@@ -1,0 +1,73 @@
+{
+    "pages": [
+        //pages数组中第一项表示应用启动页,
+
+        {
+            "path": "pages/main/main",
+            "style": {
+                "navigationBarTitleText": "发现焦点"
+            }
+        },
+        {
+            "path": "pages/auth/login",
+            "style": {
+                "navigationBarTitleText": "登录",
+                "app-plus": {
+                    "titleNView": false
+                }
+            }
+        },
+        {
+            "path": "pages/reg/reg",
+            "style": {
+                "navigationBarTitleText": "注册"
+            }
+        },
+        {
+            "path": "pages/pwd/pwd",
+            "style": {
+                "navigationBarTitleText": "找回密码"
+            }
+        },
+        {
+            "path": "pages/user/user",
+            "style": {
+                "navigationBarTitleText": "我的"
+            }
+        }
+    ],
+    "tabBar": {
+        "color": "#7a7e83",
+        "selectedColor": "#0faeff",
+        "backgroundColor": "#ffffff",
+        "list": [{
+                "pagePath": "pages/main/main",
+                "text": "首页",
+                "iconPath": "static/icon/home.png",
+                "selectedIconPath": "static/icon/home_blue.png"
+            },
+            {
+                "pagePath": "pages/user/user",
+                "text": "评测",
+                "iconPath": "static/icon/news.png",
+                "selectedIconPath": "static/icon/news_blue.png"
+            },
+            {
+                "pagePath": "pages/user/user",
+                "text": "商城",
+                "iconPath": "static/icon/shop.png",
+                "selectedIconPath": "static/icon/shop_blue.png"
+            }, {
+                "pagePath": "pages/user/user",
+                "text": "我的",
+                "iconPath": "static/icon/service.png",
+                "selectedIconPath": "static/icon/service_blue.png"
+            }
+        ]
+    },
+    "globalStyle": {
+        "navigationBarTextStyle": "black",
+        "navigationBarBackgroundColor": "#ffffff",
+        "backgroundColor": "#ffffff"
+    }
+}
