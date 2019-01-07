@@ -257,7 +257,8 @@ checkbox-group label {
 }
 
 .uni-form-item .with-fun .uni-icon {
-	width: 40px;
+	width: 50px;
+	padding-right: 10px;
 	height: 80upx;
 	line-height: 80upx;
 	flex-shrink: 0;

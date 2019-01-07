@@ -3,24 +3,43 @@
         //pages数组中第一项表示应用启动页,
 
         {
-            "path": "pages/main/main",
+            "path": "pages/news/list",
             "style": {
                 "navigationBarTitleText": "发现焦点"
             }
         },
         {
-            "path": "pages/auth/login",
+            "path": "pages/posts/list",
             "style": {
-                "navigationBarTitleText": "登录",
-                "app-plus": {
-                    "titleNView": false
-                }
+                "navigationBarTitleText": "焦点评测"
             }
         },
         {
-            "path": "pages/reg/reg",
+            "path": "pages/mall/index",
+            "style": {
+                "navigationBarTitleText": "焦点商城"
+            }
+        },
+        {
+            "path": "pages/auth/login",
+            "style": {
+                "navigationBarTitleText": "登录"
+                // ,
+                // "app-plus": {
+                //     "titleNView": false
+                // }
+            }
+        },
+        {
+            "path": "pages/auth/register",
             "style": {
                 "navigationBarTitleText": "注册"
+            }
+        },
+        {
+            "path": "pages/auth/reset",
+            "style": {
+                "navigationBarTitleText": "重新绑定"
             }
         },
         {
@@ -41,19 +60,19 @@
         "selectedColor": "#0faeff",
         "backgroundColor": "#ffffff",
         "list": [{
-                "pagePath": "pages/main/main",
+                "pagePath": "pages/news/list",
                 "text": "首页",
                 "iconPath": "static/icon/home.png",
                 "selectedIconPath": "static/icon/home_blue.png"
             },
             {
-                "pagePath": "pages/user/user",
+                "pagePath": "pages/posts/list",
                 "text": "评测",
                 "iconPath": "static/icon/news.png",
                 "selectedIconPath": "static/icon/news_blue.png"
             },
             {
-                "pagePath": "pages/user/user",
+                "pagePath": "pages/mall/index",
                 "text": "商城",
                 "iconPath": "static/icon/shop.png",
                 "selectedIconPath": "static/icon/shop_blue.png"

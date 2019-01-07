@@ -1,6 +1,6 @@
 <template>
   <view class="uni-padding-wrap uni-common-mt">
-    <view class="uni-center uni-h3 uni-common-mt uni-common-pt">登录</view>
+    <!-- <view class="uni-center uni-h3 uni-common-mt uni-common-pt">登录</view> -->
     <form class="uni-common-mt uni-common-pt" @submit="formSubmit">
       <view class="uni-form-item uni-column">
         <input
@@ -12,13 +12,17 @@
         >
       </view>
       <view class="uni-form-item uni-column">
-        <input
-          type="password"
-          v-model="postData.password"
-          required
-          placeholder="请输入登录密码"
-          class="uni-input"
-        >
+        <view class="with-fun">
+          <input
+            v-model="postData.password"
+            required
+            placeholder="请输入登录密码"
+            class="uni-input"
+            :password="showPassword"
+          >
+          <view class="uni-icon uni-icon-eye" :class="[!showPassword ? 'uni-active' : '']" @click="changePassword"></view>
+        </view>
+        	
       </view>
 
       <view class="uni-common-pl uni-common-pr uni-common-mt">
@@ -27,11 +31,11 @@
 
       <view class="uni-common-pl uni-common-pr uni-common-mt uni-center uni-flex">
         <view class="uni-column uni-flex-item uni-link">
-          <navigator url="../main/main">没有账号去注册?</navigator>
+          <navigator url="/pages/auth/register">没有账号去注册?</navigator>
         </view>
 
         <view class="uni-column uni-flex-item uni-link">
-          <navigator url="../main/main">忘记密码</navigator>
+          <navigator url="../auth/reset">忘记密码</navigator>
         </view>
       </view>
 
@@ -44,9 +48,9 @@
 
         <view class="uni-common-pa uni-center uni-flex">
           <view class="uni-column uni-flex-item uni-link">
-            <navigate url="../auth/register" class>老用户入口</navigate>
+            <navigator  url="../auth/reset?type=1" >老用户入口</navigator>
           </view>
-          <view class="uni-column uni-flex-item uni-link" @tap="goBack">
+          <view class="uni-column uni-flex-item uni-link" @tap="notLogin">
             <text>暂不登录</text>
           </view>
         </view>
@@ -57,7 +61,7 @@
 </template>
 
 <script>
-import Request from "./../../api/request.js";
+import Request from "./../../store/request.js";
 export default {
   data() {
     return {
@@ -67,10 +71,14 @@ export default {
       },
       hasProvider: false,
       providerList: [],
-      positionTop:0
+      positionTop:0,
+      showPassword:true
     };
   },
   methods: {
+    changePassword(){
+      this.showPassword = !this.showPassword
+    },
     async formSubmit() {
       let postData = this.postData;
       console.log("formSubmit postData", JSON.stringify(postData));
@@ -90,10 +98,11 @@ export default {
         let token = ret.data.token;
         console.log("formSbumit token ", token);
         uni.setStorageSync("user_auth_token", token);
+        this.$store.state.hasLogin = true;
         uni.navigateBack({
           delta: 1
         });
-        this.$store.state.hasLogin = true;
+        
       } else {
         uni.showToast({
           title: "登录失败," + ret.message,
@@ -132,13 +141,13 @@ export default {
          * 使用 absolute 定位，并且设置 bottom 值进行定位。软键盘弹出时，底部会因为窗口变化而被顶上来。
          * 反向使用 top 进行定位，可以避免此问题。
          */
-        this.positionTop = uni.getSystemInfoSync().windowHeight - 100;
+        this.positionTop = uni.getSystemInfoSync().windowHeight - 160;
         console.log('positionTop' , this.positionTop);
     },
-    goBack(){
-      uni.navigateBack({
-        delta: 1
-      });
+    notLogin(){
+      uni.reLaunch({
+        url:'../news/list'
+      })
     }
   },
   onLoad() {

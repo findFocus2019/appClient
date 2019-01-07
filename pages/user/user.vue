@@ -47,6 +47,9 @@ export default {
           url: "../auth/login"
         });
       } else {
+        uni.navigateTo({
+          url: "../auth/login"
+        });
       }
     }
   }
