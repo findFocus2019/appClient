@@ -37,18 +37,6 @@
             }
         },
         {
-            "path": "pages/auth/reset",
-            "style": {
-                "navigationBarTitleText": "重新绑定"
-            }
-        },
-        {
-            "path": "pages/pwd/pwd",
-            "style": {
-                "navigationBarTitleText": "找回密码"
-            }
-        },
-        {
             "path": "pages/user/user",
             "style": {
                 "navigationBarTitleText": "我的"

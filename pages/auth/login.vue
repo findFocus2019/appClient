@@ -34,21 +34,24 @@
           <navigator url="/pages/auth/register">没有账号去注册?</navigator>
         </view>
 
-        <view class="uni-column uni-flex-item uni-link">
-          <navigator url="../auth/reset">忘记密码</navigator>
+        <view class="uni-column uni-flex-item uni-link" @tap="goAuthBind(1)">
+          <text>忘记密码</text>
         </view>
       </view>
 
       <view :style="{position: 'absolute' ,top: positionTop + 'px', width: '100%'}">
         <view class="uni-common-pa uni-common-mt uni-center uni-flex" v-if="hasProvider">
-          <view class="uni-column uni-flex-item" @tap="oauth(item.value)" v-for="item in providerList">
-            <image :src="item.image" style="width:64px;height:64px;"></image>
-          </view>
+          <template v-for="item in providerList">
+             <view class="uni-column uni-flex-item" @tap="oauth(item.value)" >
+               <image :src="item.image" style="width:64px;height:64px;"></image>
+             </view>
+          </template>
+          
         </view>
 
         <view class="uni-common-pa uni-center uni-flex">
-          <view class="uni-column uni-flex-item uni-link">
-            <navigator  url="../auth/reset?type=1" >老用户入口</navigator>
+          <view class="uni-column uni-flex-item uni-link" @tap="goAuthBind(2)">
+            <text>老用户入口</text>
           </view>
           <view class="uni-column uni-flex-item uni-link" @tap="notLogin">
             <text>暂不登录</text>
@@ -147,6 +150,12 @@ export default {
     notLogin(){
       uni.reLaunch({
         url:'../news/list'
+      })
+    },
+    goAuthBind(type = 0){
+      uni.setStorageSync('auth_reg_type' , type)
+      uni.redirectTo({
+      	url:'../auth/register'
       })
     }
   },

@@ -36,7 +36,7 @@
       </view>
 
       <view class="uni-common-pl uni-common-pr uni-common-mt">
-        <button type="primary" formType="submit">立即注册</button>
+        <button type="primary" formType="submit">确定</button>
       </view>
 
       <view class="uni-common-pa uni-center uni-flex">
@@ -56,13 +56,30 @@ export default {
       postData: {
         mobile: "",
         password: "",
-        verify_code: ""
+        verify_code: "",
+        type:0
       },
       sms: {
         text: "发送",
         second: 60
-      }
+      },
     };
+  },
+  onShow() {
+    let type = uni.getStorageSync('auth_reg_type') || 0
+    this.postData.type = type
+    if(type == 1){
+      uni.setNavigationBarTitle({
+      	title:'重置密码'
+      })
+    }else if(type== 2){
+      uni.setNavigationBarTitle({
+      	title:'老用户绑定'
+      })
+    }
+  },
+  onHide(){
+    uni.getStorageSync('auth_reg_type' , 0)
   },
   methods: {
     async formSubmit() {
@@ -76,16 +93,19 @@ export default {
       uni.hideLoading();
       if (ret.code == 0) {
         uni.showToast({
-          title: "注册成功",
+          title: ret.message,
           duration: 2000,
           icon: "success"
         });
-        uni.navigateBack({
-          delta: 1
-        });
+        setTimeout(() => {
+           uni.navigateBack({
+             delta: 1
+           });
+        },2000)
+        
       } else {
         uni.showToast({
-          title: "注册失败," + ret.message,
+          title: ret.message,
           duration: 2000,
           icon: "none"
         });
