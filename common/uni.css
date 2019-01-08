@@ -80,6 +80,7 @@ form {
 
 .uni-page-body {
 	width: 100%;
+  min-height: 100%;
 	flex-grow: 1;
 	overflow-x: hidden;
 }
@@ -147,6 +148,10 @@ form {
 }
 
 /* 背景色 */
+.uni-bg-white{
+  background: #FFFFFF;
+  color: #454545;
+}
 .uni-bg-red {
 	background: #F76260;
 	color: #FFF;

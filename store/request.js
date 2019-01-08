@@ -24,9 +24,7 @@ class Request {
           content: content,
           sign: sign
         },
-        header: {
-          'api_token': '123456' //自定义请求头信息
-        },
+        header: {},
         success: (res) => {
           console.log('request response ', JSON.stringify(res.data));
           r(res.data)

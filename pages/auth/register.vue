@@ -1,51 +1,54 @@
 <template>
-  <view class="uni-padding-wrap uni-common-mt">
-    <form class="uni-common-mt uni-common-pt" @submit="formSubmit">
-      <view class="uni-form-item uni-column">
-        <input
-          type="text"
-          v-model="postData.mobile"
-          required
-          placeholder="请输入登录手机号码"
-          class="uni-input"
-        >
-      </view>
-      <view class="uni-form-item uni-column">
-        <input
-          type="password"
-          v-model="postData.password"
-          required
-          placeholder="请输入登录密码"
-          class="uni-input"
-        >
-      </view>
-
-      <view class="uni-flex uni-common-mt">
-        <view class="uni-column uni-flex-item">
-          <input
-            type="password"
-            v-model="postData.verify_code"
-            required
-            placeholder="请输入验证码"
-            class="uni-input"
-          >
-        </view>
-        <view class="uni-column uni-flex-item uni-common-pl uni-common-pr">
-          <button color="primary" @tap="smsSend">{{ sms.text }}</button>
-        </view>
-      </view>
-
-      <view class="uni-common-pl uni-common-pr uni-common-mt">
-        <button type="primary" formType="submit">确定</button>
-      </view>
-
-      <view class="uni-common-pa uni-center uni-flex">
-        <view class="uni-column uni-flex-item uni-link" @tap="goBack">
-          <text>返回登录</text>
-        </view>
-      </view>
-    </form>
+  <view class="uni-page-body uni-bg-white">
+     <view class="uni-padding-wrap uni-common-mt">
+       <form class="uni-common-mt uni-common-pt" @submit="formSubmit">
+         <view class="uni-form-item uni-column">
+           <input
+             type="text"
+             v-model="postData.mobile"
+             required
+             placeholder="请输入登录手机号码"
+             class="uni-input"
+           >
+         </view>
+         <view class="uni-form-item uni-column">
+           <input
+             type="password"
+             v-model="postData.password"
+             required
+             placeholder="请输入登录密码"
+             class="uni-input"
+           >
+         </view>
+     
+         <view class="uni-flex uni-common-mt">
+           <view class="uni-column uni-flex-item">
+             <input
+               type="password"
+               v-model="postData.verify_code"
+               required
+               placeholder="请输入验证码"
+               class="uni-input"
+             >
+           </view>
+           <view class="uni-column uni-flex-item uni-common-pl uni-common-pr">
+             <button color="primary" @tap="smsSend">{{ sms.text }}</button>
+           </view>
+         </view>
+     
+         <view class="uni-common-mt uni-common-pl uni-common-pr">
+           <button type="primary" formType="submit">确定</button>
+         </view>
+     
+         <view class="uni-common-pa uni-center uni-flex">
+           <view class="uni-column uni-flex-item uni-link" @tap="goBack">
+             <text>返回登录</text>
+           </view>
+         </view>
+       </form>
+     </view>
   </view>
+  
 </template>
 
 <script>
@@ -65,6 +68,11 @@ export default {
       },
     };
   },
+  computed:{
+    oAuthId(){
+      return this.$store.state.oAuthId
+    }
+  },
   onShow() {
     let type = uni.getStorageSync('auth_reg_type') || 0
     this.postData.type = type
@@ -76,6 +84,16 @@ export default {
       uni.setNavigationBarTitle({
       	title:'老用户绑定'
       })
+    }else if(type == 3){
+      uni.setNavigationBarTitle({
+      	title:'三方登录绑定'
+      })
+    }
+    
+    let systemInfo = uni.getSystemInfoSync();
+    this.postData.oauth_info = {
+      platform: systemInfo.platform,
+      device: systemInfo.model
     }
   },
   onHide(){
@@ -84,6 +102,10 @@ export default {
   methods: {
     async formSubmit() {
       let postData = this.postData;
+      if(postData.type == 3){
+        // 设置oauth的数据
+        postData.oauth_info.oauth_id = this.oAuthId
+      }
       console.log("formSubmit postData", JSON.stringify(postData));
       uni.showLoading({
         title: "注册中..."
@@ -92,16 +114,39 @@ export default {
       console.log("formSubmit ret", JSON.stringify(ret));
       uni.hideLoading();
       if (ret.code == 0) {
-        uni.showToast({
-          title: ret.message,
-          duration: 2000,
-          icon: "success"
-        });
-        setTimeout(() => {
-           uni.navigateBack({
-             delta: 1
+        if(postData.type == 3){
+          // 授权登录返回
+          uni.showToast({
+            title: "绑定成功",
+            duration: 2000,
+            icon: "success"
+          });
+          
+          let token = ret.data.token;
+          console.log("formSbumit token", token);
+          uni.setStorageSync("user_auth_token", token);
+          this.$store.state.hasLogin = true;
+          this.$store.dispatch('userInfoGet')
+          
+          setTimeout(() => {
+             uni.navigateBack({
+               delta: 1
+             });
+          }, 1000)
+          
+        }else{
+           uni.showToast({
+             title: ret.message,
+             duration: 2000,
+             icon: "success"
            });
-        },2000)
+           setTimeout(() => {
+              uni.navigateBack({
+                delta: 1
+              });
+           },2000)
+        }
+        
         
       } else {
         uni.showToast({

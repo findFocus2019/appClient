@@ -37,9 +37,9 @@
             }
         },
         {
-            "path": "pages/user/user",
+            "path": "pages/user/index",
             "style": {
-                "navigationBarTitleText": "我的"
+                "navigationBarTitleText": "个人中心"
             }
         }
     ],
@@ -65,7 +65,7 @@
                 "iconPath": "static/icon/shop.png",
                 "selectedIconPath": "static/icon/shop_blue.png"
             }, {
-                "pagePath": "pages/user/user",
+                "pagePath": "pages/user/index",
                 "text": "我的",
                 "iconPath": "static/icon/service.png",
                 "selectedIconPath": "static/icon/service_blue.png"

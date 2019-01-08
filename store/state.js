@@ -4,4 +4,6 @@ export default {
    */
   forcedLogin: false,
   hasLogin: false,
+  userInfo:{},
+  oAuthId: 0
 }

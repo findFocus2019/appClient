@@ -1,66 +1,69 @@
 <template>
-  <view class="uni-padding-wrap uni-common-mt">
-    <!-- <view class="uni-center uni-h3 uni-common-mt uni-common-pt">登录</view> -->
-    <form class="uni-common-mt uni-common-pt" @submit="formSubmit">
-      <view class="uni-form-item uni-column">
-        <input
-          type="text"
-          v-model="postData.mobile"
-          required
-          placeholder="请输入登录手机号码"
-          class="uni-input"
-        >
-      </view>
-      <view class="uni-form-item uni-column">
-        <view class="with-fun">
-          <input
-            v-model="postData.password"
-            required
-            placeholder="请输入登录密码"
-            class="uni-input"
-            :password="showPassword"
-          >
-          <view class="uni-icon uni-icon-eye" :class="[!showPassword ? 'uni-active' : '']" @click="changePassword"></view>
-        </view>
-        	
-      </view>
-
-      <view class="uni-common-pl uni-common-pr uni-common-mt">
-        <button type="primary" formType="submit">登录</button>
-      </view>
-
-      <view class="uni-common-pl uni-common-pr uni-common-mt uni-center uni-flex">
-        <view class="uni-column uni-flex-item uni-link">
-          <navigator url="/pages/auth/register">没有账号去注册?</navigator>
-        </view>
-
-        <view class="uni-column uni-flex-item uni-link" @tap="goAuthBind(1)">
-          <text>忘记密码</text>
-        </view>
-      </view>
-
-      <view :style="{position: 'absolute' ,top: positionTop + 'px', width: '100%'}">
-        <view class="uni-common-pa uni-common-mt uni-center uni-flex" v-if="hasProvider">
-          <template v-for="item in providerList">
-             <view class="uni-column uni-flex-item" @tap="oauth(item.value)" >
-               <image :src="item.image" style="width:64px;height:64px;"></image>
+  <view class="uni-bg-white uni-page-body">
+     <view class="uni-padding-wrap uni-common-mt">
+       <!-- <view class="uni-center uni-h3 uni-common-mt uni-common-pt">登录</view> -->
+       <form class="uni-common-mt uni-common-pt" @submit="formSubmit">
+         <view class="uni-form-item uni-column">
+           <input
+             type="text"
+             v-model="postData.mobile"
+             required
+             placeholder="请输入登录手机号码"
+             class="uni-input"
+           >
+         </view>
+         <view class="uni-form-item uni-column">
+           <view class="with-fun">
+             <input
+               v-model="postData.password"
+               required
+               placeholder="请输入登录密码"
+               class="uni-input"
+               :password="showPassword"
+             >
+             <view class="uni-icon uni-icon-eye" :class="[!showPassword ? 'uni-active' : '']" @click="changePassword"></view>
+           </view>
+           	
+         </view>
+     
+         <view class="uni-common-mt uni-common-pl uni-common-pr">
+           <button type="primary" formType="submit">登录</button>
+         </view>
+     
+         <view class="uni-common-pl uni-common-pr uni-common-mt uni-center uni-flex">
+           <view class="uni-column uni-flex-item uni-link">
+             <navigator url="/pages/auth/register">没有账号去注册?</navigator>
+           </view>
+     
+           <view class="uni-column uni-flex-item uni-link" @tap="goAuthBind(1)">
+             <text>忘记密码</text>
+           </view>
+         </view>
+     
+         <view :style="{position: 'absolute' ,top: positionTop + 'px', width: '100%'}">
+           <view class="uni-common-pa uni-common-mt uni-center uni-flex" v-if="hasProvider">
+             <template v-for="item in providerList">
+                <view class="uni-column uni-flex-item" @tap="oauth(item.value)" >
+                  <image :src="item.image" style="width:64px;height:64px;"></image>
+                </view>
+             </template>
+             
+           </view>
+     
+           <view class="uni-common-pa uni-center uni-flex">
+             <view class="uni-column uni-flex-item uni-link" @tap="goAuthBind(2)">
+               <text>老用户入口</text>
              </view>
-          </template>
-          
-        </view>
-
-        <view class="uni-common-pa uni-center uni-flex">
-          <view class="uni-column uni-flex-item uni-link" @tap="goAuthBind(2)">
-            <text>老用户入口</text>
-          </view>
-          <view class="uni-column uni-flex-item uni-link" @tap="notLogin">
-            <text>暂不登录</text>
-          </view>
-        </view>
-      </view>
-      
-    </form>
+             <view class="uni-column uni-flex-item uni-link" @tap="notLogin">
+               <text>暂不登录</text>
+             </view>
+           </view>
+         </view>
+         
+       </form>
+     </view>
   </view>
+  
 </template>
 
 <script>
@@ -70,13 +73,30 @@ export default {
     return {
       postData: {
         mobile: "",
-        password: ""
+        password: "",
+        auth_info: {}
       },
       hasProvider: false,
       providerList: [],
       positionTop:0,
-      showPassword:true
+      showPassword:true,
+      oauth_info:{
+        platform:'',
+        device: '',
+        avatar:'',
+        nickname:'',
+        openid:''
+      }
     };
+  },
+  onShow() {
+  	let systemInfo = uni.getSystemInfoSync();
+  	this.postData.auth_info = {
+  	  platform: systemInfo.platform,
+  	  device: systemInfo.model
+  	}
+    this.oauth_info.platform = systemInfo.platform
+    this.oauth_info.device = systemInfo.model
   },
   methods: {
     changePassword(){
@@ -85,37 +105,125 @@ export default {
     async formSubmit() {
       let postData = this.postData;
       console.log("formSubmit postData", JSON.stringify(postData));
+      
+//       let systemInfo = uni.getSystemInfoSync();
+//       postData.auth_info = {
+//         platform: systemInfo.platform,
+//         device: systemInfo.model
+//       }
       uni.showLoading({
         title: "正在登录..."
       });
       let ret = await Request.post("auth/login", postData);
       console.log("formSubmit ret", JSON.stringify(ret));
       uni.hideLoading();
+
       if (ret.code == 0) {
         uni.showToast({
           title: "登录成功",
-          duration: 2000,
+          duration: 1500,
           icon: "success"
         });
 
         let token = ret.data.token;
-        console.log("formSbumit token ", token);
+        console.log("formSbumit token", token);
         uni.setStorageSync("user_auth_token", token);
         this.$store.state.hasLogin = true;
-        uni.navigateBack({
-          delta: 1
-        });
+        this.$store.dispatch('userInfoGet')
         
+        setTimeout(() => {
+           uni.navigateBack({
+             delta: 1
+           });
+        }, 1000)
+         
       } else {
         uni.showToast({
           title: "登录失败," + ret.message,
-          duration: 2000,
+          duration: 1500,
           icon: "none"
         });
       }
     },
     async oauth(type = ''){
       console.log('oauth type :' , type);
+      uni.login({
+        provider: type,
+        success:(loginRes)=> {
+          console.log('login res =========' , JSON.stringify(loginRes));
+          if(type == 'sinaweibo'){
+            this.oauth_info.openid = loginRes.authResult.uid
+          }
+          
+          uni.getUserInfo({
+              provider: type,
+              withCredentials: true,
+              success: async (infoRes) => {
+                  /**
+                   * 实际开发中，获取用户信息后，需要将信息上报至服务端。
+                   * 服务端可以用 userInfo.openId 作为用户的唯一标识新增或绑定用户信息。
+                   */
+                  console.log(JSON.stringify(infoRes))
+                  let oauthInfo = infoRes.userInfo
+                  this.oauth_info.avatar = oauthInfo.avatarUrl
+                  this.oauth_info.nickname = oauthInfo.nickName
+                  if(oauthInfo.openid ){
+                     this.oauth_info.openid = oauthInfo.openid
+                  }
+                  
+                  console.log(JSON.stringify((this.oauth_info)))
+                  
+                  let oauthRet = await Request.post('auth/loginOauth' , this.oauth_info)
+                  if(oauthRet.code == 0){
+                    uni.showToast({
+                      title: "授权登录成功",
+                      duration: 1500,
+                      icon: "success"
+                    });
+                    
+                    let token = oauthRet.data.token;
+                    console.log("loginOauth token", token);
+                    uni.setStorageSync("user_auth_token", token);
+                    this.$store.state.hasLogin = true;
+                    this.$store.dispatch('userInfoGet')
+                    
+                    setTimeout(() => {
+                       uni.navigateBack({
+                         delta: 1
+                       });
+                    }, 1000)
+                  }else if(oauthRet.code == 2){
+                    // 设置oauth_id
+                    this.$store.state.oAuthId = oauthRet.data.oauth_id
+                    // 去绑定
+                    this.goAuthBind(3)
+                  }else {
+                    uni.showToast({
+                      title: "授权登录失败,请稍后重试",
+                      duration: 1500,
+                      icon: "none"
+                    });
+                  }
+              },
+              fail:(err)=> {
+                console.error('授权登录失败，' , JSON.stringify((err)))
+                uni.showToast({
+                  title: "授权登录失败,获取用户信息出错",
+                  duration: 1500,
+                  icon: "none"
+                });
+              }
+          });
+        },
+        fail:(err)=> {
+        	console.error('授权登录失败，' , JSON.stringify((err)))
+          uni.showToast({
+            title: "授权登录失败, " + err.errMsg || '请稍后再试',
+            duration: 1500,
+            icon: "none"
+          });
+        }
+      });
     },
     initProvider() {
         const filters = ['weixin', 'qq', 'sinaweibo'];
