@@ -76,7 +76,9 @@ export default {
   onShow() {
     let type = uni.getStorageSync('auth_reg_type') || 0
     this.postData.type = type
-    if(type == 1){
+    if(type == 0){
+      
+    }else if(type == 1){
       uni.setNavigationBarTitle({
       	title:'重置密码'
       })

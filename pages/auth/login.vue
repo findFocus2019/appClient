@@ -32,7 +32,9 @@
      
          <view class="uni-common-pl uni-common-pr uni-common-mt uni-center uni-flex">
            <view class="uni-column uni-flex-item uni-link">
-             <navigator url="/pages/auth/register">没有账号去注册?</navigator>
+             <!-- <navigator url="/pages/auth/register">没有账号去注册?</navigator>
+              -->
+              <text @tap="goAuthBind(0)">没有账号去注册?</text>
            </view>
      
            <view class="uni-column uni-flex-item uni-link" @tap="goAuthBind(1)">
