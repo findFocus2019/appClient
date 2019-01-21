@@ -1,155 +1,190 @@
 <template>
-  <view class="uni-page-body">
-    <view class="uni-padding-wrap uni-bg-white">
-      <view class="uni-common-pa uni-flex uni-row">
-        <view class="uni-flex" style="width: 25%;">
-          <image :src="userInfo.avatar" mode="scaleToFill" style="width: 100px;height: 100px;" v-if="userInfo && userInfo.avatar"></image>
-          <image src="../../static/img/user.png" mode="scaleToFill" style="width: 100px;height: 100px;" v-else></image>
-        </view>
-        <view class="uni-flex">
-          <view v-if="!hasLogin">
-            <navigator url="../auth/login" class="uni-common-pa">还未登录，去登录</navigator>
-          </view>
-          <view class="" v-else>
-            <text class="uni-h3">{{ userInfo.nickname || '还未设置'}}</text>
-            <view class="">
-              {{ userInfo.mobile }}
-            </view>
-          </view>
-        </view>
-        
-      </view>
-      <view class="uni-flex uni-common-pb uni-common-pt" v-if="hasLogin">
-         <view class="uni-flex-item uni-center">
-         	<view class="">
-         		余额
-         	</view>
-          <text class="uni-h3">100</text>
+  <view class="page-user">
+    
+  	<view class="uni-padding-wrap uni-common-pt page-user-head">
+      <view class="uni-flex page-user-head-title">
+         <view class="uni-flex-item">
+         	
          </view>
-         <view class="uni-flex-item uni-center">
-         	<view class="">
-         		积分
-         	</view>
-          <text class="uni-h3">100</text>
+         <view class="uni-flex-item uni-center uni-h3">
+         	个人中心
+         </view>
+         <view class="uni-flex-item uni-right">
+         	
          </view>
       </view>
       
-    </view>
+      <view class="uni-flex uni-common-pt uni-common-pb" style="width: 100%;">
+   
+        <view class="user-avatar">
+          <image src="../../static/icon/qq.png" mode="scaleToFill"></image>
+        </view>
  
-    <view class="uni-card">
-    	<view class="uni-list">
-    		<view class="uni-list-cell" hover-class="uni-list-cell-hover" @tap="goToPage('../task/index')">
-    			<view class="uni-list-cell-navigate uni-navigate-right">
-    				每日任务
-    			</view>
-    		</view>
-        <view class="uni-list-cell" hover-class="uni-list-cell-hover" @tap="goToPage('../task/list')">
-        	<view class="uni-list-cell-navigate uni-navigate-right">
-        		收益记录
+        <view class="uni-flex uni-flex-item uni-common-pl">
+        	<view class="uni-flex-item">
+            <view class="">
+            	用户昵称
+            </view>
+            <view class="">
+            	是否vie
+            </view>
+        		
         	</view>
+          <view class="uni-flex-item uni-right">
+          	消息
+          </view>
+          
+        </view>
+        
+      </view>
+  		
+  	</view>
+    
+    <view class="uni-common-pa page-user-content ">
+    	<view class="uni-center uni-bg-white ">
+    		<view class="uni-flex uni-common-pt uni-common-pb uni-border-bottom uni-radius-big">
+    			<view class="uni-flex-item">
+    				<view class="uni-h5">
+    					总收益
+    				</view>
+            <view class="uni-h4">
+            	10000
+            </view>
+    			</view>
+          <view class="uni-flex-item">
+          	
+          </view>
+          <view class="uni-flex-item">
+          	<view class="uni-h5">
+          		积分余额
+          	</view>
+          	<view class="uni-h4">
+          		10000
+          	</view>
+          </view>
+    		</view>
+        <view class="uni-flex uni-common-pt uni-common-pb uni-text-lighter">
+        	<view class="uni-flex-item">
+        		<view class="">
+        			浏览量
+        		</view>
+            <view class="">
+            	100
+            </view>
+        	</view>
+          <view class="uni-flex-item">
+          	<view class="">
+          		评论量
+          	</view>
+          	<view class="">
+          		100
+          	</view>
+          </view>
+          <view class="uni-flex-item">
+          	<view class="">
+          		点赞量
+          	</view>
+          	<view class="">
+          		100
+          	</view>
+          </view>
+          <view class="uni-flex-item">
+          	<view class="">
+          		转发量
+          	</view>
+          	<view class="">
+          		100
+          	</view>
+          </view>
         </view>
     	</view>
+      
+      <view class="uni-common-mt">
+      	<user-card :title="cards[0].title" :items="cards[0].items"></user-card>
+      </view>
+      
+      <view class="uni-common-mt">
+      	<user-card :title="cards[1].title" :items="cards[1].items"></user-card>
+      </view>
+      
+      <view class="uni-common-mt">
+      	<user-card :title="cards[2].title" :items="cards[2].items"></user-card>
+      </view>
+      
+      
     </view>
     
-    <view class="uni-card">
-    	<view class="uni-list">
-  
-        <view class="uni-list-cell" hover-class="uni-list-cell-hover" @tap="goToPage('../mall/order')">
-        	<view class="uni-list-cell-navigate uni-navigate-right">
-        		商城订单
-        	</view>
-        </view>
-        <view class="uni-list-cell uni-list-cell-last" hover-class="uni-list-cell-hover" @tap="goToPage('../user/address')">
-        	<view class="uni-list-cell-navigate uni-navigate-right">
-        		地址管理
-        	</view>
-        </view>
-    	</view>
-    </view>
     
-    <view class="uni-card uni-common-mt">
-    	<view class="uni-list">
-    		<view class="uni-list-cell" hover-class="uni-list-cell-hover" @tap="goToPage('../user/views')">
-    			<view class="uni-list-cell-navigate uni-navigate-right">
-    				浏览
-    			</view>
-    		</view>
-        <view class="uni-list-cell" hover-class="uni-list-cell-hover" @tap="goToPage('../user/comments')">
-        	<view class="uni-list-cell-navigate uni-navigate-right">
-        		评论
-        	</view>
-        </view>
-        <view class="uni-list-cell" hover-class="uni-list-cell-hover" @tap="goToPage('../user/likes')">
-        	<view class="uni-list-cell-navigate uni-navigate-right">
-        		收藏
-        	</view>
-        </view>
-        <view class="uni-list-cell uni-list-cell-last" hover-class="uni-list-cell-hover" @tap="goToPage('../user/posts')">
-        	<view class="uni-list-cell-navigate uni-navigate-right">
-        		评测
-        	</view>
-        </view>
-    	</view>
-    </view>
     
-    <view class="uni-card">
-    	<view class="uni-list">
-    		<view class="uni-list-cell" hover-class="uni-list-cell-hover" @tap="goToPage('../notice')">
-    			<view class="uni-list-cell-navigate uni-navigate-right">
-    				系统公告
-    			</view>
-    		</view>
-    	</view>
-    </view>
-
-    <view class="uni-padding-wrap uni-common-mt uni-center" v-if="hasLogin">
-      <button type="warn" @tap="logout">退出登录</button>
-    </view>
-
   </view>
-
-
-
 </template>
 
 <script>
-  import {
-    mapState,
-    mapActions
-  } from "vuex";
-  export default {
-    components: {},
-    computed: {
-      ...mapState(["hasLogin", "userInfo"])
-    },
-    data() {
-      return {
-
-      }
-    },
-    methods: {
-      ...mapActions(["authLogout"]),
-      logout() {
-        this.authLogout();
-        uni.navigateTo({
-          url: "../auth/login"
-        });
-      },
-      goToPage(page){
-        if(!this.hasLogin){
-          uni.navigateTo({
-          	url:'../auth/login'
-          })
-        }else {
-          uni.navigateTo({
-          	url:page
-          })
-        }
-      }
-    }
-
-  };
+  import UserCard from '../../components/user/user-card.vue';
+   export default {
+     components:{
+       UserCard
+     },
+     data(){
+       return {
+         cards : [
+           {title : '我的服务' ,items: [
+             {text: '收支记录' , icon : 'trade'},
+             {text: '商城订单' , icon : 'order'},
+             {text: '我的售后' , icon : 'after'},
+             {text: '我的团队' , icon : 'team'},
+             {text: '我的评价' , icon : 'rate'},
+             {text: '品牌申请' , icon : 'brand'},
+           ]},
+           {title : '我的足迹' ,items: [
+             {text: '收货地址' , icon : 'address'},
+             {text: '我的评论' , icon : 'comment'},
+             {text: '我的收藏' , icon : 'like'},
+             {text: '我的评测' , icon : 'posts'}
+           ]},
+           {title : '每日任务' ,items: [
+             {text: '推荐注册' , icon : 'invite-reg'},
+             {text: '登录签到' , icon : 'daily-sign'},
+             {text: '文章评论' , icon : 'post-comment'},
+             {text: '内容点赞' , icon : 'post-like'}
+           ]}
+         ]
+       }
+     }
+   }
 </script>
 
 <style>
+  .page-user-head {
+    background: #ff5c44;
+    color: #FFFFFF;
+    padding-bottom: 150upx;
+    padding-top: 120upx;
+  }
+  
+  .page-user-head-title {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: 0;
+    padding-top: 48upx;
+    background: #ff5c44;
+    z-index: 10000;
+  }
+  .user-avatar {
+    width: 94upx;
+    height: 94upx;
+    border-radius: 50upx;
+    overflow: hidden;
+    border: 6upx solid #febdb5;
+  }
+  
+  .page-user-content {
+    position: relative;
+    top: -150upx;
+  }
+  
+  .user-avatar image {
+    width: 100upx;height: 100upx;
+  }
 </style>

@@ -44,7 +44,10 @@
         {
             "path": "pages/user/index",
             "style": {
-                "navigationBarTitleText": "个人中心"
+                "navigationBarTitleText": "个人中心",
+                "app-plus": {
+                    "titleNView": false
+                }
             }
         }
     ],

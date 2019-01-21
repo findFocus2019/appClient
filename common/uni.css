@@ -46,6 +46,10 @@ form {
 	text-align: center;
 }
 
+.uni-right {
+  text-align: right;
+}
+
 .uni-inline-item {
 	display: flex;
 	flex-direction: row;
@@ -115,6 +119,22 @@ form {
 	color: #ccc;
 }
 
+.uni-text-light {
+	color: #666666;
+}
+
+.uni-text-lighter {
+  color: #999999;
+}
+
+.uni-text-dark {
+  color: #454545;
+}
+
+.uni-text-darker {
+  color: #333333;
+}
+
 .uni-text-small {
 	font-size: 24upx;
 }
@@ -165,6 +185,20 @@ form {
 .uni-bg-blue {
 	background: #007AFF;
 	color: #FFF;
+}
+
+.uni-border-bottom{
+  border-bottom: 1px solid #EEEEEE;
+}
+
+.uni-radius-small {
+  border-radius: 2px;
+}
+.uni-radius-middle {
+  border-radius: 4px;
+}
+.uni-radius-big {
+  border-radius: 8px;
 }
 
 /* 标题 */
