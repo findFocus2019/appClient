@@ -45,42 +45,47 @@
             "path": "pages/user/index",
             "style": {
                 "navigationBarTitleText": "个人中心",
+                "navigationBarTextStyle": "white",
+                "navigationBarBackgroundColor":"#ff5c44",
                 "app-plus": {
-                    "titleNView": false
+                    "titleNView": {
+                    	"buttons": [{
+                    			"fontSrc": "/static/fonts/uni.ttf",
+                          "text": "\ue502"
+                    		}
+                    	]
+                    }
                 }
             }
         }
     ],
     "tabBar": {
         "color": "#7a7e83",
-        "selectedColor": "#0faeff",
+        "selectedColor": "#E03c45",
         "backgroundColor": "#ffffff",
         "list": [{
                 "pagePath": "pages/main/main",
                 "text": "首页",
                 "iconPath": "static/icon/home.png",
-                "selectedIconPath": "static/icon/home_blue.png"
-            },
-            {
-                "pagePath": "pages/posts/list",
-                "text": "评测",
-                "iconPath": "static/icon/news.png",
-                "selectedIconPath": "static/icon/news_blue.png"
-            },
-            {
-                "pagePath": "pages/auth/login",
-                "text": ""
+                "selectedIconPath": "static/icon/home_a.png"
             },
             {
                 "pagePath": "pages/mall/index",
                 "text": "商城",
-                "iconPath": "static/icon/shop.png",
-                "selectedIconPath": "static/icon/shop_blue.png"
-            }, {
+                "iconPath": "static/icon/mall.png",
+                "selectedIconPath": "static/icon/mall_a.png"
+            },
+            {
+                "pagePath": "pages/posts/list",
+                "text": "评测",
+                "iconPath": "static/icon/post.png",
+                "selectedIconPath": "static/icon/post_a.png"
+            },
+             {
                 "pagePath": "pages/user/index",
                 "text": "我的",
-                "iconPath": "static/icon/service.png",
-                "selectedIconPath": "static/icon/service_blue.png"
+                "iconPath": "static/icon/user.png",
+                "selectedIconPath": "static/icon/user_a.png"
             }
         ]
     },

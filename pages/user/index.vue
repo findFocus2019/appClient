@@ -2,45 +2,56 @@
   <view class="page-user">
     
   	<view class="uni-padding-wrap uni-common-pt page-user-head">
-      <view class="uni-flex page-user-head-title">
-         <view class="uni-flex-item">
-         	
-         </view>
-         <view class="uni-flex-item uni-center uni-h3">
-         	个人中心
-         </view>
-         <view class="uni-flex-item uni-right">
-         	
-         </view>
-      </view>
       
-      <view class="uni-flex uni-common-pt uni-common-pb" style="width: 100%;">
+      <view class="uni-flex uni-common-pt uni-common-pb"  v-if="hasLogin">
    
         <view class="user-avatar">
-          <image src="../../static/icon/qq.png" mode="scaleToFill"></image>
+          <image src="/static/icon/qq.png" mode="scaleToFill"></image>
         </view>
  
         <view class="uni-flex uni-flex-item uni-common-pl">
         	<view class="uni-flex-item">
             <view class="">
-            	用户昵称
+            	{{ userInfo.nickname || '还未设置'}}
             </view>
             <view class="">
-            	是否vie
+            	<image src="/static/icon/user/vip-tag.png" mode="widthFix" style="width: 180upx;"></image>
             </view>
         		
         	</view>
           <view class="uni-flex-item uni-right">
-          	消息
+            <image src="/static/icon/user/msg.png" mode="widthFix" style="width: 110upx;"></image>
           </view>
           
         </view>
         
       </view>
+      
+      <view class="uni-flex uni-common-pt uni-common-pb" v-else>
+      	<view class="user-avatar">
+      	  <image src="../../static/icon/qq.png" mode="scaleToFill"></image>
+      	</view>
+        
+        <view class="uni-flex uni-flex-item uni-common-pl">
+        	<view class="uni-flex-item">
+            <view class="uni-common-pt">
+              <navigator url="/pages/auth/login" hover-class="navigator-hover">
+                    还未登录，去登录
+                </navigator>
+            	
+            </view>
+        		
+        	</view>
+          <view class="uni-flex-item uni-right">
+            <image src="/static/icon/user/msg.png" mode="widthFix" style="width: 110upx;"></image>
+          </view>
+          
+        </view>
+      </view>
   		
   	</view>
-    
-    <view class="uni-common-pa page-user-content ">
+   
+    <view class="uni-common-pa page-user-content" >
     	<view class="uni-center uni-bg-white ">
     		<view class="uni-flex uni-common-pt uni-common-pb uni-border-bottom uni-radius-big">
     			<view class="uni-flex-item">
@@ -100,15 +111,48 @@
     	</view>
       
       <view class="uni-common-mt">
-      	<user-card :title="cards[0].title" :items="cards[0].items"></user-card>
+      	<user-card :title="cards[0].title" :items="cards[0].items" :hasLogin="hasLogin"></user-card>
+      </view>
+      
+      <view class="uni-common-mt uni-flex">
+      	<view class="uni-flex-item uni-flex user-box-vip uni-common-pa">
+      		<view class="uni-flex-item uni-common-pr">
+      			<image src="/static/icon/user/vip.png" mode="widthFix" style="width: 100%;"></image>
+      		</view>
+          <view class="uni-flex-item">
+          	<view class="uni-text-dark">
+          		会员权益
+          	</view>
+            <view class="uni-badge-danger uni-center user-box-detail-link">
+            	查看详情
+            </view>
+          </view>
+      	</view>
+        <view class="uni-flex-item uni-flex user-box-ecard uni-common-pa">
+        	<view class="uni-flex-item uni-common-pr">
+        		<image src="/static/icon/user/ecard.png" mode="widthFix" style="width: 100%;"></image>
+        	</view>
+        	<view class="uni-flex-item">
+        		<view class="uni-text-dark">
+        			代金券
+        		</view>
+            <view class="uni-badge-danger uni-center user-box-detail-link">
+            	查看详情
+            </view>
+        	</view>
+        </view>
       </view>
       
       <view class="uni-common-mt">
-      	<user-card :title="cards[1].title" :items="cards[1].items"></user-card>
+      	<image src="/static/img/user-daily-sign.png" mode="widthFix" style="width: 100%;"></image>
       </view>
       
       <view class="uni-common-mt">
-      	<user-card :title="cards[2].title" :items="cards[2].items"></user-card>
+      	<user-card :title="cards[1].title" :items="cards[1].items" :hasLogin="hasLogin"></user-card>
+      </view>
+      
+      <view class="uni-common-mt">
+      	<user-card :title="cards[2].title" :items="cards[2].items" :hasLogin="hasLogin"></user-card>
       </view>
       
       
@@ -121,32 +165,66 @@
 
 <script>
   import UserCard from '../../components/user/user-card.vue';
+  import {
+    mapState,
+    mapActions
+  } from "vuex";
    export default {
      components:{
        UserCard
+     },
+     computed: {
+       ...mapState(["hasLogin", "userInfo"])
+     },
+     methods:{
+       ...mapActions(["authLogout"]),
+       logout() {
+         this.authLogout();
+         uni.navigateTo({
+           url: "../auth/login"
+         });
+       },
+       goToPage(page){
+         if(!this.hasLogin){
+           uni.navigateTo({
+           	url:'../auth/login'
+           })
+         }else {
+           uni.navigateTo({
+           	url:page
+           })
+         }
+       }
+     },
+     onNavigationBarButtonTap(e) {
+     	if(e.index === 0){
+        uni.redirectTo({
+        	url:'/pages/user/setting'
+        })
+      }
      },
      data(){
        return {
          cards : [
            {title : '我的服务' ,items: [
-             {text: '收支记录' , icon : 'trade'},
-             {text: '商城订单' , icon : 'order'},
-             {text: '我的售后' , icon : 'after'},
-             {text: '我的团队' , icon : 'team'},
-             {text: '我的评价' , icon : 'rate'},
-             {text: '品牌申请' , icon : 'brand'},
+             {text: '收支记录' , icon : 'trade' , path: '/pages/user/trade'},
+             {text: '商城订单' , icon : 'order' , path: '/pages/order/list'},
+             {text: '我的售后' , icon : 'after' , path: '/pages/order/afters'},
+             {text: '我的团队' , icon : 'team', path: '/pages/user/invites'},
+             {text: '我的评价' , icon : 'rate', path: '/pages/order/rates'},
+             {text: '品牌申请' , icon : 'brand', path: '/pages/user/brandApply'},
            ]},
            {title : '我的足迹' ,items: [
-             {text: '收货地址' , icon : 'address'},
-             {text: '我的评论' , icon : 'comment'},
-             {text: '我的收藏' , icon : 'like'},
-             {text: '我的评测' , icon : 'posts'}
+             {text: '收货地址' , icon : 'address', path: '/pages/user/address'},
+             {text: '我的评论' , icon : 'comment', path: '/pages/user/postComments'},
+             {text: '我的收藏' , icon : 'like', path: '/pages/user/postLikes'},
+             {text: '我的评测' , icon : 'posts', path: '/pages/user/postsList'}
            ]},
            {title : '每日任务' ,items: [
-             {text: '推荐注册' , icon : 'invite-reg'},
-             {text: '登录签到' , icon : 'daily-sign'},
-             {text: '文章评论' , icon : 'post-comment'},
-             {text: '内容点赞' , icon : 'post-like'}
+             {text: '推荐注册' , icon : 'invite-reg', path: '/pages/user/invite'},
+             {text: '登录签到' , icon : 'daily-sign', path: '/pages/user/dailySign'},
+             {text: '文章评论' , icon : 'post-comment',path: '/pages/posts/list'},
+             {text: '内容点赞' , icon : 'post-like',path: '/pages/posts/list'}
            ]}
          ]
        }
@@ -159,18 +237,8 @@
     background: #ff5c44;
     color: #FFFFFF;
     padding-bottom: 150upx;
-    padding-top: 120upx;
   }
-  
-  .page-user-head-title {
-    position: fixed;
-    width: 100%;
-    left: 0;
-    top: 0;
-    padding-top: 48upx;
-    background: #ff5c44;
-    z-index: 10000;
-  }
+
   .user-avatar {
     width: 94upx;
     height: 94upx;
@@ -186,5 +254,20 @@
   
   .user-avatar image {
     width: 100upx;height: 100upx;
+  }
+  
+  .user-box-vip {
+   padding-top: 32upx;
+    margin-right: 8upx;
+    background: #FFFFFF;
+  }
+  .user-box-ecard{
+    padding-top: 40upx;
+    margin-left: 8upx;
+    background: #FFFFFF;
+  }
+  .user-box-detail-link {
+    border-radius: 32upx;
+    margin-top: 16upx;
   }
 </style>
