@@ -1,61 +1,68 @@
 <template>
   <view class="content">
-    <view v-if="hasLogin" class="hello">
-      <view class="title">您好，您已成功登录。</view>
-      <view class="ul">
-        <view>这是 uni-app 带登录模板的示例App首页。</view>
-        <view>在 “我的” 中点击 “退出” 可以 “注销当前账户”</view>
-      </view>
-    </view>
-    <view v-if="!hasLogin" class="hello">
-      <view class="title">您好 游客。</view>
-      <view class="ul">
-        <view>这是 uni-app 带登录模板的示例App首页。</view>
-        <view>在 “我的” 中点击 “登录” 可以 “登录您的账户”</view>
-      </view>
-    </view>
+    
   </view>
 </template>
 
 <script>
 // import { mapState } from "vuex";
-
+var bitmap1=null;
 export default {
   computed: {
-    hasLogin() {
-      return uni.getStorageSync("user_auth_token") ? true : false;
-    },
-    forcedLogin() {
-      return false;
-    }
+   
+  },
+  onShow() {
+  	var icon = plus.nativeObj.View.getViewById("icon");
+    console.log('icon' , icon)
+  		if (icon) {
+  			setTimeout(function(){
+  				icon.show();
+  			},100)
+  		}
   },
   onLoad() {
-    if (!this.hasLogin) {
-      uni.showModal({
-        title: "未登录",
-        content: "您未登录，需要登录后才能继续",
-        /**
-         * 如果需要强制登录，不显示取消按钮
-         */
-        showCancel: !this.forcedLogin,
-        success: res => {
-          if (res.confirm) {
-            /**
-             * 如果需要强制登录，使用reLaunch方式
-             */
-            if (this.forcedLogin) {
-              uni.reLaunch({
-                url: "../auth/login"
-              });
-            } else {
-              uni.navigateTo({
-                url: "../auth/login"
-              });
-            }
-          }
-        }
-      });
-    }
+   console.log("App onLoad");
+    bitmap1 = new plus.nativeObj.Bitmap('bmp1');
+   	bitmap1.load('static/img/logo.png',function(){
+   		console.log('bmp1.png load success!');
+   	},function(e){
+   		console.log('bmp1.png load failed! '+JSON.stringify(e));
+   	});
+   	this.createtab();
+  },
+  methods:{
+     createtab: function() {
+    		//console.log('App onLoad');
+    		// 设置水平居中位置
+    		var leftPos = Math.ceil((plus.screen.resolutionWidth - 60) / 2);
+    		var view = new plus.nativeObj.View('icon', {
+    			bottom: '11px',
+    			left:  leftPos+'px',
+    			width: '60px',
+    			height: '60px'
+    		});
+    		view.drawBitmap(bitmap1,
+    			{
+    				tag: 'font',
+    				id: 'icon',
+    				//text: '\ue510', //此为字体图标Unicode码'\e600'转换为'\ue600'
+    				src: '../../static/img/logo.png',
+    				position: {
+    					top: '0px',
+    					left: '5px',
+    					width: '50px',
+    					height: '100%'
+    				}
+    			}
+    		);
+    		view.addEventListener("click", function(e) {
+    
+    			uni.switchTab({
+    				url: '/pages/auth/login'
+    			})
+    		}, false);
+    		view.show();
+    	}
   }
 };
 </script>

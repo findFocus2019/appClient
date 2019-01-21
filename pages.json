@@ -1,11 +1,16 @@
 {
     "pages": [
         //pages数组中第一项表示应用启动页,
-
+        {
+            "path": "pages/main/main",
+            "style": {
+                "navigationBarTitleText": "发现焦点"
+            }
+        },
         {
             "path": "pages/news/list",
             "style": {
-                "navigationBarTitleText": "发现焦点"
+                "navigationBarTitleText": "焦点资讯"
             }
         },
         {
@@ -48,7 +53,7 @@
         "selectedColor": "#0faeff",
         "backgroundColor": "#ffffff",
         "list": [{
-                "pagePath": "pages/news/list",
+                "pagePath": "pages/main/main",
                 "text": "首页",
                 "iconPath": "static/icon/home.png",
                 "selectedIconPath": "static/icon/home_blue.png"
@@ -58,6 +63,10 @@
                 "text": "评测",
                 "iconPath": "static/icon/news.png",
                 "selectedIconPath": "static/icon/news_blue.png"
+            },
+            {
+                "pagePath": "pages/auth/login",
+                "text": ""
             },
             {
                 "pagePath": "pages/mall/index",

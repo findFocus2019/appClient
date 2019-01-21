@@ -4,20 +4,21 @@ export default {
     console.log("App Launch");
     // 检查
     let res = uni.getSystemInfoSync();
-    console.log('divice info' , JSON.stringify(res))
+    console.log('divice info' , JSON.stringify(res));
   },
   onShow: function() {
     console.log("App Show");
+    
   },
   onHide: function() {
     console.log("App Hide");
   }
+  
 };
 </script>
 
 <style>
 @import "./common/uni.css";
-@import "./common/vant.css";
 
 page {
   background-color: #f4f5f6;
