@@ -35,7 +35,7 @@
           	url:'/pages/auth/login'
           })
         }else {
-           uni.redirectTo({
+           uni.navigateTo({
            	url:path,
              fail() {
              	console.log('跳转失败')

@@ -22,7 +22,29 @@
         {
             "path": "pages/mall/index",
             "style": {
-                "navigationBarTitleText": "焦点商城"
+                "navigationBarTitleText": "焦点商城",
+                // "enablePullDownRefresh":true,//开启下拉刷新
+                "app-plus": {
+                    "titleNView": false
+                }
+            }
+        },
+        {
+            "path": "pages/mall/list",
+            "style": {
+                "navigationBarTitleText": "京东商城",
+                "app-plus": {
+                    "titleNView": false
+                }
+            }
+        },
+        {
+            "path": "pages/mall/search",
+            "style": {
+                "navigationBarTitleText": "商城搜索",
+                "app-plus": {
+                    "titleNView": false
+                }
             }
         },
         {

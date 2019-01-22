@@ -1,5 +1,5 @@
 <template>
-	<view class="uni-navbar" :class="{'uni-navbar-fixed':isFixed,'uni-navbar-shadow':hasShadow}" :style="{'background-color':backgroundColor}">
+	<view class="uni-navbar uni-common-pt uni-common-pb" :class="{'uni-navbar-fixed':isFixed,'uni-navbar-shadow':hasShadow}" :style="{'background-color':backgroundColor}">
 		<uni-status-bar v-if="insertStatusBar"></uni-status-bar>
 		<view class="uni-navbar-header" :style="{color:color}">
 			<view class="uni-navbar-header-btns" @tap="onClickLeft">
