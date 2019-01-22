@@ -1,71 +1,70 @@
 <template>
-	<view class="uni-tab-bar" >
-    <!-- #ifndef MP -->
-    <!-- 固定在顶部的导航栏 -->
-    <uni-nav-bar color="#333333" background-color="#FFFFFF" fixed="true" @click-left="search" @click-right="cart">
-      <block slot="left">
-        <view class="uni-common-pl">
-          <uni-icon type="search" size="22" color="#666666"></uni-icon>
-        </view>
-      </block>
-      <view class="input-view uni-flex uni-center" v-if="mallType == 1">
-        <text class="uni-h4  uni-flex-item">自营商城</text>
-        <text class="uni-flex-item" @tap="changeType">京东商城</text>
-      </view>
-      <view class="input-view uni-flex uni-center" v-if="mallType == 2">
-        <text class="uni-flex-item" @tap="changeType">自营商城</text>
-        <text class="uni-h4 uni-flex-item">京东商城</text>
-      </view>
-      <block slot="right">
-        <view class="uni-common-pr">
-          <uni-icon type="search" size="22" color="#666666"></uni-icon>
-        </view>
-      </block>
-    </uni-nav-bar>
-    <!-- 使用非原生导航栏后需要在页面顶部占位 -->
-    <view :style="{height:topHideViewStyle + 'px'}" class="uni-common-pa">&nbsp;</view>
-    <!-- #endif -->
-		<scroll-view id="tab-bar" class="uni-swiper-tab uni-bg-white" scroll-x :scroll-left="scrollLeft" :style="{position:'fixed' , top:topHideViewStyle + 'px',zIndex:198}">
-			<view v-for="(tab,index) in tabBars" :key="tab.id" :class="['swiper-tab-list',tabIndex==index ? 'active' : '']" :id="tab.id"
+	<view class="uni-tab-bar">
+		<!-- #ifndef MP -->
+		<!-- 固定在顶部的导航栏 -->
+		<uni-nav-bar color="#333333" background-color="#FFFFFF" fixed="true" @click-left="search" @click-right="cart">
+			<block slot="left">
+				<view class="uni-common-pl">
+					<uni-icon type="search" size="22" color="#666666"></uni-icon>
+				</view>
+			</block>
+			<view class="input-view uni-flex uni-center" v-if="mallType == 1">
+				<text class="uni-h4  uni-flex-item">自营商城</text>
+				<text class="uni-flex-item" @tap="changeType">京东商城</text>
+			</view>
+			<view class="input-view uni-flex uni-center" v-if="mallType == 2">
+				<text class="uni-flex-item" @tap="changeType">自营商城</text>
+				<text class="uni-h4 uni-flex-item">京东商城</text>
+			</view>
+			<block slot="right">
+				<view class="uni-common-pr">
+					<uni-icon type="search" size="22" color="#666666"></uni-icon>
+				</view>
+			</block>
+		</uni-nav-bar>
+		<!-- 使用非原生导航栏后需要在页面顶部占位 -->
+		<view :style="{height:topHideViewStyle + 'px'}" class="uni-common-pa">&nbsp;</view>
+		<!-- #endif -->
+		<scroll-view id="tab-bar" class="uni-swiper-tab uni-bg-white" scroll-x :scroll-left="scrollLeft" :style="{position:'fixed' , top:topHideViewStyle + 'px',zIndex:198}" v-if="mallCategorys && mallCategorys.length">
+			<view v-for="(tab,index) in mallCategorys" :key="tab.id" :class="['swiper-tab-list',tabIndex==index ? 'active' : '']" :id="tab.id"
 			 :data-current="index" @click="tapTab(index)">{{tab.name}}</view>
 		</scroll-view>
-		<swiper :current="tabIndex" class="swiper-box" duration="300" @change="changeTab" :style="{position:'relative' , top:topHideViewStyle + 'px'}">
-			<swiper-item v-for="(tab,index1) in newsitems" :key="index1">
+		<swiper :current="tabIndex" class="swiper-box" duration="300" @change="changeTab" :style="{position:'relative' , paddingTop:topHideViewStyle + 'px'}">
+			<swiper-item v-for="(tab,index1) in tabDatas" :key="index1">
 				<scroll-view class="list" scroll-y @scrolltolower="loadMore(index1)">
-					<block v-for="(newsitem,index2) in tab.data" :key="index2">
-						<!-- <media-list :data="newsitem" @close="close(index1,index2)" @click="goDetail(newsitem)"></media-list> -->
-            <view class="">
-              <view class="" style="width: 100%;">
-              	<image src="http://placehold.it/300x200" mode="widthFix" style="width: 100%;"></image>
-              </view>
-            	<view class="uni-bg-white uni-common-pa ">
-                <view class="">
-                	<view class="uni-text-darker">
-                		{{ newsitem.title }}
-                	</view>
-                	<view class="uni-text-small uni-text-light uni-flex">
-                		
-                    <view class="uni-flex-item">
-                      <view class="">
-                      	100.00
-                      </view>
-                      <view class="">
-                      	超级多的描述超级多的描述超级多的描述超级多的描述超级多的描述超级多的描述
-                      </view>
-                    	
-                    </view>
-                    
-                    <view class="uni-right" style="width: 100upx;">
-                    	
-                    </view>
-                	</view>
-                  
-                </view>
-                
-                
-            		
-            	</view>
-            </view>
+					<block v-for="(item,index2) in tab.rows" :key="index2">
+						<view class="">
+							<view class="" style="width: 100%;">
+								<image :src="item.cover" mode="widthFix" style="width: 100%;"></image>
+							</view>
+							<view class="uni-bg-white uni-common-pa ">
+								<view class="">
+									<view class="uni-text-darker uni-title">
+										{{ item.title }}
+									</view>
+									<view class="uni-text-small uni-text-light uni-flex">
+
+										<view class="uni-flex-item uni-common-pr " style="width: 80%;">
+											<view class="uni-text-red">
+												￥ {{ item.price_sell }}
+											</view>
+											<view class="uni-text-small uni-ellipsis" style="width: 100%;">
+												{{ item.description }}
+											</view>
+
+										</view>
+
+										<view class="uni-right" style="width: 20%;">
+
+										</view>
+									</view>
+
+								</view>
+
+
+
+							</view>
+						</view>
 					</block>
 					<view class="uni-tab-bar-loading">
 						<uni-load-more :loadingType="tab.loadingType" :contentText="loadingText"></uni-load-more>
@@ -76,24 +75,24 @@
 	</view>
 </template>
 <script>
-  import uniIcon from '../../components/uni-icon.vue';
-  import uniNavBar from '../../components/uni-nav-bar.vue';
+	import uniIcon from '@/components/uni-icon.vue';
+	import uniNavBar from '@/components/uni-nav-bar.vue';
 	import mediaList from '@/components/tab-nvue/mediaList.vue';
 	import uniLoadMore from '@/components/uni-load-more.vue';
-  import {
-    mapState,
-    mapActions
-  } from "vuex";
+	import {
+		mapState,
+		mapActions
+	} from "vuex";
 	export default {
 		components: {
-      uniIcon,
-      uniNavBar,
+			uniIcon,
+			uniNavBar,
 			mediaList,
 			uniLoadMore
 		},
 		data() {
 			return {
-        topHideViewStyle:0,
+				topHideViewStyle: 0,
 				loadingText: {
 					contentdown: "上拉显示更多",
 					contentrefresh: "正在加载...",
@@ -102,129 +101,30 @@
 				scrollLeft: 0,
 				isClickChange: false,
 				tabIndex: 0,
-				newsitems: [],
-				data0: {
-					"datetime": "40分钟前",
-					"article_type": 0,
-					"title": "uni-app行业峰会频频亮相，开发者反响热烈!",
-					"source": "DCloud",
-					"comment_count": 639
-				},
-				data1: {
-					"datetime": "一天前",
-					"article_type": 1,
-					"title": "DCloud完成B2轮融资，uni-app震撼发布!",
-					"image_url": "https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/shuijiao.jpg?imageView2/3/w/200/h/100/q/90",
-					"source": "DCloud",
-					"comment_count": 11395
-				},
-				data2: {
-					"datetime": "一天前",
-					"article_type": 2,
-					"title": "中国技术界小奇迹：HBuilder开发者突破200万",
-					"image_url": "https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/muwu.jpg?imageView2/3/w/200/h/100/q/90",
-					"source": "DCloud",
-					"comment_count": 11395
-				},
-				data4: {
-					"datetime": "2小时前",
-					"article_type": 4,
-					"title": "uni-app 支持原生小程序自定义组件，更开放、更自由",
-					"image_url": "https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/cbd.jpg?imageView2/3/w/200/h/100/q/90",
-					"source": "DCloud",
-					"comment_count": 69
-				},
-				data3: {
-					"article_type": 3,
-					"image_list": [{
-						"url": "https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/cbd.jpg?imageView2/3/w/200/h/100/q/90",
-						"width": 563,
-						"height": 316
-					}, {
-						"url": "https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/muwu.jpg?imageView2/3/w/200/h/100/q/90",
-						"width": 641,
-						"height": 360
-					}, {
-						"url": "https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/shuijiao.jpg?imageView2/3/w/200/h/100/q/90",
-						"width": 640,
-						"height": 360
-					}],
-					"datetime": "5分钟前",
-					"title": "uni-app 支持使用 npm 安装第三方包，生态更趋丰富",
-					"source": "DCloud",
-					"comment_count": 11
-				},
-				tabBars: [{
-					name: '关注',
-					id: 'guanzhu'
-				}, {
-					name: '推荐',
-					id: 'tuijian'
-				}, {
-					name: '体育',
-					id: 'tiyu'
-				}, {
-					name: '热点',
-					id: 'redian'
-				}, {
-					name: '财经',
-					id: 'caijing'
-				}, {
-					name: '娱乐',
-					id: 'yule'
-				}, {
-					name: '军事',
-					id: 'junshi'
-				}, {
-					name: '历史',
-					id: 'lishi'
-				}, {
-					name: '本地',
-					id: 'bendi'
-				}]
-			}
+				tabDatas: [],
+				}
 		},
-    computed: {
-      ...mapState(['mallType', 'mallGoodsList'])
-    },
-		onLoad: function() {
-			this.newsitems = this.randomfn()
+		computed: {
+			...mapState(['mallType', 'mallGoodsList','mallCategorys'])
 		},
 		methods: {
-      ...mapActions(['mallChangeType']),
-      changeType() {
-        this.mallChangeType()
-      },
-			goDetail(e) {
-				uni.navigateTo({
-					url: '/pages/template/tabbar/detail/detail?data=' + e.title
-				})
+			...mapActions(['mallChangeType']),
+			changeType() {
+				this.mallChangeType()
 			},
-			close(index1, index2) {
-				uni.showModal({
-					content: '是否删除本条信息？',
-					success: (res) => {
-						if (res.confirm) {
-							this.newsitems[index1].data.splice(index2, 1);
-						}
-					}
+			goDetail(item) {
+				uni.navigateTo({
+					url: '/pages/mall/goods?id=' + item.id
 				})
 			},
 			loadMore(e) {
-				this.newsitems[e].loadingType = 1;
+				this.tabDatas[e].loadingType = 1;
 				setTimeout(() => {
 					this.addData(e);
 				}, 1200);
 			},
 			addData(e) {
-				if (this.newsitems[e].data.length > 30) {
-					this.newsitems[e].loadingType = 2;
-					return;
-				}
-				for (let i = 1; i <= 10; i++) {
-					this.newsitems[e].data.push(this['data' + Math.floor(Math.random() * 5)]);
-				}
-				this.newsitems[e].loadingType = 1;
+				console.log('addData' , e)
 			},
 			async changeTab(e) {
 				let index = e.detail.current;
@@ -238,11 +138,11 @@
 				let width = 0;
 
 				for (let i = 0; i < index; i++) {
-					let result = await this.getElSize(this.tabBars[i].id);
+					let result = await this.getElSize(this.mallCategorys[i].id);
 					width += result.width;
 				}
 				let winWidth = uni.getSystemInfoSync().windowWidth,
-					nowElement = await this.getElSize(this.tabBars[index].id),
+					nowElement = await this.getElSize(this.mallCategorys[index].id),
 					nowWidth = nowElement.width;
 				if (width + nowWidth - tabBarScrollLeft > winWidth) {
 					this.scrollLeft = width + nowWidth - winWidth;
@@ -252,6 +152,8 @@
 				}
 				this.isClickChange = false;
 				this.tabIndex = index; //一旦访问data就会出问题
+				
+				this.getNexTabData(index)
 			},
 			getElSize(id) { //得到元素的size
 				return new Promise((res, rej) => {
@@ -273,31 +175,45 @@
 					this.isClickChange = true;
 					this.tabIndex = index;
 				}
+
+				this.getNexTabData(index)
 			},
-			randomfn() {
-				let ary = [];
-				for (let i = 0, length = this.tabBars.length; i < length; i++) {
-					let aryItem = {
-						loadingType: 0,
-						data: []
-					};
-					for (let j = 1; j <= 10; j++) {
-						aryItem.data.push(this['data' + Math.floor(Math.random() * 5)]);
-					}
-					ary.push(aryItem);
+			async getNexTabData(index){
+				if(!this.mallCategorys[index + 1]){
+					return
 				}
-				return ary;
+				let category = this.mallCategorys[index + 1].id
+				
+				await this.$store.dispatch('getGoodsList' , {category: category})
 			}
 		},
-    onReady() {
-      console.log('onReady')
-      let navbar = uni.createSelectorQuery().select('.uni-navbar')
-      navbar.boundingClientRect(data => {
-        console.log("得到布局位置信息" + JSON.stringify(data));
-        this.topHideViewStyle = data.height
-      }).exec();
-      
-    },
+		async onReady() {
+			console.log('onReady')
+			let navbar = uni.createSelectorQuery().select('.uni-navbar')
+			navbar.boundingClientRect(data => {
+				console.log("得到布局位置信息" + JSON.stringify(data));
+				this.topHideViewStyle = data.height
+			}).exec();
+		},
+		async onLoad() {
+			console.log('onLoad')
+			
+			this.$store.state.goodsTimestamp = parseInt(Date.now() / 1000)
+			await this.$store.dispatch('getGoodsCategory')
+			let mallCategorys = this.$store.state.mallCategorys
+			console.log('mallCategorys', JSON.stringify(mallCategorys))
+			let category = mallCategorys[0].id
+			console.log('category', category)
+			await this.$store.dispatch('getGoodsList' , {category: category})
+			if(mallCategorys.length > 1){
+				let category = mallCategorys[1].id
+				console.log('category', category)
+				await this.$store.dispatch('getGoodsList' , {category: category})
+			}
+			
+			// this.tabDatas = this.randomfn()
+			this.tabDatas = this.$store.state.mallGoodsList
+		},
 	}
 </script>
 
@@ -306,28 +222,38 @@
 	.swiper-tab-list {
 		display: inline-block;
 	}
+	
 	/* #endif */
-  
-  .input-view {
-  	width: 92%;
-  	display: flex;
-  	background-color: #e7e7e7;
-  	height: 30px;
-  	border-radius: 15px;
-  	padding: 0 4%;
-  	flex-wrap:nowrap;
-  	margin:7px 0;
-  	line-height:30px;
-  }
-  
-  .input-view .uni-icon{
-  	line-height:30px !important;
-  }
-  
-  .input-view .input {
-  	height:30px;
-  	line-height:30px;
-  	width:94%;
-  	padding: 0 3%;
-  }
+	
+	.swiper-tab-list.active {
+		color: #333333;
+		font-size: 32upx;
+	}
+	
+	.order-type-item.active {
+	  color: #ff5c44;
+	}
+
+	.input-view {
+		width: 92%;
+		display: flex;
+		background-color: #e7e7e7;
+		height: 30px;
+		border-radius: 15px;
+		padding: 0 4%;
+		flex-wrap: nowrap;
+		margin: 7px 0;
+		line-height: 30px;
+	}
+
+	.input-view .uni-icon {
+		line-height: 30px !important;
+	}
+
+	.input-view .input {
+		height: 30px;
+		line-height: 30px;
+		width: 94%;
+		padding: 0 3%;
+	}
 </style>
