@@ -4,8 +4,8 @@
     	{{ title }}
     </view>
     <view class="user-card-body">
-      <template v-for="item in items">
-      	<view class="user-card-item" @tap="goTo(item.path)">
+      <template v-if="items.length">
+      	<view class="user-card-item" @tap="goTo(item.path)" v-for="(item,index) in items" :key="index">
           <view class="uni-common-pa">
           	<view class="user-card-item-img">
           		<image :src="'/static/icon/user/' + item.icon + '.png'" mode="scaleToFill"></image>

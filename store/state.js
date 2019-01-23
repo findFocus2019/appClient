@@ -12,5 +12,28 @@ export default {
 	goodsLimit: 10,
 	goodsTimestamp:0,
 	mallCategorys:[],
-  mallGoodsList:{}
+  mallGoodsList:{},
+  mallGoodsInfo:{},
+  mallSearch:{
+    open:false,
+    text:'',
+    hasDone: false
+  },
+  mallOrderTypes: [{
+    name: 'default',
+    text: '综合',
+    type: 'desc'
+  }, {
+    name: 'sales',
+    text: '销量',
+    type: 'desc'
+  }, {
+    name: 'price',
+    text: '价格',
+    type: 'desc'
+  }],
+  mallOrderActive: {
+    name:'default',
+    type:'desc'
+  }
 }

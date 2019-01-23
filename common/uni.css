@@ -44,10 +44,12 @@ form {
 
 .uni-center {
 	text-align: center;
+  justify-content:center;
 }
 
 .uni-right {
   text-align: right;
+  justify-content:right;
 }
 
 .uni-inline-item {
