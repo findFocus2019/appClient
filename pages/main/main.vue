@@ -1,12 +1,15 @@
 <template>
   <view class="content">
-    
+    <view class="top-panel">
+			<view class="search-bar">
+      </view>
+		</view>
   </view>
 </template>
 
 <script>
 // import { mapState } from "vuex";
-var bitmap1=null;
+
 export default {
   computed: {
    
@@ -22,25 +25,43 @@ export default {
 };
 </script>
 
-<style>
-.hello {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-}
+<style lang="less">
+	.content {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+    background-color: #fff;
+    
+    .top-panel {
+      position: absolute;
+      left: 0;
+      top: 0;
+      
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: top;
+      align-items: center;
+      width: 100%;
+      height: 555.56upx; 
+      background: url('/static/img/home_header_bg.jpg');
+      background-position: center;
+      background-size: 100% 100%;
 
-.title {
-  color: #8f8f94;
-  margin-top: 50upx;
-}
+      .search-bar {
+        
+        display: flex;
+        width: 548.61upx;
+        height: 49.30upx;
+        margin-top: 70upx;
+        border: 1upx solid #fff;
+        border-radius: 24.65upx;
 
-.ul {
-  font-size: 30upx;
-  color: #8f8f94;
-  margin-top: 50upx;
-}
-
-.ul > view {
-  line-height: 50upx;
-}
+        background: #fff;
+      }
+    }
+	}
+	
+	
 </style>

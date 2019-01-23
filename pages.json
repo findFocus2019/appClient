@@ -4,7 +4,11 @@
         {
             "path": "pages/main/main",
             "style": {
-                "navigationBarTitleText": "发现焦点"
+                "app-plus": {
+                    "titleNView": {
+                        "type": "transparent"
+                    }
+                }
             }
         },
         {
