@@ -20,13 +20,36 @@
             }
         },
         {
+            "path": "pages/plus/plus",
+            "style": {
+                "navigationBarTitleText": "发布"
+            }
+        },
+        {
             "path": "pages/mall/index",
             "style": {
                 "navigationBarTitleText": "焦点商城",
-                // "enablePullDownRefresh":true,//开启下拉刷新
+                "enablePullDownRefresh":true,//开启下拉刷新
                 "app-plus": {
                     "titleNView": false
                 }
+            }
+        },
+        {
+            "path": "pages/mall/goods",
+            "style": {
+                "navigationBarTitleText": "商品详情",
+                "app-plus": {
+                    "titleNView" : {
+                        "type" : "transparent"
+                    }
+                }
+            }
+        },
+        {
+            "path": "pages/mall/cart",
+            "style": {
+                "navigationBarTitleText": "购物车"
             }
         },
         {
@@ -96,6 +119,12 @@
                 "text": "商城",
                 "iconPath": "static/icon/mall.png",
                 "selectedIconPath": "static/icon/mall_a.png"
+            },
+            {
+                "pagePath": "pages/plus/plus",
+                // "text": "商城",
+                "iconPath": "static/icon/plus.png",
+                "selectedIconPath": "static/icon/plus_a.png"
             },
             {
                 "pagePath": "pages/posts/list",

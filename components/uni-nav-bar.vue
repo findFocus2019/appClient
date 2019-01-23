@@ -1,6 +1,9 @@
 <template>
 	<view class="uni-navbar uni-common-pt uni-common-pb" :class="{'uni-navbar-fixed':isFixed,'uni-navbar-shadow':hasShadow}" :style="{'background-color':backgroundColor}">
+		<!-- #ifndef MP -->
 		<uni-status-bar v-if="insertStatusBar"></uni-status-bar>
+		<!-- #endif -->
+        
 		<view class="uni-navbar-header" :style="{color:color}">
 			<view class="uni-navbar-header-btns" @tap="onClickLeft">
 				<view v-if="leftIcon.length">
@@ -162,7 +165,7 @@
     }
 	
 	.uni-navbar view{
-		line-height:44px;
+		line-height:48upx;
 	}
 
     .uni-navbar-shadow {
@@ -178,28 +181,28 @@
         display: flex;
         flex-direction: row;
         width: 100%;
-        height:44px;
-        line-height:44px;
-        font-size: 16px;
+        height:48upx;
+        line-height:48upx;
+        font-size: 32upx;
     }
 	
 	.uni-navbar-header .uni-navbar-header-btns{
 		display:inline-flex;
 		flex-wrap:nowrap;
 		flex-shrink:0;
-		width: 120upx;
-		padding:0 12upx;
+		/* width: 120upx; */
+		/* padding:0 12upx; */
 	}
 	
 	.uni-navbar-header .uni-navbar-header-btns:first-child{
-		padding-left:0;
+		/* padding-left:0; */
 	}
 	.uni-navbar-header .uni-navbar-header-btns:last-child{
-		width: 60upx;
+		/* width: 60upx; */
 	}
 	.uni-navbar-container{
 		width:100%;
-		margin:0 10upx;
+		margin:0 20upx;
 	}
 	.uni-navbar-container-title{
 		font-size:30upx;

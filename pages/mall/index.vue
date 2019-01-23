@@ -1,39 +1,62 @@
 <template>
 	<view class="uni-tab-bar">
-		<!-- #ifndef MP -->
 		<!-- 固定在顶部的导航栏 -->
-		<uni-nav-bar color="#333333" background-color="#FFFFFF" fixed="true" @click-left="search" @click-right="cart">
+    <uni-nav-bar color="#333333" background-color="#FFFFFF" fixed="true" @click-right="cancelSearch" v-if="mallSearch.open">
+      
+      <view class="input-view uni-flex">
+        <uni-icon type="search" size="22" color="#666666"></uni-icon>
+        <input confirm-type="搜索" @focus="goSearch" class="input" type="text" placeholder="输入搜索关键词" v-model="mallSearch.text"/>
+        <uni-icon type="clear" size="22" color="#666666" @click="cancelSearch"></uni-icon>
+      </view>
+      <block slot="right">
+      <view class="uni-common-pr">
+      	取消
+      </view>
+      </block>
+    </uni-nav-bar >
+		<uni-nav-bar color="#333333" background-color="#FFFFFF" fixed="true" @click-left="goSearch" @click-right="goCart" v-else>
 			<block slot="left">
 				<view class="uni-common-pl">
 					<uni-icon type="search" size="22" color="#666666"></uni-icon>
 				</view>
 			</block>
-			<view class="input-view uni-flex uni-center" v-if="mallType == 1">
-				<text class="uni-h4  uni-flex-item">自营商城</text>
-				<text class="uni-flex-item" @tap="changeType">京东商城</text>
+			<view class="uni-flex" v-if="mallType == 1">
+				<text class="uni-h4 uni-flex-item uni-right uni-common-pr">自营商城</text>
+				<text class="uni-flex-item" @tap="changeType">京选商城</text>
 			</view>
-			<view class="input-view uni-flex uni-center" v-if="mallType == 2">
-				<text class="uni-flex-item" @tap="changeType">自营商城</text>
-				<text class="uni-h4 uni-flex-item">京东商城</text>
+			<view class="uni-flex" v-if="mallType == 2">
+				<text class="uni-flex-item uni-right uni-common-pr" @tap="changeType">自营商城</text>
+				<text class="uni-h4 uni-flex-item">京选商城</text>
 			</view>
 			<block slot="right">
 				<view class="uni-common-pr">
-					<uni-icon type="search" size="22" color="#666666"></uni-icon>
+           <image src="/static/icon/mall/cart.png" mode="widthFix" style="width: 60upx;"></image>
 				</view>
 			</block>
 		</uni-nav-bar>
 		<!-- 使用非原生导航栏后需要在页面顶部占位 -->
 		<view :style="{height:topHideViewStyle + 'px'}" class="uni-common-pa">&nbsp;</view>
-		<!-- #endif -->
 		<scroll-view id="tab-bar" class="uni-swiper-tab uni-bg-white" scroll-x :scroll-left="scrollLeft" :style="{position:'fixed' , top:topHideViewStyle + 'px',zIndex:198}" v-if="mallCategorys && mallCategorys.length">
 			<view v-for="(tab,index) in mallCategorys" :key="tab.id" :class="['swiper-tab-list',tabIndex==index ? 'active' : '']" :id="tab.id"
 			 :data-current="index" @click="tapTab(index)">{{tab.name}}</view>
 		</scroll-view>
-		<swiper :current="tabIndex" class="swiper-box" duration="300" @change="changeTab" :style="{position:'relative' , paddingTop:topHideViewStyle + 'px'}">
+    
+    <view class="uni-flex uni-common-pt uni-common-pb order-type-items" :style="{top:topHideViewStyle + 50 + 'px'}">
+    	<view class="uni-flex-item uni-center uni-flex" v-for="orderType in mallOrderTypes" :key="orderType.name" :class="['order-type-item', mallOrderActive.name === orderType.name ? 'active' : '']" @tap="listTypeChoose(orderType)">
+    		<text>{{orderType.text}}</text>
+    		<uni-icon type="arrowdown"  size="22" v-if="orderType.type === 'desc'" ></uni-icon>
+        <uni-icon type="arrowup" size="22" v-else></uni-icon>
+        
+    	</view>
+      <view class="uni-flex-item uni-center">
+      	
+      </view>
+    </view>
+		<swiper :current="tabIndex" class="swiper-box" duration="300" @change="changeTab" :style="{position:'relative' , paddingTop:topHideViewStyle + 55 + 'px'}">
 			<swiper-item v-for="(tab,index1) in tabDatas" :key="index1">
 				<scroll-view class="list" scroll-y @scrolltolower="loadMore(index1)">
 					<block v-for="(item,index2) in tab.rows" :key="index2">
-						<view class="">
+						<view class="" @tap="goDetail(item)">
 							<view class="" style="width: 100%;">
 								<image :src="item.cover" mode="widthFix" style="width: 100%;"></image>
 							</view>
@@ -45,7 +68,7 @@
 									<view class="uni-text-small uni-text-light uni-flex">
 
 										<view class="uni-flex-item uni-common-pr " style="width: 80%;">
-											<view class="uni-text-red">
+											<view class="uni-text-red uni-h4">
 												￥ {{ item.price_sell }}
 											</view>
 											<view class="uni-text-small uni-ellipsis" style="width: 100%;">
@@ -54,14 +77,12 @@
 
 										</view>
 
-										<view class="uni-right" style="width: 20%;">
-
+										<view class="uni-right" style="width: 100upx">
+                      <image src="/static/icon/mall/cart1.png" mode="widthFix" style="width: 100upx"></image>
 										</view>
 									</view>
 
 								</view>
-
-
 
 							</view>
 						</view>
@@ -92,6 +113,7 @@
 		},
 		data() {
 			return {
+        
 				topHideViewStyle: 0,
 				loadingText: {
 					contentdown: "上拉显示更多",
@@ -101,30 +123,68 @@
 				scrollLeft: 0,
 				isClickChange: false,
 				tabIndex: 0,
-				tabDatas: [],
-				}
+				tabDatas: []
+			}
+        
 		},
 		computed: {
-			...mapState(['mallType', 'mallGoodsList','mallCategorys'])
+			...mapState(['mallType', 'mallGoodsList','mallCategorys', 'mallSearch','mallOrderTypes','mallOrderActive'])
 		},
 		methods: {
 			...mapActions(['mallChangeType']),
+      async listTypeChoose(orderType) {
+        console.log('listTypeChoose orderType', orderType)
+        let lastType = this.mallOrderActive
+        if (lastType.name != orderType.name) {
+          this.mallOrderActive.name = orderType.name
+        } else {
+          if(orderType.name !== 'sales'){
+            orderType.type = (orderType.type) === 'desc' ? 'asc' : 'desc'
+          }  
+        }
+      
+      },
+      goCart(){
+        uni.navigateTo({
+        	url:'/pages/mall/cart'
+        })
+      },
+      goSearch(){
+        this.mallSearch.open = true
+        uni.navigateTo({
+        	url:'/pages/mall/search'
+        })
+      },
+      cancelSearch(){
+        this.mallSearch.open = false
+        this.mallSearch.hasDone = false
+        this.mallSearch.text = ''
+        
+        uni.reLaunch({
+        	url:'/pages/mall/index'
+        })
+        
+      },
 			changeType() {
 				this.mallChangeType()
 			},
 			goDetail(item) {
 				uni.navigateTo({
-					url: '/pages/mall/goods?id=' + item.id
+					url: '/pages/mall/goods?id=' + item.uuid
 				})
 			},
-			loadMore(e) {
+			async loadMore(e) {
 				this.tabDatas[e].loadingType = 1;
-				setTimeout(() => {
-					this.addData(e);
-				}, 1200);
+        await this.addData(e);
+// 				setTimeout(() => {
+// 					
+// 				}, 1200);
 			},
-			addData(e) {
+			async addData(e) {
 				console.log('addData' , e)
+        let category = this.mallCategorys[e].id
+        await this.$store.dispatch('getGoodsList' , {category: category})
+        
 			},
 			async changeTab(e) {
 				let index = e.detail.current;
@@ -153,6 +213,10 @@
 				this.isClickChange = false;
 				this.tabIndex = index; //一旦访问data就会出问题
 				
+        if(this.mallSearch.open){
+          this.cancelSearch()
+        }
+        
 				this.getNexTabData(index)
 			},
 			getElSize(id) { //得到元素的size
@@ -176,6 +240,10 @@
 					this.tabIndex = index;
 				}
 
+        if(this.mallSearch.open){
+          this.cancelSearch()
+        }
+        
 				this.getNexTabData(index)
 			},
 			async getNexTabData(index){
@@ -198,6 +266,13 @@
 		async onLoad() {
 			console.log('onLoad')
 			
+      let mallGoodsList = this.$store.state.mallGoodsList
+      if(mallGoodsList.all && mallGoodsList.all.rows.length > 0){
+        // console.log(mallGoodsList.all)
+        this.tabDatas = this.$store.state.mallGoodsList
+        return
+      }
+      
 			this.$store.state.goodsTimestamp = parseInt(Date.now() / 1000)
 			await this.$store.dispatch('getGoodsCategory')
 			let mallCategorys = this.$store.state.mallCategorys
@@ -214,6 +289,15 @@
 			// this.tabDatas = this.randomfn()
 			this.tabDatas = this.$store.state.mallGoodsList
 		},
+    onShow() {
+      console.log('onShow')
+      if(this.mallSearch.hasDone){
+        console.log('================搜索过')
+        // 搜索跳转到tab0
+        this.tapTab(0)
+        // this.mallSearch.hasDone = false
+      }
+    }
 	}
 </script>
 
@@ -230,30 +314,39 @@
 		font-size: 32upx;
 	}
 	
+  .order-type-items {
+    position: fixed;
+    top: 100px;
+    z-index: 199;
+    width: 100%;
+    background: #fff;
+    border-top: 1px solid #EEEEEE;
+  }
 	.order-type-item.active {
 	  color: #ff5c44;
 	}
+  
+ .input-view {
+     
+     display: flex;
+     background-color: #e7e7e7;
+     height: 48upx;
+     border-radius: 48upx;
+     -webkit-flex-wrap: nowrap;
+     -ms-flex-wrap: nowrap;
+     flex-wrap: nowrap;
+     line-height: 48upx;
+   }
+   
+   .input-view .uni-icon{
+   	line-height:48upx !important;
+   }
+   
+   .input-view .input {
+   	height:48upx;
+   	line-height:48upx;
+   	width:90%;
+   	padding: 0 3%;
+   }
 
-	.input-view {
-		width: 92%;
-		display: flex;
-		background-color: #e7e7e7;
-		height: 30px;
-		border-radius: 15px;
-		padding: 0 4%;
-		flex-wrap: nowrap;
-		margin: 7px 0;
-		line-height: 30px;
-	}
-
-	.input-view .uni-icon {
-		line-height: 30px !important;
-	}
-
-	.input-view .input {
-		height: 30px;
-		line-height: 30px;
-		width: 94%;
-		padding: 0 3%;
-	}
 </style>
