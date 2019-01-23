@@ -125,6 +125,10 @@ form {
 	color: #dd524d;
 }
 
+.uni-text-yellow {
+	color: #ff9c19ff9c19;
+}
+
 .uni-text-light {
 	color: #666666;
 }
@@ -190,6 +194,11 @@ form {
 
 .uni-bg-blue {
 	background: #007AFF;
+	color: #FFF;
+}
+
+.uni-bg-yellow {
+	background: #ff9c19;
 	color: #FFF;
 }
 
