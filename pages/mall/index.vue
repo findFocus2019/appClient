@@ -297,6 +297,23 @@
         this.tapTab(0)
         // this.mallSearch.hasDone = false
       }
+    },
+		async onPullDownRefresh() {
+        console.log('refresh');
+//         setTimeout(function () {
+//             uni.stopPullDownRefresh();
+//         }, 1000);
+			let category = this.mallCategorys[this.tabIndex].id
+			console.log('refresh  category' , category)
+			this.$store.state.mallGoodsList[category] = {}
+			this.$store.state.mallGoodsList[category].rows = []
+			this.$store.state.mallGoodsList[category].page = 1
+			this.$store.state.mallGoodsList[category].order = []
+			this.$store.state.mallGoodsList[category].timestamp = parseInt(Date.now() / 1000)
+
+			await this.$store.dispatch('getGoodsList' , {category: category})
+			
+			uni.stopPullDownRefresh();
     }
 	}
 </script>

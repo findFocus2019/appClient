@@ -36,7 +36,7 @@ export default {
 		let type = store.state.mallType
 		let page = store.state.mallGoodsList[category].page
 		let limit = store.state.goodsLimit || 10
-		let timestamp = data.timestamp || store.state.goodsTimestamp 
+		let timestamp = data.timestamp || store.state.mallGoodsList[category].timestamp || store.state.goodsTimestamp 
 		
 		let pramas = {type: type, page: page, limit:limit, category: category,timestamp:timestamp , search: search}
 		console.log('getGoodsList pramas' , JSON.stringify(pramas))
@@ -55,6 +55,7 @@ export default {
 			}
 
 			store.state.mallGoodsList[category].count = ret.data.count
+			store.state.mallGoodsList[category].timestamp = timestamp // 更新时间戳
 			// console.log('getGoodsCategory mallGoodsList rows' , category, JSON.stringify(store.state.mallGoodsList[category]))
 			
 			if(rows.length < limit){

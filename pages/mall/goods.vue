@@ -8,15 +8,20 @@
 
     <view class="uni-common-pa uni-bg-white">
       <view class="uni-flex goods-info-price">
-        <view class="uni-flex-item">
-          <text class="">优惠价</text>
-          <text class="uni-text-red uni-h4">￥ {{mallGoodsInfo.price_sell}}</text>
+        <view class="">
+          <text class="uni-text-small">优惠价:</text>
+					<text>￥</text>
+          <text class="uni-text-red uni-h4">{{mallGoodsInfo.price_sell}}</text>
         </view>
-        <view class="uni-flex-item uni-text-gray" style="text-decoration: line-through;">
-          <text class="">原价: ￥ {{ mallGoodsInfo.price_market }}</text>
+        <view class="uni-text-gray uni-common-pl" style="text-decoration: line-through;">
+          <text class="uni-text-small">原价:</text>
+					<text>￥</text>
+					<text>{{ mallGoodsInfo.price_market }}</text>
         </view>
-        <view class="uni-flex-item uni-text-light">
-          <text class="">积分可抵扣:￥ {{ mallGoodsInfo.price_score_sell}}</text>
+        <view class="uni-text-light uni-common-pl">
+          <text class="uni-text-small">积分可抵扣:</text>
+					<text>￥</text>
+					<text>{{ mallGoodsInfo.price_score_sell}}</text>
         </view>
       </view>
 
@@ -83,7 +88,7 @@
         </view>
         <view class="uni-flex-item uni-common-pl">
           <view class="uni-text-dark uni-h4 uni-ellipsis-2" style="width: 430upx;height: 100upx;line-height: 50upx;">
-            {{ mallGoodsInfo.title }} 标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题
+            {{ mallGoodsInfo.title }} 
           </view>
           <view class="uni-flex">
             <view class="uni-flex-item">
@@ -253,7 +258,6 @@
     bottom: 0;
     width: 100%;
     height: 100upx;
-
     background: #fff;
 
     text {

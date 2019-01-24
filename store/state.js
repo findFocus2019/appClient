@@ -35,5 +35,8 @@ export default {
   mallOrderActive: {
     name:'default',
     type:'desc'
-  }
+  },
+	mallOrderConfirm: {
+		list : []
+	}
 }

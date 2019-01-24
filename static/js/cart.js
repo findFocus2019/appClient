@@ -23,6 +23,7 @@ class Cart {
     this.score = 0
     this.scoreVip = 0
     this.checkAll = false
+		this.checkAllType = [false, false , false]
   }
   
   _setData(){
@@ -40,7 +41,8 @@ class Cart {
       totalVip: this.totalVip,
       score: this.score,
       scoreVip: this.scoreVip,
-      checkAll: this.checkAll
+      checkAll: this.checkAll,
+			checkAllType: this.checkAllType
     }
   }
   
@@ -51,7 +53,8 @@ class Cart {
     let datas = [[],[],[]]
     
     let checkCount = 0
-    
+    let checkCountType = [0,0,0]
+		
     this._init()
     this.cart.forEach(item => {
       let type = item.type 
@@ -59,12 +62,13 @@ class Cart {
         datas[type].push(item)
         
         this.count += item.num
-        if(item.isCheck){
+        if(item.check){
           this.total += parseInt(item.price_sell* 100) / 100
           this.totalVip = parseInt(item.price_vip * 100) / 100
           this.score = parseInt(item.price_score_sell * 100) / 100
           this.scoreVip = parseInt(item.price_score_vip * 100) / 100
           checkCount++
+					checkCountType[type]++
         }
         
       }
@@ -73,7 +77,14 @@ class Cart {
     if(checkCount > 0 && checkCount == this.cart.length){
       this.checkAll = true
     }
+		
+		[0,1,2].forEach(index => {
+			if(checkCountType[index] && checkCountType[index] == datas[index].length){
+				this.checkAllType[index] = true
+			}
+		})
     
+		console.log('checkCountType' , checkCountType)
     return datas
   }
   
@@ -93,7 +104,7 @@ class Cart {
   /**
    * 全选
    */
-  checkAll(){
+  checkAllAction(){
     let isCheckCount = 0
     this.cart.forEach(item => {
       if(item.check){
@@ -113,6 +124,59 @@ class Cart {
     this._setData()
     
   }
+	
+	/**
+	 * 查找已选
+	 */
+	listChecked(){
+		let datas = [[],[],[]]
+
+		this.cart.forEach(item => {
+		  let type = item.type 
+		  if([0,1,2].indexOf(type) > -1){
+		    if(item.isCheck){
+					datas[type].push(item)
+		    }  
+		  }
+		})
+		
+		return datas
+	}
+	
+	/**
+	 * 分类选择全部
+	 */
+	checkAllByType(type = 0){
+		let list = []
+		
+		this.cart.forEach(item => {
+			if(item.type == type){
+				list.push(item)
+			}
+		})
+		
+		if(!list.length){
+			return
+		}
+		
+		let isCheckCount = 0
+		list.forEach(item => {
+		  if(item.check){
+		    isCheckCount++
+		  }
+		})
+		
+		let setCheck = false
+		if(isCheckCount < list.length){
+		  setCheck = true
+		}
+		
+		list.forEach(item => {
+		  item.check = setCheck
+		})
+		
+		this._setData()
+	}
   
   /**
    * 添加数量
