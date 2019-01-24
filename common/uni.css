@@ -47,6 +47,11 @@ form {
   justify-content:center;
 }
 
+.uni-left {
+  text-align: left;
+  justify-content:left;
+}
+
 .uni-right {
   text-align: right;
   justify-content:right;
@@ -202,6 +207,22 @@ form {
 	color: #FFF;
 }
 
+.uni-border{
+  border: 1px solid #EEEEEE;
+}
+
+.uni-border-top{
+  border-top: 1px solid #EEEEEE;
+}
+
+.uni-border-left{
+  border-left: 1px solid #EEEEEE;
+}
+
+.uni-border-right{
+  border-right: 1px solid #EEEEEE;
+}
+
 .uni-border-bottom{
   border-bottom: 1px solid #EEEEEE;
 }
@@ -256,6 +277,17 @@ form {
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
+}
+
+.uni-ellipsis-2{
+  word-break: break-all;
+  display: -webkit-box;
+  overflow: hidden;
+  line-height: 1.5;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  flex-shrink:0;
 }
 
 /* 竖向百分百按钮 */
