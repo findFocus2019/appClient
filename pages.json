@@ -56,6 +56,12 @@
                 "navigationBarTitleText": "购物车"
             }
         },
+		{
+		    "path": "pages/mall/cartConfirm",
+		    "style": {
+		        "navigationBarTitleText": "确认订单"
+		    }
+		},
         {
             "path": "pages/mall/list",
             "style": {

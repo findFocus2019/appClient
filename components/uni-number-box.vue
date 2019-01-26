@@ -28,7 +28,13 @@
 			disabled: {
 				type: Boolean,
 				default: false
-			}
+			},
+      cartItem: {
+        type: Object,
+        default: ()=>{
+          return {}
+        }
+      }
 		},
 		data() {
 			return {
@@ -48,7 +54,8 @@
 				this.inputValue = val;
 			},
 			inputValue(val) {
-				this.$emit('change', val);
+        // console.log(this.uid)
+				this.$emit('change', {val:val,item:this.cartItem});
 			}
 		},
 		methods: {
@@ -97,7 +104,7 @@
 		display: inline-flex;
 		flex-direction: row;
 		justify-content: flex-start;
-		height: 70upx;
+		height: 60upx;
 		position: relative;
 	}
 
@@ -119,9 +126,9 @@
 	.uni-numbox-plus {
 		margin: 0;
 		background-color: #f9f9f9;
-		width: 80upx;
+		width: 60upx;
 		height: 100%;
-		line-height: 70upx;
+		line-height: 60upx;
 		text-align: center;
 		color: #555555;
 		position: relative;
