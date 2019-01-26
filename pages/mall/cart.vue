@@ -13,7 +13,12 @@
 						<uni-icon type="circle" size="22"  v-else></uni-icon> 
 					</view>
 					<view class="uni-h4 uni-flex-item">
-						自营商城
+						<view class="" v-if="index == 1">
+							自营商城
+						</view>
+						<view class="" v-if="index == 2">
+							京选商城
+						</view>
 					</view>
 				</view>
 				
@@ -30,7 +35,7 @@
 				      			<image :src="item.cover" mode="" style="width: 180upx;height: 180upx;"></image>
 				      		</view>
 				      		<view class="uni-flex-item uni-common-pt uni-common-pl uni-common-pr cart-list-item" >
-				      			<view class="uni-text-dark cart-list-title uni-text-darker " style="width: 410upx;">
+				      			<view class=" cart-list-title uni-text-darker " style="width: 410upx;">
 				             {{item.title}} 
 				      			</view>
 				            <view class="uni-flex">
@@ -111,9 +116,10 @@
       uniIcon
     },
     computed:{
-      ...mapState(['mallOrderConfirm'])
+      ...mapState(['hasLogin','mallOrderConfirm'])
     },
     methods:{
+      ...mapActions(['goToLoginPage']),
       scroll: function(e) {
 				console.log(e)
 				// this.old.scrollTop = e.detail.scrollTop
@@ -147,11 +153,25 @@
 				this.cartInfo = Cart.info()
 			},
 			cartToOrder(){
-// 				let cartCheckList = Cart.listChecked()
-// 				this.mallOrderConfirm.list = cartCheckList
-				uni.navigateTo({
-					url:'/pages/mall/cartConfirm'
-				})
+        let total = Cart.total
+        if(!total){
+          uni.showToast({
+              title: '请选择商品结算',
+              icon:'none',
+              duration: 2000
+          });
+          return
+        }
+        if(!this.hasLogin){
+          this.goToLoginPage()
+        }else {
+          // 发票默认不选
+          this.$store.state.mallOrderConfirm.invoice = 0
+          uni.navigateTo({
+          	url:'/pages/mall/cartConfirm'
+          })
+        }
+				
 			}
     },
     onLoad() {

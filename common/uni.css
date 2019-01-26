@@ -20,6 +20,10 @@ form {
 	width: 100%;
 }
 
+.input-label {
+    width: 160upx;
+  }
+  
 .uni-flex {
 	display: flex;
 	flex-direction: row;
@@ -207,6 +211,11 @@ form {
 	color: #FFF;
 }
 
+.uni-bg-gray {
+  background: #EEEEEE;
+  color: #333333;
+}
+
 .uni-border{
   border: 1px solid #EEEEEE;
 }
@@ -271,6 +280,15 @@ form {
 .uni-bold {
 	font-weight: bold;
 }
+
+.uni-fixed-bottom {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 100upx;
+    line-height: 100upx;
+    /* background: #FFFFFF; */
+  }
 
 /* 文本溢出隐藏 */
 .uni-ellipsis {

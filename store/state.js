@@ -5,6 +5,10 @@ export default {
   forcedLogin: false,
   hasLogin: false,
   userInfo:{},
+  userAddressList:[],
+  userAddressInfo:{},
+  userAddressCurrent:{id:0},
+  userInvoice:{id:0},
   oAuthId: 0,
   
   // 商城相关
@@ -37,6 +41,7 @@ export default {
     type:'desc'
   },
 	mallOrderConfirm: {
-		list : []
+		list : [],
+    invoice : 0
 	}
 }

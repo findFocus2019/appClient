@@ -165,7 +165,7 @@
     computed: {
       ...mapState(['hasLogin', 'userInfo', 'mallGoodsInfo']),
       goodsInfoStock() {
-        let stock = this.$store.state.mallGoodsInfo.stock
+        let stock = this.$store.state.mallGoodsInfo.stock || 0
         if (stock == -1) {
           return 100000000
         } else {
@@ -229,6 +229,8 @@
       await this.$store.dispatch('getGoodsInfo', {
         id: id
       })
+      
+      console.log('mallGoodsInfo' , this.mallGoodsInfo)
 
       // 设置添加数量
       this.cartAddNum = (this.goodsInfoStock > 0) ? 1 : 0

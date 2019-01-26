@@ -63,10 +63,10 @@ class Cart {
         
         this.count += item.num
         if(item.check){
-          this.total += parseInt(item.price_sell* 100) / 100
-          this.totalVip = parseInt(item.price_vip * 100) / 100
-          this.score = parseInt(item.price_score_sell * 100) / 100
-          this.scoreVip = parseInt(item.price_score_vip * 100) / 100
+          this.total += parseInt(item.price_sell * 100) / 100
+          this.totalVip += parseInt(item.price_vip * 100) / 100
+          this.score += parseInt(item.price_score_sell * 100) / 100
+          this.scoreVip += parseInt(item.price_score_vip * 100) / 100
           checkCount++
 					checkCountType[type]++
         }
@@ -134,7 +134,7 @@ class Cart {
 		this.cart.forEach(item => {
 		  let type = item.type 
 		  if([0,1,2].indexOf(type) > -1){
-		    if(item.isCheck){
+		    if(item.check){
 					datas[type].push(item)
 		    }  
 		  }
