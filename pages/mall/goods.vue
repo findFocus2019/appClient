@@ -10,15 +10,15 @@
       <view class="uni-flex goods-info-price">
         <view class="">
           <text class="uni-text-small">优惠价:</text>
-          <text class="uni-text-red uni-h4">{{formatMoney(mallGoodsInfo.price_sell)}}</text>
+          <text class="uni-text-red uni-h4">{{(mallGoodsInfo.price_sell)}}</text>
         </view>
         <view class="uni-text-gray uni-common-pl" style="text-decoration: line-through;">
           <text class="uni-text-small">原价:</text>
-					<text>{{ formatMoney(mallGoodsInfo.price_market) }}</text>
+					<text>{{ (mallGoodsInfo.price_market) }}</text>
         </view>
         <view class="uni-text-light uni-common-pl">
           <text class="uni-text-small">积分可抵扣:</text>
-					<text>{{ formatMoney(mallGoodsInfo.price_score_sell)}}</text>
+					<text>{{ (mallGoodsInfo.price_score_sell)}}</text>
         </view>
       </view>
 
@@ -92,11 +92,11 @@
               <text class="uni-text-small uni-text-gray">已有{{mallGoodsInfo.sales}}人付款</text>
             </view>
             <view class="uni-flex-item">
-              <text class="uni-text-small uni-text-gray">积分可抵扣:{{formatMoney( mallGoodsInfo.price_score_sell)}}</text>
+              <text class="uni-text-small uni-text-gray">积分可抵扣:{{( mallGoodsInfo.price_score_sell)}}</text>
             </view>
           </view>
           <view class="">
-            <text class="uni-text-red uni-h4">{{formatMoney( mallGoodsInfo.price_sell)}}</text>
+            <text class="uni-text-red uni-h4">{{( mallGoodsInfo.price_sell)}}</text>
           </view>
         </view>
       </view>
@@ -136,7 +136,6 @@
   import uniNumberBox from '@/components/uni-number-box.vue'
   import uniSegmentedControl from '@/components/uni-segmented-control.vue';
   import Cart from '@/static/js/cart.js';
-  import Utils from '@/static/js/utils.js';
   export default {
     components: {
       uniSegmentedControl,
@@ -174,13 +173,7 @@
       }
     },
     methods: {
-      ...Utils,
       ...mapActions(['goCart','goToLoginPage', 'callServicePhone']),
-      onClickItem(index) {
-        if (this.current !== index) {
-          this.current = index;
-        }
-      },
       hidePopup() {
         this.showPopupBottom = false
       },

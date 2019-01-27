@@ -40,12 +40,12 @@
 				      			</view>
 				            <view class="uni-flex">
 				            	<view class="uni-flex-item uni-text-small uni-text-light">
-				            		积分可抵扣:{{formatMoney(item.price_score_sell)}} 
+				            		积分可抵扣:{{(item.price_score_sell)}} 
 				            	</view>
 				            </view>
 				            <view class="uni-flex">
 				              <view class="uni-text-red uni-flex-item">
-				              	<text class="uni-h4">{{ formatMoney(item.price_sell + item.price_score_sell) }}</text>
+				              	<text class="uni-h4">{{ (item.price_sell + item.price_score_sell) }}</text>
 				              </view>
 				            	<view class="uni-right uni-flex-item">
 				            		<uni-number-box  @change="onNumberChange" :value="item.num" :cartItem="item"></uni-number-box>
@@ -85,9 +85,9 @@
 			</view>
 			<view class="uni-flex-item uni-left uni-common-pl"  style="line-height: 100upx;">
 				<text>总计:</text>
-				<text>{{formatMoney(cartInfo.total + cartInfo.score)}}</text>
+				<text>{{(cartInfo.total + cartInfo.score)}}</text>
         <text class="uni-text-small uni-text-light">/积分可抵扣:</text>
-        <text  class="uni-text-small uni-text-light">{{formatMoney(cartInfo.score)}}</text>
+        <text  class="uni-text-small uni-text-light">{{(cartInfo.score)}}</text>
 			</view>
 			<view class="uni-center uni-common-pr" style="" @tap="cartToOrder">
 				
@@ -106,8 +106,7 @@
 	  mapActions
 	} from 'vuex'
   import Cart from '@/static/js/cart.js';
-  import Utils from '@/static/js/utils.js';
-  import uniNumberBox from '@/components/uni-number-box.vue'
+  import uniNumberBox from '@/components/uni-number-box.vue';
   import uniIcon from '@/components/uni-icon.vue';
  
   export default {
@@ -124,8 +123,8 @@
       ...mapState(['hasLogin','mallOrderConfirm'])
     },
     methods:{
-      ...Utils,
       ...mapActions(['goToLoginPage']),
+      
       scroll: function(e) {
 				console.log(e)
 				// this.old.scrollTop = e.detail.scrollTop

@@ -29,7 +29,7 @@
                 	<view class="uni-flex-item uni-text-small uni-text-light">
                 		<text>积分可抵扣:</text>
                 		<!-- <text style="margin-left: 10upx;">￥</text> -->
-                		<text>{{formatMoney(item.price_score_sell)}} x {{item.num}}</text>
+                		<text>{{(item.price_score_sell)}} x {{item.num}}</text>
                 	</view>
                   <view class="uni-flex-item uni-right ">
                     
@@ -38,7 +38,7 @@
                 <view class="uni-flex ">
                 	<view class="uni-flex-item uni-text-red">
                 		<!-- <text class="uni-text-small">￥</text> -->
-                		<text>{{formatMoney(item.price_sell)}}</text>
+                		<text>{{(item.price_sell)}}</text>
                 	</view>
                   <view class="uni-flex-item uni-right uni-text-small uni-text-light">
                     <text>x</text>
@@ -80,10 +80,10 @@
       <view class="uni-flex uni-common-pt uni-common-pb " >
       	
         <view class="uni-flex-item uni-right" >
-          <text v-if="postData.score" class="uni-text-small uni-text-light">积分抵扣:{{formatMoney(score)}} </text>
+          <text v-if="postData.score" class="uni-text-small uni-text-light">积分抵扣:{{(score)}} </text>
           <text style="margin-left: 10upx;">小计</text>
         	<!-- <text class="uni-text-red">￥</text> -->
-          <text class="uni-text-red uni-h4">{{formatMoney(total)}}</text>
+          <text class="uni-text-red uni-h4">{{(total)}}</text>
         </view>
       </view>
     </view>
@@ -131,7 +131,6 @@
   import Cart from '@/static/js/cart.js';
   import userAddress from '@/components/user/user-address.vue';
   import uniIcon from '@/components/uni-icon.vue';
-  import Utils from '@/static/js/utils.js';
 	export default {
     data(){
       return {
@@ -163,8 +162,9 @@
       ...mapState(['hasLogin', 'userInfo','userAddressList' , 'userAddressCurrent' , 'mallOrderConfirm', 'userInvoice'])
     },
 		methods:{
-      ...Utils,
+      
       ...mapActions(['goToLoginPage', 'userInfoGet']),
+      
 			async orderCreate(){
         
         uni.showLoading({

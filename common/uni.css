@@ -21,9 +21,9 @@ form {
 }
 
 .input-label {
-    width: 160upx;
-  }
-  
+	width: 160upx;
+}
+
 .uni-flex {
 	display: flex;
 	flex-direction: row;
@@ -48,17 +48,17 @@ form {
 
 .uni-center {
 	text-align: center;
-  justify-content:center;
+	justify-content: center;
 }
 
 .uni-left {
-  text-align: left;
-  justify-content:left;
+	text-align: left;
+	justify-content: left;
 }
 
 .uni-right {
-  text-align: right;
-  justify-content:right;
+	text-align: right;
+	justify-content: right;
 }
 
 .uni-inline-item {
@@ -95,7 +95,7 @@ form {
 
 .uni-page-body {
 	width: 100%;
-  min-height: 100%;
+	min-height: 100%;
 	flex-grow: 1;
 	overflow-x: hidden;
 }
@@ -143,15 +143,15 @@ form {
 }
 
 .uni-text-lighter {
-  color: #999999;
+	color: #999999;
 }
 
 .uni-text-dark {
-  color: #454545;
+	color: #454545;
 }
 
 .uni-text-darker {
-  color: #333333;
+	color: #333333;
 }
 
 .uni-text-small {
@@ -187,10 +187,11 @@ form {
 }
 
 /* 背景色 */
-.uni-bg-white{
-  background: #FFFFFF;
-  color: #454545;
+.uni-bg-white {
+	background: #FFFFFF;
+	color: #454545;
 }
+
 .uni-bg-red {
 	background: #F76260;
 	color: #FFF;
@@ -212,42 +213,44 @@ form {
 }
 
 .uni-bg-gray {
-  background: #EEEEEE;
-  color: #333333;
+	background: #EEEEEE;
+	color: #333333;
 }
 
-.uni-border{
-  border: 1px solid #EEEEEE;
+.uni-border {
+	border: 1px solid #EEEEEE;
 }
 
-.uni-border-top{
-  border-top: 1px solid #EEEEEE;
+.uni-border-top {
+	border-top: 1px solid #EEEEEE;
 }
 
-.uni-border-left{
-  border-left: 1px solid #EEEEEE;
+.uni-border-left {
+	border-left: 1px solid #EEEEEE;
 }
 
-.uni-border-right{
-  border-right: 1px solid #EEEEEE;
+.uni-border-right {
+	border-right: 1px solid #EEEEEE;
 }
 
-.uni-border-bottom{
-  border-bottom: 1px solid #EEEEEE;
+.uni-border-bottom {
+	border-bottom: 1px solid #EEEEEE;
 }
 
 .uni-border-btn-radius {
-  border-radius: 50upx;
+	border-radius: 50upx;
 }
 
 .uni-radius-small {
-  border-radius: 2px;
+	border-radius: 2px;
 }
+
 .uni-radius-middle {
-  border-radius: 4px;
+	border-radius: 4px;
 }
+
 .uni-radius-big {
-  border-radius: 8px;
+	border-radius: 8px;
 }
 
 /* 标题 */
@@ -286,13 +289,13 @@ form {
 }
 
 .uni-fixed-bottom {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: 100upx;
-    line-height: 100upx;
-    /* background: #FFFFFF; */
-  }
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	height: 100upx;
+	line-height: 100upx;
+	/* background: #FFFFFF; */
+}
 
 /* 文本溢出隐藏 */
 .uni-ellipsis {
@@ -301,15 +304,15 @@ form {
 	text-overflow: ellipsis;
 }
 
-.uni-ellipsis-2{
-  word-break: break-all;
-  display: -webkit-box;
-  overflow: hidden;
-  line-height: 1.5;
-  text-overflow: ellipsis;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  flex-shrink:0;
+.uni-ellipsis-2 {
+	word-break: break-all;
+	display: -webkit-box;
+	overflow: hidden;
+	line-height: 1.5;
+	text-overflow: ellipsis;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	flex-shrink: 0;
 }
 
 /* 竖向百分百按钮 */

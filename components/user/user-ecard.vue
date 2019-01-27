@@ -7,10 +7,10 @@
   		</view>
   	  <view class="uni-flex-item uni-center">
   	  	<view class="uni-text-red uni-h2 " style="line-height: 200upx;" v-if="ecard.status == 1">
-  	  		 {{ formatMoney(ecard.amount) }}
+  	  		 {{ ecard.amount }}
   	  	</view>
         <view class="uni-text-gray uni-h2 " style="line-height: 200upx;" v-if="ecard.status == 0">
-        	 {{ formatMoney(ecard.price) }}
+        	 {{ ecard.price }}
         </view>
   	  </view>
   	  <view class="uni-center uni-text-red uni-common-pt ecard-right-text" v-if="ecard.status == 1">
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-  import Utils from '@/static/js/utils.js';
+
   export default {
     props:{
       ecard:{
@@ -41,7 +41,7 @@
       }
     },
     methods:{
-      ...Utils,
+
       ecardTap(){
         console.log('ecardTap======' ,this.ecard )
         if(this.ecard.status == 1){
