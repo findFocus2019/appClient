@@ -236,6 +236,10 @@ form {
   border-bottom: 1px solid #EEEEEE;
 }
 
+.uni-border-btn-radius {
+  border-radius: 50upx;
+}
+
 .uni-radius-small {
   border-radius: 2px;
 }

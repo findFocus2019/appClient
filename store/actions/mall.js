@@ -73,5 +73,23 @@ export default {
     let ret = await Request.post('mall/goodsInfo' , {goods_id: data.id})
     console.log('getGoodsInfo ret' , ret)
     store.state.mallGoodsInfo = ret.data.info
+    return ret
+  },
+  
+  async mallOrderCreate(store, data){
+    let ret = await Request.post('mall/orderCreate' , data)
+    console.log('mallOrderCreate ret' , ret)
+    // store.state.mallGoodsInfo = ret.data.info
+    return ret
+  },
+  
+  async mallOrderPayPre(store, data){
+    let ret = await Request.post('mall/orderPayPre' , data)
+    console.log('mallOrderCreate ret' , ret)
+    if(ret.code == 0){
+      store.state.mallPayment.orderIds = []
+    }
+    // store.state.mallGoodsInfo = ret.data.info
+    return ret
   }
 }

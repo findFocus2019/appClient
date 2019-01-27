@@ -69,7 +69,7 @@
 
 										<view class="uni-flex-item uni-common-pr " style="width: 80%;">
 											<view class="uni-text-red uni-h4">
-												￥ {{ item.price_sell }}
+												{{ formatMoney(item.price_sell) }}
 											</view>
 											<view class="uni-text-small uni-ellipsis" style="width: 100%;">
 												{{ item.description }}
@@ -104,6 +104,7 @@
 		mapState,
 		mapActions
 	} from "vuex";
+  import Utils from '@/static/js/utils.js';
 	export default {
 		components: {
 			uniIcon,
@@ -131,6 +132,7 @@
 			...mapState(['mallType', 'mallGoodsList','mallCategorys', 'mallSearch','mallOrderTypes','mallOrderActive'])
 		},
 		methods: {
+      ...Utils,
 			...mapActions(['mallChangeType']),
       async listTypeChoose(orderType) {
         console.log('listTypeChoose orderType', orderType)

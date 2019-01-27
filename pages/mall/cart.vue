@@ -40,13 +40,12 @@
 				      			</view>
 				            <view class="uni-flex">
 				            	<view class="uni-flex-item uni-text-small uni-text-light">
-				            		积分可抵扣 <text>￥</text>{{item.price_score_sell}}
+				            		积分可抵扣:{{formatMoney(item.price_score_sell)}} 
 				            	</view>
 				            </view>
 				            <view class="uni-flex">
 				              <view class="uni-text-red uni-flex-item">
-				              	<text>￥</text>
-				              	<text class="uni-h4">{{ item.price_sell }}</text>
+				              	<text class="uni-h4">{{ formatMoney(item.price_sell + item.price_score_sell) }}</text>
 				              </view>
 				            	<view class="uni-right uni-flex-item">
 				            		<uni-number-box  @change="onNumberChange" :value="item.num" :cartItem="item"></uni-number-box>
@@ -85,12 +84,16 @@
 				</view>
 			</view>
 			<view class="uni-flex-item uni-left uni-common-pl"  style="line-height: 100upx;">
-				<text>总计: </text>
-				<text>￥</text>
-				<text>{{cartInfo.total}}</text>
+				<text>总计:</text>
+				<text>{{formatMoney(cartInfo.total + cartInfo.score)}}</text>
+        <text class="uni-text-small uni-text-light">/积分可抵扣:</text>
+        <text  class="uni-text-small uni-text-light">{{formatMoney(cartInfo.score)}}</text>
 			</view>
-			<view class="uni-center uni-bg-red " style="line-height: 100upx;width: 200upx;" @tap="cartToOrder">
-				结算
+			<view class="uni-center uni-common-pr" style="" @tap="cartToOrder">
+				
+        <view class="uni-bg-red" style="border-radius: 50upx;height: 60upx;margin-top: 20upx;line-height: 60upx;width: 100upx;">
+        	结算
+        </view>
 			</view>
 		</view>
 		
@@ -103,8 +106,10 @@
 	  mapActions
 	} from 'vuex'
   import Cart from '@/static/js/cart.js';
+  import Utils from '@/static/js/utils.js';
   import uniNumberBox from '@/components/uni-number-box.vue'
   import uniIcon from '@/components/uni-icon.vue';
+ 
   export default {
     data(){
       return {
@@ -119,6 +124,7 @@
       ...mapState(['hasLogin','mallOrderConfirm'])
     },
     methods:{
+      ...Utils,
       ...mapActions(['goToLoginPage']),
       scroll: function(e) {
 				console.log(e)
@@ -166,7 +172,8 @@
           this.goToLoginPage()
         }else {
           // 发票默认不选
-          this.$store.state.mallOrderConfirm.invoice = 0
+          this.$store.state.mallOrderConfirm.invoice = 0 //
+          // return 
           uni.navigateTo({
           	url:'/pages/mall/cartConfirm'
           })

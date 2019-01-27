@@ -60,13 +60,13 @@ class Cart {
       let type = item.type 
       if([0,1,2].indexOf(type) > -1){
         datas[type].push(item)
-        
-        this.count += item.num
+        let num = item.num
+        this.count += num
         if(item.check){
-          this.total += parseInt(item.price_sell * 100) / 100
-          this.totalVip += parseInt(item.price_vip * 100) / 100
-          this.score += parseInt(item.price_score_sell * 100) / 100
-          this.scoreVip += parseInt(item.price_score_vip * 100) / 100
+          this.total += parseInt(item.price_sell * 100) / 100 * num
+          this.totalVip += parseInt(item.price_vip * 100) / 100 * num
+          this.score += parseInt(item.price_score_sell * 100) / 100 * num
+          this.scoreVip += parseInt(item.price_score_vip * 100) / 100 * num
           checkCount++
 					checkCountType[type]++
         }
@@ -142,6 +142,17 @@ class Cart {
 		
 		return datas
 	}
+  
+  listCheckedClear(){
+  	let list = []
+  	this.cart.forEach(item => {
+  	  if(!item.check){
+        list.push(item)
+      }
+  	})
+  	
+    this.cart = list
+  }
 	
 	/**
 	 * 分类选择全部

@@ -36,5 +36,13 @@ export default {
   async userInvoiceUpdate(store, data){
     let ret = await Request.post('user/invoiceUpdate', data)
     return ret
+  },
+  async userEcardListGet(store,data){
+    let ret = await Request.post('user/listEcard', data)
+    console.log('userEcardListGet ========' , ret)
+    if(ret.code == 0){
+      store.state.userEcardList = ret.data.list || []
+    }
+    return ret
   }
 }

@@ -130,7 +130,20 @@
       "style": {
         "navigationBarTitleText": "发票信息"
       }
+    },
+    {
+      "path": "pages/user/ecard",
+      "style": {
+        "navigationBarTitleText": "代金券"
+      }
+    },
+    {
+      "path": "pages/user/order",
+      "style": {
+        "navigationBarTitleText": "商城订单"
+      }
     }
+    
   ],
   "tabBar": {
     "color": "#7a7e83",

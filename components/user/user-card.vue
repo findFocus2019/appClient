@@ -21,7 +21,7 @@
   </view>
 </template>
 <script>
-  
+  import Utils from '@/static/js/utils.js';
   export default {
     props:{
       title: String,

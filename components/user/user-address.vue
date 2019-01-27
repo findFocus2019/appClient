@@ -21,6 +21,7 @@
 
 <script>
   import uniIcon from '../uni-icon.vue';
+  import Utils from '@/static/js/utils.js';
   export default {
     props:{
       address:{
@@ -47,6 +48,7 @@
       uniIcon
     },
     methods:{
+      ...Utils,
       goToAddress(){
         uni.navigateTo({
         	url:this.toPage

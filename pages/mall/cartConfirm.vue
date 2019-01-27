@@ -22,14 +22,14 @@
           			<image :src="item.cover" mode="scaleToFill" style="width: 160upx;height: 160upx;"></image>
           		</view>
               <view class="uni-flex-item uni-common-pl" >
-              	<view class="uni-ellipsis-2 uni-text-darker">
-              		{{item.title}}商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题商品标题
+              	<view class="uni-ellipsis-2 uni-text-darker" style="height: 80upx;">
+              		{{item.title}}
               	</view>
                 <view class="uni-flex ">
                 	<view class="uni-flex-item uni-text-small uni-text-light">
-                		<text>积分可抵扣</text>
-                		<text style="margin-left: 10upx;">￥</text>
-                		<text>{{item.price_score_sell}}</text>
+                		<text>积分可抵扣:</text>
+                		<!-- <text style="margin-left: 10upx;">￥</text> -->
+                		<text>{{formatMoney(item.price_score_sell)}} x {{item.num}}</text>
                 	</view>
                   <view class="uni-flex-item uni-right ">
                     
@@ -37,8 +37,8 @@
                 </view>
                 <view class="uni-flex ">
                 	<view class="uni-flex-item uni-text-red">
-                		<text class="uni-text-small">￥</text>
-                		<text>{{item.price_sell}}</text>
+                		<!-- <text class="uni-text-small">￥</text> -->
+                		<text>{{formatMoney(item.price_sell)}}</text>
                 	</view>
                   <view class="uni-flex-item uni-right uni-text-small uni-text-light">
                     <text>x</text>
@@ -80,31 +80,13 @@
       <view class="uni-flex uni-common-pt uni-common-pb " >
       	
         <view class="uni-flex-item uni-right" >
-          <text v-if="postData.score" class="uni-text-small uni-text-light">积分抵扣:￥{{score}}</text>
+          <text v-if="postData.score" class="uni-text-small uni-text-light">积分抵扣:{{formatMoney(score)}} </text>
           <text style="margin-left: 10upx;">小计</text>
-        	<text class="uni-text-red">￥</text>
-          <text class="uni-text-red uni-h4">{{total}}</text>
+        	<!-- <text class="uni-text-red">￥</text> -->
+          <text class="uni-text-red uni-h4">{{formatMoney(total)}}</text>
         </view>
       </view>
     </view>
-    
-    <!-- <view class="uni-common-mt uni-common-pl uni-common-pr uni-bg-white uni-border-top">
-    	<view class="uni-flex uni-common-pb uni-common-pt">
-    		<view class="uni-flex-item input-label">
-    			支付方式
-    		</view>
-    	</view>
-    	
-    	<view class="uni-flex uni-common-pt uni-common-pb uni-border-top" v-for="item in payTypes" :key="item.id" @tap="payTypeChoose(item)">
-    		<view class="uni-flex-item input-label">
-    			{{item.name}}
-    		</view>
-    	  <view class="uni-flex-item uni-right" >
-    	  	<uni-icon type="checkbox-filled" size="22" v-if="payTypeId == item.id" color="#ff5c44"></uni-icon>
-          <uni-icon type="circle" size="22" v-else></uni-icon>
-    	  </view>
-    	</view>
-    </view> -->
     
     <view class="uni-common-mt uni-common-pl uni-common-pr uni-bg-white uni-border-top">
     	<view class="uni-flex uni-common-pt uni-common-pb">
@@ -126,7 +108,7 @@
     			备注
     		</view>
     	  <view class="uni-flex-item uni-right uni-common-pa uni-bg-gray" >
-    	  	<textarea type="text" placeholder="备注信息" auto-height="true" style="width: 500upx;"/>
+    	  	<textarea type="text" placeholder="备注信息" auto-height="true" style="width: 500upx;" v-model="postData.remark"/>
     	  </view>
     	</view>
     </view>
@@ -149,14 +131,16 @@
   import Cart from '@/static/js/cart.js';
   import userAddress from '@/components/user/user-address.vue';
   import uniIcon from '@/components/uni-icon.vue';
+  import Utils from '@/static/js/utils.js';
 	export default {
     data(){
       return {
         postData:{
-          pay_type:0,
-          pay_method:'',
+          // pay_type:0,
+          // pay_method:'',
           score:0,
-          total:0
+          total:0,
+          remark:''
         },
         cartList:[],
         address : {},
@@ -167,7 +151,7 @@
 //           {id: 3, name:'代金券','pay_type':'1' , 'pay_method':'ecard'},
 //           {id: 4, name:'账户余额','pay_type':'2' , 'pay_method':'balance'},
 //         ],
-        payTypeId:0,
+        // payTypeId:0,
         score:0
       }
     },
@@ -176,12 +160,67 @@
       uniIcon
     },
     computed:{
-      ...mapState(['hasLogin', 'userInfo','userAddressList' , 'userAddressCurrent' , 'mallOrderConfirm'])
+      ...mapState(['hasLogin', 'userInfo','userAddressList' , 'userAddressCurrent' , 'mallOrderConfirm', 'userInvoice'])
     },
 		methods:{
-      ...mapActions(['goToLoginPage']),
-			orderCreate(){
-				
+      ...Utils,
+      ...mapActions(['goToLoginPage', 'userInfoGet']),
+			async orderCreate(){
+        
+        uni.showLoading({
+        	title:'订单提交中'
+        })
+        
+				let cartList = Cart.listChecked()
+        let orderDatas = []
+        cartList.forEach((items,index) => {
+          if(items.length){
+            orderDatas.push({
+              order_type:1,
+              items: items
+            })
+          }
+        })
+        
+        let postData = this.postData
+        postData.orders = orderDatas
+        postData.score = this.postData.score * 1000
+        postData.address = this.userAddressCurrent
+        postData.invoice = this.mallOrderConfirm.invoice ? this.userInvoice : ''
+        
+        console.log('orderCreate postData' , postData)
+        
+        let ret = await this.$store.dispatch('mallOrderCreate' , postData)
+        if(ret.code === 0){
+          uni.hideLoading()
+          let orderIds = ret.data.ids
+          let totals = ret.data.totals
+          this.$store.state.mallPayment.orderIds = orderIds
+          this.$store.state.mallPayment.totals = totals
+          
+          console.log('this.$store.state.mallPayment' , this.$store.state.mallPayment)
+          // 消除购物车
+          Cart.listCheckedClear()
+          
+          uni.showToast({
+          	title:'生成订单成功',
+            duration:2000,
+            success() {
+              uni.reLaunch({
+              	url:'/pages/mall/payment'
+              })
+            },
+            icon:'success'
+          })
+        }else {
+          uni.hideLoading()
+          uni.showToast({
+          	title:ret.message,
+            icon:'none',
+            duration:2000
+          })
+        }
+    
 			},
       invoiceChoose(){
         uni.showActionSheet({
@@ -225,9 +264,11 @@
     	  return
     	}
       
+      // 获取实时用户数据
+      this.userInfoGet()
+      
       if(!this.userAddressList.length){
         this.$store.dispatch('userAddressGet')
-        
       }
       
       console.log('userAddressCurrent' , this.userAddressCurrent)
