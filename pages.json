@@ -102,7 +102,7 @@
       "style": {
         "navigationBarTitleText": "个人中心",
         "navigationBarTextStyle": "white",
-        "navigationBarBackgroundColor": "#ff5c44",
+        "navigationBarBackgroundColor": "#d81e06",
         "app-plus": {
           "titleNView": {
             "buttons": [{
@@ -111,6 +111,76 @@
             }]
           }
         }
+      }
+    },
+    {
+      "path": "pages/user/setting",
+      "style": {
+        "navigationBarTitleText": "设置"
+      }
+    },
+    {
+      "path": "pages/user/vip",
+      "style": {
+        "navigationBarTitleText": "会员权益",
+        "navigationBarTextStyle": "white",
+        "navigationBarBackgroundColor": "#d81e06"
+      }
+    },
+    {
+      "path": "pages/user/dailySign",
+      "style": {
+        "navigationBarTitleText": "登录签到",
+        "navigationBarTextStyle": "white",
+        "navigationBarBackgroundColor": "#d81e06",
+        "app-plus": {
+          "titleNView": {
+            "buttons": [{
+              "fontSrc": "/static/fonts/uni.ttf",
+              "text": "\ue560"
+            }]
+          }
+        }
+      }
+    },
+    {
+      "path": "pages/user/dailySignHongbao",
+      "style": {
+        "navigationBarTitleText": "累计登录"
+      }
+    },
+    {
+      "path": "pages/user/dailySignRule",
+      "style": {
+        "navigationBarTitleText": "签到规则"
+      }
+    },
+    {
+      "path": "pages/user/invite",
+      "style": {
+        "navigationBarTitleText": "推荐注册",
+        "navigationBarTextStyle": "white",
+        "navigationBarBackgroundColor": "#d81e06",
+        "app-plus": {
+          "titleNView": {
+            "buttons": [{
+              "fontSrc": "/static/fonts/uni.ttf",
+              "text": "\ue560"
+            }]
+          }
+        }
+      }
+    },
+    {
+      "path": "pages/user/inviteList",
+      "style": {
+        "navigationBarTitleText": "好友列表"
+      }
+    },
+    {
+      "path": "pages/user/inviteRule",
+      "style": {
+        "navigationBarTitleText": "推荐规则"
       }
     },
     {
@@ -143,7 +213,7 @@
         "navigationBarTitleText": "商城订单"
       }
     }
-    
+
   ],
   "tabBar": {
     "color": "#7a7e83",

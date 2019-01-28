@@ -40,7 +40,7 @@
 
     <view class="uni-common-mt uni-common-pt uni-bg-white">
       <uni-segmented-control :current="current" :values="items" v-on:clickItem="onClickItem" styleType="text"
-        activeColor="#dd524d"></uni-segmented-control>
+        activeColor="#d81e06"></uni-segmented-control>
 
       <view class="content uni-common-mt uni-common-pa">
         <view v-show="current === 0">

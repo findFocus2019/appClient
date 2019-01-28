@@ -15,12 +15,12 @@
             	{{ userInfo.nickname || '还未设置'}}
             </view>
             <view class="">
-            	<image src="/static/icon/user/vip-tag.png" mode="widthFix" style="width: 180upx;"></image>
+            	<image src="/static/icon/user/vip-tag.png" mode="widthFix" style="width: 180upx;height: 40upx;"></image>
             </view>
         		
         	</view>
           <view class="uni-flex-item uni-right">
-            <image src="/static/icon/user/msg.png" mode="widthFix" style="width: 110upx;"></image>
+            <image src="/static/icon/user/msg.png" mode="widthFix" style="width: 110upx;height: 110upx;"></image>
           </view>
           
         </view>
@@ -43,7 +43,7 @@
         		
         	</view>
           <view class="uni-flex-item uni-right">
-            <image src="/static/icon/user/msg.png" mode="widthFix" style="width: 110upx;"></image>
+            <image src="/static/icon/user/msg.png" mode="widthFix" style="width: 110upx;height: 110upx;"></image>
           </view>
           
         </view>
@@ -59,7 +59,7 @@
     					总收益
     				</view>
             <view class="uni-h4">
-            	10000
+            	{{userIndexData.balance}}
             </view>
     			</view>
           <view class="uni-flex-item">
@@ -70,7 +70,7 @@
           		积分余额
           	</view>
           	<view class="uni-h4">
-          		10000
+          		{{ userIndexData.score}}
           	</view>
           </view>
     		</view>
@@ -80,7 +80,7 @@
         			浏览量
         		</view>
             <view class="">
-            	100
+            	{{userIndexData.count.views}}
             </view>
         	</view>
           <view class="uni-flex-item">
@@ -88,7 +88,7 @@
           		评论量
           	</view>
           	<view class="">
-          		100
+          		{{userIndexData.count.comments}}
           	</view>
           </view>
           <view class="uni-flex-item">
@@ -96,7 +96,7 @@
           		点赞量
           	</view>
           	<view class="">
-          		100
+          		{{userIndexData.count.likes}}
           	</view>
           </view>
           <view class="uni-flex-item">
@@ -104,7 +104,7 @@
           		转发量
           	</view>
           	<view class="">
-          		100
+          		{{userIndexData.count.shares}}
           	</view>
           </view>
         </view>
@@ -115,35 +115,29 @@
       </view>
       
       <view class="uni-common-mt uni-flex">
-      	<view class="uni-flex-item uni-flex user-box-vip uni-common-pa">
-      		<view class="uni-flex-item uni-common-pr">
-      			<image src="/static/icon/user/vip.png" mode="widthFix" style="width: 100%;"></image>
+      	<view class="uni-flex-item uni-flex user-box-vip uni-common-pa" @tap="goToPage('/pages/user/vip')">
+      		<view class="uni-flex-item uni-common-pr" style="width: 120upx;height: 120upx;">
+      			<image src="/static/icon/user/vip.png" mode="widthFix" style="width: 120upx;height: 120upx;"></image>
       		</view>
           <view class="uni-flex-item">
-          	<view class="uni-text-dark">
+          	<view class="uni-text-dark uni-common-mt">
           		会员权益
           	</view>
-            <view class="uni-badge-danger uni-center user-box-detail-link">
-            	查看详情
-            </view>
           </view>
       	</view>
-        <view class="uni-flex-item uni-flex user-box-ecard uni-common-pa">
-        	<view class="uni-flex-item uni-common-pr">
-        		<image src="/static/icon/user/ecard.png" mode="widthFix" style="width: 100%;"></image>
+        <view class="uni-flex-item uni-flex user-box-ecard uni-common-pa" @tap="goToPage('/pages/user/ecard')">
+        	<view class="uni-flex-item uni-common-pr" style="width: 120upx;height: 120upx;">
+        		<image src="/static/icon/user/ecard.png" mode="widthFix" style="width: 120upx;height: 120upx;"></image>
         	</view>
         	<view class="uni-flex-item">
-        		<view class="uni-text-dark">
+        		<view class="uni-text-dark uni-common-mt">
         			代金券
         		</view>
-            <view class="uni-badge-danger uni-center user-box-detail-link">
-            	查看详情
-            </view>
         	</view>
         </view>
       </view>
       
-      <view class="uni-common-mt">
+      <view class="uni-common-mt" @tap="goToPage('/pages/user/dailySignHongbao')">
       	<image src="/static/img/user-daily-sign.png" mode="widthFix" style="width: 100%;"></image>
       </view>
       
@@ -174,7 +168,7 @@
        UserCard
      },
      computed: {
-       ...mapState(["hasLogin", "userInfo"])
+       ...mapState(["hasLogin", "userInfo","userIndexData"])
      },
      methods:{
        ...mapActions(["authLogout"]),
@@ -198,7 +192,7 @@
      },
      onNavigationBarButtonTap(e) {
      	if(e.index === 0){
-        uni.redirectTo({
+        uni.navigateTo({
         	url:'/pages/user/setting'
         })
       }
@@ -210,7 +204,7 @@
              {text: '收支记录' , icon : 'trade' , path: '/pages/user/trade'},
              {text: '商城订单' , icon : 'order' , path: '/pages/order/list'},
              {text: '我的售后' , icon : 'after' , path: '/pages/order/afters'},
-             {text: '我的团队' , icon : 'team', path: '/pages/user/invites'},
+             {text: '我的团队' , icon : 'team', path: '/pages/user/inviteList'},
              {text: '我的评价' , icon : 'rate', path: '/pages/order/rates'},
              {text: '品牌申请' , icon : 'brand', path: '/pages/user/brandApply'},
            ]},
@@ -234,7 +228,7 @@
 
 <style>
   .page-user-head {
-    background: #ff5c44;
+    background: #d81e06;
     color: #FFFFFF;
     padding-bottom: 150upx;
   }

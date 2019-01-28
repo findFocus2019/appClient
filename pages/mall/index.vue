@@ -360,7 +360,7 @@
   }
 
   .order-type-item.active {
-    color: #ff5c44;
+    color: #d81e06;
   }
 
   .input-view {
