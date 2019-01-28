@@ -9,7 +9,7 @@
 			<view class="uni-common-mb" v-if="list.length">
 				<view class="uni-bg-white uni-border-top uni-common-pa uni-flex" >
 					<view class="" style="width: 70upx;" @tap="cartCheckType(index)">
-						<uni-icon type="checkbox-filled" size="22" v-if="cartInfo.checkAllType[index]" color="#ff5c44"></uni-icon>
+						<uni-icon type="checkbox-filled" size="22" v-if="cartInfo.checkAllType[index]" color="#d81e06"></uni-icon>
 						<uni-icon type="circle" size="22"  v-else></uni-icon> 
 					</view>
 					<view class="uni-h4 uni-flex-item">
@@ -28,7 +28,7 @@
 				      <view class="">
 				      	<view class="uni-flex">
 				      		<view class="cart-list-check uni-flex-item uni-center" @tap="cartCheck(item)">
-				      			<uni-icon type="checkbox-filled" size="22" v-if="item.check" color="#ff5c44"></uni-icon>
+				      			<uni-icon type="checkbox-filled" size="22" v-if="item.check" color="#d81e06"></uni-icon>
 										<uni-icon type="circle" size="22"  v-else></uni-icon>
 				      		</view>
 				      		<view class="cart-list-cover uni-common-pt uni-flex-item">
@@ -56,7 +56,7 @@
 				      </view>
 	    
 					  </view>
-						<view class="scroll-view-item_H uni-center" style="background: #ff5c44;width: 100upx;color: #fff;" @tap="cartDel(item)">
+						<view class="scroll-view-item_H uni-center" style="background: #d81e06;width: 100upx;color: #fff;" @tap="cartDel(item)">
 				      <view class="" style="display: inline-block;vertical-align: middle;" >
 				      	<view class="">
 				      		<uni-icon type="trash" size="24"></uni-icon>
@@ -77,7 +77,7 @@
 		<view class="cart-toolbar uni-flex uni-center uni-bg-white">
 			<view class="uni-flex">
 				<view class="" style="width: 70upx;line-height: 100upx;" @tap="cartCheckAll">
-					<uni-icon type="checkbox-filled" size="22" v-if="cartInfo.checkAll" color="#ff5c44"></uni-icon>
+					<uni-icon type="checkbox-filled" size="22" v-if="cartInfo.checkAll" color="#d81e06"></uni-icon>
 					<uni-icon type="circle" size="22"  v-else></uni-icon> 
 				</view>
 				<view style="line-height: 100upx;">全选
@@ -220,7 +220,7 @@
   
   .scroll-view-item_H.delete {
     width: 100upx;
-    background: #ff5c44;
+    background: #d81e06;
     color: #fff;
   }
   

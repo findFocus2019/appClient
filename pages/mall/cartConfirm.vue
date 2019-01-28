@@ -72,7 +72,7 @@
     		</view>
     	  <view class="uni-flex-item uni-right" >
           <text style="margin-right: 10upx;">{{score * 1000}}</text> 
-    	  	<uni-icon type="checkbox-filled" size="22" v-if="postData.score" color="#ff5c44"></uni-icon>
+    	  	<uni-icon type="checkbox-filled" size="22" v-if="postData.score" color="#d81e06"></uni-icon>
     	  	<uni-icon type="circle" size="22" v-else></uni-icon>
     	  </view>
     	</view>

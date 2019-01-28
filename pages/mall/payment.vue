@@ -27,7 +27,7 @@
                       type="checkbox-filled"
                       size="22"
                       v-if="mallPayment.payTypeCheck == item.pay_type && mallPayment.payMethodCheck == item.pay_method "
-                      color="#ff5c44"
+                      color="#d81e06"
                     ></uni-icon>
                     <uni-icon type="circle" size="22" v-else></uni-icon>
                   </view>
@@ -44,7 +44,7 @@
                       type="checkbox-filled"
                       size="22"
                       v-if="mallPayment.payTypeCheck == item.pay_type && mallPayment.payMethodCheck == item.pay_method && mallPayment.ecardId"
-                      color="#ff5c44"
+                      color="#d81e06"
                     ></uni-icon>
                     <uni-icon type="circle" size="22" v-else></uni-icon>
                   </view>
@@ -57,7 +57,7 @@
                       type="checkbox-filled"
                       size="22"
                       v-if="mallPayment.payTypeCheck == item.pay_type && mallPayment.payMethodCheck == item.pay_method "
-                      color="#ff5c44"
+                      color="#d81e06"
                     ></uni-icon>
                     <uni-icon type="circle" size="22" v-else></uni-icon>
                   </view>

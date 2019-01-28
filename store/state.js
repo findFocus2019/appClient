@@ -5,6 +5,16 @@ export default {
   forcedLogin: false,
   hasLogin: false,
   userInfo:{},
+  userIndexData:{
+    balance:0,
+    score:0,
+    count: {
+      views:0,
+      comments:0,
+      likes:0,
+      shares:0
+    }
+  },
   userAddressList:[],
   userAddressInfo:{},
   userAddressCurrent:{id:0},

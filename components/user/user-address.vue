@@ -4,7 +4,7 @@
       <uni-icon
         type="location"
         size="22"
-        color="#ff5c44"
+        color="#d81e06"
         v-if="current === address.id && current !== 0"
       ></uni-icon>
       <uni-icon type="location" size="22" v-else></uni-icon>
