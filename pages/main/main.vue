@@ -68,27 +68,11 @@
         </view>
         <view style="width: 100%;height: 1px;background: rgba(229,229,229,1);"></view>
         <view class="news-list">
-          <view class="news-item" v-for="(news, index) in newsList">
-            <image class="cover" :src="news.cover"></image>
-            <view class="content">
-              <text class="title">{{news.title}}</text>
-              <text class="publish-date">发布时间：{{news.publish_time}}</text>
-              <view class="statistics-info">
-                <view class="statistics-item visits">
-                  <image class="icon-visits"></image>
-                  <text>{{news.visits}}</text>
-                </view>
-                <view class="statistics-item likes">
-                  <image class="icon-likes"></image>
-                  <text>{{news.likes}}</text>
-                </view>
-                <view class="statistics-item shares">
-                  <image class="icon-shares"></image>
-                  <text>{{news.shares}}</text>
-                </view>
-              </view>
-            </view>
-          </view>
+            <block v-for="(news, index) in newsList">
+              <news-item :cover="news.cover" :title="news.title" 
+                        :publish_time="news.publish_time" :visits="news.visits"
+                        :likes="news.likes" :shares="news.shares"/>
+            </block>
         </view>
       </view>
     </view>
@@ -104,12 +88,14 @@ import uniNavBar from "@/components/uni-nav-bar.vue";
 import uniIcon from "@/components/uni-icon.vue";
 
 import RecommendedFocusItem from "@/components/home/recommended-focus-item.vue";
+import NewsItem from "@/components/home/news-item.vue";
 
 export default {
   components: {
     uniNavBar,
     uniIcon,
-    RecommendedFocusItem
+    RecommendedFocusItem,
+    NewsItem,
   },
 
   data() {
@@ -373,83 +359,6 @@ export default {
       flex-flow: column nowrap;
       justify-content: center;
       align-items: center;
-
-      .news-item {
-        display: flex;
-        flex-flow: row nowrap;
-        justify-content: space-between;
-        align-items: center;
-
-        width: 694.444upx;
-        height: 267.361upx;
-        background: #fff;
-        box-sizing: border-box;
-        border-bottom: 0.694upx solid #e5e5e5;
-
-        .cover {
-          width: 277.778upx;
-          height: 208.333upx;
-        }
-
-        .content {
-          position: relative;
-          width: 388.889upx;
-          height: 208.333upx;
-          overflow: hidden;
-          text-align: left;
-
-          .title {
-            font-size: 27.778upx;
-            font-family: MicrosoftYaHei;
-            font-weight: 400;
-            color: #333;
-            line-height: 38.889upx;
-          }
-
-          .publish-date {
-            display: block;
-            font-size: 22upx;
-            font-family:MicrosoftYaHeiLight;
-            font-weight:300;
-            color: #666;
-            line-height: 41.667upx;
-          }
-
-          .statistics-info {
-            width: 100%;
-            height: 34.722upx;
-            overflow: hidden;
-            display: flex;
-            flex-flow: row nowrap;
-            justify-content: space-between;
-            align-items: center;
-
-            .statistics-item {
-              width: auto;
-              height: 100%;
-
-              &.visits {
-                .icon-visits {
-                  width: 51px;
-                  height: 32px;
-                }
-              }
-              &.likes {
-                .icon-likes {
-                  width: 38px;
-                  height: 38px;
-                }
-
-              }
-              &.shares {
-                width: 41px;
-                height: 44px;
-              }
-            }
-          }
-          
-        }
-      }
     }
   }
 }
