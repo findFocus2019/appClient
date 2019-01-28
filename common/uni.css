@@ -322,6 +322,11 @@ form {
 	flex-shrink: 0;
 }
 
+.uni-btn {
+  height: 100upx;
+  line-height: 100upx;
+}
+
 /* 竖向百分百按钮 */
 .uni-btn-v {
 	padding: 10upx 0;

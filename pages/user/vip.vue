@@ -24,7 +24,10 @@
     </view>
     
     <view class="uni-common-pa">
-    	<button type="warn" class="uni-border-btn-radius">续费会员</button>
+      <navigator url="/pages/user/vipOrder" class="uni-btn uni-border-btn-radius uni-bg-red uni-center">
+        续费会员
+      </navigator>
+    	
     </view>
 	</view>
 </template>

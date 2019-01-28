@@ -6,7 +6,9 @@
       <view class="uni-flex uni-common-pt uni-common-pb"  v-if="hasLogin">
    
         <view class="user-avatar">
-          <image src="/static/icon/qq.png" mode="scaleToFill"></image>
+          <image :src="userInfo.avatar" mode="scaleToFill" v-if="userInfo.avatar" ></image>
+          <image src="/static/icon/qq.png" mode="scaleToFill" v-else></image>
+          
         </view>
  
         <view class="uni-flex uni-flex-item uni-common-pl">
@@ -211,7 +213,7 @@
            {title : '我的足迹' ,items: [
              {text: '收货地址' , icon : 'address', path: '/pages/user/address'},
              {text: '我的评论' , icon : 'comment', path: '/pages/user/postComments'},
-             {text: '我的收藏' , icon : 'like', path: '/pages/user/postLikes'},
+             {text: '我的收藏' , icon : 'like', path: '/pages/user/collection'},
              {text: '我的评测' , icon : 'posts', path: '/pages/user/postsList'}
            ]},
            {title : '每日任务' ,items: [

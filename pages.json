@@ -120,11 +120,29 @@
       }
     },
     {
+      "path": "pages/user/passwordTrade",
+      "style": {
+        "navigationBarTitleText": "交易密码"
+      }
+    },
+    {
+      "path": "pages/user/about",
+      "style": {
+        "navigationBarTitleText": "关于我们"
+      }
+    },
+    {
       "path": "pages/user/vip",
       "style": {
         "navigationBarTitleText": "会员权益",
         "navigationBarTextStyle": "white",
         "navigationBarBackgroundColor": "#d81e06"
+      }
+    },
+    {
+      "path": "pages/user/vipOrder",
+      "style": {
+        "navigationBarTitleText": "会员充值"
       }
     },
     {
@@ -211,6 +229,18 @@
       "path": "pages/user/order",
       "style": {
         "navigationBarTitleText": "商城订单"
+      }
+    },
+    {
+      "path": "pages/user/postComments",
+      "style": {
+        "navigationBarTitleText": "我的评论"
+      }
+    },
+    {
+      "path": "pages/user/collection",
+      "style": {
+        "navigationBarTitleText": "我的收藏"
       }
     }
 

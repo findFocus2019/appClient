@@ -46,7 +46,7 @@
             
             <view class="uni-flex uni-center uni-common-mt" v-for="(days,index1) in monthDays" :key="index1">
             	<view class="uni-flex-item" v-for="(day,index2) in days" :key="index2">
-            		{{ day }}
+            		<text class="month-day-item">{{ day }}</text> 
             	</view>
             </view>
             
@@ -63,7 +63,12 @@
             
       		</view>
           
-          <view class="uni-common-pa">
+          <view class="uni-common-mt">
+            <view class="uni-bg-gray uni-border-btn-radius" style="line-height: 100upx;">
+            	<navigator url="/pages/user/dailySignHongbao">
+            	  立即领取
+            	</navigator>
+            </view>
           	
           </view>
       	</view>
@@ -152,6 +157,14 @@
     /* background: #000000; */
     border-radius: 10upx;
     margin-right: 10upx;
+  }
+  
+  .month-day-item {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    /* background: #000; */
+    border-radius: 12px;
   }
   
 </style>
