@@ -28,7 +28,22 @@ class Request {
         success: (res) => {
           console.log('request response ', JSON.stringify(res.data));
           r(res.data)
+          let ret = res.data
           // this.text = 'request success';
+          if(ret.code == -100){
+            uni.navigateTo({
+            	url:'/pages/auth/login'
+            })
+          }else if (ret.code == -101){
+            uni.showToast({
+              title: '网络异常，请稍后再试！',
+              duration: 2000
+            });
+            r({
+              code: -1,
+              message: '网络异常，请稍后再试！'
+            })
+          }
         },
         fail: () => {
           uni.showToast({

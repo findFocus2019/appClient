@@ -5,6 +5,12 @@ export default {
   forcedLogin: false,
   hasLogin: false,
   userInfo:{},
+  userAddressList:[],
+  userAddressInfo:{},
+  userAddressCurrent:{id:0},
+  userInvoice:{id:0},
+  userEcardList:[],
+  userEcardInfo:{},
   oAuthId: 0,
   
   // 商城相关
@@ -37,6 +43,16 @@ export default {
     type:'desc'
   },
 	mallOrderConfirm: {
-		list : []
-	}
+		list : [],
+    invoice : 0
+	},
+  mallPayment:{
+    orderIds:[],
+    totals:0,
+    payTypeCheck:0,
+    payMethodCheck:'',
+    ecardId:0,
+    ecardAmount:0,
+    payMethodExt:''
+  }
 }
