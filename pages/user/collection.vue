@@ -2,7 +2,7 @@
 	<view class="uni-page-body">
 		<view class="uni-common-pa uni-bg-white uni-border-top">
 			<view class="uni-common-pl uni-common-pr uni-flex uni-center">
-				<view class="uni-flex-item" v-for="(item ,i) in types" :key="i" @tap="changeType(i)">
+				<view class="uni-flex-item" v-for="(item ,i) in types" :key="i" @tap="changeType(item , i)">
 					<text v-if="category == item.category && item.type == type" class="uni-bold">{{item.name}}</text>
           <text v-else>{{item.name}}</text>
 				</view>
@@ -13,17 +13,88 @@
     <view class="uni-common-mt">
     	<view class="content">
     	  <view v-show="current === 0">
-
-          <view class="uni-flex uni-bg-white uni-common-pa" @touchmove="touchmove('1')" @touchend="touchEnd" @touchstart="touchStart">
-          	
-          </view>
-    	    
+          
+    	    <view class="uni-common-pa uni-bg-white uni-flex">
+    	    	<view class="" style="width: 200upx;height: 200upx;">
+    	    		<image src="" mode="" style="width: 200upx;height: 200upx;"></image>
+    	    	</view>
+            <view class="uni-flex-item uni-common-pl">
+            	<view class="list-title">
+            		产品标题产品标题产品标题产品标题产品标题产品标题产品标题产品标题产品标题
+            	</view>
+              <view class="uni-text-small uni-text-gray">
+              	积分可抵扣
+              </view>
+              <view class="uni-flex">
+              	<view class="uni-flex-item uni-bold uni-text-red">
+              		￥ 29.0
+              	</view>
+                <view class="uni-flex-item uni-right">
+                	<text class="uni-text-small">删除</text>
+                </view>
+              </view>
+            </view>
+    	    </view>
+          
+          
     	  </view>
     	  <view v-show="current === 1">
-    	1
+
+          <view class="uni-common-pa uni-bg-white uni-flex">
+          	<view class="" style="width: 200upx;height: 200upx;">
+          		<image src="" mode="" style="width: 200upx;height: 200upx;"></image>
+          	</view>
+            <view class="uni-flex-item uni-common-pl">
+            	<view class="list-title">
+            		新闻标题新闻标题新闻标题新闻标题新闻标题新闻标题新闻标题新闻标题新闻标题
+            	</view>
+              <view class="uni-text-small uni-text-gray">
+              	发布时间
+              </view>
+              <view class="uni-flex">
+              	<view class="uni-flex-item uni-text-small">
+              		浏览
+              	</view>
+                <view class="uni-flex-item uni-text-small">
+                	点赞
+                </view>
+                <view class="uni-flex-item uni-text-small">
+                	分享
+                </view>
+                <view class="uni-flex-item uni-right uni-text-small">
+                	<text class="">删除</text>
+                </view>
+              </view>
+            </view>
+          </view>
+          
+           
     	  </view>
     	  <view v-show="current === 2">
-    	2
+
+          <view class="uni-common-pa uni-bg-white uni-flex">
+          	<view class="" style="width: 200upx;height: 200upx;">
+          		<image src="" mode="" style="width: 200upx;height: 200upx;"></image>
+          	</view>
+            <view class="uni-flex-item uni-common-pl">
+            	<view class="list-title">
+            		新闻标题新闻标题新闻标题新闻标题新闻标题新闻标题新闻标题新闻标题新闻标题
+            	</view>
+              <view class="uni-text-small uni-text-gray">
+              	积分可抵扣
+              </view>
+              <view class="uni-flex">
+              	<view class="uni-flex-item uni-bold uni-text-red">
+              		￥ 29.0
+              	</view>
+                <view class="uni-flex-item uni-right">
+                	<text class="uni-text-small">删除</text>
+                </view>
+              </view>
+            </view>
+          </view>
+          
+          
     	  </view>
     	</view>
     </view>
@@ -71,57 +142,17 @@
       getList(){
         
       },
-      changeType(i){
+      changeType(item , i){
         console.log(this.current)
         this.current = i
-      },
-      touchmove(i){
-        console.log(i)
-        this.item = i
-      },
-      touchStart(e){
-        console.log(e)
-        this.itemXStart = e.changedTouches[0].pageX
-      },
-      touchEnd(e){
-        console.log(e)
-        this.itemXEnd = e.changedTouches[0].pageX
-        this.item = 0
-        
+        this.type = item.type
+        this.category = item.category
       }
     }
   }
 </script>
 
 <style lang="less">
-  
-  .scroll-view_H {
-  	white-space: nowrap;
-  	width: 100%;
-    height: 300upx;
-  }
-  
-  .scroll-view-item {
-  	height: 300upx;
-  	// line-height: 300upx;
-  	// text-align: center;
-  	// font-size: 36upx;
-  }
-  
-  .scroll-view-item_H {
-  	display: inline-block;
-  	width: 100%;
-  	height: 300upx;
-  	line-height: 300upx;
-  	// text-align: center;
-  	// font-size: 36upx;
-  }
-  
-  .scroll-view-item_H.delete {
-    width: 100upx;
-    background: #d81e06;
-    color: #fff;
-  }
   
   .list-title {
     // width: 300upx;

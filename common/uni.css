@@ -161,9 +161,7 @@ form {
 	font-size: 24upx;
 }
 
-.uni-common-mb {
-	margin-bottom: 30upx;
-}
+
 
 .uni-common-pa {
 	padding: 30upx;
@@ -187,6 +185,34 @@ form {
 
 .uni-common-mt {
 	margin-top: 30upx;
+}
+
+.uni-common-mb {
+	margin-bottom: 30upx;
+}
+
+.uni-common-ml {
+	margin-left: 30upx;
+}
+
+.uni-common-mr {
+	margin-right: 30upx;
+}
+
+.uni-common-mt-sm {
+	margin-top: 10upx;
+}
+
+.uni-common-mb-sm {
+	margin-bottom: 10upx;
+}
+
+.uni-common-ml-sm {
+	margin-left: 10upx;
+}
+
+.uni-common-mr-sm {
+	margin-right: 10upx;
 }
 
 /* 背景色 */

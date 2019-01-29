@@ -45,7 +45,10 @@
         		
         	</view>
           <view class="uni-flex-item uni-right">
-            <image src="/static/icon/user/msg.png" mode="widthFix" style="width: 110upx;height: 110upx;"></image>
+            <navigator url="/pages/notice/notice">
+              <image src="/static/icon/user/msg.png" mode="widthFix" style="width: 110upx;height: 110upx;"></image>
+            </navigator>
+            
           </view>
           
         </view>
@@ -204,10 +207,10 @@
          cards : [
            {title : '我的服务' ,items: [
              {text: '收支记录' , icon : 'trade' , path: '/pages/user/trade'},
-             {text: '商城订单' , icon : 'order' , path: '/pages/order/list'},
-             {text: '我的售后' , icon : 'after' , path: '/pages/order/afters'},
+             {text: '商城订单' , icon : 'order' , path: '/pages/user/orders'},
+             {text: '我的售后' , icon : 'after' , path: '/pages/user/orderAfters'},
              {text: '我的团队' , icon : 'team', path: '/pages/user/inviteList'},
-             {text: '我的评价' , icon : 'rate', path: '/pages/order/rates'},
+             {text: '我的评价' , icon : 'rate', path: '/pages/user/orderRates'},
              {text: '品牌申请' , icon : 'brand', path: '/pages/user/brandApply'},
            ]},
            {title : '我的足迹' ,items: [

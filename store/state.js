@@ -22,7 +22,7 @@ export default {
   userEcardList:[],
   userEcardInfo:{},
   oAuthId: 0,
-  
+  brandApplyInfo:{},
   // 商城相关
   mallType: 1, // 1:自营商城2:京东商城
 	goodsLimit: 10,
