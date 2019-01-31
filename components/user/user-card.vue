@@ -1,6 +1,6 @@
 <template>
 	<view class="user-card uni-bg-white">
-    <view class="user-card-header uni-common-pa uni-border-bottom uni-text-darker">
+    <view class="user-card-header uni-common-pa uni-border-bottom uni-bold">
     	{{ title }}
     </view>
     <view class="user-card-body">

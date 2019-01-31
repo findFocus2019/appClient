@@ -8,6 +8,7 @@
     
     <view class="uni-common-mt uni-bg-white ">
     	<view class="" v-for="(list,index) in cartList" :key="index">
+        
     		<view class="" v-if="list.length">
     			<view class="uni-common-pa" v-if="index == 1">
     				自营商城

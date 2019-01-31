@@ -26,7 +26,16 @@
         {
             "path" : "pages/plus/plus",
             "style" : {
-                "navigationBarTitleText" : "发布"
+                "navigationBarTitleText" : "发布",
+                "app-plus" : {
+                    "titleNView" : false
+                }
+            }
+        },
+        {
+            "path" : "pages/plus/post",
+            "style" : {
+                "navigationBarTitleText" : "发布评测"
             }
         },
         {
@@ -237,6 +246,12 @@
             }
         },
         {
+            "path" : "pages/user/trade",
+            "style" : {
+                "navigationBarTitleText" : "收支记录"
+            }
+        },
+        {
             "path" : "pages/user/order",
             "style" : {
                 "navigationBarTitleText" : "商城订单"
@@ -267,9 +282,21 @@
             }
         },
         {
+            "path" : "pages/user/orderDetail",
+            "style" : {
+                "navigationBarTitleText" : "订单详情"
+            }
+        },
+        {
             "path" : "pages/user/orderRates",
             "style" : {
                 "navigationBarTitleText" : "我的评价"
+            }
+        },
+        {
+            "path" : "pages/user/orderRatePost",
+            "style" : {
+                "navigationBarTitleText" : "订单评价"
             }
         },
         {
@@ -281,7 +308,7 @@
         {
             "path" : "pages/user/orderAfterDetail",
             "style" : {
-                "navigationBarTitleText" : "我的售后"
+                "navigationBarTitleText" : "售后详情"
             }
         },
         {
@@ -305,7 +332,13 @@
         {
             "path" : "pages/notice/detail",
             "style" : {
-              "navigationBarTitleText" : "系统详情"
+              "navigationBarTitleText" : "公告详情"
+            }
+        },
+        {
+            "path" : "pages/user/assetsOut",
+            "style" : {
+              "navigationBarTitleText" : "提现"
             }
         }
     ],

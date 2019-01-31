@@ -22,7 +22,9 @@
         		
         	</view>
           <view class="uni-flex-item uni-right">
+            <navigator url="/pages/notice/notice">
             <image src="/static/icon/user/msg.png" mode="widthFix" style="width: 110upx;height: 110upx;"></image>
+            </navigator>
           </view>
           
         </view>
@@ -60,18 +62,18 @@
     	<view class="uni-center uni-bg-white ">
     		<view class="uni-flex uni-common-pt uni-common-pb uni-border-bottom uni-radius-big">
     			<view class="uni-flex-item">
-    				<view class="uni-h5">
+    				<view class="uni-text-dark">
     					总收益
     				</view>
             <view class="uni-h4">
             	{{userIndexData.balance}}
             </view>
     			</view>
-          <view class="uni-flex-item">
-          	
+          <view class="uni-flex-item uni-common-pt" @tap="goToPage('/pages/user/assetsOut')">
+          	<text class="uni-bg-red" style="padding: 12upx 36upx;border-radius: 8upx;">提现</text>
           </view>
           <view class="uni-flex-item">
-          	<view class="uni-h5">
+          	<view class="uni-text-dark">
           		积分余额
           	</view>
           	<view class="uni-h4">
@@ -122,7 +124,7 @@
       <view class="uni-common-mt uni-flex">
       	<view class="uni-flex-item uni-flex user-box-vip uni-common-pa" @tap="goToPage('/pages/user/vip')">
       		<view class="uni-flex-item uni-common-pr" style="width: 120upx;height: 120upx;">
-      			<image src="/static/icon/user/vip.png" mode="widthFix" style="width: 120upx;height: 120upx;"></image>
+      			<image src="/static/icon/user/vip.png" mode="scaleToFill" style="width: 120upx;height: 120upx;"></image>
       		</view>
           <view class="uni-flex-item">
           	<view class="uni-text-dark uni-common-mt">
@@ -132,7 +134,7 @@
       	</view>
         <view class="uni-flex-item uni-flex user-box-ecard uni-common-pa" @tap="goToPage('/pages/user/ecard')">
         	<view class="uni-flex-item uni-common-pr" style="width: 120upx;height: 120upx;">
-        		<image src="/static/icon/user/ecard.png" mode="widthFix" style="width: 120upx;height: 120upx;"></image>
+        		<image src="/static/icon/user/ecard.png" mode="scaleToFill" style="width: 120upx;height: 120upx;"></image>
         	</view>
         	<view class="uni-flex-item">
         		<view class="uni-text-dark uni-common-mt">
@@ -256,12 +258,12 @@
   }
   
   .user-box-vip {
-   padding-top: 32upx;
+    padding-top: 32upx;
     margin-right: 8upx;
     background: #FFFFFF;
   }
   .user-box-ecard{
-    padding-top: 40upx;
+    padding-top: 32upx;
     margin-left: 8upx;
     background: #FFFFFF;
   }

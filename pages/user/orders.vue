@@ -11,7 +11,7 @@
     	
       <view class="uni-bg-white uni-common-mt">
       	
-        <view class="uni-flex uni-common-pa">
+        <view class="uni-flex uni-common-pa" @tap="goToDetail">
         	<view class="uni-flex-item">
         		自营:100101010101010010101010110
         	</view>
@@ -20,7 +20,7 @@
           </view>
         </view>
         
-        <view class="uni-border-top  uni-common-pb">
+        <view class="uni-border-top  uni-common-pb" @tap="goToDetail">
           
         	<view class="uni-flex uni-common-pl uni-common-pr uni-common-pt">
         		<view class="" style="width: 200upx;height: 200upx;">
@@ -68,7 +68,7 @@
           
         </view>
         
-         <view class="uni-border-top uni-common-pa uni-right">
+         <view class="uni-border-top uni-common-pa uni-right" @tap="goToDetail">
            <text class="uni-text-small uni-text-light uni-common-mr-sm ">
            	共4件
            </text>
@@ -115,6 +115,11 @@
     methods:{
       changeStatus(status){
         this.status = status
+      },
+      goToDetail(){
+        uni.navigateTo({
+        	url:'/pages/user/orderDetail'
+        })
       }
     }
     
