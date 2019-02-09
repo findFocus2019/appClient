@@ -5,7 +5,7 @@
       <view class="top-panel">
         <image class="top-panel-bg" src="/static/img/home_header_bg.jpg"/>
         <view class="search-bar-container">
-          <search-bar />
+          <search-bar @update:confirm="doSearch"/>
         </view>
         <view class="buttons">
           <view class="button checkout">
@@ -149,7 +149,11 @@ export default {
 
   onLoad() {},
 
-  methods: {}
+  methods: {
+    doSearch (data) {
+      console.log('doSearch: ', data);
+    }
+  }
 };
 </script>
 

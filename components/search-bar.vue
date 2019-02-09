@@ -1,8 +1,8 @@
 <template>
   <view class="search-bar">
     <uni-icon type="search" class="icon-search" size="24"/>
-    <input :value="searchValue" :type="text" confirm-type="search" placeholder="请输入搜索内容" @input="onInput" @confirm="onConfirm" class="uni-input"/>
-    <uni-icon type="clear" class="icon-clear" size="24"/>
+    <input v-model="searchValue" confirm-type="搜索" type="text"  placeholder="请输入搜索内容" @input="onInput" @confirm="onConfirm" class="uni-input"/>
+    <uni-icon type="clear" class="icon-clear" size="24"  @tap="clearInput"/>
   </view>
 </template>
 
@@ -28,16 +28,24 @@ export default {
     console.log("mounted");
   },
 
-  method: {
+  methods: {
     
     // 输入
     onInput (evt) {
-      this.emit('update:input', evt);
+      console.log("onInput: ", evt);
+      this.$emit('update:input', this.searchValue);
     },
 
     // 触发搜索的动作
     onConfirm (evt) {
-      this.emit('update:confirm', evt);
+      console.log("onConfirm: ", evt);
+      this.$emit('update:confirm', this.searchValue);
+    },
+
+    clearInput (evt) {
+      console.log("clearInput: ", this.searchValue);
+      // this.setData({searchValue: ''});
+      this.searchValue = '';
     }
   }
 
