@@ -18,13 +18,13 @@
 				<slot></slot>
 			</view>
 			<view class="uni-navbar-header-btns" @tap="onClickRight">
-                <view v-if="rightIcon.length">
-                    <uni-icon :type="rightIcon" :color="color" size="24"></uni-icon>
-                </view>
-                <!-- 优先显示图标 -->
-                <view v-if="rightText.length&&!rightIcon.length" class="uni-navbar-btn-text">{{rightText}}</view>
-                <slot name="right"></slot>
-            </view>
+        <view v-if="rightIcon.length">
+            <uni-icon :type="rightIcon" :color="color" size="24"></uni-icon>
+        </view>
+        <!-- 优先显示图标 -->
+        <view v-if="rightText.length&&!rightIcon.length" class="uni-navbar-btn-text">{{rightText}}</view>
+        <slot name="right"></slot>
+      </view>
 		</view>
 	</view>
 </template>

@@ -3,7 +3,10 @@
     <view class="content">
       <!-- 顶部的大背景 -->
       <view class="top-panel">
-        <image class="top-panel-bg" src="/static/img/home_header_bg.jpg"/>>
+        <image class="top-panel-bg" src="/static/img/home_header_bg.jpg"/>
+        <view class="search-bar-container">
+          <search-bar />
+        </view>
         <view class="buttons">
           <view class="button checkout">
             <image src="/static/icon/home/icon_checkout.png"/>
@@ -90,12 +93,15 @@ import uniIcon from "@/components/uni-icon.vue";
 import RecommendedFocusItem from "@/components/home/recommended-focus-item.vue";
 import NewsItem from "@/components/home/news-item.vue";
 
+import SearchBar from "@/components/search-bar.vue";
+
 export default {
   components: {
     uniNavBar,
     uniIcon,
     RecommendedFocusItem,
     NewsItem,
+    SearchBar,
   },
 
   data() {
@@ -227,6 +233,20 @@ export default {
           
         }
       }
+    }
+
+    .search-bar-container {
+      position: absolute;
+      left: 50%;
+      top: 53upx;
+      transform: translateX(-50%);
+
+      display: block;
+      width: 549upx;
+      height: 49upx;
+      border-radius:24upx;
+
+      overflow: hidden;
     }
 
   }
