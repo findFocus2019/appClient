@@ -4,12 +4,12 @@
     <view class="uni-common-pa uni-center uni-text-white" style="position: relative;">
     	<view class="uni-h4">
     		连续累计签到
-        <text class="uni-h1" style="margin-left: 10upx;margin-right: 10upx;">3</text>
+        <text class="uni-h1" style="margin-left: 10upx;margin-right: 10upx;">{{dailySignData.continues_num}}</text>
         天
     	</view>
       <view class="">
       	累计获得奖励：
-        <text class="uni-h3 uni-text-yellow" style="margin-left: 10upx;margin-right: 10upx;">888</text>
+        <text class="uni-h3 uni-text-yellow" style="margin-left: 10upx;margin-right: 10upx;">{{dailySignData.score}}</text>
         积分
       </view>
       
@@ -39,23 +39,32 @@
       			</view>
             
             <view class="uni-flex uni-center uni-text-dark uni-common-mt">
-            	<view class="uni-flex-item" v-for="(day,index) in weekdays" :key="index">
-            		{{ day }}
+            	<view class="uni-flex-item" v-for="(item,index) in weekdays" :key="index" >
+            		{{ item }}
             	</view>
             </view>
             
-            <view class="uni-flex uni-center uni-common-mt" v-for="(days,index1) in monthDays" :key="index1">
-            	<view class="uni-flex-item" v-for="(day,index2) in days" :key="index2">
-            		<text class="month-day-item">{{ day }}</text> 
+            <view class="uni-flex uni-common-mt" v-for="(days,index1) in monthDays" :key="index1">
+            	<view class="uni-center" v-for="(item,index2) in days" :key="index2" style="width: 90upx;">
+            		<text class="month-day-item today" v-if="item == day">{{ item }}</text> 
+                <text class="month-day-item" v-if="item > day">{{ item }}</text>
+                <block v-if="item < day && item > 0">
+                  <text class="month-day-item active" v-if="dailySignData.active_days.indexOf(item) > -1">{{ item }}</text>
+                  <text class="month-day-item no-active" v-else>{{ item }}</text>
+                </block>
+                
             	</view>
             </view>
             
             <view class="uni-common-mt">
             	<view class="uni-common-pa">
                 <view class="uni-common-pl uni-common-pr">
-                	<view class="uni-bg-pink uni-border-btn-radius" style="line-height: 80upx;">
+                	<view class="uni-bg-pink uni-border-btn-radius" style="line-height: 80upx;" v-if="dailySignData.today_sign == 0" @tap="dailySignAction">
                 		我要签到
                 	</view>
+                  <view class="uni-bg-gray uni-border-btn-radius" style="line-height: 80upx;" v-else>
+                  	已签到
+                  </view>
                 </view>
             		
             	</view>
@@ -64,9 +73,9 @@
       		</view>
           
           <view class="uni-common-mt">
-            <view class="uni-bg-gray uni-border-btn-radius" style="line-height: 100upx;">
+            <view class="uni-text-dark" style="line-height: 100upx;">
             	<navigator url="/pages/user/dailySignHongbao">
-            	  立即领取
+            	  查看连续签到情况
             	</navigator>
             </view>
           	
@@ -86,7 +95,15 @@
         year:0,
         month:0,
         day:0,
-        monthDays:[]
+        monthDays:[],
+        
+        dailySignData:{
+          continues_num: 0,
+          active_days: [],
+          score:0,
+          balance:0,
+          today_sign:0
+        }
       }
     },
     computed:{
@@ -98,7 +115,49 @@
        })
      }
     },
-    onLoad() {
+    methods:{
+      async dailySignAction(){
+        uni.showLoading({
+        	mask:true,
+          title:'签到中...'
+        })
+        let ret= await this.$store.dispatch('userDailySignAction')
+        console.log('userDailySignAction' , JSON.stringify(ret))
+        uni.hideLoading()
+        if(ret.code == 0){
+          let data = ret.data
+          let score = data.score
+          let balance = data.balance
+          let title = '签到成功'
+          if(score){
+            title += ',获得' + score + '积分奖励'
+          }
+          if(balance){
+            title += ',获得' + balance + '现金奖励'
+          }
+          uni.showToast({
+          	icon:'success',
+            title:title
+          })
+          
+          this.getDailySignData()
+        }else {
+          uni.showToast({
+          	icon:'none',
+            title:ret.message
+          })
+        }
+      },
+      async getDailySignData(){
+        // 获取数据
+        let ret = await this.$store.dispatch('userDailySignDataGet')
+        console.log('userDailySignDataGet =====' , ret)
+        if(ret.code == 0){
+          this.dailySignData = ret.data
+        }
+      }
+    },
+    async onLoad() {
     	let date = new Date()
       this.year = date.getFullYear()
       this.month = date.getMonth() + 1
@@ -139,6 +198,7 @@
       console.log(weekdays)
       this.monthDays = weekdays
       
+      this.getDailySignData()
     }
   }
 </script>
@@ -161,10 +221,25 @@
   
   .month-day-item {
     display: inline-block;
-    width: 24px;
-    height: 24px;
+    width: 48upx;
+    height: 48upx;
     /* background: #000; */
-    border-radius: 12px;
+    border-radius: 24upx;
+  }
+  
+  .month-day-item.today {
+    background: #ff6262;
+    color: #FFFFFF;
+  }
+  
+  .month-day-item.active {
+    background: #007aff;
+    color: #FFFFFF;
+  }
+  
+  .month-day-item.no-active {
+    background: #EEEEEE;
+    /* color: #333333; */
   }
   
 </style>

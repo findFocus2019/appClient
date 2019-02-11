@@ -1,8 +1,8 @@
 <template>
   <view class="news-item">
-    <image class="cover" :src="cover"></image>
+    <image class="cover" :src="cover" mode="scaleToFill"></image>
     <view class="content">
-      <text class="title">{{title}}</text>
+      <text class="uni-ellipsis-2">{{title}}</text>
       <text class="publish-date">发布时间：{{publish_time}}</text>
       <view class="statistics-info">
         <view class="statistics-item visits">
@@ -51,8 +51,8 @@ export default {
         border-bottom: 0.694upx solid #e5e5e5;
 
         .cover {
-          width: 277.778upx;
-          height: 208.333upx;
+          width: 280upx;
+          height: 180upx;
         }
 
         .content {
@@ -63,15 +63,15 @@ export default {
           text-align: left;
           background-color: #fff;
 
-          .title {
-            width: 100%;
-            height: 72.917upx;
-            font-size: 27.778upx;
-            font-family: MicrosoftYaHei;
-            font-weight: 400;
-            color: #333;
-            line-height: 38.889upx;
-          }
+//           .title {
+//             width: 100%;
+//             height: 72.917upx !important;
+//             font-size: 27.778upx;
+//             font-family: MicrosoftYaHei;
+//             font-weight: 400;
+//             color: #333;
+//             line-height: 38.889upx !important;
+//           }
 
           .publish-date {
             display: block;

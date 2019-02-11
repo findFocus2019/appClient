@@ -27,4 +27,14 @@ page {
   line-height: 1.8;
 }
 
+uni-rich-text img {
+    max-width: 100% !important;
+  }
+  
+uni-rich-text p {
+  line-height: 1.5;
+  margin-bottom: 30upx;
+  word-break: break-all;
+}
+
 </style>

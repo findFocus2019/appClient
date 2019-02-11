@@ -1,10 +1,27 @@
 export default {
+  version:'0.9.0',
+  configs:{},
+  appNoticeData:{
+    page:1,
+    count:0,
+    list:[],
+    info:{}
+  },
+  plusPostData:{
+    title: '',
+    goods: {},
+    contents: [],
+    video:'',
+    audio:'',
+    progress:0
+  },
   /**
    * 是否需要强制登录
    */
   forcedLogin: false,
   hasLogin: false,
   userInfo:{},
+  isVip:0,
   userIndexData:{
     balance:0,
     score:0,
@@ -21,14 +38,28 @@ export default {
   userInvoice:{id:0},
   userEcardList:[],
   userEcardInfo:{},
+  
+  // 我的评测
+  userPostData:{
+    page:1,
+    list:[],
+    count:0
+  },
+  // 我的评论
+  userCommentData:{
+    page:1,
+    list:[],
+    count:0
+  },
+  
   oAuthId: 0,
   brandApplyInfo:{},
   // 商城相关
   mallType: 1, // 1:自营商城2:京东商城
 	goodsLimit: 10,
 	goodsTimestamp:0,
-	mallCategorys:[],
-  mallGoodsList:{},
+	mallCategorysData:[,[],[]],
+  mallGoodsListData:[,{},{}],
   mallGoodsInfo:{},
   mallSearch:{
     open:false,
@@ -64,5 +95,16 @@ export default {
     ecardId:0,
     ecardAmount:0,
     payMethodExt:''
-  }
+  },
+  
+  // 资讯相关
+  postInfo:{},
+  postChannels:[],
+  newsDatas:{},
+  recommendDatas:{},
+  focusDatas:{
+    story:{},
+    activity:{}
+  },
+  postsListDatas:{} //焦点评测
 }

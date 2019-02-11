@@ -2,7 +2,6 @@
   <view class="uni-tab-bar">
     <!-- 固定在顶部的导航栏 -->
     <uni-nav-bar color="#333333" background-color="#FFFFFF" fixed="true" @click-right="cancelSearch" v-if="mallSearch.open">
-
       <view class="input-view uni-flex">
         <uni-icon type="search" size="22" color="#666666"></uni-icon>
         <input confirm-type="搜索" @focus="goSearch" class="input" type="text" placeholder="输入搜索关键词" v-model="mallSearch.text" />
@@ -119,7 +118,7 @@
     },
     data() {
       return {
-
+      
         topHideViewStyle: 0,
         loadingText: {
           contentdown: "上拉显示更多",
@@ -177,7 +176,7 @@
       },
       goDetail(item) {
         uni.navigateTo({
-          url: '/pages/mall/goods?id=' + item.uuid
+          url: '/pages/mall/goods?id=' + item.id
         })
       },
       async loadMore(e) {
@@ -278,33 +277,36 @@
     },
     async onLoad() {
       console.log('onLoad')
-
-      let mallGoodsList = this.$store.state.mallGoodsList
-      if (mallGoodsList.all && mallGoodsList.all.rows.length > 0) {
-        // console.log(mallGoodsList.all)
-        this.tabDatas = this.$store.state.mallGoodsList
-        return
-      }
-
-      this.$store.state.goodsTimestamp = parseInt(Date.now() / 1000)
       await this.$store.dispatch('getGoodsCategory')
       let mallCategorys = this.$store.state.mallCategorys
       console.log('mallCategorys', JSON.stringify(mallCategorys))
-      let category = mallCategorys[0].id
-      console.log('category', category)
-      await this.$store.dispatch('getGoodsList', {
-        category: category
-      })
-      if (mallCategorys.length > 1) {
-        let category = mallCategorys[1].id
+      
+      let mallGoodsList = this.$store.state.mallGoodsList
+      if (mallGoodsList.all && mallGoodsList.all.rows.length > 0) {
+        // console.log(mallGoodsList.all)
+        // this.tabDatas = this.$store.state.mallGoodsList
+        // return
+      }else {
+        this.$store.state.goodsTimestamp = parseInt(Date.now() / 1000)
+        let category = mallCategorys[0].id
         console.log('category', category)
         await this.$store.dispatch('getGoodsList', {
           category: category
         })
+        if (mallCategorys.length > 1) {
+          let category = mallCategorys[1].id
+          console.log('category', category)
+          await this.$store.dispatch('getGoodsList', {
+            category: category
+          })
+        }
       }
 
-      // this.tabDatas = this.randomfn()
       this.tabDatas = this.$store.state.mallGoodsList
+      
+
+      // this.tabDatas = this.randomfn()
+      
     },
     onShow() {
       console.log('onShow')
@@ -314,6 +316,8 @@
         this.tapTab(0)
         // this.mallSearch.hasDone = false
       }
+      
+      
     },
     async onPullDownRefresh() {
       console.log('refresh');

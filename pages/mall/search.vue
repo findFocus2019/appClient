@@ -65,15 +65,17 @@
           uni.navigateBack()
         }
       },
-      cancel(){
+      async cancel(){
         
         this.mallSearch.open = false
         this.mallSearch.hasDone = false
         this.mallSearch.text = ''
         
-        uni.reLaunch({
-        	url:'/pages/mall/index'
-        })
+        uni.navigateBack()
+        
+//         uni.reLaunch({
+//         	url:'/pages/mall/index'
+//         })
       }
     },
     async onReady() {

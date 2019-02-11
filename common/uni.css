@@ -16,12 +16,19 @@ checkbox-group {
 	width: 100%;
 }
 
+.uni-bg-red-linear {
+  background: linear-gradient(#ff5d44 , #d81e06);
+}
+
 form {
 	width: 100%;
 }
 
 .input-label {
 	width: 160upx;
+}
+.uni-inline-block{
+  display: inline-block;
 }
 
 .uni-flex {

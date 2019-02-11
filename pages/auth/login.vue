@@ -21,13 +21,13 @@
                class="uni-input"
                :password="showPassword"
              >
-             <view class="uni-icon uni-icon-eye" :class="[!showPassword ? 'uni-active' : '']" @click="changePassword"></view>
+             <view class="uni-icon uni-icon-eye" :class="[!showPassword ? 'uni-active' : '']" @click="changePassword" style="font-size: 36upx;"></view>
            </view>
            	
          </view>
      
          <view class="uni-common-mt uni-common-pl uni-common-pr">
-           <button type="primary" formType="submit">登录</button>
+           <button type="warn" formType="submit" class="uni-border-btn-radius">登录</button>
          </view>
      
          <view class="uni-common-pl uni-common-pr uni-common-mt uni-center uni-flex">
@@ -44,12 +44,11 @@
      
          <view :style="{position: 'absolute' ,top: positionTop + 'px', width: '100%'}">
            <view class="uni-common-pa uni-common-mt uni-center uni-flex" v-if="hasProvider">
-             <template v-for="item in providerList">
-                <view class="uni-column uni-flex-item" @tap="oauth(item.value)" >
+
+                <view class="uni-column uni-flex-item" @tap="oauth(item.value)" v-for="(item,index) in providerList" :key="index">
                   <image :src="item.image" style="width:64px;height:64px;"></image>
                 </view>
-             </template>
-             
+ 
            </view>
      
            <view class="uni-common-pa uni-center uni-flex">
@@ -156,6 +155,10 @@ export default {
           if(type == 'sinaweibo'){
             this.oauth_info.openid = loginRes.authResult.uid
           }
+          // #ifdef MP-WEIXIN
+          let jscode = loginRes.code
+          console.log('login jscode =====' , jscode)
+          // #endif
           
           uni.getUserInfo({
               provider: type,
@@ -173,6 +176,22 @@ export default {
                      this.oauth_info.openid = oauthInfo.openid
                   }
                   
+                  // #ifdef MP-WEIXIN
+                  console.log('login 小程序，去后台取openid');
+                  let jscodeRet = await this.$store.dispatch('authCodeToSession' , {jscode: jscode})
+                  if(jscodeRet.code == 0){
+                    this.oauth_info.openid = jscodeRet.data.openid
+                  }else {
+                    uni.showToast({
+                      icon:'none',
+                    	title: '小程序授权获取openid失败，请稍后重试',
+                    	mask: false,
+                    	duration: 1500
+                    });
+                    return
+                  }
+                  // #endif
+   
                   console.log(JSON.stringify((this.oauth_info)))
                   
                   let oauthRet = await Request.post('auth/loginOauth' , this.oauth_info)
@@ -272,6 +291,10 @@ export default {
   onLoad() {
       this.initProvider();
       this.initPosition();
+      
+      // #ifdef MP-WEIXIN
+      this.oauth('weixin');
+      // #endif
   }
 };
 </script>

@@ -6,68 +6,74 @@ export default {
     let type = store.state.mallType
     store.state.mallType = (type === 1) ? 2 : 1
   },
-	
+	// 获取商城分类列表
 	async getGoodsCategory(store, data){
 		let type = store.state.mallType
 		let ret = await Request.post('mall/categorys' , {type: type})
 		if(ret.code == 0){
 			console.log('getGoodsCategory' , JSON.stringify(ret.data))
-			store.state.mallCategorys = ret.data
+			store.state.mallCategorysData[type] = ret.data
 		}
+    return ret
 	},
 	
-	async getGoodsList(store, data){
-		console.log('getGoodsList data' , JSON.stringify(data))
-		let category = data.category
-		if(!store.state.mallGoodsList.hasOwnProperty(category)){
-			store.state.mallGoodsList[category] = {}
-			store.state.mallGoodsList[category].rows = []
-			store.state.mallGoodsList[category].page = 1
-			store.state.mallGoodsList[category].order = []
-		}
-		console.log('getGoodsList mallGoodsList[category]' , category, store.state.mallGoodsList[category])
-		
-    let mallSearch = store.state.mallSearch
-    let search = ''
-    if(mallSearch.hasDone && mallSearch.text){
-      search = mallSearch.text
-    }
-		
-		let type = store.state.mallType
-		let page = store.state.mallGoodsList[category].page
-		let limit = store.state.goodsLimit || 10
-		let timestamp = data.timestamp || store.state.mallGoodsList[category].timestamp || store.state.goodsTimestamp 
-		
-		let pramas = {type: type, page: page, limit:limit, category: category,timestamp:timestamp , search: search}
-		console.log('getGoodsList pramas' , JSON.stringify(pramas))
-		let ret = await Request.post('mall/goodsList' , pramas)
-		if(ret.code == 0){
-			console.log('getGoodsCategory' ,category, JSON.stringify(ret.data))
-			let rows = ret.data.rows
-			console.log('getGoodsCategory mallGoodsList rows' , category,store.state.mallGoodsList[category].rows)
-			if(rows.length){
-				for (var i = 0; i < rows.length; i++) {
-					let item = rows[i]
-					store.state.mallGoodsList[category].rows.push(item)
-				}
-				
-				store.state.mallGoodsList[category].page++
-			}
-
-			store.state.mallGoodsList[category].count = ret.data.count
-			store.state.mallGoodsList[category].timestamp = timestamp // 更新时间戳
-			// console.log('getGoodsCategory mallGoodsList rows' , category, JSON.stringify(store.state.mallGoodsList[category]))
-			
-			if(rows.length < limit){
-				store.state.mallGoodsList[category].loadingType = 2
-			}else {
-				store.state.mallGoodsList[category].loadingType = 1
-			}
-		}else {
-			
-			store.state.mallGoodsList[category].loadingType = 2
-		}
-	},
+  async getGooddList(store , data){
+    
+    let ret = await Request.post('mall/goodsList' , data)
+    return ret
+  },
+// 	async getGoodsList(store, data){
+// 		console.log('getGoodsList data' , JSON.stringify(data))
+// 		let category = data.category
+// 		if(!store.state.mallGoodsList.hasOwnProperty(category)){
+// 			store.state.mallGoodsList[category] = {}
+// 			store.state.mallGoodsList[category].rows = []
+// 			store.state.mallGoodsList[category].page = 1
+// 			store.state.mallGoodsList[category].order = []
+// 		}
+// 		console.log('getGoodsList mallGoodsList[category]' , category, store.state.mallGoodsList[category])
+// 		
+//     let mallSearch = store.state.mallSearch
+//     let search = ''
+//     if(mallSearch.hasDone && mallSearch.text){
+//       search = mallSearch.text
+//     }
+// 		
+// 		let type = store.state.mallType
+// 		let page = store.state.mallGoodsList[category].page
+// 		let limit = store.state.goodsLimit || 10
+// 		let timestamp = data.timestamp || store.state.mallGoodsList[category].timestamp || store.state.goodsTimestamp 
+// 		
+// 		let pramas = {type: type, page: page, limit:limit, category: category,timestamp:timestamp , search: search}
+// 		console.log('getGoodsList pramas' , JSON.stringify(pramas))
+// 		let ret = await Request.post('mall/goodsList' , pramas)
+// 		if(ret.code == 0){
+// 			console.log('getGoodsCategory' ,category, JSON.stringify(ret.data))
+// 			let rows = ret.data.rows
+// 			console.log('getGoodsCategory mallGoodsList rows' , category,store.state.mallGoodsList[category].rows)
+// 			if(rows.length){
+// 				for (var i = 0; i < rows.length; i++) {
+// 					let item = rows[i]
+// 					store.state.mallGoodsList[category].rows.push(item)
+// 				}
+// 				
+// 				store.state.mallGoodsList[category].page++
+// 			}
+// 
+// 			store.state.mallGoodsList[category].count = ret.data.count
+// 			store.state.mallGoodsList[category].timestamp = timestamp // 更新时间戳
+// 			// console.log('getGoodsCategory mallGoodsList rows' , category, JSON.stringify(store.state.mallGoodsList[category]))
+// 			
+// 			if(rows.length < limit){
+// 				store.state.mallGoodsList[category].loadingType = 2
+// 			}else {
+// 				store.state.mallGoodsList[category].loadingType = 1
+// 			}
+// 		}else {
+// 			
+// 			store.state.mallGoodsList[category].loadingType = 2
+// 		}
+// 	},
   
   async getGoodsInfo(store, data){
     let ret = await Request.post('mall/goodsInfo' , {goods_id: data.id})

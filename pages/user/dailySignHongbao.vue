@@ -1,6 +1,6 @@
 <template>
 	<view class="uni-page-body uni-bg-white">
-		<view class="uni-border-top uni-top uni-common-mt">
+		<view class="uni-common-mt">
 			<view class="uni-common-pa uni-center">
 				
         <view class="uni-center uni-common-pt" >
@@ -19,7 +19,7 @@
           				您已连续登录
           			</view>
                 <view class="" style="line-height: 100upx;">
-                	<text class="uni-bold uni-text-red" style="font-size: 112upx;">7</text>
+                	<text class="uni-bold uni-text-red" style="font-size: 112upx;">{{dailySignData.continues_num}}</text>
                   天
                 </view>
           		</view>
@@ -40,9 +40,12 @@
         </view>
         
         <view class="uni-common-pa">
-        	<view class="uni-btn uni-border-btn-radius uni-bg-red">
+        	<view class="uni-btn uni-border-btn-radius uni-bg-red" v-if="dailySignData.balance">
         		立即领取
         	</view>
+          <view class="uni-btn uni-border-btn-radius uni-bg-gray" v-else>
+          	已领取
+          </view>
         </view>
 			</view>
 		</view>
@@ -54,8 +57,29 @@
     data(){
       return {
         nums:[1,2,3,4,5,6,7],
-        signNum:3
+        signNum:3,
+        dailySignData:{
+          continues_num: 0,
+          active_days: [],
+          score:0,
+          balance:0,
+          today_sign:0
+        }
       }
+    },
+    methods:{
+      async getDailySignData(){
+        // 获取数据
+        let ret = await this.$store.dispatch('userDailySignDataGet')
+        console.log('userDailySignDataGet =====' , ret)
+        if(ret.code == 0){
+          this.dailySignData = ret.data
+          this.signNum = ret.data.continues_num
+        }
+      }
+    },
+    onLoad() {
+    	this.getDailySignData()
     }
   }
 </script>

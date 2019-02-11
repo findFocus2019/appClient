@@ -1,6 +1,6 @@
 <template>
 	<view class="" style="display: inline;">
-		{{ money }}
+		<text :style="{fontSize: size + 'upx'}">{{ money }}</text>
 	</view>
 </template>
 
@@ -10,6 +10,16 @@
       num:{
         type: Number,
         default:0
+      },
+      size:{
+        type: String,
+        default:'24'
+      },
+      nums:{
+        type:Array,
+        default(){
+          return []
+        }
       }
     },
 		data() {
@@ -17,22 +27,61 @@
 				money: 0
 			};
 		},
-    created() {
-      let numStr = this.num.toString()
-      console.log(numStr)
-      let numArr = numStr.split('.')
-      if(numArr.length == 1){
-        this.money = '￥' + numStr + '.00'
-      }else {
-        this.money = '￥' + numArr[0] + '.'
-        if(numArr[1].length == 1){
-          this.money += numArr[1] + '0'
-        }else{
-          this.money += numArr[1]
+    methods:{
+      formatNum(){
+        if(this.num || this.num === 0 || this.num === '0'){
+          let numStr = this.num.toString()
+          console.log(numStr)
+          let numArr = numStr.split('.')
+          if(numArr.length == 1){
+            this.money = '￥' + numStr + '.00'
+          }else {
+            this.money = '￥' + numArr[0] + '.'
+            if(numArr[1].length == 1){
+              this.money += numArr[1] + '0'
+            }else{
+              this.money += numArr[1]
+            }
+          }
+        }
+      },
+      formatNums(){
+        if(this.nums.length){
+          let num = 0
+          this.nums.forEach(n => {
+            num += n * 100
+          })
+          let numStr = num / 100
+          
+          numStr = numStr.toString()
+          console.log(numStr)
+          let numArr = numStr.split('.')
+          if(numArr.length == 1){
+            this.money = '￥' + numStr + '.00'
+          }else {
+            this.money = '￥' + numArr[0] + '.'
+            if(numArr[1].length == 1){
+              this.money += numArr[1] + '0'
+            }else{
+              this.money += numArr[1]
+            }
+          }
+          
         }
       }
-      
-    	
+    },
+    created() {
+      this.formatNum()
+      this.formatNums()
+    },
+    watch:{
+      num(newVal,oldVal){
+        console.log('newVal' , newVal)
+        this.formatNum()
+      },
+      nums(newVal,oldVal){
+        this.formatNums()
+      }
     }
 	}
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <scroll-view scroll-y="true" class="scroll-view">
+  <view class="uni-page-body">
     <view class="content">
       <!-- 顶部的大背景 -->
       <view class="top-panel">
@@ -17,14 +17,14 @@
       </view>
 
       <!-- 滑动banner -->
-      <view class="swiper-banners">
+      <!-- <view class="swiper-banners">
 
         <swiper class="swiper" 
         :indicator-dots="swiper.indicatorDots"
         :autoplay="swiper.autoplay"
         :interval="swiper.interval"
         :duration="swiper.duration">
-          <swiper-item class="swiper-item" v-for="(image, index) in imgList">
+          <swiper-item class="swiper-item" v-for="(image, index) in imgList" :key="index">
             <navigator class="banner" url="image.item1.link">
               <image :src="image.item1.img" class="banner-img"></image>
             </navigator>
@@ -34,18 +34,36 @@
           </swiper-item>
         </swiper>
 
+      </view> -->
+      
+      <view class="uni-bg-white uni-common-pa uni-flex">
+      	<view class="uni-flex-item uni-left">
+      		<navigator :url="configs.main_sub_url_1">
+            <image :src="configs.main_sub_img_1" mode="" style="width: 324upx;height:200upx ;"></image>
+          </navigator>
+      	</view>
+        <view class="uni-flex-item uni-right">
+        	<navigator :url="configs.main_sub_url_2">
+        	  <image :src="configs.main_sub_img_2" mode="" style="width: 324upx;height:200upx ;"></image>
+        	</navigator>
+        </view>
       </view>
 
       <!-- 焦点推荐 -->
       <view class="the-focus-sugguestions">
         <view class="header">
           <text class="title">焦点推荐</text>
-          <navigator url="#"><text>更多&gt;&gt;</text></navigator>
+          <navigator url="/pages/posts/recommend"><text class="uni-text-small">更多</text></navigator>
         </view>
         <view class="body">
           <swiper>
-            <swiper-item class="suggestion-swiper-item" v-for="item in suggestionList">
-              <recommended-focus-item :link="item.link" :img="item.img" :title="item.title" :views="item.views" :shares="item.shares"/>
+            <swiper-item class="suggestion-swiper-item" v-for="(item,index) in recommendList" :key="index" v-if="index < 10">
+                <view class="" @tap="goToDetail(item)">
+                	<image :src="item.cover" mode="scaleToFill" style="width: 280upx;height: 210upx;"></image>
+                  <view class="uni-ellipsis uni-bold">
+                  	{{item.title}}
+                  </view>
+                </view>
             </swiper-item>
           </swiper>
         </view>
@@ -56,32 +74,70 @@
         <view class="menu-navigator">
           <swiper class="menu-swiper">
             <!-- 定义菜单 -->
-            <swiper-item v-for="(menu, index) in menus" class="swiper-menu-item">
+            <swiper-item v-for="(menu, index) in menus" class="swiper-menu-item" :key="index" @tap="goToPage(menu,index)">
               <view class="menu" :class="index === 0 ? 'activate' : ''">
-                <navigator class="menu" :url="menu.url">
+                <view class="menu">
                   <text>{{ menu.name }}</text>
-                </navigator>
+                </view>
               </view>
             </swiper-item>
 
           </swiper>
         </view>
-        <view style="width: 100%;height: 1px;background: rgba(229,229,229,1);"></view>
-        <view class="news-list">
-            <block v-for="(news, index) in newsList">
-              <news-item :cover="news.cover" :title="news.title" 
+        <!-- <view style="width: 100%;height: 1px;background: rgba(229,229,229,1);"></view> -->
+        <view class="">
+            <block v-for="(news, index) in newsList" :key="index" v-if="index < 10">
+              <!-- <news-item :cover="news.cover" :title="news.title" 
                         :publish_time="news.publish_time" :visits="news.visits"
-                        :likes="news.likes" :shares="news.shares"/>
+                        :likes="news.likes" :shares="news.shares"/> -->
+                <view class="uni-flex uni-border-top uni-bg-white uni-common-pa uni-left" @tap="goToDetail(news)" >
+                	<view class="">
+                		<image :src="news.cover" mode="scaleToFill" style="width: 280upx;height: 210upx;"></image>
+                	</view>
+                  <view class="uni-flex-item uni-common-pl">
+                  	<view class="uni-ellipsis-2 uni-left uni-bold" style="height: 80upx;">
+                  		{{news.title}}
+                  	</view>
+                    <view class="uni-common-pt uni-text-gray uni-text-small">
+                    	{{ news.publish_time}}
+                    </view>
+                    <view class="uni-common-pt-sm uni-text-gray uni-flex">
+                    	<view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
+                        <image src="/static/icon/posts/eye.png" mode="" style="width: 36upx;height: 36upx;"></image>  
+                      </view>
+                      <view class="uni-flex-item uni-common-ml-sm">
+                        <text >{{news.views}}</text> 
+                      </view>
+                      <view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
+                        <image src="/static/icon/posts/zan.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image> 
+                       </view>
+                      <view class="uni-flex-item uni-common-ml-sm">
+                      	<text>{{news.likes}}</text> 
+                      </view>
+                      <view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
+                        <image src="/static/icon/posts/share.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image> 
+                       </view>
+                      <view class="uni-flex-item uni-common-ml-sm">
+                        
+                      	<text>{{news.shares}}</text> 
+                      </view>
+                    </view>
+                  </view>
+                </view>
             </block>
+            
+            <view class="uni-border-top uni-bg-white uni-common-pa ">
+            	<navigator url="/pages/news/list">查看更多</navigator>
+            </view>
         </view>
       </view>
     </view>
-  </scroll-view>
+  </view>
 
 </template>
 
 <script>
-// import { mapState } from "vuex";
+import { mapState } from "vuex";
 
 import uniNavBar from "@/components/uni-nav-bar.vue";
 
@@ -118,32 +174,104 @@ export default {
 			    } 
 			  }
       ],
-      suggestionList: [
-        {title: "测试标题", link: "#", img: "/static/img/home/pic_1.png", views: 0, shares: 0},
-        {title: "测试标题2", link: "#", img: "/static/img/home/pic_2.png", views: 0, shares: 0}
-      ],
+//       suggestionList: [
+//         {title: "测试标题", link: "#", img: "/static/img/home/pic_1.png", views: 0, shares: 0},
+//         {title: "测试标题2", link: "#", img: "/static/img/home/pic_2.png", views: 0, shares: 0},
+//         {title: "测试标题2", link: "#", img: "/static/img/home/pic_2.png", views: 0, shares: 0}
+//       ],
+      recommendList:[],
+      newsList:[],
       menus: [
-        {name: "焦点咨询", url: "#"},
-        {name: "社会", url: "#"},
-        {name: "国际", url: "#"},
-        {name: "娱乐", url: "#"},
-        {name: "体育", url: "#"},
-        {name: "科学", url: "#"}
-      ],
-      newsList: [
-        {title: "世界记忆大师教你快速提升记忆力", cover: "/static/img/home/pic_1.png", publish_time: "2019-01-01", visits: 0, likes: 0, shares: 0},
-        {title: "世界记忆大师教你快速提升记忆力", cover: "/static/img/home/pic_1.png", publish_time: "2019-01-01", visits: 0, likes: 0, shares: 0},
-        
+        {name: "焦点资讯", url: "/pages/posts/list"}
       ]
 		}
   },
-  computed: {},
+  computed: {
+    ...mapState(['postChannels' , 'newsDatas' , 'recommendDatas', 'configs'])
+  },
 
   onShow() {},
 
-  onLoad() {},
+  async onLoad() {
+    // 获取配置
+    let configs = this.configs
+    if(Object.keys(configs).length == 0){
+      this.$store.dispatch('getConfigs')
+    }
+    
+    let channelRet = await this.$store.dispatch('postChannelsGet',{type: 1})
+    if(channelRet.code == 0){
+      let channels = this.postChannels
+      console.log('onLoad' , channels)
+      channels.forEach(channel => {
+        this.menus.push({name: channel , url:'/pages/news/list'})
+      })
+    }
+    
+    // 获取数据,焦点资讯
+    let postsAllDatas = this.$store.state.newsDatas.all || {}
+    let params = {}
+    if(!postsAllDatas.list || postsAllDatas.list.length <= 0){
+      params.page = 1
+      params.type = 1
+      params.channel = 'all'
+      params.timestamp = parseInt(Date.now() / 100)
+    }else {
+      params.page = postsAllDatas.page
+      params.type = 1
+      params.channel = 'all'
+      params.timestamp = postsAllDatas.timestamp
+    }
+    
+    let ret = await this.$store.dispatch('postListGet' , params)
+    if(ret.code == 0){
+      this.$store.state.newsDatas.all = {
+        page : ret.data.page,
+        list: ret.data.rows,
+        count: ret.data.count,
+        newCount: ret.data.newCount,
+        timestamp: ret.data.timestamp
+      }
+    }
+    this.newsList = this.newsDatas.all.list
+    
+    // 获取数据，焦点推荐
+    let recommendDatas = this.$store.state.recommendDatas
+    params = {}
+    params.page = this.recommendDatas.page || 1
+    params.recommend = 1
+    params.timestamp = this.recommendDatas.timestamp || parseInt(Date.now() / 100)
+    
+    let retR = await this.$store.dispatch('postListGet' , params)
+    console.log('retR===============' , retR)
+    if(retR.code == 0){
+      this.$store.state.recommendDatas = {
+        page : retR.data.page + 1,
+        list: retR.data.rows,
+        count: retR.data.count,
+        newCount: retR.data.newCount,
+        timestamp: retR.data.timestamp
+      }
+    }
+    this.recommendList = this.recommendDatas.list
+    
+    
+  },
 
-  methods: {}
+  methods: {
+    goToPage(item, index){
+      if(index > 0){
+        uni.navigateTo({
+        	url:item.url + '?channel=' + item.name
+        })
+      }
+    },
+    goToDetail(news){
+      uni.navigateTo({
+      	url:'/pages/posts/detail?id=' + news.id
+      })
+    }
+  }
 };
 </script>
 
@@ -238,7 +366,7 @@ export default {
     margin: 0 auto;
     margin-top: -30px;
 
-    background: #fff;
+    // background: #fff;
     border-radius: 41.667upx 41.667upx 0px 0px;
 
     .swiper-item {
@@ -270,7 +398,7 @@ export default {
     .header {
       display: flex;
       width: 100%;
-      height: 69.444upx;
+      height: 80upx;
       box-sizing: border-box;
       margin: 0;
       padding: 0 27.778upx;
@@ -354,12 +482,12 @@ export default {
       }
     }
 
-    .news-list {
-      display: flex;
-      flex-flow: column nowrap;
-      justify-content: center;
-      align-items: center;
-    }
+//     .news-list {
+//       display: flex;
+//       flex-flow: column nowrap;
+//       justify-content: center;
+//       align-items: center;
+//     }
   }
 }
 </style>

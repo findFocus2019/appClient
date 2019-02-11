@@ -32,12 +32,12 @@
              >
            </view>
            <view class="uni-column uni-flex-item uni-common-pl uni-common-pr">
-             <button color="primary" @tap="smsSend">{{ sms.text }}</button>
+             <view @tap="smsSend" class="uni-border-btn-radius uni-bg-red uni-center" style="height: 80upx;line-height: 80upx;">{{ sms.text }}</view>
            </view>
          </view>
      
          <view class="uni-common-mt uni-common-pl uni-common-pr">
-           <button type="primary" formType="submit">确定</button>
+           <button type="warn" formType="submit" class="uni-border-btn-radius">确定</button>
          </view>
      
          <view class="uni-common-pa uni-center uni-flex">

@@ -10,38 +10,43 @@
     	<view class="" v-for="(list,index) in cartList" :key="index">
         
     		<view class="" v-if="list.length">
-    			<view class="uni-common-pa" v-if="index == 1">
-    				自营商城
-    			</view>
-          <view class="uni-common-pa uni-border-top" v-if="index == 2">
-          	京选商城
+          
+          <view class="uni-bold">
+          	<view class="uni-common-pa" v-if="index == 1">
+          		自营商城
+          	</view>
+          	<view class="uni-common-pa uni-border-top" v-if="index == 2">
+          		京选商城
+          	</view>
           </view>
+    			
           
           <view class="uni-common-pl uni-common-pr" v-for="(item,index2) in list" :key="index2">
           	<view class="uni-flex uni-border-top uni-common-pt uni-common-pb">
           		<view class="" style="160upx;height: 160upx;">
-          			<image :src="item.cover" mode="scaleToFill" style="width: 160upx;height: 160upx;"></image>
+          			<image :src="item.cover" mode="scaleToFill" style="width: 160upx;height: 160upx;border-radius: 8upx;"></image>
           		</view>
               <view class="uni-flex-item uni-common-pl" >
-              	<view class="uni-ellipsis-2 uni-text-darker" style="height: 80upx;">
+              	<view class="uni-ellipsis-2 uni-bold" style="height: 80upx;">
               		{{item.title}}
               	</view>
                 <view class="uni-flex ">
-                	<view class="uni-flex-item uni-text-small uni-text-light">
+                	<view class="uni-flex-item uni-text-small uni-text-gray">
                 		<text>积分可抵扣:</text>
                 		<!-- <text style="margin-left: 10upx;">￥</text> -->
-                		<text>{{(item.price_score_sell)}} x {{item.num}}</text>
+                		<view class="uni-inline-block uni-text-small" >
+                      <money :num="item.price_score_sell" v-if="!isVip"/> 
+                      <money :num="item.price_score_vip" v-else/> 
+                      <text class="uni-common-ml-sm"> x {{item.num}}</text>
+                    </view>
                 	</view>
-                  <view class="uni-flex-item uni-right ">
-                    
-                  </view>
                 </view>
                 <view class="uni-flex ">
                 	<view class="uni-flex-item uni-text-red">
-                		<!-- <text class="uni-text-small">￥</text> -->
-                		<text>{{(item.price_sell)}}</text>
+                    <money :nums="[item.price_sell, item.price_score_sell]" size="28" v-if="!isVip"/>
+                    <money :nums="[item.price_vip, item.price_score_vip]" size="28" v-else/>
                 	</view>
-                  <view class="uni-flex-item uni-right uni-text-small uni-text-light">
+                  <view class="uni-flex-item uni-right uni-text-light">
                     <text>x</text>
                     <text style="margin-left: 10upx;">{{ item.num}}</text>
                   </view>
@@ -84,7 +89,9 @@
           <text v-if="postData.score" class="uni-text-small uni-text-light">积分抵扣:{{(score)}} </text>
           <text style="margin-left: 10upx;">小计</text>
         	<!-- <text class="uni-text-red">￥</text> -->
-          <text class="uni-text-red uni-h4">{{(total)}}</text>
+          <view class="uni-inline-block uni-text-red">
+          	<money :num="total" size="36"/>
+          </view>
         </view>
       </view>
     </view>
@@ -108,8 +115,8 @@
     		<view class="input-label">
     			备注
     		</view>
-    	  <view class="uni-flex-item uni-right uni-common-pa uni-bg-gray" >
-    	  	<textarea type="text" placeholder="备注信息" auto-height="true" style="width: 500upx;" v-model="postData.remark"/>
+    	  <view class="uni-flex-item uni-right uni-common-pa uni-bg-gray uni-text-small" >
+    	  	<textarea type="text" placeholder="填写备注信息(非必填)" auto-height="true" style="width: 500upx;" v-model="postData.remark" placeholder-class="uni-text-small"/>
     	  </view>
     	</view>
     </view>
@@ -132,6 +139,7 @@
   import Cart from '@/static/js/cart.js';
   import userAddress from '@/components/user/user-address.vue';
   import uniIcon from '@/components/uni-icon.vue';
+  import money from '@/components/money.vue';
 	export default {
     data(){
       return {
@@ -152,15 +160,17 @@
 //           {id: 4, name:'账户余额','pay_type':'2' , 'pay_method':'balance'},
 //         ],
         // payTypeId:0,
-        score:0
+        score:0,
+        total:0
       }
     },
     components:{
       userAddress,
-      uniIcon
+      uniIcon,
+      money
     },
     computed:{
-      ...mapState(['hasLogin', 'userInfo','userAddressList' , 'userAddressCurrent' , 'mallOrderConfirm', 'userInvoice'])
+      ...mapState(['hasLogin','isVip', 'userInfo','userAddressList' , 'userAddressCurrent' , 'mallOrderConfirm', 'userInvoice'])
     },
 		methods:{
       
@@ -250,10 +260,12 @@
         }
         
         this.postData.score = (this.postData.score == 0) ? 1: 0
+        let total = this.isVip ? Cart.totalVip : Cart.total
+        let score = this.isVip ? Cart.scoreVip : Cart.score
         if(this.postData.score){
-          this.total = Cart.total
+          this.total = total * 100 / 100
         }else{
-          this.total = Cart.total + Cart.score
+          this.total = (total * 100 + score * 100)/ 100
         }
       }
 		},
@@ -277,8 +289,9 @@
       let cartInfo = Cart.info()
       
       console.log('cartInfo' , cartInfo)
-      this.score = cartInfo.score
-      this.total = cartInfo.total + this.score
+      this.score = this.isVip ? cartInfo.scoreVip : cartInfo.score
+      this.total = this.isVip ? (cartInfo.totalVip * 100 + this.score * 100) / 100 : (cartInfo.total * 100 + this.score * 100) / 100
+            
       this.cartList = Cart.listChecked()
       
       console.log('cartList' , this.cartList)

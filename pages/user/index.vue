@@ -1,7 +1,18 @@
 <template>
   <view class="page-user">
     
-  	<view class="uni-padding-wrap uni-common-pt page-user-head">
+  	<view class="uni-padding-wrap page-user-head">
+      <!-- #ifndef MP-WEIXIN -->
+        <view class="uni-center uni-common-pa">
+        	个人中心
+        </view>
+      <!-- #endif -->
+      
+      <!-- #ifdef MP-WEIXIN -->
+      <view class="uni-right uni-common-pa " @tap="goToPage('/pages/user/setting')">
+      	设置
+      </view>
+      <!-- #endif -->
       
       <view class="uni-flex uni-common-pt uni-common-pb"  v-if="hasLogin">
    
@@ -17,7 +28,7 @@
             	{{ userInfo.nickname || '还未设置'}}
             </view>
             <view class="">
-            	<image src="/static/icon/user/vip-tag.png" mode="widthFix" style="width: 180upx;height: 40upx;"></image>
+            	<image src="/static/icon/user/vip-tag.png" mode="scaleToFill" style="width: 120upx;height: 30upx;"></image>
             </view>
         		
         	</view>
@@ -195,13 +206,26 @@
            	url:page
            })
          }
+       },
+       refresh(){
+         if(this.hasLogin){
+           this.$store.dispatch('userIndexDataGet')
+         }
        }
      },
      onNavigationBarButtonTap(e) {
      	if(e.index === 0){
-        uni.navigateTo({
-        	url:'/pages/user/setting'
-        })
+        if(!this.hasLogin){
+          uni.navigateTo({
+          	url:'../auth/login'
+          })
+          
+        }else{
+          uni.navigateTo({
+          	url:'/pages/user/setting'
+          })
+        }
+        
       }
      },
      data(){
@@ -224,18 +248,31 @@
            {title : '每日任务' ,items: [
              {text: '推荐注册' , icon : 'invite-reg', path: '/pages/user/invite'},
              {text: '登录签到' , icon : 'daily-sign', path: '/pages/user/dailySign'},
-             {text: '文章评论' , icon : 'post-comment',path: '/pages/posts/list'},
-             {text: '内容点赞' , icon : 'post-like',path: '/pages/posts/list'}
+             {text: '文章评论' , icon : 'post-comment',path: '/pages/news/list'},
+             {text: '内容点赞' , icon : 'post-like',path: '/pages/news/list'}
            ]}
          ]
        }
+     },
+     onLoad() {
+        if(this.hasLogin){
+          this.$store.dispatch('userIndexDataGet')
+        }
+     },
+     onShow() {
+        this.refresh()
      }
    }
 </script>
 
 <style>
   .page-user-head {
+    /* #ifdef MP-WEIXIN */
     background: #d81e06;
+    /* #endif */
+    /* #ifndef MP-WEIXIN */
+    background: linear-gradient(#ff5d44 , #d81e06);
+    /* #endif */
     color: #FFFFFF;
     padding-bottom: 150upx;
   }

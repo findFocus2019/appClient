@@ -4,7 +4,22 @@ export default {
 
   async userInfoGet(store, data) {
     let ret = await Request.post('user/info')
-    store.state.userInfo = ret.data.info
+    if (ret.code == 0) {
+    	store.state.userInfo = ret.data.info
+    	store.state.isVip = ret.data.isVip
+    } 
+    console.log('userInfoGet ret' , JSON.stringify(ret))
+    return ret
+  },
+  async userInfoUpdate(store, data){
+    let ret = await Request.post('user/infoUpdate' , data)
+    return ret
+  },
+  async userIndexDataGet(store, data){
+    let ret = await Request.post('user/centerData')
+    if(ret.code == 0){
+      store.state.userIndexData = ret.data
+    }
   },
   /**
    * 获取用户地址
@@ -43,6 +58,75 @@ export default {
     if(ret.code == 0){
       store.state.userEcardList = ret.data.list || []
     }
+    return ret
+  },
+  
+  // 用户收藏
+  async userCollectionListGet(store,data){
+    let ret = await Request.post('user/listCollection' , data)
+    return ret
+  },
+  async userCollectionAction(store, data){
+    let ret = await Request.post('user/collectionAction' , data)
+    return ret
+  },
+  
+  // 
+  async userOrderItemsListGet(store, data = {}){
+    let ret = await Request.post('user/listOrderItem' , data)
+    return ret
+  },
+  
+  // 签到
+  async userDailySignAction(store, data = {}){
+    let ret = await Request.post('user/dailySign' , data)
+    return ret
+  },
+  async userDailySignDataGet(store, data = {}){
+
+    let ret = await Request.post('user/dailySignData' , data)
+    return ret
+  },
+  
+  // 邀请好友列表
+  async userInviteListGet(store, data = {}){
+    let ret = await Request.post('user/listInvite' , data)
+    return ret
+  },
+  
+  // 获取用户评测列表
+  async userPostListGet(store, data = {}){
+    let ret = await Request.post('user/listPost' , data)
+    return ret
+  },
+  async userPostDelAction(store, data = {}){
+    let ret = await Request.post('user/delPost' , data)
+    return ret
+  },
+  
+  // 用户评论
+  async userCommentListGet(store, data = {}){
+    let ret = await Request.post('user/listComment' , data)
+    return ret
+  },
+  async userCommentDelAction(store, data = {}){
+    let ret = await Request.post('user/delComment' , data)
+    return ret
+  },
+  
+  // 用户申请，申请为评测人，申请品牌
+  async userApplyInfoGet(store, data = {}){
+    let ret = await Request.post('user/applyInfo' , data)
+    return ret
+  },
+  async userApplyAction(store, data = {}){
+    let ret = await Request.post('user/applyAction' , data)
+    return ret
+  },
+  
+  // 收益记录
+  async userTaskLogsListGet(store, data= {}){
+    let ret = await Request.post('user/taskLogs' , data)
     return ret
   }
 }

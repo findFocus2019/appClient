@@ -26,9 +26,11 @@ class Request {
         },
         header: {},
         success: (res) => {
-          console.log('request response ', JSON.stringify(res.data));
+          // console.log('request response ', JSON.stringify(res.data));
           r(res.data)
           let ret = res.data
+           console.log('request response code:', ret.code);
+           console.log('request response code:', ret.message);
           // this.text = 'request success';
           if(ret.code == -100){
             uni.navigateTo({
@@ -60,9 +62,9 @@ class Request {
   }
 
   signData(obj) {
-    console.log('obj:', JSON.stringify(obj))
+    // console.log('obj:', JSON.stringify(obj))
     let str = Buffer.from(JSON.stringify(obj)).toString('base64')
-    console.log('base64str:', str)
+    // console.log('base64str:', str)
     return this.hash(signKey, str)
   }
 
@@ -83,6 +85,35 @@ class Request {
     let hash = sha256.hmac.create(key);
     hash.update(str);
     return hash.hex();
+  }
+  
+  async upload(path){
+    
+    return new Promise((r,j) => {
+      uni.uploadFile({
+          url: apiDomain + '/upload', //仅为示例，非真实的接口地址
+          filePath: path,
+          name: 'file',
+          dataType: 'json',
+          formData: {},
+          success: (uploadFileRes) => {
+              console.log('uploadFileRes' , uploadFileRes.data);
+              let ret = JSON.parse(uploadFileRes.data)
+              if(ret.code == 0){
+                r(ret.data.url)
+              }else {
+                console.log('uploadFileRes err msg' , ret.message)
+                j(null)
+              }
+              // r(uploadFileRes.data)
+          },
+          fail: (err) => {
+            console.log(err)
+          	j(null)
+          }
+      });
+    })
+    
   }
 }
 

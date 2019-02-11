@@ -29,38 +29,49 @@
     
     <view class="">
     	<view class="" v-show="type == 1">
-        
-        <view class="uni-flex uni-border-bottom uni-common-pa">
-        	<view class="uni-flex-item">
-        		<view class="uni-text-dark">
-        			现金收支类型
+        <view class="" v-if="listData[type].count">
+        	<view class="uni-flex uni-border-bottom uni-common-pa"  v-for="(item,index) in listData[type].list" :key="index">
+        		<view class="uni-flex-item">
+        			<view class="uni-text-dark">
+        				{{item.task.title}}
+        			</view>
+        	    <view class="uni-text-small uni-text-gray">
+        	    	{{ item.create_date}}
+        	    </view>
         		</view>
-            <view class="uni-text-small uni-text-gray">
-            	2018-10-01 10:11
-            </view>
+        	  <view class="uni-flex-item uni-right uni-h3">
+        	  	{{item.balance}}
+        	  </view>
         	</view>
-          <view class="uni-flex-item uni-right uni-h3">
-          	+100000
-          </view>
         </view>
+        <view class="uni-center uni-common-pa uni-text-gray" v-else>
+        	无数据
+        </view>
+        
         
     	</view>
       
       <view class="" v-show="type == 2">
         
-      	<view class="uni-flex uni-border-bottom uni-common-pa">
-      		<view class="uni-flex-item">
-      			<view class="uni-text-dark">
-      				积分收支类型
-      			</view>
-      	    <view class="uni-text-small uni-text-gray">
-      	    	2018-10-01 10:11
-      	    </view>
-      		</view>
-      	  <view class="uni-flex-item uni-right uni-h3">
-      	  	+100000
-      	  </view>
-      	</view>
+        <view class="" v-if="listData[type].count">
+        	<view class="uni-flex uni-border-bottom uni-common-pa" v-for="(item,index) in listData[type].list" :key="index">
+        		<view class="uni-flex-item">
+        			<view class="uni-text-dark">
+        				{{item.task.title}}
+        			</view>
+        	    <view class="uni-text-small uni-text-gray">
+        	    	{{ item.create_date}}
+        	    </view>
+        		</view>
+        	  <view class="uni-flex-item uni-right uni-h3">
+        	  	{{item.score}}
+        	  </view>
+        	</view>
+        </view>
+      	
+        <view class="uni-center uni-common-pa uni-text-gray" v-else>
+        	无数据
+        </view>
         
       </view>
     </view>
@@ -72,10 +83,26 @@
     data(){
       return {
         type: 1,
-        // startDate:'2018-01-01',
-        // endDate:'2018-12-31',
         date1:'',
-        date2:''
+        date2:'',
+        listData:[
+          {},
+          {
+            page:1,
+            list:[],
+            count:0,
+            start_date:0,
+            end_date:0
+          },{
+            page:1,
+            list:[],
+            count:0,
+            start_date:0,
+            end_date:0
+          }
+        ],
+        showLoadMore: false,
+        loadMoreText:'加载中...',
       }
     },
     computed: {
@@ -89,6 +116,16 @@
     methods:{
       changeType(i){
         this.type = i
+        let type = this.type
+        this.date1 = this.listData[type].start_date || this.getDate('start')
+        this.date2 = this.listData[type].end_date || this.getDate('end')
+        
+        this.listData[type].start_date  = this.date1
+        this.listData[type].end_date = this.date2
+        
+        if(this.listData[type].list.length == 0){
+          this.getData()
+        }
       },
       bindDateChangeStart(e){
         console.log('bindDateChangeStart' , this.date1)
@@ -97,9 +134,19 @@
         if(this.date1.replace('-','') > this.date2.replace('-','')){
           console.log('bindDateChangeStart 超出')
           this.date1 = this.date2
-          return
+          
         }
         
+        let type= this.type
+        this.listData[type].page = 1
+        this.listData[type].count = 0
+        this.listData[type].start_date = this.date1
+        this.listData[type].end_date = this.date2
+        this.listData[type].list = []
+        
+        this.getData()
+        
+        return
         
       },
       bindDateChangeEnd(e){
@@ -107,10 +154,19 @@
         this.date2 = e.target.value
         if(this.date2.replace('-','') < this.date1.replace('-','')){
           this.date2 = this.date1
-          return
+          
         }
         
+        let type= this.type
+        this.listData[type].page = 1
+        this.listData[type].count = 0
+        this.listData[type].start_date = this.date1
+        this.listData[type].end_date = this.date2
+        this.listData[type].list = []
         
+        this.getData()
+        
+        return
       },
       getDate(type) {
         const date = new Date();
@@ -124,11 +180,64 @@
         month = month > 9 ? month : '0' + month;;
         day = day > 9 ? day : '0' + day;
         return `${year}-${month}-${day}`;
+      },
+      async getData(){
+        let type = this.type
+        let listDataItem = this.listData[type]
+        
+        let params = {}
+        params.page = listDataItem.page
+        params.start_date = listDataItem.start_date
+        params.end_date = listDataItem.end_date
+        params.type = type
+        console.log('userTaskLogsListGet params: ============' , JSON.stringify(params))
+        let ret = await this.$store.dispatch('userTaskLogsListGet' , params)
+        console.log('userTaskLogsListGet ret:' , JSON.stringify(ret))
+        if(ret.code == 0){
+          this.listData[type].page += 1
+          this.listData[type].count = ret.data.count
+          this.listData[type].start_date = ret.data.start_date
+          this.listData[type].end_date = ret.data.end_date
+          
+          let rows = ret.data.rows
+          rows.forEach(row => {
+            this.listData[type].list.push(row)
+          })
+          
+          if(rows.length == 0){
+            this.showLoadMore = '无更多'
+          }
+        }
       }
     },
     onLoad() {
-    	this.date1 = this.getDate('start')
-      this.date2 = this.getDate('end')
+      let type = this.type
+      this.listData[type].start_date = this.getDate('start')
+      this.listData[type].end_date = this.getDate('end')
+      
+    	this.date1 = this.listData[type].start_date
+      this.date2 = this.listData[type].end_date
+      
+      this.getData()
+    },
+    async onPullDownRefresh() {
+    	let type= this.type
+      this.listData[type].page = 1
+      this.listData[type].count = 0
+      // this.listData[type].start_date = this.getDate('start')
+      // this.listData[type].end_date = this.getDate('end')
+      this.listData[type].list = []
+      
+      await this.getData()
+      uni.stopPullDownRefresh()
+    },
+    async onReachBottom() {
+    	this.showLoadMore = true
+    	await this.getData()
+    	
+    	setTimeout(() => {
+    	  this.showLoadMore = false
+    	} , 1000)
     }
   }
 </script>

@@ -2,7 +2,9 @@
   <view class="page">
     <view class="uni-common-pa uni-bg-white uni-center uni-border-top">
       <view class="uni-common-pt">付款金额</view>
-      <view class="uni-h2 uni-common-pb">{{ (mallPayment.totals) }}</view>
+      <view class="uni-h2 uni-common-pb uni-text-red">
+        <money :num="mallPayment.totals * 100 / 100" size="48" />
+      </view>
     </view>
 
     <view class="uni-bg-white uni-border-top uni-common-mt uni-common-pl uni-common-pr">
@@ -22,7 +24,11 @@
               <view class="uni-flex-item">{{item.name}}</view>
               <view class="uni-right" @tap="payTypeChoose(item)">
                 <view class v-if="item.id == 4">
+                  
                   <view class v-if="userInfo.balance > mallPayment.totals">
+                    <view class="uni-common-mb-sm uni-inline-block">
+                    	<money :num="userInfo.balance" />
+                    </view>
                     <uni-icon
                       type="checkbox-filled"
                       size="22"
@@ -34,7 +40,9 @@
                   <view
                     class="uni-text-small uni-text-light"
                     v-else
-                  >账户余额不足,剩余:{{ (userInfo.balance)}}</view>
+                  >账户余额不足,剩余:
+                  <money :num="userInfo.balance" />
+                  </view>
                 </view>
 
                 <view class v-if="item.id == 3">
@@ -76,7 +84,7 @@
       <view class="uni-common-pt uni-text-light uni-center">
         <view class>
           <text>还需支付</text>
-          <text class="uni-text-red">{{ (mallPayment.totals - mallPayment.ecardAmount)}}</text>
+          <text class="uni-text-red">￥ {{ (mallPayment.totals - mallPayment.ecardAmount) * 100 / 100}}</text>
         </view>
         <view class="uni-flex uni-common-mt">
           <view
@@ -109,9 +117,11 @@
 <script>
 import { mapState, mapActions } from "vuex";
 import uniIcon from "@/components/uni-icon.vue";
+import money from '@/components/money.vue';
 export default {
   components: {
-    uniIcon
+    uniIcon,
+    money
   },
   data() {
     return {
@@ -168,7 +178,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["hasLogin", "userInfo", "mallPayment", "userEcardList"])
+    ...mapState(["hasLogin","isVip", "userInfo", "mallPayment", "userEcardList"])
   },
   methods: {
     ...mapActions(["goToLoginPage", "userInfoGet"]),

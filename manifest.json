@@ -54,14 +54,19 @@
     /* 快应用特有相关 */
     "mp-weixin" : {
         /* 小程序特有相关 */
-        "appid" : "",
+        "appid" : "wx2e40960c5cfb7723",
         "setting" : {
-            "urlCheck" : true
-        }
+            "urlCheck" : false
+        },
+        "permission" : {}
     },
     "h5" : {
         "router" : {
             "mode" : "history"
-        }
+        },
+        "devServer" : {
+            "https" : false
+        },
+        "title" : "发现焦点"
     }
 }

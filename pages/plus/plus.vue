@@ -56,6 +56,7 @@
 
 <script>
   import uniIcon from '@/components/uni-icon.vue';
+  import {mapState} from 'vuex';
 	export default {
     components:{
       uniIcon
@@ -65,6 +66,9 @@
 				
 			};
 		},
+    computed:{
+      ...mapState(['hasLogin'])
+    },
     methods:{
       back(){
         uni.showTabBar()
@@ -73,6 +77,12 @@
         })
       },
       goToPage(page){
+        if(!this.hasLogin){
+          uni.navigateTo({
+          	url:'/pages/auth/login'
+          })
+          return
+        }
         uni.navigateTo({
         	url:page
         })

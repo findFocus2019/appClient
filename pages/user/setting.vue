@@ -5,12 +5,16 @@
 			<view class="uni-flex-item">
         头像
 			</view>
-      <view class="uni-flex-item uni-right">
+      <view class="uni-flex-item uni-right" v-if="!userInfo.avatar">
       	<image :src="userInfo.avatar" mode="" v-if="userInfo.avatar" style="width: 80upx;height: 80upx; border-radius: 40upx;"></image>
+      </view>
+      <view class="uni-flex-item uni-right" v-else @tap="goToPage('/pages/user/avatar')">
+      	上传头像
+        <uni-icon type="arrowright" size="22"></uni-icon>
       </view>
 		</view>
     
-    <view class="uni-flex uni-common-pa uni-border-bottom" >
+    <view class="uni-flex uni-common-pa uni-border-bottom" @tap="updateInputItem({name:'nickname',text:'设置昵称',val:userInfo.nickname})">
     	<view class="uni-flex-item">
         昵称
     	</view>
@@ -32,7 +36,7 @@
     	<view class="uni-flex-item">
         性别
     	</view>
-      <view class="uni-flex-item uni-right">
+      <view class="uni-flex-item uni-right" @tap="chooseSex">
         <text v-if="userInfo.sex == 0">未知</text>
       	<text v-if="userInfo.sex == 1">男</text>
         <text v-if="userInfo.sex == 2">女</text>
@@ -48,20 +52,22 @@
       </view>
     </view>
     
-    <view class="uni-flex uni-common-pa uni-border-bottom" >
+    <view class="uni-flex uni-common-pa uni-border-bottom" @tap="updateInputItem({name:'alipay',text:'绑定支付宝',val:userInfo.alipay})">
     	<view class="uni-flex-item">
         绑定支付宝
     	</view>
       <view class="uni-flex-item uni-right">
+        <text v-if="userInfo.alipay" class="uni-text-gray uni-text-small">已设置</text>
         <uni-icon type="arrowright" size="22"></uni-icon>
       </view>
     </view>
     
-    <view class="uni-flex uni-common-pa uni-border-bottom" >
+    <view class="uni-flex uni-common-pa uni-border-bottom" @tap="authWeixin">
     	<view class="uni-flex-item">
         绑定微信
     	</view>
       <view class="uni-flex-item uni-right">
+        <text v-if="userInfo.openid" class="uni-text-gray uni-text-small">已设置</text>
         <uni-icon type="arrowright" size="22"></uni-icon>
       </view>
     </view>
@@ -71,7 +77,7 @@
         版本号
     	</view>
       <view class="uni-flex-item uni-right">
-        1.0.6
+       {{version}}
       </view>
     </view>
     
@@ -84,24 +90,181 @@
       </view>
     </view>
     
+     <view class="uni-flex uni-common-pa " @tap="goToLogout">
+    	<view class="uni-flex-item">
+        退出登录
+    	</view>
+      <view class="uni-flex-item uni-right">
+        <uni-icon type="arrowright" size="22"></uni-icon>
+      </view>
+    </view>
+    
+    <uni-popup :show="showPopupBottom" type="bottom" @hidePopup="hidePopup">
+      <view class="uni-center uni-common-pa">
+        <view class="">
+        	{{popupTitle}}
+        </view>
+      	<view class="uni-common-mt  uni-border-bottom">
+      		<input type="text" v-model="updateVal" class="uni-left" @confirm="updateConfirm"/>
+      	</view>
+
+      </view>
+
+    </uni-popup>
 	</view>
 </template>
 
 <script>
   import {mapState,mapActions} from 'vuex';
+  import uniPopup from '@/components/uni-popup.vue';
   import uniIcon from '@/components/uni-icon.vue';
   export default {
+    data(){
+      return {
+        showPopupBottom: false,
+        popupTitle:'',
+        updateName: '',
+        updateVal:'',
+        sexItems: ['男','女']
+      }
+    },
     components:{
-      uniIcon
+      uniIcon,
+      uniPopup
     },
     computed:{
-      ...mapState(['userInfo'])
+      ...mapState(['version','userInfo'])
     },
     methods:{
       goToPage(page){
         uni.navigateTo({
         	url:page
         })
+      },
+      goToLogout(){
+        this.$store.dispatch('authLogout')
+        uni.navigateBack({
+        	delta:1
+        })
+      },
+      authWeixin(){
+        let authLogin = () => {
+          uni.login({
+            provider: 'weixin',
+            success: (loginRes) => {
+              console.log('authWeixin ' , JSON.stringify(loginRes.authResult));
+              
+              // #ifdef MP-WEIXIN
+              let jscode = loginRes.code
+              console.log('login jscode =====' , jscode)
+              // #endif
+              
+              uni.getUserInfo({
+                provider: 'weixin',
+                success: async (infoRes) => {
+                  // console.log('用户昵称为：' + infoRes.userInfo.nickName);
+                  let openid = infoRes.userInfo.openid;
+                  
+                  // #ifdef MP-WEIXIN
+                  console.log('login 小程序，去后台取openid');
+                  let jscodeRet = await this.$store.dispatch('authCodeToSession' , {jscode: jscode})
+                  if(jscodeRet.code == 0){
+                    openid = jscodeRet.data.openid
+                  }else {
+                    uni.showToast({
+                      icon:'none',
+                    	title: '小程序授权获取openid失败，请稍后重试',
+                    	mask: false,
+                    	duration: 1500
+                    });
+                    return
+                  }
+                  // #endif
+           
+                  this.updateName = 'openid'
+                  this.updateVal = openid
+                  
+                  let ret = await this.updateUserInfo()
+                  if(ret.code == 0){
+                    uni.showToast({
+                    	title: '绑定成功',
+                    	mask: false,
+                    	duration: 1500
+                    });
+                  }
+                  
+                }
+              });
+            },
+            fail() {
+            	console.log()
+              uni.showToast({
+              	icon:'none',
+                title:'不支持微信授权或授权失败'
+              })
+            }
+          });
+        }
+        
+        uni.showActionSheet({
+          itemList: [this.userInfo.openid ? '重新绑定':'授权绑定'],
+          success: (res) => {
+              if(res.tapIndex == 0){
+                authLogin()
+              }
+          },
+          fail: function (res) {
+              console.log(res.errMsg);
+          }
+        })
+        
+        
+      },
+      chooseSex(){
+        let sexItems = this.sexItems
+        uni.showActionSheet({
+          itemList: sexItems,
+          success: (res) => {
+              console.log('选中了第' + (res.tapIndex + 1) + '个按钮');
+              this.updateName = 'sex'
+              this.updateVal = res.tapIndex + 1
+              
+              this.updateUserInfo()
+          },
+          fail: function (res) {
+              console.log(res.errMsg);
+          }
+        })
+      },
+      updateInputItem(item){
+        
+        this.popupTitle = item.text
+        this.updateName = item.name
+        this.updateVal = item.val
+        
+        this.showPopupBottom = true
+      },
+      hidePopup(){
+        this.showPopupBottom = false
+      },
+      updateConfirm(){
+        console.log('updateConfirm')
+        this.updateUserInfo().then(() => {
+          this.showPopupBottom = false
+        })
+        
+      },
+      async updateUserInfo(){
+        let postData = {}
+        postData[this.updateName] = this.updateVal
+        console.log('updateUserInfo postData',JSON.stringify(postData))
+        let ret = await this.$store.dispatch('userInfoUpdate' , postData)
+        console.log('userInfoUpdate' , JSON.stringify(ret))
+        if(ret.code== 0){
+          await this.$store.dispatch('userInfoGet')
+        }
+        
+        return ret
       }
     }
   }

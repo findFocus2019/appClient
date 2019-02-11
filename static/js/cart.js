@@ -152,6 +152,7 @@ class Cart {
   	})
   	
     this.cart = list
+    this._setData()
   }
 	
 	/**

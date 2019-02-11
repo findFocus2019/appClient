@@ -22,7 +22,7 @@
 					</view>
 				</view>
 				
-				<view class="uni-bg-white uni-border-top" v-for="(item,index2) in list" :key="item.uuid">
+				<view class="uni-bg-white uni-border-top" v-for="(item,index2) in list" :key="index2">
 					<scroll-view class="scroll-view_H cart-list" scroll-x="true" @scroll="scroll" scroll-left="0">
 						<view class="scroll-view-item_H">
 				      <view class="">
@@ -35,17 +35,20 @@
 				      			<image :src="item.cover" mode="" style="width: 180upx;height: 180upx;"></image>
 				      		</view>
 				      		<view class="uni-flex-item uni-common-pt uni-common-pl uni-common-pr cart-list-item" >
-				      			<view class=" cart-list-title uni-text-darker " style="width: 410upx;">
+				      			<view class=" cart-list-title uni-bold" style="width: 410upx;">
 				             {{item.title}} 
 				      			</view>
 				            <view class="uni-flex">
-				            	<view class="uni-flex-item uni-text-small uni-text-light">
-				            		积分可抵扣:{{(item.price_score_sell)}} 
+				            	<view class="uni-flex-item uni-text-small uni-text-gray">
+				            		积分可抵扣:
+                        <money :nums="[item.price_score_sell]" size="24" v-if="!isVip"/> 
+                        <money :nums="[item.price_score_vip]" size="24" v-else/> 
 				            	</view>
 				            </view>
 				            <view class="uni-flex">
 				              <view class="uni-text-red uni-flex-item">
-				              	<text class="uni-h4">{{ (item.price_sell + item.price_score_sell) }}</text>
+				              	<money :nums="[item.price_sell,item.price_score_sell]" size="36" v-if="!isVip" />
+                        <money :nums="[item.price_vip,item.price_score_vip]" size="36" v-else />
 				              </view>
 				            	<view class="uni-right uni-flex-item">
 				            		<uni-number-box  @change="onNumberChange" :value="item.num" :cartItem="item"></uni-number-box>
@@ -83,11 +86,21 @@
 				<view style="line-height: 100upx;">全选
 				</view>
 			</view>
-			<view class="uni-flex-item uni-left uni-common-pl"  style="line-height: 100upx;">
-				<text>总计:</text>
-				<text>{{(cartInfo.total + cartInfo.score)}}</text>
-        <text class="uni-text-small uni-text-light">/积分可抵扣:</text>
-        <text  class="uni-text-small uni-text-light">{{(cartInfo.score)}}</text>
+			<view class="uni-flex-item uni-left uni-common-pl" >
+        <view class="" style="line-height: 50upx;">
+          <text>总计:</text>
+        	<view class="uni-text-red uni-inline-block"> 
+            <money :nums="[cartInfo.total,cartInfo.score]" size="32" v-if="!isVip"/>
+            <money :nums="[cartInfo.totalVip,cartInfo.scoreVip]" size="32" v-else/>
+          </view>
+        </view>
+				<view class="" style="line-height: 50upx;">
+					<text class="uni-text-small uni-text-gray">积分可抵扣:</text>
+					<view  class="uni-text-small uni-text-gray uni-inline-block">
+					<money :num="cartInfo.score" size="24" v-if="!isVip"/>
+          <money :num="cartInfo.scoreVip" size="24" v-else/>
+          </view>
+				</view>
 			</view>
 			<view class="uni-center uni-common-pr" style="" @tap="cartToOrder">
 				
@@ -108,7 +121,7 @@
   import Cart from '@/static/js/cart.js';
   import uniNumberBox from '@/components/uni-number-box.vue';
   import uniIcon from '@/components/uni-icon.vue';
- 
+ import money from '@/components/money.vue';
   export default {
     data(){
       return {
@@ -117,10 +130,11 @@
     },
     components:{
       uniNumberBox,
-      uniIcon
+      uniIcon,
+      money
     },
     computed:{
-      ...mapState(['hasLogin','mallOrderConfirm'])
+      ...mapState(['hasLogin','isVip','mallOrderConfirm'])
     },
     methods:{
       ...mapActions(['goToLoginPage']),
