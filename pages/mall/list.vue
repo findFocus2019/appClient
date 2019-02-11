@@ -92,7 +92,7 @@
               
               <view class="uni-common-pl " >
                 <view class="uni-bold uni-ellipsis-2" style="width: 450upx;height: 100upx;line-height: 50upx;">
-                  {{ item.title }}{{ item.title }}{{ item.title }}
+                  {{ item.title }}
                 </view>
                 <view class="uni-flex">
                   <view class="">
