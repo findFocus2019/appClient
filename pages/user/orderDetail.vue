@@ -72,7 +72,7 @@
     		        		<money :nums="[item.price_vip,item.price_score_vip]" size="30" v-else/>
                     
     	              <text style="margin-left: 10upx;">x</text>
-    	              <text style="margin-left: 10upx;">2</text>
+    	              <text style="margin-left: 10upx;">{{ item.num }}</text>
     		        	</view>
     		          <view class="uni-flex-item uni-right uni-text-small uni-text-light" >
     		             <text class="uni-bg-gray" v-if="order.status == 9" @tap="goToAfterApply({order:order, item: item})">申请售后</text>
@@ -136,13 +136,13 @@
     	  </view>
     	</view>
     	
-    	<view class="uni-common-mt">
+    	<view class="uni-common-mt" v-if="order.express">
     		<view class="uni-common-pa uni-border-top uni-bg-white uni-flex" >
     			<view class="">
     				物流信息
     			</view>
     		  <view class="uni-flex-item uni-right">
-    		  	
+    		  	{{ order.express.company }}
     		  </view>
     		</view>
     		
@@ -151,7 +151,7 @@
     				物流单号
     			</view>
     		  <view class="uni-flex-item uni-right">
-    		  	
+    		  	{{ order.express.no }}
     		  </view>
     		</view>
     	</view>
@@ -202,10 +202,10 @@
         	<text class="uni-bg-red" @tap="goPayment(order)">去支付</text>
         </view>
         <view class="" v-if="order.status == 2">
-        	<text class="order-btn">确认收货</text>
+        	<text class="order-btn" @tap="goComplete(order)">确认收货</text>
         </view>
         <view class="" v-if="order.status == 9">
-        	<text @tap="goToComment">评价</text>
+        	<!-- <text @tap="goToComment">评价</text> -->
           <text @tap="goToComment">申请售后</text>
         </view>
     	  
@@ -243,6 +243,55 @@
         uni.navigateTo({
         	url:"/pages/user/orderAfterApply"
         })
+      },
+      goComplete(order) {
+        uni.showModal({
+          title: '订单完成',
+          content: '确认收到货物完成订单',
+          success: async (res) => {
+            if (res.confirm) {
+              console.log('用户点击确定');
+              let ret = await this.$store.dispatch('mallOrderComplete', {
+                order_id: order.id
+              })
+              console.log('mallOrderComplete ret', ret)
+              if (ret.code == 0) {
+                uni.showToast({
+                  icon: 'success',
+                  title: '操作成功',
+                  mask: false,
+                  duration: 1500
+                });
+        
+//                 uni.startPullDownRefresh({
+//                   success: async (res) => {
+//                     await this.getData()
+//                     uni.stopPullDownRefresh();
+//                   }
+//                 });
+              this.$store.state.userDataRefresh = true
+              uni.startPullDownRefresh({
+              	success: async (res) => {
+                  await this.getData()
+                  uni.stopPullDownRefresh()
+                }
+              })
+
+              } else {
+                uni.showToast({
+                  icon: 'none',
+                  title: '操作成功，' + ret.message,
+                  mask: false,
+                  duration: 1500
+                });
+              }
+        
+        
+            } else if (res.cancel) {
+              console.log('用户点击取消');
+            }
+          }
+        });
       },
       goCancel(order){
         uni.showModal({
@@ -293,7 +342,7 @@
         });
       },
       goPayment(order){
-        this.$store.state.mallPayment.orderIds = '-' + order.id + '-'
+        this.$store.state.mallPayment.orderIds =  [order.id]
         let isVip = order.vip
         let useScore = order.score_use 
         let totalVip = order.total_vip * 100

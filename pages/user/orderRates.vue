@@ -57,6 +57,8 @@
 			</view>
       
 		</view>
+    
+    <view class="uni-loadmore" v-if="showLoadMore">{{loadMoreText}}</view>
 	</view>
 </template>
 
@@ -64,8 +66,57 @@
   import {mapState,mapActions} from 'vuex';
   
   export default {
+    data(){
+      return {
+        listData:{
+          page:1,
+          count:0,
+          list:[]
+        },
+        showLoadMore: false,
+        loadMoreText:'加载中...',
+      }
+    },
     computed:{
       ...mapState(['userInfo'])
+    },
+    methods:{
+      async getData(){
+        let params = {}
+        params.page = this.listData.page
+        
+        let ret = await this.$store.dispatch('mallOrderItemListGet' , params)
+        if(ret.code == 0){
+          let data =ret.data
+          this.listData.page += 1
+          this.listData.count = data.count
+          
+          let rows = data.rows
+          if(rows.length == 0){
+            this.loadMoreText = '无更多'
+          }
+          
+          rows.forEach(row => {
+            this.listData.list.push(row)
+          })
+        }
+      }
+    },
+    onLoad() {
+    	this.getData()
+    },
+    async onPullDownRefresh() {
+    	this.listData.page = 0
+    	this.listData.count = 0
+      this.listData.list = []
+      
+      await this.getData()
+      uni.stopPullDownRefresh()
+    },
+    async onReachBottom() {
+    	this.showLoadMore = false
+      await this.getData()
+      this.showLoadMore = true
     }
   }
 </script>

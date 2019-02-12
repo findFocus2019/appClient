@@ -1,5 +1,9 @@
 <template>
-	<view class="uni-password-trade">
+	<view class="uni-password-trade" :style="{display: show ? 'block' : 'none'}">
+    
+    <view class="uni-right uni-common-pa" style="margin-top: 100upx;">
+    	<text @tap="close">关闭</text>
+    </view>
     
     <view class="uni-center uni-common-mt uni-common-mb uni-common-pa">
     	<view class="uni-h4" v-if="title">
@@ -91,6 +95,10 @@
 <script>
   export default {
     props:{
+      show:{
+        type: Boolean,
+        default:false
+      },
       title:{
         type:String,
         default:''
@@ -129,7 +137,20 @@
       },
       delPassword(){
         this.password.splice(this.password.length - 1,1)
+      },
+      close(){
+        this.show = false
       }
+    },
+    watch:{
+      show(newVal,oldVal){
+        if(newVal == true){
+          this.password = []
+        }else {
+          this.title = ''
+          this.description = ''
+        }
+      },
     }
   }
 </script>
@@ -139,6 +160,8 @@
     position: fixed;
     width: 100%;
     height: 100%;
+    top: 0;
+    background: #FFFFFF;
   }
   
   .text-nums {

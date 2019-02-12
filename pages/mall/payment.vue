@@ -111,6 +111,8 @@
     </view>
 
     <view class="uni-bg-white" style="height: 100upx;"></view>
+    
+    <password-trade :title="passwordTradeData.title" :description="passwordTradeData.description" :show="passwordTradeData.show" @confirm="passwordTradeConfirm"></password-trade>
   </view>
 </template>
 
@@ -118,13 +120,21 @@
 import { mapState, mapActions } from "vuex";
 import uniIcon from "@/components/uni-icon.vue";
 import money from '@/components/money.vue';
+import passwordTrade from '@/components/user/password_trade.vue';
 export default {
   components: {
     uniIcon,
-    money
+    money,
+    passwordTrade
   },
   data() {
     return {
+      passwordTradeData:{
+        show: false,
+        title: '',
+        description: '',
+        password:''
+      },
       payTypes: [
         {
           name: "在线支付",
@@ -182,9 +192,46 @@ export default {
   },
   methods: {
     ...mapActions(["goToLoginPage", "userInfoGet"]),
+    passwordTradeConfirm(password){
+      console.log('passwordTradeConfirm ==============' , password)
+      this.passwordTradeData.password = password
+      
+      this.paymentConfirm()
+      
+    },
+    async paymentConfirm(){
+      let params = {}
+      params.payment_id = this.paymentInfo.id
+      params.password = this.passwordTradeData.password
+      console.log('paymentConfirm payment_id' , params)
+      uni.showLoading({
+        title: "提交中...",
+        mask:true
+      });
+      
+      let ret = await this.$store.dispatch('mallOrderPayConfirm', params)
+      uni.hideLoading()
+      if(ret.code == 0){
+        uni.showToast({
+        	title:'操作成功',
+          success: () => {
+          	uni.redirectTo({
+          		url: '/pages/user/orders?status=1'
+          	})
+          }
+        })
+      }else {
+        uni.showToast({
+        	icon:'none',
+          title:'操作失败:' + ret.message
+        })
+      }
+    },
+    
     async paymentCreate() {
       uni.showLoading({
-        title: "支付提交中..."
+        title: "支付提交中...",
+        mask:true
       });
       console.log("paymentCreate", this.$store.state.mallPayment);
       if (!this.mallPayment.payTypeCheck) {
@@ -221,6 +268,7 @@ export default {
         //           	url:'/pages/mall/paymentSuccess'
         //           })
         this.paymentInfo = ret.data;
+    
         if (this.paymentInfo.amount > 0) {
           // 去第三方下单
           uni.showToast({
@@ -230,8 +278,17 @@ export default {
         } else {
           // 弹出密码框
           uni.showToast({
-            title: "弹出密码框"
+            icon:'none',
+            title: "请输入密码确认",
+            success:()=> {
+            	this.passwordTradeData.show = true
+            	this.passwordTradeData.title = '确认支付'
+            	this.passwordTradeData.description = '<p>首次支付将设置为默认支付密码，请妥善牢记</p>'
+            	// this.passwordTradeData.description = 'aaaaaa'
+            }
           });
+          
+          
         }
       } else {
         uni.showToast({

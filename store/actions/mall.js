@@ -99,6 +99,16 @@ export default {
     return ret
   },
   
+  async mallOrderPayConfirm(store, data){
+    let ret = await Request.post('mall/orderPayConfirm' , data)
+    console.log('mallOrderPayConfirm ret' , ret)
+    if(ret.code == 0){
+      store.state.mallPayment.id = 0
+      store.state.mallPayment.orderIds = []
+    }
+    return ret
+  },
+  
   async mallOrderListGet(store, data){
     let ret = await Request.post('mall/orderList', data)
     return ret
@@ -111,6 +121,26 @@ export default {
   
   async mallOrderCancel(store, data){
     let ret = await Request.post('mall/orderCancel', data)
+    return ret
+  },
+  
+  async mallOrderComplete(store, data){
+    let ret = await Request.post('mall/orderComplete', data)
+    return ret
+  },
+  
+  async mallOrderItemListGet(store, data){
+    let ret = await Request.post('mall/orderItemList', data)
+    return ret
+  },
+  
+  async mallOrderItemInfoGet(store, data){
+    let ret = await Request.post('mall/orderItemInfo', data)
+    return ret
+  },
+  
+  async mallOrderItemRate(store, data){
+    let ret = await Request.post('mall/orderRate', data)
     return ret
   }
 }
