@@ -124,9 +124,18 @@
             "path" : "pages/mall/goods",
             "style" : {
                 "navigationBarTitleText" : "商品详情",
+                "navigationBarTextStyle" : "white",
+                "navigationBarBackgroundColor" : "#d81e06",
                 "app-plus" : {
                     "titleNView" : {
-                        "type" : "transparent"
+                        "type":"transparent",
+                        "buttons":[{
+                            "text":"购物车",
+                            "fontSize":"14",
+                            "width":"auto",
+                            "background":"none",
+                            "color":"#FFFFFF"
+                        }]
                     }
                 }
             }
@@ -190,6 +199,7 @@
                 "navigationBarTitleText" : "个人中心",
                 "navigationBarTextStyle" : "white",
                 "navigationBarBackgroundColor" : "#d81e06",
+                "enablePullDownRefresh":true,
                 "app-plus" : {
                     "titleNView" : {
                         "buttons" : [
@@ -357,13 +367,15 @@
         {
             "path" : "pages/user/orders",
             "style" : {
-                "navigationBarTitleText" : "商城订单"
+                "navigationBarTitleText" : "商城订单",
+                "enablePullDownRefresh":true
             }
         },
         {
             "path" : "pages/user/orderDetail",
             "style" : {
-                "navigationBarTitleText" : "订单详情"
+                "navigationBarTitleText" : "订单详情",
+                "enablePullDownRefresh":true
             }
         },
         {

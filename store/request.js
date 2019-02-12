@@ -38,6 +38,7 @@ class Request {
             })
           }else if (ret.code == -101){
             uni.showToast({
+              icon:'none',
               title: '网络异常，请稍后再试！',
               duration: 2000
             });
@@ -49,6 +50,7 @@ class Request {
         },
         fail: () => {
           uni.showToast({
+            icon:'none',
             title: '网络异常，请稍后再试！',
             duration: 2000
           });

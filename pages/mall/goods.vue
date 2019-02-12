@@ -1,5 +1,5 @@
 <template>
-  <view class="page">
+  <view class="uni-page-body mall-goods-page">
     <swiper indicator-dots="true">
       <swiper-item v-for="(img,key) in imgUrls" :key="key">
         <image :src="img" />
@@ -139,11 +139,11 @@
     </uni-popup>
     
     <!-- #ifdef APP-PLUS -->
-      <view class="cart-icon bottom" @tap="goCart">
+     <!-- <view class="cart-icon bottom" @tap="goCart">
     	<image src="/static/icon/mall/cart.png" mode="widthFix" style="width: 60upx;height: 60upx;"></image>
-    </view>
+    </view> -->
     <!-- #endif -->
-    <!-- #ifndef APP-PLUS -->
+    <!-- #ifdef MP-WEIXIN -->
      <view class="cart-icon top" @tap="goCart">
     	<image src="/static/icon/mall/cart.png" mode="widthFix" style="width: 60upx;height: 60upx;"></image>
     </view>
@@ -303,6 +303,9 @@
     	  console.log('onShow getGoodsInfo ret ==============' , JSON.stringify(ret))
     	  
     	}
+    },
+    onNavigationBarButtonTap(){
+      this.goCart()
     }
   }
 </script>
@@ -313,6 +316,11 @@
   .img-view {
     width: 100%;
     // height: 500upx;
+  }
+  
+  .mall-goods-page {
+//     height: 100%;
+//     overflow: auto;
   }
 
   .goods-info-price text {
@@ -362,5 +370,9 @@
   
   .cart-icon.bottom {
     bottom: 110upx 
+  }
+  
+  .uni-popup-bottom {
+    position: fixed;
   }
 </style>

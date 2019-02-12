@@ -88,6 +88,10 @@
       let channel = opt.channel || 'all'
       this.newsItems = this.newsDatas
       
+      if(!this.postChannels.length){
+        await this.$store.dispatch('postChannelsGet' , {type : 1})
+      }
+      
       for (var i = 0; i < this.postChannels.length; i++) {
       	let item = this.postChannels[i]
         
@@ -128,8 +132,7 @@
 
         this.swiperHeight = (data.height - 100) + 'px';
       }).exec();
-      
-      
+
     },
     methods: {
       async tapChannel(item, index) {
@@ -153,7 +156,12 @@
       changeTab(e) {
         let index = e.detail.current;
         this.currentIndex = index;
-        this.scrollLeft = 50 * index
+        if(index >= 5){
+          this.scrollLeft = 75 * index
+        }else {
+          this.scrollLeft = 0
+        }
+        
       },
       goToDetail(item) {
         uni.navigateTo({

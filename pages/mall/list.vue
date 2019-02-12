@@ -173,11 +173,11 @@
         let type = this.mallType
         let item = (type == 1) ? this.mallTypes[2] : this.mallTypes[1]
         uni.showActionSheet({
-        	itemList:['切换商城' , item],
+        	itemList:[ '切换' + item],
           success:(e)=> {
             this.tabIndex = 0
           	let index = e.tapIndex
-            if(index == 1){
+            if(index == 0){
               this.$store.state.mallType = (type == 1) ? 2 : 1
             }
             

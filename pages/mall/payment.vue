@@ -242,7 +242,7 @@ export default {
     },
     paymentCancel() {
       uni.reLaunch({
-        url: "/pages/mall/index"
+        url: "/pages/mall/list"
       });
     },
     payTypeChoose(item) {

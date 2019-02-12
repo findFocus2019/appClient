@@ -34,7 +34,8 @@
         	</view>
           <view class="uni-flex-item uni-right">
             <navigator url="/pages/notice/notice">
-            <image src="/static/icon/user/msg.png" mode="widthFix" style="width: 110upx;height: 110upx;"></image>
+            <!-- <image src="/static/icon/user/msg.png" mode="widthFix" style="width: 110upx;height: 110upx;"></image> -->
+            <uni-icon type="chat" size="32"></uni-icon>
             </navigator>
           </view>
           
@@ -59,8 +60,10 @@
         	</view>
           <view class="uni-flex-item uni-right">
             <navigator url="/pages/notice/notice">
-              <image src="/static/icon/user/msg.png" mode="widthFix" style="width: 110upx;height: 110upx;"></image>
+              <!-- <image src="/static/icon/user/msg.png" mode="widthFix" style="width: 110upx;height: 110upx;"></image> -->
+              <uni-icon type="chat" size="32" color="#ffffff"></uni-icon>
             </navigator>
+            
             
           </view>
           
@@ -177,16 +180,18 @@
 
 <script>
   import UserCard from '../../components/user/user-card.vue';
+  import uniIcon from '@/components/uni-icon.vue';
   import {
     mapState,
     mapActions
   } from "vuex";
    export default {
      components:{
-       UserCard
+       UserCard,
+       uniIcon
      },
      computed: {
-       ...mapState(["hasLogin", "userInfo","userIndexData"])
+       ...mapState(["hasLogin", "userInfo","userIndexData" , "userDataRefresh"])
      },
      methods:{
        ...mapActions(["authLogout"]),
@@ -258,8 +263,12 @@
         if(this.hasLogin){
           this.$store.dispatch('userIndexDataGet')
         }
+
      },
      onShow() {
+        this.refresh()
+     },
+     async onPullDownRefresh() {
         this.refresh()
      }
    }

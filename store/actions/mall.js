@@ -97,5 +97,20 @@ export default {
     }
     // store.state.mallGoodsInfo = ret.data.info
     return ret
+  },
+  
+  async mallOrderListGet(store, data){
+    let ret = await Request.post('mall/orderList', data)
+    return ret
+  },
+  
+  async mallOrderInfoGet(store, data){
+    let ret = await Request.post('mall/orderInfo', data)
+    return ret
+  },
+  
+  async mallOrderCancel(store, data){
+    let ret = await Request.post('mall/orderCancel', data)
+    return ret
   }
 }

@@ -22,6 +22,7 @@ export default {
   hasLogin: false,
   userInfo:{},
   isVip:0,
+  userDataRefresh:false,
   userIndexData:{
     balance:0,
     score:0,
