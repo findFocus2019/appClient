@@ -19,7 +19,7 @@
         <view class="">
         	<view class="uni-flex uni-common-pa " v-for="(item,index1) in after.items" :key="index1">
         		<view class="" style="width: 200upx;height: 200upx;">
-        			<image :src="item.cover" mode="scaleToFill" style="width: 200upx;height: 200upx;border-radius: 8upx;"></image>
+        			<image lazy-load="true"  :src="item.cover" mode="scaleToFill" style="width: 200upx;height: 200upx;border-radius: 8upx;"></image>
         		</view>
         	  <view class="uni-flex-item uni-common-pl">
         	  	<view class="uni-ellipsis-2 uni-text-dark" style="height: 100upx;line-height: 50upx;">

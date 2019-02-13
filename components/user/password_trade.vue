@@ -84,7 +84,7 @@
       	</view>
       	<view class="uni-flex-item keyboard-num bg-none" @tap="delPassword">
       		<view class="uni-common-ml-sm">
-      			<image src="/static/icon/user/backspace.png" mode="widthFix" style="width: 64upx;height: 48upx;margin-top: 16upx;"></image>
+      			<image lazy-load="true"  src="/static/icon/user/backspace.png" mode="widthFix" style="width: 64upx;height: 48upx;margin-top: 16upx;"></image>
       		</view>
       	</view>
       </view>

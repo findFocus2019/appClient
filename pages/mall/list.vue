@@ -14,7 +14,7 @@
   		</view>
       <block slot="right">
         <view class="uni-common-pl uni-common-pr">
-          <image src="/static/icon/mall/cart.png" mode="widthFix" style="width: 48upx;height: 48upx;"></image>
+          <image lazy-load="true"  src="/static/icon/mall/cart.png" mode="widthFix" style="width: 48upx;height: 48upx;"></image>
         </view>
       </block>
   	</uni-nav-bar>
@@ -51,7 +51,7 @@
           <block v-if="mallType == 2">
             <view class="mall-list-item type-self uni-bg-white uni-common-mb" v-for="(item,index) in mallGoodsList.list" :key="index" @tap="goToDetail(item)">
               <view class="">
-                <image :src="item.cover" mode="widthFix" style="width: 100%;"></image>
+                <image lazy-load="true"  :src="item.cover" mode="widthFix" style="width: 100%;"></image>
               </view>
               
               <view class="uni-common-pl uni-common-pr uni-common-pb " >
@@ -75,7 +75,7 @@
                      
                   </view>
                   <view class="uni-right uni-flex-item uni-common-pt">
-                    <image src="/static/icon/mall/cart1.png" mode="widthFix" style="width: 100upx;"></image>
+                    <image lazy-load="true"  src="/static/icon/mall/cart1.png" mode="widthFix" style="width: 100upx;"></image>
                   </view>
                 </view>
               </view>
@@ -87,7 +87,7 @@
           
             <view class="mall-list-item type-jd uni-bg-white uni-border-top uni-flex uni-common-pa" v-for="(item,index) in mallGoodsList.list" :key="index" @tap="goToDetail(item)">
               <view class="" style="width: 200upx;height: 200upx;">
-                <image :src="item.cover" mode="scaleToFill" style="width: 200upx;height: 200upx;"></image>
+                <image lazy-load="true"  :src="item.cover" mode="scaleToFill" style="width: 200upx;height: 200upx;"></image>
               </view>
               
               <view class="uni-common-pl " >
@@ -113,7 +113,7 @@
                      
                   </view>
                   <view class="uni-right uni-flex-item uni-common-pt">
-                    <image src="/static/icon/mall/cart1.png" mode="widthFix" style="width: 80upx;"></image>
+                    <image lazy-load="true"  src="/static/icon/mall/cart1.png" mode="widthFix" style="width: 80upx;"></image>
                   </view>
                 </view>
               </view>

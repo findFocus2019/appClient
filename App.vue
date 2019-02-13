@@ -38,7 +38,7 @@ uni-rich-text p {
 }
 
 .uni-popup-bottom {
-  position: fixed;
+  position: fixed !important;
 }
 
 </style>

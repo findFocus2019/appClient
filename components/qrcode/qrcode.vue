@@ -1,6 +1,6 @@
 <template>
 	<view class="qrcode">
-		<image class="image" v-if="img != ''" :src="img" :style="{ width: size+'px', height: size + 'px' }"/>
+		<image lazy-load="true"  class="image" v-if="img != ''" :src="img" :style="{ width: size+'px', height: size + 'px' }"/>
 	</view>
 </template>
 <script>

@@ -1,7 +1,7 @@
 <template>
 	<view class="m-item" :id="'message'+id">
 		<view class="m-left">
-			<image class="head_icon" src="https://img-cdn-qiniu.dcloud.net.cn/uniapp/app/homeHL.png" v-if="message.user=='home'"></image>
+			<image lazy-load="true"  class="head_icon" src="https://img-cdn-qiniu.dcloud.net.cn/uniapp/app/homeHL.png" v-if="message.user=='home'"></image>
 		</view>
 		<view class="m-content">
 			<view class="m-content-head" :class="{'m-content-head-right':message.user=='customer'}">
@@ -9,7 +9,7 @@
 			</view>
 		</view>
 		<view class="m-right">
-			<image class="head_icon" src="https://img-cdn-qiniu.dcloud.net.cn/uniapp/app/customerHL.png" v-if="message.user=='customer'"></image>
+			<image lazy-load="true"  class="head_icon" src="https://img-cdn-qiniu.dcloud.net.cn/uniapp/app/customerHL.png" v-if="message.user=='customer'"></image>
 		</view>
 	</view>
 </template>

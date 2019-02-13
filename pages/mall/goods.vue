@@ -2,7 +2,7 @@
   <view class="uni-page-body mall-goods-page">
     <swiper indicator-dots="true">
       <swiper-item v-for="(img,key) in imgUrls" :key="key">
-        <image :src="img" />
+        <image lazy-load="true"  :src="img" />
       </swiper-item>
     </swiper>
 
@@ -61,12 +61,12 @@
         </view>
         <view v-show="current === 1">
           <view class="" v-if="mallGoodsInfo.img_1">
-          	<image :src="mallGoodsInfo.img_1" mode="widthFix" style="width: 100%;"></image>
+          	<image lazy-load="true"  :src="mallGoodsInfo.img_1" mode="widthFix" style="width: 100%;"></image>
           </view>
         </view>
         <view v-show="current === 2">
           <view class="" v-if="mallGoodsInfo.img_2">
-          	<image :src="mallGoodsInfo.img_2" mode="widthFix" style="width: 100%;"></image>
+          	<image lazy-load="true"  :src="mallGoodsInfo.img_2" mode="widthFix" style="width: 100%;"></image>
           </view>
           
         </view>
@@ -100,7 +100,7 @@
 
       <view class="uni-flex uni-common-pa uni-left uni-border-top uni-border-bottom">
         <view style="width: 200upx;">
-          <image :src="mallGoodsInfo.cover" mode="widthFix" style="width: 200upx;height: 200upx;"></image>
+          <image lazy-load="true"  :src="mallGoodsInfo.cover" mode="widthFix" style="width: 200upx;height: 200upx;"></image>
         </view>
         <view class="uni-flex-item uni-common-pl">
           <view class="uni-text-dark uni-h4 uni-ellipsis" style="width: 430upx;line-height: 50upx;">
@@ -140,12 +140,12 @@
     
     <!-- #ifdef APP-PLUS -->
      <!-- <view class="cart-icon bottom" @tap="goCart">
-    	<image src="/static/icon/mall/cart.png" mode="widthFix" style="width: 60upx;height: 60upx;"></image>
+    	<image lazy-load="true"  src="/static/icon/mall/cart.png" mode="widthFix" style="width: 60upx;height: 60upx;"></image>
     </view> -->
     <!-- #endif -->
     <!-- #ifdef MP-WEIXIN -->
      <view class="cart-icon top" @tap="goCart">
-    	<image src="/static/icon/mall/cart.png" mode="widthFix" style="width: 60upx;height: 60upx;"></image>
+    	<image lazy-load="true"  src="/static/icon/mall/cart.png" mode="widthFix" style="width: 60upx;height: 60upx;"></image>
     </view>
     <!-- #endif -->
   
@@ -185,12 +185,18 @@
         ],
         showPopupBottom: false,
         cartAddNum: 1,
-        shareId:0,
-        postId:0
+        // shareId:0,
+        // postId:0
       }
     },
     computed: {
-      ...mapState(['hasLogin', 'userInfo', 'mallGoodsInfo']),
+      ...mapState(['hasLogin', 'userInfo', 'mallGoodsInfo' , 'webDomain']),
+			shareId(){
+				return this.$store.state.inviteShareId
+			},
+			postId(){
+				return this.$store.state.invitePostId
+			},
       goodsInfoStock() {
         let stock = this.$store.state.mallGoodsInfo.stock || 0
         if (stock == -1) {
@@ -237,6 +243,8 @@
         item.check = false
         item.share_id = this.shareId
         item.post_id = this.postId
+				
+				console.log('cartAddConfirm item =======', item )
        
         Cart.plus(item , this.cartAddNum)
         uni.showToast({
@@ -280,7 +288,61 @@
             icon:'none'
           })
         }
-      }
+      },
+			async goodsShare(){
+			  // 分享
+				if(!this.hasLogin){
+				  uni.navigateTo({
+				  	url:'/pages/auth/login'
+				  })
+				  return
+				}
+				
+				let shareId = 0
+				let params = {}
+				params.category = 'goods'
+				params.post_id = 0
+				params.goods_id = this.mallGoodsInfo.id || 0
+				let shareRet = await this.$store.dispatch('userShareInfoGet', params)
+				if(shareRet.code == 0){
+					let shareData = shareRet.data.info
+					shareId = shareData.id
+				}else {
+					uni.showToast({
+						icon:'none',
+						title:'分享发生错误，请稍后重试'
+					})
+					return 
+				}
+				
+			  let sharePage = 'pages/mall/goods'
+				sharePage = sharePage + '?id=' + this.mallGoodsInfo.id + '&puid=' + this.userInfo.id + '&share_id=' + shareId
+			  let shareUrl = this.webDomain + '/' + sharePage
+			  // let postType = this.postInfo.type
+			  // console.log()
+			  console.log('分享 ：' , shareUrl)
+			  let shareData = {
+			    title: this.mallGoodsInfo.title,
+			    description: this.mallGoodsInfo.description,
+			    href: shareUrl,
+			    imgUrl: this.mallGoodsInfo.cover,
+			    miniAppId: this.miniAppId,
+			    miniPage: sharePage
+			  }
+			  uni.showActionSheet({
+			  	itemList:['分享给QQ好友','分享到微信聊天','分享到微信朋友圈'],
+			    success: (e) => {
+			    	let index = e.tapIndex
+			      if(index == 0){
+			        Share.qq(shareData)
+			      }else if(index == 1){
+			        Share.mini(shareData, 0)
+			      } else if (index == 2){
+			        Share.mini(shareData , 1)
+			      }
+			    }
+			  })
+			},
     },
     async onLoad(opt) {
       // 获取商品信息
@@ -289,8 +351,23 @@
       await this.$store.dispatch('getGoodsInfo', {
         id: id
       })
-      this.shareId = opt.share_id || 0
-      this.postId = opt.post_id || 0
+			
+			// 分享
+      let shareId = opt.share_id || 0
+			let postId = opt.post_id || 0
+ 
+			if(shareId){
+				this.$store.state.inviteShareId = shareId
+			}
+			if(postId){
+				this.$store.state.invitePostId = postId
+			}
+			
+			// 邀请人
+			let inviteUserId = opt.puid || 0
+			if(inviteUserId){
+				this.$store.state.inviteUserId = inviteUserId
+			}
       
       console.log('mallGoodsInfo' , this.mallGoodsInfo)
 
@@ -305,7 +382,8 @@
     	}
     },
     onNavigationBarButtonTap(){
-      this.goCart()
+      // this.goCart()
+			this.goodsShare()
     }
   }
 </script>

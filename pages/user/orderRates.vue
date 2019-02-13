@@ -6,7 +6,7 @@
 			  
 			  <view class="uni-flex uni-common-pl uni-common-pr">
 			  	<view class="" style="width: 80upx;height: 80upx;">
-			  		<image :src="userInfo.avatar" mode="" style="width: 80upx;height: 80upx;border-radius: 80upx;"></image>
+			  		<image lazy-load="true"  :src="userInfo.avatar" mode="" style="width: 80upx;height: 80upx;border-radius: 80upx;"></image>
 			  	</view>
 			    <view class="uni-flex-item uni-h4 uni-common-pl">
 			    	<text style="">{{ userInfo.nickname}}</text>
@@ -25,14 +25,14 @@
 			  
 			  <view class="uni-common-mt uni-common-pl" v-if="item.rate_imgs.length">
 			  	<view class="uni-common-pr" style="display: inline-block;width: 100upx;height: 100upx;" v-for="(img,index1) in item.rate_imgs" :key="index1" @tap="preImg(item.rate_imgs, img)">
-			  		<image :src="img" mode="scaleToFill" style="width: 100upx;height: 100upx;border-radius: 4upx;"></image>
+			  		<image lazy-load="true"  :src="img" mode="scaleToFill" style="width: 100upx;height: 100upx;border-radius: 4upx;"></image>
 			  	</view>
 			  </view>
         
         <view class="uni-common-pl uni-common-pr">
         	<view class="uni-common-pa uni-bg-gray uni-common-mt-sm uni-flex">
         		<view class="" style="width: 160upx;height: 160upx;">
-        			<image :src="item.goods_cover" mode="scaleToFill" style="width: 160upx;height: 160upx;border-radius: 8upx;"></image>
+        			<image lazy-load="true"  :src="item.goods_cover" mode="scaleToFill" style="width: 160upx;height: 160upx;border-radius: 8upx;"></image>
         		</view>
             <view class="uni-flex-item uni-common-pl">
             	<view class="uni-ellipsis-2 " style="height: 80upx;">

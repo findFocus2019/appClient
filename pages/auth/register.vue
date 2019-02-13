@@ -71,7 +71,10 @@ export default {
   computed:{
     oAuthId(){
       return this.$store.state.oAuthId
-    }
+    },
+		inviteUserId(){
+			return this.$store.state.inviteUserId
+		}
   },
   onShow() {
     let type = uni.getStorageSync('auth_reg_type') || 0
@@ -104,6 +107,7 @@ export default {
   methods: {
     async formSubmit() {
       let postData = this.postData;
+			postData.pid = this.inviteUserId;
       if(postData.type == 3){
         // 设置oauth的数据
         postData.oauth_info.oauth_id = this.oAuthId
@@ -183,7 +187,11 @@ export default {
       });
     }
   },
-  onLoad() {}
+  onLoad(opt) {
+		let inviteUserId = opt.puid || 0
+		this.$store.state.inviteUserId = inviteUserId
+		
+	}
 };
 </script>
 

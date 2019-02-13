@@ -1,4 +1,6 @@
-const apiDomain = 'http://127.0.0.1:5001'
+// const apiDomain = 'http://127.0.0.1:5001';
+import config from './config.js'; 
+const apiDomain = config.apiDomain
 // const apiDomain = 'http://47.91.250.144:5001'
 const signKey = '123456'
 import {

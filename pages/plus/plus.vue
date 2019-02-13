@@ -2,7 +2,7 @@
 	<view class="uni-page-body uni-page-plus">
 		<view class="uni-page-plus-up">
 			<view class="uni-center bg">
-				<image src="../../static/img/plus/bg.png" mode="scaleToFill"></image>
+				<image lazy-load="true"  src="../../static/img/plus/bg.png" mode="scaleToFill"></image>
 			</view>
       <view class="content">
       	<view class="uni-flex">
@@ -29,7 +29,7 @@
     	<view class="uni-common-pl uni-common-pr uni-flex">
     		<view class="uni-flex-item uni-common-pl uni-common-pr" @tap="goToPage('/pages/plus/post')">
     			<view class="">
-    				<image src="../../static/img/plus/post.png" mode="scaleToFill" style="width: 160upx;height: 160upx;"></image>
+    				<image lazy-load="true"  src="../../static/img/plus/post.png" mode="scaleToFill" style="width: 160upx;height: 160upx;"></image>
     			</view>
           <view class="uni-bold plus-item-title">
           	发布评测
@@ -37,7 +37,7 @@
     		</view>
         <view class="uni-flex-item uni-right uni-common-pl uni-common-pr">
         	<view class="">
-        		<image src="../../static/img/plus/share.png" mode="scaleToFill" style="width: 160upx;height: 160upx;"></image>
+        		<image lazy-load="true"  src="../../static/img/plus/share.png" mode="scaleToFill" style="width: 160upx;height: 160upx;"></image>
         	</view>
         	<view class="uni-bold plus-item-title">
         		代言分享

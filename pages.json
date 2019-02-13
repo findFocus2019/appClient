@@ -130,11 +130,12 @@
                     "titleNView" : {
                         "type":"transparent",
                         "buttons":[{
-                            "text":"购物车",
-                            "fontSize":"14",
-                            "width":"auto",
-                            "background":"none",
-                            "color":"#FFFFFF"
+//                             "text":"购物车",
+//                             "fontSize":"14",
+//                             "width":"auto",
+//                             "background":"none",
+//                             "color":"#FFFFFF"
+													"type":"share"
                         }]
                     }
                 }
@@ -206,7 +207,7 @@
                             {
                                 "fontSrc" : "/static/fonts/uni.ttf",
                                 "text" : "\ue502",
-                                "background":"white"
+                                "background":"none"
                             }
                         ],
                         "type":"transparent"

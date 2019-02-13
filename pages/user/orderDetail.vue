@@ -46,7 +46,7 @@
     	      
     		  	<view class="uni-flex uni-border-top uni-common-pt uni-common-pb" v-for="(item,index) in order.goods_items" :key="index">
     		  		<view class="" style="160upx;height: 160upx;">
-    		  			<image :src="item.cover" mode="scaleToFill" style="width: 160upx;height: 160upx;border-radius: 8upx;"></image>
+    		  			<image lazy-load="true"  :src="item.cover" mode="scaleToFill" style="width: 160upx;height: 160upx;border-radius: 8upx;"></image>
     		  		</view>
     		      <view class="uni-flex-item uni-common-pl" >
     		      	<view class="uni-ellipsis-2 uni-text-darker" style="height: 80upx;">

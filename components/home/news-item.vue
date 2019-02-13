@@ -1,20 +1,20 @@
 <template>
   <view class="news-item">
-    <image class="cover" :src="cover" mode="scaleToFill"></image>
+    <image lazy-load="true"  class="cover" :src="cover" mode="scaleToFill"></image>
     <view class="content">
       <text class="uni-ellipsis-2">{{title}}</text>
       <text class="publish-date">发布时间：{{publish_time}}</text>
       <view class="statistics-info">
         <view class="statistics-item visits">
-          <image class="icon-visits" src="/static/icon/home/icon_visit.png"></image>
+          <image lazy-load="true"  class="icon-visits" src="/static/icon/home/icon_visit.png"></image>
           <text>{{visits}}</text>
         </view>
         <view class="statistics-item likes">
-          <image class="icon-likes" src="/static/icon/home/icon_like.png"></image>
+          <image lazy-load="true"  class="icon-likes" src="/static/icon/home/icon_like.png"></image>
           <text>{{likes}}</text>
         </view>
         <view class="statistics-item shares">
-          <image class="icon-shares" src="/static/icon/home/icon_share.png"></image>
+          <image lazy-load="true"  class="icon-shares" src="/static/icon/home/icon_share.png"></image>
           <text>{{shares}}</text>
         </view>
       </view>

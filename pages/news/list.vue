@@ -21,7 +21,7 @@
               <view class="uni-common-pt uni-common-pb uni-border-bottom" @tap="goToDetail(news)">
                 <view class="uni-flex">
                   <view class="uni-flex-item" v-for="(img,index3) in news.imgs" :key="index3" v-if="index3 < 3">
-                    <image :src="img.url" mode="scaleToFill" style="width: 200upx;height: 160upx;"></image>
+                    <image lazy-load="true"  :src="img.url" mode="scaleToFill" style="width: 200upx;height: 160upx;border-radius: 4upx;"></image>
                   </view>
                 </view>
                 <view class="uni-bold">
@@ -29,19 +29,19 @@
                 </view>
                 <view class="uni-common-pt-sm uni-text-gray uni-flex">
                 	<view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
-                    <image src="/static/icon/posts/eye.png" mode="" style="width: 36upx;height: 36upx;"></image>  
+                    <image lazy-load="true"  src="/static/icon/posts/eye.png" mode="" style="width: 36upx;height: 36upx;"></image>  
                   </view>
                   <view class="uni-flex-item uni-common-ml-sm">
                     <text >{{news.views}}</text> 
                   </view>
                   <view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
-                    <image src="/static/icon/posts/zan.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image> 
+                    <image lazy-load="true"  src="/static/icon/posts/zan.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image> 
                    </view>
                   <view class="uni-flex-item uni-common-ml-sm">
                   	<text>{{news.likes}}</text> 
                   </view>
                   <view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
-                    <image src="/static/icon/posts/share.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image> 
+                    <image lazy-load="true"  src="/static/icon/posts/share.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image> 
                    </view>
                   <view class="uni-flex-item uni-common-ml-sm">
                   	<text>{{news.shares}}</text> 
@@ -52,9 +52,10 @@
           </scroll-view>
         </view>
       </swiper-item>
+
     </swiper>
 
-    <view class="uni-center uni-common-pt">
+    <view class="uni-center uni-common-pa" v-if="showLoadMore">
       {{loadMoreText}}
     </view>
   </view>
@@ -76,6 +77,7 @@
         scrollLeft: 0,
         swiperHeight: 0,
         newsItems: {},
+				showLoadMore:false,
         loadMoreText: '',
         refreshDisplay:'none'
       }
@@ -130,7 +132,7 @@
         console.log("得到节点信息" + JSON.stringify(data));
         console.log("节点的宽为" + data.width);
 
-        this.swiperHeight = (data.height - 100) + 'px';
+        this.swiperHeight = (data.height - 50) + 'px';
       }).exec();
 
     },
@@ -161,6 +163,9 @@
         }else {
           this.scrollLeft = 0
         }
+				
+				let item = this.channels[index]
+				this.tapChannel(item, index)
         
       },
       goToDetail(item) {
@@ -239,6 +244,7 @@
       },
       async loadMore(item) {
         console.log('load more ...')
+				this.showLoadMore = true
         this.loadMoreText = '加载更多...'
 
         let ret = await this.getNewsData(item)
@@ -247,9 +253,11 @@
           this.loadMoreText = '无更多'
 
           setTimeout(() => {
+						this.showLoadMore = false
             this.loadMoreText = ''
-          }, 3000)
+          }, 1500)
         } else {
+					this.showLoadMore = false
           this.loadMoreText = ''
         }
 

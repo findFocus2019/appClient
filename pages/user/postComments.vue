@@ -5,7 +5,7 @@
     	
       <view class="uni-flex uni-common-mt uni-common-pa uni-bg-white uni-border-bottom" v-for="(item,index) in listData.list" :key="index">
       	<view class="">
-      		<image :src="userInfo.avatar" mode="widthFix" style="width: 80upx;height: 80upx;border-radius: 40upx;"></image>
+      		<image lazy-load="true"  :src="userInfo.avatar" mode="widthFix" style="width: 80upx;height: 80upx;border-radius: 40upx;"></image>
       	</view>
         <view class="uni-flex-item uni-common-pl">
         	<view class="uni-text-darker">
@@ -21,7 +21,7 @@
           
           <view class="uni-bg-gray uni-common-pa uni-flex" @tap="goToPostDetail(item.post)">
           	<view class="" style="width: 160upx;height: 100upx;">
-          		<image :src="item.post.cover" mode="scaleToFill" style="width: 160upx;height: 100upx;"></image>
+          		<image lazy-load="true"  :src="item.post.cover" mode="scaleToFill" style="width: 160upx;height: 100upx;"></image>
           	</view>
             <view class="uni-flex-item uni-ellipsis-2 uni-common-pl" style="height: 100upx;line-height: 50upx;">
             	{{ item.post.title}}

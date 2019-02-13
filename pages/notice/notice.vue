@@ -3,7 +3,7 @@
     <view class="" v-if="listData.count">
       <view class="uni-common-pa uni-common-mt uni-bg-white uni-flex" @tap="goToDetail(item)" v-for="(item,index) in listData.list" :key="index">
         <view class="" style="width: 200upx;height: 120upx;">
-          <image :src="item.cover" mode="scaleToFill" style="width: 200upx;height: 120upx;"></image>
+          <image lazy-load="true"  :src="item.cover" mode="scaleToFill" style="width: 200upx;height: 120upx;"></image>
         </view>
         <view class="uni-flex-item uni-common-pl">
           <view class="post-list-title">

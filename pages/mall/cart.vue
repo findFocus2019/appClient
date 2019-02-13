@@ -32,7 +32,7 @@
 										<uni-icon type="circle" size="22"  v-else></uni-icon>
 				      		</view>
 				      		<view class="cart-list-cover uni-common-pt uni-flex-item">
-				      			<image :src="item.cover" mode="" style="width: 180upx;height: 180upx;"></image>
+				      			<image lazy-load="true"  :src="item.cover" mode="" style="width: 180upx;height: 180upx;"></image>
 				      		</view>
 				      		<view class="uni-flex-item uni-common-pt uni-common-pl uni-common-pr cart-list-item" >
 				      			<view class=" cart-list-title uni-bold" style="width: 410upx;">

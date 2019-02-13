@@ -5,8 +5,8 @@
 			<view class="uni-flex-item">
         头像
 			</view>
-      <view class="uni-flex-item uni-right" v-if="!userInfo.avatar">
-      	<image :src="userInfo.avatar" mode="" v-if="userInfo.avatar" style="width: 80upx;height: 80upx; border-radius: 40upx;"></image>
+      <view class="uni-flex-item uni-right" v-if="userInfo.avatar">
+      	<image lazy-load="true"  :src="userInfo.avatar" mode="" v-if="userInfo.avatar" style="width: 80upx;height: 80upx; border-radius: 40upx;"></image>
       </view>
       <view class="uni-flex-item uni-right" v-else @tap="goToPage('/pages/user/avatar')">
       	上传头像
@@ -163,7 +163,7 @@
                 provider: 'weixin',
                 success: async (infoRes) => {
                   // console.log('用户昵称为：' + infoRes.userInfo.nickName);
-                  let openid = infoRes.userInfo.openid;
+                  let openid = infoRes.userInfo.openId || infoRes.userInfo.openid;
                   
                   // #ifdef MP-WEIXIN
                   console.log('login 小程序，去后台取openid');

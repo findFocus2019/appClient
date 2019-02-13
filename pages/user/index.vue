@@ -17,8 +17,8 @@
       <view class="uni-flex uni-common-pt uni-common-pb"  v-if="hasLogin">
    
         <view class="user-avatar">
-          <image :src="userInfo.avatar" mode="scaleToFill" v-if="userInfo.avatar" ></image>
-          <image src="/static/icon/qq.png" mode="scaleToFill" v-else></image>
+          <image lazy-load="true"  :src="userInfo.avatar" mode="scaleToFill" v-if="userInfo.avatar" ></image>
+          <image lazy-load="true"  src="/static/icon/qq.png" mode="scaleToFill" v-else></image>
           
         </view>
  
@@ -28,13 +28,13 @@
             	{{ userInfo.nickname || '还未设置'}}
             </view>
             <view class="">
-            	<image src="/static/icon/user/vip-tag.png" mode="scaleToFill" style="width: 120upx;height: 30upx;"></image>
+            	<image lazy-load="true"  src="/static/icon/user/vip-tag.png" mode="scaleToFill" style="width: 120upx;height: 30upx;"></image>
             </view>
         		
         	</view>
           <view class="uni-flex-item uni-right">
             <navigator url="/pages/notice/notice">
-            <!-- <image src="/static/icon/user/msg.png" mode="widthFix" style="width: 110upx;height: 110upx;"></image> -->
+            <!-- <image lazy-load="true"  src="/static/icon/user/msg.png" mode="widthFix" style="width: 110upx;height: 110upx;"></image> -->
             <uni-icon type="chat" size="32"></uni-icon>
             </navigator>
           </view>
@@ -45,7 +45,7 @@
       
       <view class="uni-flex uni-common-pt uni-common-pb" v-else>
       	<view class="user-avatar">
-      	  <image src="../../static/icon/qq.png" mode="scaleToFill"></image>
+      	  <image lazy-load="true"  src="../../static/icon/qq.png" mode="scaleToFill"></image>
       	</view>
         
         <view class="uni-flex uni-flex-item uni-common-pl">
@@ -60,7 +60,7 @@
         	</view>
           <view class="uni-flex-item uni-right">
             <navigator url="/pages/notice/notice">
-              <!-- <image src="/static/icon/user/msg.png" mode="widthFix" style="width: 110upx;height: 110upx;"></image> -->
+              <!-- <image lazy-load="true"  src="/static/icon/user/msg.png" mode="widthFix" style="width: 110upx;height: 110upx;"></image> -->
               <uni-icon type="chat" size="32" color="#ffffff"></uni-icon>
             </navigator>
             
@@ -138,7 +138,7 @@
       <view class="uni-common-mt uni-flex">
       	<view class="uni-flex-item uni-flex user-box-vip uni-common-pa" @tap="goToPage('/pages/user/vip')">
       		<view class="uni-flex-item uni-common-pr" style="width: 120upx;height: 120upx;">
-      			<image src="/static/icon/user/vip.png" mode="scaleToFill" style="width: 120upx;height: 120upx;"></image>
+      			<image lazy-load="true"  src="/static/icon/user/vip.png" mode="scaleToFill" style="width: 120upx;height: 120upx;"></image>
       		</view>
           <view class="uni-flex-item">
           	<view class="uni-text-dark uni-common-mt">
@@ -148,7 +148,7 @@
       	</view>
         <view class="uni-flex-item uni-flex user-box-ecard uni-common-pa" @tap="goToPage('/pages/user/ecard')">
         	<view class="uni-flex-item uni-common-pr" style="width: 120upx;height: 120upx;">
-        		<image src="/static/icon/user/ecard.png" mode="scaleToFill" style="width: 120upx;height: 120upx;"></image>
+        		<image lazy-load="true"  src="/static/icon/user/ecard.png" mode="scaleToFill" style="width: 120upx;height: 120upx;"></image>
         	</view>
         	<view class="uni-flex-item">
         		<view class="uni-text-dark uni-common-mt">
@@ -159,7 +159,7 @@
       </view>
       
       <view class="uni-common-mt" @tap="goToPage('/pages/user/dailySignHongbao')">
-      	<image src="/static/img/user-daily-sign.png" mode="widthFix" style="width: 100%;"></image>
+      	<image lazy-load="true"  src="/static/img/user-daily-sign.png" mode="widthFix" style="width: 100%;"></image>
       </view>
       
       <view class="uni-common-mt">

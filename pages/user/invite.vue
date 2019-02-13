@@ -4,15 +4,15 @@
     
     <view class="uni-center">
     	<view class="invite-qrcode uni-center uni-common-mt">
-    		<image src="/static/img/user/invite-qrcode.png" mode="widthFix" style="width: 540upx;height: 600upx;"></image>
+    		<image lazy-load="true"  src="/static/img/user/invite-qrcode.png" mode="widthFix" style="width: 540upx;height: 600upx;"></image>
         <view class="qrcode-img" style="">
         	二维码
         </view>
     	</view>
       <view class="invite-info">
-      	<image src="/static/img/user/invite-info.png" mode="widthFix" style="width: 540upx;height: 323upx;"></image>
+      	<image lazy-load="true"  src="/static/img/user/invite-info.png" mode="widthFix" style="width: 540upx;height: 323upx;"></image>
         <view class="uni-common-pa user-info-box">
-        	<image :src="userInfo.avatar" mode="" style="width: 160upx;height: 160upx;border-radius: 80upx;margin-top: 20upx;" ></image>
+        	<image lazy-load="true"  :src="userInfo.avatar" mode="" style="width: 160upx;height: 160upx;border-radius: 80upx;margin-top: 20upx;" ></image>
           <view class="uni-center">
           	{{ userInfo.nickname }}
           </view>

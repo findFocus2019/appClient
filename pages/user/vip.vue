@@ -4,10 +4,10 @@
     
     <view class="uni-center ">
       <view class="uni-common-pa" style="height:328upx;">
-      	<image src="/static/img/user/vip-card.png" mode="widthFix" style="width:600upx;height:328upx;border-radius: 12upx;overflow: hidden;"></image>
+      	<image lazy-load="true"  src="/static/img/user/vip-card.png" mode="widthFix" style="width:600upx;height:328upx;border-radius: 12upx;overflow: hidden;"></image>
       </view>
       <view class="uni-common-pt">
-      	<image src="/static/img/user/vip-title.png" mode="widthFix" style="width: 500upx;height: 144upx;"></image>
+      	<image lazy-load="true"  src="/static/img/user/vip-title.png" mode="widthFix" style="width: 500upx;height: 144upx;"></image>
       </view>
       <view class="uni-text-small uni-text-light">
       	{{subTitle}}

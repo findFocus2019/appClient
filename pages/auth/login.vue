@@ -46,7 +46,7 @@
            <view class="uni-common-pa uni-common-mt uni-center uni-flex" v-if="hasProvider">
 
                 <view class="uni-column uni-flex-item" @tap="oauth(item.value)" v-for="(item,index) in providerList" :key="index">
-                  <image :src="item.image" style="width:64px;height:64px;"></image>
+                  <image lazy-load="true"  :src="item.image" style="width:64px;height:64px;"></image>
                 </view>
  
            </view>
@@ -172,9 +172,12 @@ export default {
                   let oauthInfo = infoRes.userInfo
                   this.oauth_info.avatar = oauthInfo.avatarUrl
                   this.oauth_info.nickname = oauthInfo.nickName
-                  if(oauthInfo.openid ){
+                  if(oauthInfo.openid){
                      this.oauth_info.openid = oauthInfo.openid
                   }
+									if(oauthInfo.openId){
+									   this.oauth_info.openid = oauthInfo.openId
+									}
                   
                   // #ifdef MP-WEIXIN
                   console.log('login 小程序，去后台取openid');

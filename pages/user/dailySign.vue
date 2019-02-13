@@ -16,13 +16,13 @@
       <view class="uni-common-pt">
       	<view class="uni-common-pa">
           <view class="" style="width: 630upx;height: 48upx;">
-          	<image src="/static/img/user/sign-top.png" mode="" style="width: 630upx;height: 48upx;"></image>
+          	<image lazy-load="true"  src="/static/img/user/sign-top.png" mode="" style="width: 630upx;height: 48upx;"></image>
           </view>
       		<view class="uni-bg-white ">
             
       			<view class="uni-flex uni-center uni-text-light uni-common-pa">
               <view class="" style="width: 50upx;height: 50upx;margin-right: 10upx;">
-              	<image src="../../static/icon/user/sign-calendar.png" mode="" style="width: 50upx;height: 50upx;"></image>
+              	<image lazy-load="true"  src="../../static/icon/user/sign-calendar.png" mode="" style="width: 50upx;height: 50upx;"></image>
               </view>
       				<view class="">
                 签到记录

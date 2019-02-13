@@ -4,7 +4,7 @@
 			<view class="uni-common-pa uni-center">
 				
         <view class="uni-center uni-common-pt" >
-        	<image src="/static/img/user/sign-title.png" mode="widthFix" style="width: 420upx;"></image>
+        	<image lazy-load="true"  src="/static/img/user/sign-title.png" mode="widthFix" style="width: 420upx;"></image>
         </view>
         <view class="uni-text-gray">
         	累计连续登录7天，获得 <text class="uni-h3 uni-text-red">2元</text> 现金

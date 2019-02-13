@@ -1,8 +1,10 @@
+import config from './config.js';
 export default {
-  version:'0.9.0',
-  miniAppId:'wx2e40960c5cfb7723',
-  webDomain:'http://127.0.0.1:8080/',
-  apiDomain: 'http://127.0.0.1:5001/',
+  version:config.version,
+  miniAppId:config.miniAppId,
+  webDomain: config.webDomain,
+  apiDomain: config.apiDomain,
+	// apiDomain: 'http://47.91.250.144:5001',
   configs:{},
   appNoticeData:{
     page:1,
@@ -24,6 +26,12 @@ export default {
   forcedLogin: false,
   hasLogin: false,
   userInfo:{},
+	// 邀请人id，参数puid
+	inviteUserId:0,
+	// 邀请分享id，参数share_id
+	inviteShareId:0,
+	invitePostId:0,
+	
   isVip:0,
   userDataRefresh:false,
   userIndexData:{

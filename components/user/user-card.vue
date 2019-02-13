@@ -8,7 +8,7 @@
       	<view class="user-card-item" @tap="goTo(item.path)" v-for="(item,index) in items" :key="index">
           <view class="uni-common-pa">
           	<view class="user-card-item-img">
-          		<image :src="'/static/icon/user/' + item.icon + '.png'" mode="scaleToFill"></image>
+          		<image lazy-load="true"  :src="'/static/icon/user/' + item.icon + '.png'" mode="scaleToFill"></image>
           	</view>
           	<view class="uni-text-light">
           		{{item.text}}

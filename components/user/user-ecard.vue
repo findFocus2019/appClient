@@ -2,8 +2,8 @@
   <view class="uni-common-pa" >
   	<view class="uni-flex uni-bg-white" @tap="ecardTap">
   		<view class="" style="width: 218upx;height: 200upx;">
-  			<image src="/static/icon/user/ecard0.png" mode="widthFix" style="width: 218upx;height: 200upx;" v-if="ecard.status == 1"></image>
-        <image src="/static/icon/user/ecard1.png" mode="widthFix" style="width: 218upx;height: 200upx;" v-if="ecard.status == 0"></image>
+  			<image lazy-load="true"  src="/static/icon/user/ecard0.png" mode="widthFix" style="width: 218upx;height: 200upx;" v-if="ecard.status == 1"></image>
+        <image lazy-load="true"  src="/static/icon/user/ecard1.png" mode="widthFix" style="width: 218upx;height: 200upx;" v-if="ecard.status == 0"></image>
   		</view>
   	  <view class="uni-flex-item uni-center">
   	  	<view class="uni-text-red uni-h2 " style="line-height: 200upx;" v-if="ecard.status == 1">

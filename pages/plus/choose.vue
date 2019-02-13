@@ -4,19 +4,19 @@
     <view class="" v-if="goodsItems.count">
     	
       <view class="uni-flex uni-common-pa uni-border-bottom" v-for="(item,index) in goodsItems.list" :key="index" @tap="chooseGoods(item)">
-      	<view class="" v-if="item.good">
-      		<image :src="item.good.cover" mode="" style="width: 100upx;height: 100upx;"></image>
+      	<view class="" v-if="item.goods_id">
+      		<image lazy-load="true"  :src="item.goods_cover" mode="" style="width: 100upx;height: 100upx;border-radius: 8upx;"></image>
       	</view>
         <view class="uni-flex-item uni-common-pl">
           <view class="uni-ellipsis" style="width: 400upx;">
-          	{{ item.good.title}}
+          	{{ item.goods_title}}
           </view>
           <view class="uni-text-small uni-text-gray">
           	购买时间：{{ item.create_date }}
           </view>
         </view>
         <view class="">
-        	<uni-icon type="checkbox-filled" size="24" v-if="item.goods_id == chooseId" color="red"></uni-icon>
+        	<uni-icon type="checkbox-filled" size="24" v-if="item.id == chooseId" color="red"></uni-icon>
           <uni-icon type="checkbox-filled" size="24" v-else></uni-icon>
         </view>
       </view>
@@ -62,7 +62,8 @@
       chooseGoods(item){
         this.plusPostData.goods = {
           id: item.goods_id,
-          title: item.good.title
+          title: item.goods_title,
+					item_id: item.id
         }
         
         uni.navigateBack({
@@ -73,7 +74,7 @@
     onLoad() {
     	this.getDatas()
       
-      this.chooseId = this.plusPostData.goods.id || 0
+      this.chooseId = this.plusPostData.goods.item_id || 0
     }
   }
 </script>

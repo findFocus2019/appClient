@@ -30,7 +30,7 @@
       </view>
       <block slot="right">
         <view class="uni-common-pr">
-          <image src="/static/icon/mall/cart.png" mode="widthFix" style="width: 60upx;"></image>
+          <image lazy-load="true"  src="/static/icon/mall/cart.png" mode="widthFix" style="width: 60upx;"></image>
         </view>
       </block>
     </uni-nav-bar>
@@ -60,7 +60,7 @@
           <block v-for="(item,index2) in tab.rows" :key="index2">
             <view class="" @tap="goDetail(item)">
               <view class="" style="width: 100%;">
-                <image :src="item.cover" mode="widthFix" style="width: 100%;"></image>
+                <image lazy-load="true"  :src="item.cover" mode="widthFix" style="width: 100%;"></image>
               </view>
               <view class="uni-bg-white uni-common-pa ">
                 <view class="">
@@ -81,7 +81,7 @@
                     </view>
 
                     <view class="uni-right" style="width: 100upx">
-                      <image src="/static/icon/mall/cart1.png" mode="widthFix" style="width: 100upx"></image>
+                      <image lazy-load="true"  src="/static/icon/mall/cart1.png" mode="widthFix" style="width: 100upx"></image>
                     </view>
                   </view>
 

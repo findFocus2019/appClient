@@ -17,7 +17,7 @@
 
           <view class="uni-common-pa uni-common-mb uni-bg-white uni-flex" v-for="(item,index) in listDataGoods.list" :key="index">
             <view class="" style="width: 200upx;height: 200upx;">
-              <image :src="item.info.cover" mode="" style="width: 200upx;height: 200upx;"></image>
+              <image lazy-load="true"  :src="item.info.cover" mode="" style="width: 200upx;height: 200upx;"></image>
             </view>
             <view class="uni-flex-item uni-common-pl">
               <view class="list-title">
@@ -47,7 +47,7 @@
 
           <view class="uni-common-pa uni-common-mb uni-bg-white uni-flex" v-for="(item,index) in listDataPosts[current].list" :key="index">
             <view class="" style="width: 200upx;height: 200upx;">
-              <image :src="item.info.cover" mode="" style="width: 200upx;height: 200upx;"></image>
+              <image lazy-load="true"  :src="item.info.cover" mode="" style="width: 200upx;height: 200upx;"></image>
             </view>
             <view class="uni-flex-item uni-common-pl">
               <view class="list-title">
@@ -58,19 +58,19 @@
               </view>
               <view class="uni-flex">
                 <view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
-                  <image src="/static/icon/posts/eye.png" mode="" style="width: 36upx;height: 36upx;"></image>
+                  <image lazy-load="true"  src="/static/icon/posts/eye.png" mode="" style="width: 36upx;height: 36upx;"></image>
                 </view>
                 <view class="uni-flex-item uni-common-ml-sm">
                   <text>{{item.info.views}}</text>
                 </view>
                 <view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
-                  <image src="/static/icon/posts/zan.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image>
+                  <image lazy-load="true"  src="/static/icon/posts/zan.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image>
                 </view>
                 <view class="uni-flex-item uni-common-ml-sm">
                   <text>{{item.info.likes}}</text>
                 </view>
                 <view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
-                  <image src="/static/icon/posts/share.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image>
+                  <image lazy-load="true"  src="/static/icon/posts/share.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image>
                 </view>
                 <view class="uni-flex-item uni-common-ml-sm">
                   <text>{{item.info.shares}}</text>
@@ -90,7 +90,7 @@
 
           <view class="uni-common-pa uni-common-mb uni-bg-white uni-flex" v-for="(item,index) in listDataPosts[current].list" :key="index">
             <view class="" style="width: 200upx;height: 200upx;">
-              <image :src="item.info.cover" mode="" style="width: 200upx;height: 200upx;"></image>
+              <image lazy-load="true"  :src="item.info.cover" mode="" style="width: 200upx;height: 200upx;"></image>
             </view>
             <view class="uni-flex-item uni-common-pl">
               <view class="list-title">
@@ -101,19 +101,19 @@
               </view>
               <view class="uni-flex">
                 <view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
-                  <image src="/static/icon/posts/eye.png" mode="" style="width: 36upx;height: 36upx;"></image>
+                  <image lazy-load="true"  src="/static/icon/posts/eye.png" mode="" style="width: 36upx;height: 36upx;"></image>
                 </view>
                 <view class="uni-flex-item uni-common-ml-sm">
                   <text>{{item.info.views}}</text>
                 </view>
                 <view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
-                  <image src="/static/icon/posts/zan.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image>
+                  <image lazy-load="true"  src="/static/icon/posts/zan.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image>
                 </view>
                 <view class="uni-flex-item uni-common-ml-sm">
                   <text>{{item.info.likes}}</text>
                 </view>
                 <view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
-                  <image src="/static/icon/posts/share.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image>
+                  <image lazy-load="true"  src="/static/icon/posts/share.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image>
                 </view>
                 <view class="uni-flex-item uni-common-ml-sm">
                   <text>{{item.info.shares}}</text>
@@ -134,7 +134,7 @@
 
           <view class="uni-common-pa uni-common-mb uni-bg-white uni-flex" v-for="(item,index) in listDataPosts[current].list" :key="index">
             <view class="" style="width: 200upx;height: 200upx;">
-              <image :src="item.info.cover" mode="" style="width: 200upx;height: 200upx;"></image>
+              <image lazy-load="true"  :src="item.info.cover" mode="" style="width: 200upx;height: 200upx;"></image>
             </view>
             <view class="uni-flex-item uni-common-pl">
               <view class="list-title">
@@ -145,19 +145,19 @@
               </view>
               <view class="uni-flex">
                 <view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
-                  <image src="/static/icon/posts/eye.png" mode="" style="width: 36upx;height: 36upx;"></image>
+                  <image lazy-load="true"  src="/static/icon/posts/eye.png" mode="" style="width: 36upx;height: 36upx;"></image>
                 </view>
                 <view class="uni-flex-item uni-common-ml-sm">
                   <text>{{item.info.views}}</text>
                 </view>
                 <view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
-                  <image src="/static/icon/posts/zan.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image>
+                  <image lazy-load="true"  src="/static/icon/posts/zan.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image>
                 </view>
                 <view class="uni-flex-item uni-common-ml-sm">
                   <text>{{item.info.likes}}</text>
                 </view>
                 <view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
-                  <image src="/static/icon/posts/share.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image>
+                  <image lazy-load="true"  src="/static/icon/posts/share.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image>
                 </view>
                 <view class="uni-flex-item uni-common-ml-sm">
                   <text>{{item.info.shares}}</text>

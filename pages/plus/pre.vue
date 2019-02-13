@@ -10,19 +10,19 @@
 		
 		  <view class="uni-common-pt-sm uni-text-gray uni-flex">
 		    <view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
-		      <image src="/static/icon/posts/eye.png" mode="" style="width: 36upx;height: 36upx;"></image>
+		      <image lazy-load="true"  src="/static/icon/posts/eye.png" mode="" style="width: 36upx;height: 36upx;"></image>
 		    </view>
 		    <view class="uni-flex-item uni-common-ml-sm">
 		      <text>0</text>
 		    </view>
 		    <view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
-		      <image src="/static/icon/posts/zan.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image>
+		      <image lazy-load="true"  src="/static/icon/posts/zan.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image>
 		    </view>
 		    <view class="uni-flex-item uni-common-ml-sm">
 		      <text>0</text>
 		    </view>
 		    <view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
-		      <image src="/static/icon/posts/share.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image>
+		      <image lazy-load="true"  src="/static/icon/posts/share.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image>
 		    </view>
 		    <view class="uni-flex-item uni-common-ml-sm">
 		      <text>0</text>

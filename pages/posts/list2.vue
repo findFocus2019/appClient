@@ -3,7 +3,7 @@
 		<view class="" v-if="newsDatas && newsDatas.list">
       <view class="uni-bg-white uni-common-mt" v-for="(news,index) in newsDatas.list" :key="index">
         <view class="" @tap="goToDetail(news)">
-        	<image :src="news.cover" mode="widthFix" style="width: 100%"></image>
+        	<image lazy-load="true"  :src="news.cover" mode="widthFix" style="width: 100%"></image>
         </view>
         <view class="uni-flex uni-bg-white uni-common-pa uni-left"  @tap="goToDetail(news)">
         	
@@ -13,19 +13,19 @@
           	</view>
             <view class="uni-common-pt uni-text-gray uni-flex">
             	<view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
-                <image src="/static/icon/posts/eye.png" mode="" style="width: 36upx;height: 36upx;"></image>  
+                <image lazy-load="true"  src="/static/icon/posts/eye.png" mode="" style="width: 36upx;height: 36upx;"></image>  
               </view>
               <view class="uni-flex-item uni-common-ml-sm">
                 <text >{{news.views}}</text> 
               </view>
               <view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
-                <image src="/static/icon/posts/zan.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image> 
+                <image lazy-load="true"  src="/static/icon/posts/zan.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image> 
                </view>
               <view class="uni-flex-item uni-common-ml-sm">
               	<text>{{news.likes}}</text> 
               </view>
               <view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
-                <image src="/static/icon/posts/share.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image> 
+                <image lazy-load="true"  src="/static/icon/posts/share.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image> 
                </view>
               <view class="uni-flex-item uni-common-ml-sm">
                 

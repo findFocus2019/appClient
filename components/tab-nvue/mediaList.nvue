@@ -5,9 +5,9 @@
                 <div :class="[isImgRight?'media-image-right':'',isImgLeft?'media-image-left':'']">
                     <text :class="['media-title',isImgRight||isImgLeft?'media-title2':'']">{{data.title}}</text>
                     <div v-if="showImg" :class="['image-section',isImgRight?'image-section-right':'',isImgLeft?'image-section-left':'']">
-                        <image :class="['image-list1',isImgRight||isImgLeft?'image-list2':'']" v-if="data.image_url"
+                        <image lazy-load="true"  :class="['image-list1',isImgRight||isImgLeft?'image-list2':'']" v-if="data.image_url"
                             :src="data.image_url"></image>
-                        <image class="image-list3" v-if="data.image_list" :src="source.url" v-for="(source, i) in data.image_list"
+                        <image lazy-load="true"  class="image-list3" v-if="data.image_list" :src="source.url" v-for="(source, i) in data.image_list"
                             :key="i" />
                     </div>
                 </div>

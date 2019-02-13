@@ -1,14 +1,14 @@
 <template>
   <navigator class="suggestion-navigator" :url="link">
-    <image class="suggestion-bg" :src="img"></image>
+    <image lazy-load="true"  class="suggestion-bg" :src="img"></image>
     <text class="suggestion-item-title">{{title}}</text>
     <view class="bottom">
       <view class="statistics-item">
-        <image class="icon visits" src="/static/icon/home/icon_visit.png"></image>
+        <image lazy-load="true"  class="icon visits" src="/static/icon/home/icon_visit.png"></image>
         <text class="text visits">{{views}}</text>
       </view>
       <view class="statistics-item">
-        <image class="icon shares" src="/static/icon/home/icon_share.png"></image>
+        <image lazy-load="true"  class="icon shares" src="/static/icon/home/icon_share.png"></image>
         <text class="text shares">{{shares}}</text>
       </view>
     </view>

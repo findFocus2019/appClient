@@ -4,12 +4,12 @@
     <view class="uni-bg-white uni-common-pt uni-common-pb uni-common-mt" v-for="(item,index) in listData.list" :key="index" >
       
       <view class="uni-right uni-common-pl uni-common-pr" style="position: relative;height: 0;" v-if="item.status == 0">
-      	<image src="../../static/img/user/audit-no.png" mode="widthFix" style="width: 160upx;"></image>
+      	<image lazy-load="true"  src="../../static/img/user/audit-no.png" mode="widthFix" style="width: 160upx;"></image>
       </view>
       
       <view class="uni-flex uni-common-pl uni-common-pr">
       	<view class="" style="width: 80upx;height: 80upx;">
-      		<image :src="userInfo.avatar" mode="" style="width: 80upx;height: 80upx;border-radius: 80upx;"></image>
+      		<image lazy-load="true"  :src="userInfo.avatar" mode="" style="width: 80upx;height: 80upx;border-radius: 80upx;"></image>
       	</view>
         <view class="uni-flex-item uni-h4 uni-common-pl">
         	<text style="">{{ userInfo.nickname}}</text>
@@ -31,27 +31,27 @@
       
       <view class="uni-flex uni-common-mt uni-common-pl" @tap="goToDetail(item)">
       	<view class="uni-flex-item uni-common-pr" v-for="(img,index1) in item.imgs" :key="index1" v-if="index1 < 3">
-      		<image :src="img.url" mode="scaleToFill" style="width: 100%;height: 400upx;" v-if="item.imgs.length == 1"></image>
-          <image :src="img.url" mode="scaleToFill" style="width: 100%;height: 240upx;" v-if="item.imgs.length == 2"></image>
-          <image :src="img.url" mode="scaleToFill" style="width: 100%;height: 160upx;" v-if="item.imgs.length >= 3"></image>
+      		<image lazy-load="true"  :src="img.url" mode="scaleToFill" style="width: 100%;height: 400upx;" v-if="item.imgs.length == 1"></image>
+          <image lazy-load="true"  :src="img.url" mode="scaleToFill" style="width: 100%;height: 240upx;" v-if="item.imgs.length == 2"></image>
+          <image lazy-load="true"  :src="img.url" mode="scaleToFill" style="width: 100%;height: 160upx;" v-if="item.imgs.length >= 3"></image>
       	</view>
       </view>
       
       <view class="uni-flex uni-common-mt-sm uni-common-pl uni-common-pr uni-text-gray">
       	<view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
-      	  <image src="/static/icon/posts/eye.png" mode="" style="width: 36upx;height: 36upx;"></image>  
+      	  <image lazy-load="true"  src="/static/icon/posts/eye.png" mode="" style="width: 36upx;height: 36upx;"></image>  
       	</view>
       	<view class="uni-flex-item uni-common-ml-sm">
       	  <text >{{item.views}}</text> 
       	</view>
       	<view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
-      	  <image src="/static/icon/posts/zan.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image> 
+      	  <image lazy-load="true"  src="/static/icon/posts/zan.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image> 
       	 </view>
       	<view class="uni-flex-item uni-common-ml-sm">
       		<text>{{item.likes}}</text> 
       	</view>
       	<view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
-      	  <image src="/static/icon/posts/share.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image> 
+      	  <image lazy-load="true"  src="/static/icon/posts/share.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image> 
       	 </view>
       	<view class="uni-flex-item uni-common-ml-sm">
       		<text>{{item.shares}}</text> 

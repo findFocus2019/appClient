@@ -7,7 +7,7 @@
     <view class="uni-common-mt">
     	<view class="uni-flex uni-common-pa uni-border-bottom uni-bg-white" v-for="(item , index) in inviteListDatas.list" :key="index" >
     		<view class="" style="width: 60upx;height: 60upx;">
-    			<image :src="item.cover" mode="scaleToFill" style="width: 60upx;height: 60upx;border-radius: 100%;"></image>
+    			<image lazy-load="true"  :src="item.cover" mode="scaleToFill" style="width: 60upx;height: 60upx;border-radius: 100%;"></image>
           
     		</view>
         <view class="uni-common-pl">

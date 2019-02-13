@@ -2,7 +2,7 @@
 	<view class="uni-page-body ">
 		<view class="uni-flex uni-common-pa uni-bg-white" v-if="item">
 		  <view class="uni-common-pr" v-if="item.user_info && item.user_info.avatar">
-		    <image :src="item.user_info.avatar" mode="" style="width: 60upx;height: 60upx;border-radius: 30upx;"></image>
+		    <image lazy-load="true"  :src="item.user_info.avatar" mode="" style="width: 60upx;height: 60upx;border-radius: 30upx;"></image>
 		  </view>
 		  <view class="uni-flex-item">
 		    <view class="uni-flex">
@@ -10,13 +10,13 @@
 		        {{item.user_info.nickname}}
 		      </view>
 		      <view class="uni-right" >
-		        <image src="../../static/icon/posts/zan.png" mode="" style="width: 40upx;height: 40upx;"></image>
+		        <image lazy-load="true"  src="../../static/icon/posts/zan.png" mode="" style="width: 40upx;height: 40upx;"></image>
 		      </view>
 		      <view class="uni-right uni-text-gray uni-common-ml-sm uni-common-pr" >
 		        {{ item.likes }}
 		      </view>
 		      <view class="uni-right" >
-		        <image src="../../static/icon/posts/comment.png" mode="" style="width: 40upx;height: 40upx;"></image>
+		        <image lazy-load="true"  src="../../static/icon/posts/comment.png" mode="" style="width: 40upx;height: 40upx;"></image>
 		      </view>
 		      <view class="uni-right uni-text-gray uni-common-ml-sm" >
 		        {{ item.replys.length }}

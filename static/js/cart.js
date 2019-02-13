@@ -200,6 +200,14 @@ class Cart {
       console.log(item)
       if(data.id === item.id){
         item.num += num
+				
+				if(data.share_id){
+					item.share_id = data.share_id
+				}
+				if(data.post_id){
+					item.post_id = data.post_id
+				}
+		
         isHave = 1
       }
       console.log(item)

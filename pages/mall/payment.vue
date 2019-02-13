@@ -79,7 +79,7 @@
 
     <view
       class="uni-common-pt uni-common-pb uni-text-small uni-text-light uni-center"
-      v-if="mallPayment.totals - mallPayment.ecardAmount > 0 && mallPayment.payTypeCheck == 1"
+      v-if="mallPayment.totals - mallPayment.ecardAmount > 0 && mallPayment.payTypeCheck == 1 && mallPayment.ecardId"
     >代金券余额不足时，可使用账户余额或在线支付方式补齐
       <view class="uni-common-pt uni-text-light uni-center">
         <view class>
@@ -316,6 +316,7 @@ export default {
             title: "无可用代金券",
             icon: "none"
           });
+					return;
         }
       } else if (item.id == 4) {
         if (this.userInfo.balance < this.mallPayment.totals) {

@@ -6,7 +6,7 @@
         <view class="" v-if="items.length">
         	<view class="uni-flex uni-common-pa " v-for="(item,index) in items" :key="index">
         		<view class="" style="width: 200upx;height: 200upx;">
-        			<image :src="item.cover" mode="scaleToFill" style="width: 200upx;height: 200upx;border-radius: 8upx;"></image>
+        			<image lazy-load="true"  :src="item.cover" mode="scaleToFill" style="width: 200upx;height: 200upx;border-radius: 8upx;"></image>
         		</view>
         	  <view class="uni-flex-item uni-common-pl">
         	  	<view class="uni-ellipsis-2 uni-text-dark" style="height: 100upx;line-height: 50upx;">
@@ -85,7 +85,7 @@
         
         <view class="uni-common-pa uni-border-top uni-flex" v-if="info.imgs.length">
         	<view class="uni-common-mr-sm imgs-pre-item" v-for="(img , index1) in info.imgs" :key="index1" @tap="preImg(rate.imgs, img)">
-        		<image :src="img" mode="scaleToFill" style="width: 100upx;height: 100upx;"></image>
+        		<image lazy-load="true"  :src="img" mode="scaleToFill" style="width: 100upx;height: 100upx;"></image>
         	</view>
         </view>
 

@@ -128,5 +128,11 @@ export default {
   async userTaskLogsListGet(store, data= {}){
     let ret = await Request.post('user/taskLogs' , data)
     return ret
-  }
+  },
+	
+	//
+	async userShareInfoGet(store, data= {}){
+		let ret = await Request.post('user/shareAction' , data)
+		return ret
+	}
 }

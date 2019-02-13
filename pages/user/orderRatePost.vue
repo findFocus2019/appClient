@@ -6,7 +6,7 @@
   		<view class="uni-flex uni-common-pa ">
         
   			<view class="" style="width: 160upx;height: 160upx;">
-  				<image :src="info.goods_cover" mode="scaleToFill" style="width: 160upx;height: 160upx;border-radius: 8upx;"></image>
+  				<image lazy-load="true"  :src="info.goods_cover" mode="scaleToFill" style="width: 160upx;height: 160upx;border-radius: 8upx;"></image>
   			</view>
   		  <view class="uni-flex-item uni-common-pl">
   		  	<view class="uni-ellipsis-2 uni-text-dark" style="height: 100upx;line-height: 50upx;">
@@ -67,7 +67,7 @@
 				  </view>
           <view class="uni-common-mt uni-flex">
           	<view class="uni-common-mr-sm imgs-pre-item" v-for="(img , index1) in imgs" :key="index1" @tap="preImg(rate.imgs, img)">
-          		<image :src="img" mode="scaleToFill" style="width: 100upx;height: 100upx;"></image>
+          		<image lazy-load="true"  :src="img" mode="scaleToFill" style="width: 100upx;height: 100upx;"></image>
           	</view>
           </view>
 				</view>

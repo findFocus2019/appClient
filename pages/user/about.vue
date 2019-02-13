@@ -1,6 +1,6 @@
 <template>
 	<view class="uni-page-body uni-bg-white">
-		<image :src="aboutImgUrl" mode="widthFix" style="width: 100%;"></image>
+		<image lazy-load="true"  :src="aboutImgUrl" mode="widthFix" style="width: 100%;"></image>
 	</view>
 </template>
 

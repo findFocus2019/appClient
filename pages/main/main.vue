@@ -3,17 +3,17 @@
     <view class="content">
       <!-- 顶部的大背景 -->
       <view class="top-panel">
-        <image class="top-panel-bg" src="/static/img/home_header_bg.jpg"/>
+        <image lazy-load="true"  class="top-panel-bg" src="/static/img/home_header_bg.jpg"/>
         <view class="search-bar-container">
           <search-bar @update:confirm="doSearch"/>
         </view>
         <view class="buttons">
           <view class="button checkout">
-            <image src="/static/icon/home/icon_checkout.png"/>
+            <image lazy-load="true"  src="/static/icon/home/icon_checkout.png"/>
             <text>签到</text>
           </view>
           <view class="button view-points">
-            <image src="/static/icon/home/icon_pig.png"/>
+            <image lazy-load="true"  src="/static/icon/home/icon_pig.png"/>
             <text>查看</text>
           </view>
         </view>
@@ -29,10 +29,10 @@
         :duration="swiper.duration">
           <swiper-item class="swiper-item" v-for="(image, index) in imgList" :key="index">
             <navigator class="banner" url="image.item1.link">
-              <image :src="image.item1.img" class="banner-img"></image>
+              <image lazy-load="true"  :src="image.item1.img" class="banner-img"></image>
             </navigator>
             <navigator class="banner" url="image.item2.link">
-              <image :src="image.item2.img" class="banner-img"></image>
+              <image lazy-load="true"  :src="image.item2.img" class="banner-img"></image>
             </navigator>
           </swiper-item>
         </swiper>
@@ -42,12 +42,12 @@
       <view class="uni-bg-white uni-common-pa uni-flex">
       	<view class="uni-flex-item uni-left">
       		<navigator :url="configs.main_sub_url_1">
-            <image :src="configs.main_sub_img_1" mode="" style="width: 324upx;height:200upx ;"></image>
+            <image lazy-load="true"  :src="configs.main_sub_img_1" mode="" style="width: 324upx;height:200upx ;"></image>
           </navigator>
       	</view>
         <view class="uni-flex-item uni-right">
         	<navigator :url="configs.main_sub_url_2">
-        	  <image :src="configs.main_sub_img_2" mode="" style="width: 324upx;height:200upx ;"></image>
+        	  <image lazy-load="true"  :src="configs.main_sub_img_2" mode="" style="width: 324upx;height:200upx ;"></image>
         	</navigator>
         </view>
       </view>
@@ -62,7 +62,7 @@
           <swiper>
             <swiper-item class="suggestion-swiper-item" v-for="(item,index) in recommendList" :key="index" v-if="index < 10">
                 <view class="" @tap="goToDetail(item)">
-                	<image :src="item.cover" mode="scaleToFill" style="width: 280upx;height: 210upx;"></image>
+                	<image lazy-load="true"  :src="item.cover" mode="scaleToFill" style="width: 280upx;height: 210upx;"></image>
                   <view class="uni-ellipsis uni-bold">
                   	{{item.title}}
                   </view>
@@ -95,7 +95,7 @@
                         :likes="news.likes" :shares="news.shares"/> -->
                 <view class="uni-flex uni-border-top uni-bg-white uni-common-pa uni-left" @tap="goToDetail(news)" >
                 	<view class="">
-                		<image :src="news.cover" mode="scaleToFill" style="width: 280upx;height: 210upx;"></image>
+                		<image lazy-load="true"  :src="news.cover" mode="scaleToFill" style="width: 280upx;height: 210upx;"></image>
                 	</view>
                   <view class="uni-flex-item uni-common-pl">
                   	<view class="uni-ellipsis-2 uni-left uni-bold" style="height: 80upx;">
@@ -106,19 +106,19 @@
                     </view>
                     <view class="uni-common-pt-sm uni-text-gray uni-flex">
                     	<view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
-                        <image src="/static/icon/posts/eye.png" mode="" style="width: 36upx;height: 36upx;"></image>  
+                        <image lazy-load="true"  src="/static/icon/posts/eye.png" mode="" style="width: 36upx;height: 36upx;"></image>  
                       </view>
                       <view class="uni-flex-item uni-common-ml-sm">
                         <text >{{news.views}}</text> 
                       </view>
                       <view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
-                        <image src="/static/icon/posts/zan.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image> 
+                        <image lazy-load="true"  src="/static/icon/posts/zan.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image> 
                        </view>
                       <view class="uni-flex-item uni-common-ml-sm">
                       	<text>{{news.likes}}</text> 
                       </view>
                       <view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
-                        <image src="/static/icon/posts/share.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image> 
+                        <image lazy-load="true"  src="/static/icon/posts/share.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image> 
                        </view>
                       <view class="uni-flex-item uni-common-ml-sm">
                         

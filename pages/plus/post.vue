@@ -38,7 +38,7 @@
             </view>
             <view class="uni-common-mt-sm pre-imgs" v-if="content.paths && content.paths.length" >
               <view class="pre-img-item" v-for="(path,index2) in content.paths" :key="index2" @tap="preImg(content.paths , path)">
-                <image :src="path" mode="scaleToFill" style="width: 100upx;height: 100upx;"></image>
+                <image lazy-load="true"  :src="path" mode="scaleToFill" style="width: 100upx;height: 100upx;"></image>
               </view>
               
             </view>
@@ -501,6 +501,6 @@ innerAudioContext.autoplay = true;
   }
   
   .plus-post-bottom {
-    z-index: 100;
+    z-index: 1000;
   }
 </style>

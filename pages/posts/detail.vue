@@ -12,19 +12,19 @@
 
       <view class="uni-common-pt-sm uni-text-gray uni-flex">
         <view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
-          <image src="/static/icon/posts/eye.png" mode="" style="width: 36upx;height: 36upx;"></image>
+          <image lazy-load="true"  src="/static/icon/posts/eye.png" mode="" style="width: 36upx;height: 36upx;"></image>
         </view>
         <view class="uni-flex-item uni-common-ml-sm">
           <text>{{postInfo.views}}</text>
         </view>
         <view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
-          <image src="/static/icon/posts/zan.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image>
+          <image lazy-load="true"  src="/static/icon/posts/zan.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image>
         </view>
         <view class="uni-flex-item uni-common-ml-sm">
           <text>{{postInfo.likes}}</text>
         </view>
         <view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
-          <image src="/static/icon/posts/share.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image>
+          <image lazy-load="true"  src="/static/icon/posts/share.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image>
         </view>
         <view class="uni-flex-item uni-common-ml-sm">
           <text>{{postInfo.shares}}</text>
@@ -48,7 +48,7 @@
     
     
     <view class="uni-bg-white uni-common-pa" v-if="postInfo.goods_id">
-      <navigator :url="'/pages/mall/goods?id' + postInfo.goods_id + '&post_id' + postInfo.id">
+      <navigator :url="'/pages/mall/goods?id=' + postInfo.goods_id + '&post_id=' + postInfo.id + '&share_id=' + shareId">
         <button type="warn" class="uni-border-btn-radius">产品链接</button>
       </navigator>
     </view>
@@ -61,7 +61,7 @@
 
         <view class="uni-flex uni-common-pa" v-for="(item, index) in commentList" :key="index">
           <view class="uni-common-pr">
-            <image :src="item.user_info.avatar" mode="" style="width: 60upx;height: 60upx;border-radius: 30upx;"></image>
+            <image lazy-load="true"  :src="item.user_info.avatar" mode="" style="width: 60upx;height: 60upx;border-radius: 30upx;"></image>
           </view>
           <view class="uni-flex-item">
             <view class="uni-flex">
@@ -69,13 +69,13 @@
                 {{item.user_info.nickname}}
               </view>
               <view class="uni-right" @tap="commentLike(item)">
-                <image src="../../static/icon/posts/zan.png" mode="" style="width: 40upx;height: 40upx;"></image>
+                <image lazy-load="true"  src="../../static/icon/posts/zan.png" mode="" style="width: 40upx;height: 40upx;"></image>
               </view>
               <view class="uni-right uni-text-gray uni-common-ml-sm uni-common-pr" @tap="commentLike(item)">
                 {{ item.likes }}
               </view>
               <view class="uni-right" @tap="commentReply(item)">
-                <image src="../../static/icon/posts/comment.png" mode="" style="width: 40upx;height: 40upx;"></image>
+                <image lazy-load="true"  src="../../static/icon/posts/comment.png" mode="" style="width: 40upx;height: 40upx;"></image>
               </view>
               <view class="uni-right uni-text-gray uni-common-ml-sm" @tap="commentReply(item)">
                 {{ item.replys.length }}
@@ -90,10 +90,10 @@
               {{ item.info }}
             </view>
 
-            <view class="uni-common-pa uni-bg-gray uni-common-mt" v-if="item.replys.length" @tap="goToCommentDetail(item)">
+            <view class="uni-common-pa uni-bg-gray uni-common-mt-sm" v-if="item.replys.length" @tap="goToCommentDetail(item)">
 
-              <view class="uni-common-mb" v-for="(reply, index1) in item.replys" :key="index1">
-                <view class="">
+              <view class="uni-common-mb-sm" v-for="(reply, index1) in item.replys" :key="index1">
+                <view class="uni-text-dark">
                   {{ reply.user_info.nickname || ''}}
                 </view>
                 <view class="uni-text-small">
@@ -130,7 +130,7 @@
       </view>
       <view class="uni-flex-item uni-flex uni-center uni-common-pr">
         <view class="uni-flex-item" @tap="postLike" style="height: 48upx;">
-          <image src="/static/icon/posts/zan.png" mode="" style="width: 48upx;height: 48upx;"></image>
+          <image lazy-load="true"  src="/static/icon/posts/zan.png" mode="" style="width: 48upx;height: 48upx;"></image>
         </view>
         <view class="uni-flex-item" @tap="postCollection">
           <uni-icon type="star-filled" size="24" v-if="postInfo.isCollection == 1" color="#d81e06" ></uni-icon>
@@ -138,7 +138,7 @@
           <uni-icon type="star" size="24" v-if="postInfo.isCollection == -1" ></uni-icon>
         </view>
         <view class="uni-flex-item" @tap="postShare" style="height: 48upx;">
-          <image src="/static/icon/posts/share.png" mode="" style="width: 48upx;height: 48upx;"></image>
+          <image lazy-load="true"  src="/static/icon/posts/share.png" mode="" style="width: 48upx;height: 48upx;"></image>
         </view>
       </view>
     </view>
@@ -188,11 +188,15 @@
         commentId: 0,
         commentList:[],
         commentCount:0,
-        viewActionOpen: false
+        viewActionOpen: false,
+				// shareId:0
       }
     },
     computed:{
-      ...mapState(['hasLogin' , 'postInfo' , 'webDomain' , 'miniAppId' ])
+      ...mapState(['hasLogin' ,'userInfo', 'postInfo' , 'webDomain' , 'miniAppId' ]),
+			shareId(){
+				return this.$store.state.inviteShareId
+			}
     },
     methods:{
       postComments(){
@@ -273,15 +277,20 @@
         
         console.log('commentConfirm postData' , postData)
         let ret = await this.$store.dispatch('postCommentConfirm' , postData)
+				console.log('postCommentConfirm ret' , JSON.stringify(ret))
         uni.hideLoading()
         if(ret.code == 0){
- 
           if(ret.data.score){
             uni.showToast({
             	title:'发布评论获得'+ ret.data.score + '积分',
               icon:'success'
             })
-          }
+          }else {
+						uni.showToast({
+							title:'发布评论成功',
+						  icon:'success'
+						})
+					}
           
           this.commentTextVal = ''
           this.commentPopupHide()
@@ -329,7 +338,7 @@
           title:'提交中...'
         })
         let ret = await this.$store.dispatch('userCollectionAction' , params)
-        console.log('userCollectionAction ret'  , ret)
+        console.log('userCollectionAction ret'  , JSON.stringify(ret))
         uni.hideLoading()
         if(ret.code== 0){
           let score = ret.data ? (ret.data.score || 0) : 0
@@ -422,11 +431,36 @@
       },
       async postShare(){
         // 分享
+				if(!this.hasLogin){
+				  uni.navigateTo({
+				  	url:'/pages/auth/login'
+				  })
+				  return
+				}
+				
+				let shareId = 0
+				let params = {}
+				params.category = 'posts'
+				params.post_id = this.postInfo.id
+				params.goods_id = this.postInfo.goods_id || 0
+				let shareRet = await this.$store.dispatch('userShareInfoGet', params)
+				if(shareRet.code == 0){
+					let shareData = shareRet.data.info
+					shareId = shareData.id
+				}else {
+					uni.showToast({
+						icon:'none',
+						title:'分享发生错误，请稍后重试'
+					})
+					return 
+				}
+				
         let sharePage = 'pages/posts/detail'
-        let shareUrl = this.webDomain + sharePage + '?id=' + this.postInfo.id + '&share_id=1'
+				sharePage = sharePage + '?id=' + this.postInfo.id + '&puid=' + this.userInfo.id + '&share_id=' + shareId
+        let shareUrl = this.webDomain + '/' + sharePage
         let postType = this.postInfo.type
         // console.log()
-        console.log('分享 postType' , postType)
+        console.log('分享 postType' , postType , shareUrl)
         let shareData = {
           title: this.postInfo.title,
           description: this.postInfo.description,
@@ -474,6 +508,17 @@
       let id = opt.id 
       let ret = await this.$store.dispatch('postInfoGet' , {id: id})
       console.log('onLoad postInfoGet ret ==============' , ret)
+			
+			// 分享
+			let shareId = opt.share_id || 0
+			if(shareId){
+				this.$store.state.inviteShareId = shareId
+			}
+			let inviteUserId = opt.puid || 0
+			if(inviteUserId){
+				this.$store.state.inviteUserId = inviteUserId
+			}
+			
       
       // 获取评论列表
       this.commentListGet()
