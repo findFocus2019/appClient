@@ -125,7 +125,7 @@
     <view class="uni-bg-white uni-flex uni-common-pt uni-common-pb post-bottom">
       <view class="uni-flex-item uni-common-pl uni-common-pr" @tap="commentPost">
         <view class="comment-text uni-bg-gray uni-ellipsis" style="width: 350upx;">
-          <text>{{commentText}}</text>
+          <text class="uni-text-gray">{{commentText}}</text>
         </view>
       </view>
       <view class="uni-flex-item uni-flex uni-center uni-common-pr">
@@ -168,6 +168,7 @@
 
 <script>
   import {mapState} from 'vuex';
+  import Share from '@/static/js/share.js';
   import uniIcon from '@/components/uni-icon.vue';
   import uniPopup from '@/components/uni-popup.vue';
   export default {
@@ -191,7 +192,7 @@
       }
     },
     computed:{
-      ...mapState(['hasLogin' , 'postInfo'])
+      ...mapState(['hasLogin' , 'postInfo' , 'webDomain' , 'miniAppId' ])
     },
     methods:{
       postComments(){
@@ -328,18 +329,23 @@
           title:'提交中...'
         })
         let ret = await this.$store.dispatch('userCollectionAction' , params)
+        console.log('userCollectionAction ret'  , ret)
         uni.hideLoading()
         if(ret.code== 0){
-          if(ret.data){
-            let score = ret.data.score || 0
-            if(score){
-              uni.showToast({
-              	title:'收藏文章获得'+ ret.data.score + '积分',
-                icon:'success'
-              })
-            }
+          let score = ret.data ? (ret.data.score || 0) : 0
+          if(score){
+            uni.showToast({
+            	title:'收藏文章获得'+ ret.data.score + '积分',
+              icon:'success'
+            })
+          }else {
+            uni.showToast({
+            	title:ret.message,
+              icon:'success'
+            })
           }
           this.$store.dispatch('postInfoGet' , {id: this.postInfo.id})
+          console.log('postInfoGet again postInfo' , this.postInfo)
         }else {
           uni.showToast({
           	title:ret.message,
@@ -364,18 +370,23 @@
           title:'提交中...'
         })
         let ret = await this.$store.dispatch('postLikeAction' , params)
+        console.log('postLikeAction ret' , ret)
         uni.hideLoading()
         if(ret.code== 0){
-          if(ret.data){
-            let score = ret.data.score || 0
-            if(score){
-              uni.showToast({
-              	title:'点赞文章获得'+ ret.data.score + '积分',
-                icon:'success'
-              })
-            }
+          let score = ret.data ? (ret.data.score || 0) : 0
+          if(score){
+            uni.showToast({
+            	title:'点赞文章获得'+ ret.data.score + '积分',
+              icon:'success'
+            })
+          }else {
+            uni.showToast({
+            	title:'点赞成功',
+              icon:'success'
+            })
           }
-          this.$store.dispatch('postInfoGet' , {id: this.postInfo.id})
+          await this.$store.dispatch('postInfoGet' , {id: this.postInfo.id})
+          console.log('postInfoGet again postInfo' , this.postInfo)
         }else {
           uni.showToast({
           	title:ret.message,
@@ -411,7 +422,32 @@
       },
       async postShare(){
         // 分享
-        console.log('分享')
+        let sharePage = 'pages/posts/detail'
+        let shareUrl = this.webDomain + sharePage + '?id=' + this.postInfo.id + '&share_id=1'
+        let postType = this.postInfo.type
+        // console.log()
+        console.log('分享 postType' , postType)
+        let shareData = {
+          title: this.postInfo.title,
+          description: this.postInfo.description,
+          href: shareUrl,
+          imgUrl: this.postInfo.cover,
+          miniAppId: this.miniAppId,
+          miniPage: sharePage
+        }
+        uni.showActionSheet({
+        	itemList:['分享给QQ好友','分享到微信聊天','分享到微信朋友圈'],
+          success: (e) => {
+          	let index = e.tapIndex
+            if(index == 0){
+              Share.qq(shareData)
+            }else if(index == 1){
+              Share.mini(shareData, 0)
+            } else if (index == 2){
+              Share.mini(shareData , 1)
+            }
+          }
+        })
       },
       async commentListGet(){
         let params = {

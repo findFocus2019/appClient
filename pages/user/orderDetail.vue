@@ -75,7 +75,7 @@
     	              <text style="margin-left: 10upx;">{{ item.num }}</text>
     		        	</view>
     		          <view class="uni-flex-item uni-right uni-text-small uni-text-light" >
-    		             <text class="uni-bg-gray" v-if="order.status == 9" @tap="goToAfterApply({order:order, item: item})">申请售后</text>
+    		             <text class="uni-bg-gray" v-if="order.status == 9" @tap="goToAfterApply({order:order, items: [item]})">申请售后</text>
     		          </view>
     		        </view>
     		      </view>
@@ -209,7 +209,7 @@
         </view>
         <view class="" v-if="order.status == 9">
         	<!-- <text @tap="goToComment">评价</text> -->
-          <text @tap="goToComment">申请售后</text>
+          <text @tap="goToAfterApply({order:order, items: order.goods_items})">申请售后</text>
         </view>
     	  
     	</view>
@@ -242,7 +242,12 @@
         	url:"/pages/user/orderRatePost"
         })
       },
-      goToAfter(){
+      goToAfterApply(data){
+        let order= data.order
+        let goodsItems = data.items
+
+        this.$store.state.mallAfterData.order = order
+        this.$store.state.mallAfterData.goodsItems = goodsItems
         uni.navigateTo({
         	url:"/pages/user/orderAfterApply"
         })

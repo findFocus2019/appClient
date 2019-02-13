@@ -142,5 +142,17 @@ export default {
   async mallOrderItemRate(store, data){
     let ret = await Request.post('mall/orderRate', data)
     return ret
+  },
+  
+  async mallOrderAfterListGet(store, data){
+    let ret = await Request.post('mall/orderAfterList', data)
+    return ret
+  },
+  
+  async mallOrderAfterApply(store, data){
+    let ret = await Request.post('mall/orderAfterApply', data)
+    return ret
   }
+  
+  
 }

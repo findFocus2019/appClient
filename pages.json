@@ -394,7 +394,8 @@
         {
             "path" : "pages/user/orderAfters",
             "style" : {
-                "navigationBarTitleText" : "我的售后"
+                "navigationBarTitleText" : "我的售后",
+                "enablePullDownRefresh":true
             }
         },
         {

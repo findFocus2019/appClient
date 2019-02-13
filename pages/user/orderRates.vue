@@ -12,8 +12,10 @@
 			    	<text style="">{{ userInfo.nickname}}</text>
 			    </view>
 			    <view class="uni-flex-item uni-text-gray uni-right">
-			    	<text style="" v-if="item.rate_level">2018-11-11 11:11:11</text>
-						<text v-else @tap="goRate(item)">去评价</text>
+			    	<text style="" v-if="item.rate_level">
+              {{ item.rate_date }}
+            </text>
+						<text v-else @tap="goRate(item)" class="btn-rate">去评价</text>
 			    </view>
 			  </view>
 			  
@@ -22,15 +24,9 @@
 			  </view>
 			  
 			  <view class="uni-common-mt uni-common-pl" v-if="item.rate_imgs.length">
-			  	<view class="uni-common-pr" style="display: inline-block;width: 100upx;height: 100upx;">
-			  		<image src="../../static/img/home/pic_1.png" mode="scaleToFill" style="width: 100upx;height: 100upx;"></image>
+			  	<view class="uni-common-pr" style="display: inline-block;width: 100upx;height: 100upx;" v-for="(img,index1) in item.rate_imgs" :key="index1" @tap="preImg(item.rate_imgs, img)">
+			  		<image :src="img" mode="scaleToFill" style="width: 100upx;height: 100upx;border-radius: 4upx;"></image>
 			  	</view>
-          <view class="uni-common-pr" style="display: inline-block;width: 100upx;height: 100upx;">
-          	<image src="../../static/img/home/pic_1.png" mode="scaleToFill" style="width: 100upx;height: 100upx;"></image>
-          </view>
-          <view class="uni-common-pr" style="display: inline-block;width: 100upx;height: 100upx;">
-          	<image src="../../static/img/home/pic_1.png" mode="scaleToFill" style="width: 100upx;height: 100upx;"></image>
-          </view>
 			  </view>
         
         <view class="uni-common-pl uni-common-pr">
@@ -53,8 +49,16 @@
         	</view>
         </view>
 			  
-			  <view class="uni-flex uni-common-pl uni-common-pr uni-common-mt-sm " v-if="item.rate_level">
-		
+			  <view class="uni-flex uni-common-pl uni-common-pr uni-common-mt-sm " v-if="item.rate_level > 0">
+          <view class="uni-inline-block" v-for="(level,index2) in levels" :key="index2">
+          	<view v-if="level <= item.rate_level">
+          		<uni-icon type="star-filled" size="30" color="yellow" ></uni-icon>
+          	</view>
+          	<view v-else>
+          		<uni-icon type="star-filled" size="30" color="gray"></uni-icon>
+          	</view>
+          	
+          </view>
 			  </view>
 				
 			</view>
@@ -70,9 +74,11 @@
 <script>
   import {mapState,mapActions} from 'vuex';
   import money from '@/components/money.vue';
+  import uniIcon from '@/components/uni-icon.vue';
   export default {
 		components:{
-			money
+			money,
+      uniIcon
 		},
     data(){
       return {
@@ -81,6 +87,7 @@
           count:0,
           list:[]
         },
+        levels:[1,2,3,4,5],
         showLoadMore: false,
         loadMoreText:'加载中...',
       }
@@ -94,6 +101,13 @@
 					url:'/pages/user/orderRatePost?id=' + item.id
 				})
 			},
+      preImg(paths, current){
+        uni.previewImage({
+            urls: paths,
+            current: current,
+            indicator:'number'
+        });
+      },
       async getData(){
         let params = {}
         params.page = this.listData.page
@@ -136,4 +150,10 @@
 </script>
 
 <style>
+  .btn-rate {
+    padding: 8upx 16upx;
+    border: 1px solid #d81e06;
+    color: #D81E06;
+    border-radius: 32upx;
+  }
 </style>

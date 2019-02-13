@@ -1,4 +1,5 @@
 const apiDomain = 'http://127.0.0.1:5001'
+// const apiDomain = 'http://47.91.250.144:5001'
 const signKey = '123456'
 import {
   sha256
@@ -33,9 +34,17 @@ class Request {
            console.log('request response code:', ret.message);
           // this.text = 'request success';
           if(ret.code == -100){
-            uni.navigateTo({
-            	url:'/pages/auth/login'
-            })
+            uni.showToast({
+              icon:'none',
+              title: '登录信息已过期，请重新登录',
+              duration: 1500,
+              success() {
+              	uni.navigateTo({
+              		url:'/pages/auth/login'
+              	})
+              }
+            });
+            
           }else if (ret.code == -101){
             uni.showToast({
               icon:'none',

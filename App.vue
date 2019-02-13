@@ -37,4 +37,8 @@ uni-rich-text p {
   word-break: break-all;
 }
 
+.uni-popup-bottom {
+  position: fixed;
+}
+
 </style>

@@ -1,5 +1,8 @@
 export default {
   version:'0.9.0',
+  miniAppId:'wx2e40960c5cfb7723',
+  webDomain:'http://127.0.0.1:8080/',
+  apiDomain: 'http://127.0.0.1:5001/',
   configs:{},
   appNoticeData:{
     page:1,
@@ -96,6 +99,11 @@ export default {
     ecardId:0,
     ecardAmount:0,
     payMethodExt:''
+  },
+  mallAfterData:{
+    order:0,
+    goodsItems:[],
+    info:{}
   },
   
   // 资讯相关
