@@ -8,7 +8,9 @@
 
 <script>
   import { mapState, mapActions } from "vuex";
-  import userEcard from '@/components/user/user-ecard.vue'
+  import userEcard from '@/components/user/user-ecard.vue';
+	import money from '@/components/money.vue';
+	
   export default {
     data(){
       return {

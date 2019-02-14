@@ -2,7 +2,7 @@
 	<view class="uni-page-body uni-bg-white">
 		<view class="user-top uni-bg-red"></view>
     
-    <view class="uni-center ">
+    <view class="uni-center " style="position: relative;">
       <view class="uni-common-pa" style="height:328upx;">
       	<image lazy-load="true"  src="/static/img/user/vip-card.png" mode="widthFix" style="width:600upx;height:328upx;border-radius: 12upx;overflow: hidden;"></image>
       </view>

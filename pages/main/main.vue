@@ -294,14 +294,14 @@
       this.recommendList = this.recommendDatas.list
 
       // 检查登录状态
-      let token = uni.getStorageSync('user_auth_token')
-      if (token && !this.hasLogin) {
-        console.log('获取用户信息')
-        await this.$store.dispatch('userInfoGet')
-        if (this.userInfo.id) {
-          this.$store.state.hasLogin = true
-        }
-      }
+//       let token = uni.getStorageSync('user_auth_token')
+//       if (token && !this.hasLogin) {
+//         console.log('获取用户信息')
+//         await this.$store.dispatch('userInfoGet')
+//         if (this.userInfo.id) {
+//           this.$store.state.hasLogin = true
+//         }
+//       }
 
     },
     methods: {

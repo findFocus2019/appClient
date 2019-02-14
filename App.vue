@@ -6,9 +6,17 @@ export default {
     let res = uni.getSystemInfoSync();
     console.log('divice info' , JSON.stringify(res));
   },
-  onShow: function() {
+  async onShow() {
     console.log("App Show");
-    
+    let token = uni.getStorageSync('user_auth_token')
+    if (token && !this.$store.state.hasLogin) {
+      console.log('App Show userInfoGet')
+      await this.$store.dispatch('userInfoGet')
+      if (this.$store.state.userInfo.id) {
+        this.$store.state.hasLogin = true
+				console.log('App Show hasLogin' , this.$store.state.hasLogin)
+      }
+    }
   },
   onHide: function() {
     console.log("App Hide");

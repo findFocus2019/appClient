@@ -182,7 +182,8 @@ export default {
       ecardCountCanUse: 0,
       paymentInfo: {
         id: 0
-      }
+      },
+			isVipOrder:0
       // payTypeCheck:0,
       // payMethodCheck:'',
     };
@@ -350,7 +351,7 @@ export default {
       this.$store.state.mallPayment.payMethodExt = item.method;
     }
   },
-  async onLoad() {
+  async onLoad(opt) {
     if (!this.hasLogin) {
       this.goToLoginPage();
       return;
@@ -378,6 +379,11 @@ export default {
     //         pay_method: 'wx'
     //       }
     //     	this.$store.dispatch('mallOrderPayPre' , data)
+		let isVipOrder = opt.isVipOrder || 0
+		this.isVipOrder = isVipOrder
+		if(isVipOrder){
+			this.payTypes.splice(1,2)
+		}
   }
 };
 </script>

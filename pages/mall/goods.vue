@@ -91,7 +91,7 @@
       <view class="uni-flex-item uni-bg-yellow uni-text-light" @tap="cartAdd">
         <text>加入购物车</text>
       </view>
-      <view class="uni-flex-item uni-bg-red">
+      <view class="uni-flex-item uni-bg-red" @tap="readyToBuy">
         <text>立即购买</text>
       </view>
     </view>
@@ -186,6 +186,7 @@
         ],
         showPopupBottom: false,
         cartAddNum: 1,
+				addType:0,
         // shareId:0,
         // postId:0
       }
@@ -217,8 +218,18 @@
         this.showPopupBottom = false
       },
       cartAdd() {
+				this.addType = 0
         this.showPopupBottom = true
       },
+			readyToBuy(){
+				if(!this.hasLogin){
+					uni.navigateTo({
+						url:'/pages/auth/login'
+					})
+				}
+				this.addType = 1
+				this.showPopupBottom = true
+			},
       cartNumChange(data) {
         this.cartAddNum = data.val
       },
@@ -227,6 +238,7 @@
         let goods = this.mallGoodsInfo
         if(!goods){
           uni.showToast({
+						icon:'none',
             title: '添加购物车失败'
           }) 
           return 
@@ -246,11 +258,24 @@
         item.post_id = this.postId
 				
 				console.log('cartAddConfirm item =======', item )
-       
-        Cart.plus(item , this.cartAddNum)
-        uni.showToast({
-          title: '添加购物车成功'
-        })
+				
+				if(this.addType == 0){
+					Cart.plus(item , this.cartAddNum)
+					uni.showToast({
+					  title: '添加购物车成功'
+					})
+				}else if(this.addType == 1){
+					// 直接购买
+					item.num = this.cartAddNum
+					this.$store.state.cartListBuyItem = item
+					// 发票默认不选
+					this.$store.state.mallOrderConfirm.invoice = 0 //
+					// return 
+					uni.navigateTo({
+						url:'/pages/mall/cartConfirm?type=1'
+					})
+				}
+        
         this.showPopupBottom = false
       },
       async collectionAction() {

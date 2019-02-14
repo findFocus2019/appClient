@@ -7,10 +7,12 @@
   		</view>
   	  <view class="uni-flex-item uni-center">
   	  	<view class="uni-text-red uni-h2 " style="line-height: 200upx;" v-if="ecard.status == 1">
-  	  		 {{ ecard.amount }}
+  	  		 <!-- {{ ecard.amount }} -->
+					 <money :num="ecard.amount" size="60"/>
   	  	</view>
         <view class="uni-text-gray uni-h2 " style="line-height: 200upx;" v-if="ecard.status == 0">
-        	 {{ ecard.price }}
+        	 <!-- {{ ecard.price }} -->
+					 <money :num="ecard.price" size="60"/>
         </view>
   	  </view>
   	  <view class="uni-center uni-text-red uni-common-pt ecard-right-text" v-if="ecard.status == 1">
@@ -25,8 +27,11 @@
 </template>
 
 <script>
-
+	import money from '@/components/money.vue';
   export default {
+		components:{
+			money
+		},
     props:{
       ecard:{
         type: Object,

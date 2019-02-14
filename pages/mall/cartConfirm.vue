@@ -1,7 +1,7 @@
 <template>
 	<view class="page">
     
-    <view class="uni-border-top">
+    <view class="uni-border-top" v-if="!isVipOrder">
     	<user-address :address="userAddressCurrent" v-if="userAddressCurrent.id"></user-address>
     	<user-address v-else ></user-address>
     </view>
@@ -61,9 +61,9 @@
     	</view>
     </view>
     
-    <view class="uni-common-mt uni-common-pl uni-common-pr uni-bg-white uni-border-top">
+    <view class="uni-common-mt uni-common-pl uni-common-pr uni-bg-white uni-border-top" v-if="!isVipOrder">
       
-    	<view class="uni-flex uni-common-pt uni-common-pb uni-border-bottom ">
+    	<view class="uni-flex uni-common-pt uni-common-pb uni-border-bottom " >
     		<view class="uni-flex-item input-label">
     			积分余额
     		</view>
@@ -86,7 +86,13 @@
       <view class="uni-flex uni-common-pt uni-common-pb " >
       	
         <view class="uni-flex-item uni-right" >
-          <text v-if="postData.score" class="uni-text-small uni-text-light">积分抵扣:{{(score)}} </text>
+					<view class="uni-inline-block uni-text-small uni-text-gray" v-if="postData.score">
+						<text >
+							积分抵扣:
+						</text>
+						<money :num="score" />
+					</view>
+          
           <text style="margin-left: 10upx;">小计</text>
         	<!-- <text class="uni-text-red">￥</text> -->
           <view class="uni-inline-block uni-text-red">
@@ -95,6 +101,14 @@
         </view>
       </view>
     </view>
+		
+		<view class="uni-common-pa uni-bg-white uni-right uni-border-top" v-else>
+			<text style="margin-left: 10upx;">小计</text>
+			<!-- <text class="uni-text-red">￥</text> -->
+			<view class="uni-inline-block uni-text-red">
+				<money :num="total" size="36"/>
+			</view>
+		</view>
     
     <view class="uni-common-mt uni-common-pl uni-common-pr uni-bg-white uni-border-top">
     	<view class="uni-flex uni-common-pt uni-common-pb">
@@ -111,7 +125,7 @@
     	  </view>
     	</view>
     	
-    	<view class="uni-flex uni-common-pt uni-common-pb uni-border-top">
+    	<view class="uni-flex uni-common-pt uni-common-pb uni-border-top" v-if="!isVipOrder">
     		<view class="input-label">
     			备注
     		</view>
@@ -161,7 +175,9 @@
 //         ],
         // payTypeId:0,
         score:0,
-        total:0
+        total:0,
+				type:0,
+				isVipOrder:0,
       }
     },
     components:{
@@ -182,12 +198,13 @@
         	title:'订单提交中'
         })
         
-				let cartList = Cart.listChecked()
+				// let cartList = Cart.listChecked()
+				let cartList = this.cartList
         let orderDatas = []
         cartList.forEach((items,index) => {
           if(items.length){
             orderDatas.push({
-              order_type:1,
+              order_type:index,
               items: items
             })
           }
@@ -196,7 +213,7 @@
         let postData = this.postData
         postData.orders = orderDatas
         postData.score = this.postData.score * 1000
-        postData.address = this.userAddressCurrent
+        postData.address = this.userAddressCurrent || {}
         postData.invoice = this.mallOrderConfirm.invoice ? this.userInvoice : ''
         
         console.log('orderCreate postData' , postData)
@@ -210,15 +227,21 @@
           this.$store.state.mallPayment.totals = totals
           
           console.log('this.$store.state.mallPayment' , this.$store.state.mallPayment)
-          // 消除购物车
-          Cart.listCheckedClear()
-          
+					if(this.type == 0){
+						// 消除购物车
+						Cart.listCheckedClear()
+					}
+					
+					let page = '/pages/mall/payment'
+					if(this.isVipOrder){
+						page += '?isVipOrder=1'
+					}
           uni.showToast({
           	title:'生成订单成功',
             duration:2000,
             success() {
-              uni.reLaunch({
-              	url:'/pages/mall/payment'
+              uni.redirectTo({
+              	url:page
               })
             },
             icon:'success'
@@ -260,8 +283,17 @@
         }
         
         this.postData.score = (this.postData.score == 0) ? 1: 0
-        let total = this.isVip ? Cart.totalVip : Cart.total
-        let score = this.isVip ? Cart.scoreVip : Cart.score
+				let total = 0
+				let score = 0
+				if(this.type == 0){
+					total = this.isVip ? Cart.totalVip : Cart.total
+					score = this.isVip ? Cart.scoreVip : Cart.score
+				}else {
+					let item = this.$store.state.cartListBuyItem
+					score = this.isVip ? item.price_score_vip : item.price_score_sell
+					total = this.isVip ? item.price_vip : item.price_sell 
+				}
+        
         if(this.postData.score){
           this.total = total * 100 / 100
         }else{
@@ -269,7 +301,7 @@
         }
       }
 		},
-    onLoad() {
+    onLoad(opt) {
       
       console.log('onLoad ====================')
     	if(!this.hasLogin){
@@ -285,16 +317,32 @@
       }
       
       console.log('userAddressCurrent' , this.userAddressCurrent)
-      
-      let cartInfo = Cart.info()
-      
-      console.log('cartInfo' , cartInfo)
-      this.score = this.isVip ? cartInfo.scoreVip : cartInfo.score
-      this.total = this.isVip ? (cartInfo.totalVip * 100 + this.score * 100) / 100 : (cartInfo.total * 100 + this.score * 100) / 100
-            
-      this.cartList = Cart.listChecked()
-      
-      console.log('cartList' , this.cartList)
+			
+			let type = opt.type || 0 // 结算类型 0：购物车 1：直接购买
+			let isVipOrder = opt.isVipOrder || 0 // 是否VIP充值订单
+      if(type == 0){
+				let cartInfo = Cart.info()
+				
+				console.log('cartInfo' , cartInfo)
+				this.score = this.isVip ? cartInfo.scoreVip : cartInfo.score
+				this.total = this.isVip ? (cartInfo.totalVip * 100 + this.score * 100) / 100 : (cartInfo.total * 100 + this.score * 100) / 100
+				      
+				this.cartList = Cart.listChecked()
+				
+				console.log('cartList' , this.cartList)
+			}else if (type == 1) {
+				let item = this.$store.state.cartListBuyItem
+				console.log('onLoad add item' , item)
+				let datas = [[],[],[]]
+				datas[item.type].push(item)
+				this.cartList = datas
+				
+				this.score = this.isVip ? item.price_score_vip : item.price_score_sell
+				this.total = this.isVip ? (item.price_vip * 100 + this.score * 100)/100 : (item.price_sell * 100 + this.score * 100) / 100
+			}
+
+			this.type = type
+			this.isVipOrder = isVipOrder
       // 发票默认不选
       // this.$store.state.mallOrderConfirm.invoice = 0
       // this.address = this.userAddressCurrent

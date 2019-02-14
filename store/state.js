@@ -112,13 +112,15 @@ export default {
     payMethodCheck:'',
     ecardId:0,
     ecardAmount:0,
-    payMethodExt:''
+    payMethodExt:'',
+		isVipOrder:0
   },
   mallAfterData:{
     order:0,
     goodsItems:[],
     info:{}
   },
+	cartListBuyItem:{},
   
   // 资讯相关
   postInfo:{},

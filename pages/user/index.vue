@@ -8,15 +8,9 @@
         </view>
       <!-- #endif -->
       
-      <!-- #ifdef MP-WEIXIN -->
-      <view class="uni-right uni-common-pa " @tap="goToPage('/pages/user/setting')">
-      	设置
-      </view>
-      <!-- #endif -->
-      
       <view class="uni-flex uni-common-pt uni-common-pb"  v-if="hasLogin">
    
-        <view class="user-avatar">
+        <view class="user-avatar"  @tap="goToPage('/pages/user/setting')">
           <image lazy-load="true"  :src="userInfo.avatar" mode="scaleToFill" v-if="userInfo.avatar" ></image>
           <image lazy-load="true"  src="/static/icon/qq.png" mode="scaleToFill" v-else></image>
           
@@ -24,12 +18,15 @@
  
         <view class="uni-flex uni-flex-item uni-common-pl">
         	<view class="uni-flex-item">
-            <view class="">
+            <view class="" @tap="goToPage('/pages/user/setting')">
             	{{ userInfo.nickname || '还未设置'}}
             </view>
-            <view class="">
+            <view class="" v-if="isVip">
             	<image lazy-load="true"  src="/static/icon/user/vip-tag.png" mode="scaleToFill" style="width: 120upx;height: 30upx;"></image>
             </view>
+						<view class="uni-text-yellow uni-text-small" v-else>
+							<navigator url="/pages/user/vipOrder">vip充值</navigator>
+						</view>
         		
         	</view>
           <view class="uni-flex-item uni-right">
@@ -44,7 +41,7 @@
       </view>
       
       <view class="uni-flex uni-common-pt uni-common-pb" v-else>
-      	<view class="user-avatar">
+      	<view class="user-avatar"  @tap="goToPage('/pages/user/setting')">
       	  <image lazy-load="true"  src="../../static/icon/qq.png" mode="scaleToFill"></image>
       	</view>
         
@@ -191,7 +188,7 @@
        uniIcon
      },
      computed: {
-       ...mapState(["hasLogin", "userInfo","userIndexData" , "userDataRefresh"])
+       ...mapState(["hasLogin", "userInfo","isVip","userIndexData" , "userDataRefresh"])
      },
      methods:{
        ...mapActions(["authLogout"]),
