@@ -10,6 +10,14 @@
             }
         },
         {
+            "path" : "pages/main/search",
+            "style" : {
+                "app-plus" : {
+                    "titleNView" : false
+                }
+            }
+        },
+        {
             "path" : "pages/news/list",
             "style" : {
                 "navigationBarTitleText" : "焦点资讯"
@@ -108,6 +116,14 @@
             "path" : "pages/plus/choose",
             "style" : {
                 "navigationBarTitleText" : "选择评测商品"
+                
+            }
+        },
+        {
+            "path" : "pages/plus/goods",
+            "style" : {
+                "navigationBarTitleText" : "代言产品",
+                "enablePullDownRefresh" : true
             }
         },
         {

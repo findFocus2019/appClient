@@ -4,14 +4,19 @@
   	<uni-nav-bar color="#333333" background-color="#FFFFFF" fixed="true" @click-left="goSearch"
   	 @click-right="goCart" id="mall-nav-bar">
   		<block slot="left">
-  			<view class="uni-common-pl uni-common-pr">
+  			<view class="uni-common-pl uni-common-pr" v-if="!mallSearch.open">
   				<uni-icon type="search" size="22" color="#666666"></uni-icon>
   			</view>
   		</block>
-  		<view class="input-view uni-center uni-bold" @tap="changeMallType">
+  		<view class="input-view uni-center uni-bold" @tap="changeMallType" v-if="!mallSearch.open">
   			{{ mallTypes[mallType] }} 
         <uni-icon type="arrowdown" size="24"></uni-icon>
   		</view>
+      <view class="input-view uni-flex uni-bg-gray" style="border-radius: 30upx;" v-else >
+      	<uni-icon type="search" size="22" color="#666666"></uni-icon>
+      	<input class="input uni-flex-item" type="text" placeholder="输入搜索关键词" v-model="mallSearch.text" @tap="goSearch"/>
+      	<uni-icon type="clear" size="22" color="#666666" @click="cancelSearch"></uni-icon>
+      </view>
       <block slot="right">
         <view class="uni-common-pl uni-common-pr">
           <image lazy-load="true"  src="/static/icon/mall/cart.png" mode="widthFix" style="width: 48upx;height: 48upx;"></image>
@@ -87,7 +92,7 @@
           
             <view class="mall-list-item type-jd uni-bg-white uni-border-top uni-flex uni-common-pa" v-for="(item,index) in mallGoodsList.list" :key="index" @tap="goToDetail(item)">
               <view class="" style="width: 200upx;height: 200upx;">
-                <image lazy-load="true"  :src="item.cover" mode="scaleToFill" style="width: 200upx;height: 200upx;"></image>
+                <image lazy-load="true"  :src="item.cover" mode="scaleToFill" style="width: 200upx;height: 200upx;border-radius: 8upx;"></image>
               </view>
               
               <view class="uni-common-pl " >
@@ -210,6 +215,15 @@
       listOrderTypeInit(){
         
       },
+      cancelSearch(){
+              
+        this.mallSearch.open = false
+        this.mallSearch.hasDone = false
+        this.mallSearch.text = ''
+        
+        this.refresh()
+
+      },
       async getDatas(){
         await this.getCategorys()
         await this.getLists()
@@ -243,6 +257,11 @@
         params.category = category
         params.page = mallGoodsList.page
         params.timestamp = mallGoodsList.timestamp
+        
+        let search = this.mallSearch.text || ''
+        if(search){
+          params.search = search
+        }
        
         console.log('getLists params' , params)
         let ret = await this.$store.dispatch('getGooddList', params)
@@ -256,6 +275,10 @@
           let rows = data.rows
           if(rows.length == 0){
             this.loadMoreText = '无更多...'
+          }else {
+            if(search){
+              this.$store.dispatch('mallSearchListAdd' , {item: search})
+            }
           }
           rows.forEach(row => {
             this.mallGoodsListData[type][category].list.push(row)
@@ -304,6 +327,7 @@
     	}).exec();
     },
     onLoad() {
+      console.log('onLoad............')
     	this.getDatas()
     },
     async onPullDownRefresh() {
@@ -318,6 +342,19 @@
     	  this.showLoadMore = false
     	} , 1000)
     },
+    onShow() {
+    	console.log('onShow............')
+      if(this.mallSearch.open){
+        // 开启搜索
+        console.log('onShow search............')
+        this.tabIndex = 0
+        this.refresh()
+        
+        if(!this.mallSearch.text){
+          this.mallSearch.open = false
+        }
+      }
+    }
   };
 </script>
 

@@ -1,6 +1,6 @@
 <template>
 	<view class="uni-page-body">
-		<view class="">
+		<view class="" v-if="newsDatas.count">
       <view class="uni-bg-white uni-common-mt uni-common-pt uni-common-pb" v-for="(news,index) in newsDatas.list" :key="index" @tap="goToDetail(news)">
 
         <view class="uni-flex uni-common-pl uni-common-pr">
@@ -33,9 +33,9 @@
         	<view class="uni-flex uni-common-pr">
         		<view class="uni-flex-item uni-common-pl"  v-for="(img,index1) in news.imgs" :key="index1" v-if="index1 < 3">
               
-        			<image lazy-load="true"  :src="img.url" mode="scaleToFill"  style="width: 690upx;height: 400upx;" v-if="news.imgs.length == 1"></image>  
-              <image lazy-load="true"  :src="img.url" mode="scaleToFill"  style="width: 330upx;height: 240upx;" v-if="news.imgs.length == 2"></image>
-              <image lazy-load="true"  :src="img.url" mode="scaleToFill"  style="width: 210upx;height: 160upx;" v-if="news.imgs.length >= 3"></image>
+        			<image lazy-load="true"  :src="img.url" mode="scaleToFill"  style="width: 690upx;height: 400upx;border-radius: 4upx;" v-if="news.imgs.length == 1"></image>  
+              <image lazy-load="true"  :src="img.url" mode="scaleToFill"  style="width: 330upx;height: 240upx;border-radius: 4upx;" v-if="news.imgs.length == 2"></image>
+              <image lazy-load="true"  :src="img.url" mode="scaleToFill"  style="width: 210upx;height: 160upx;border-radius: 4upx;" v-if="news.imgs.length >= 3"></image>
         		</view>
       
         	</view>
@@ -67,6 +67,10 @@
       </view>
       
 		</view>
+    
+    <view class="uni-common-pa uni-center" v-else="">
+    	{{loadMoreText}}
+    </view>
     
     <view class="uni-loadmore" v-if="showLoadMore">{{loadMoreText}}</view>
 	</view>
@@ -118,6 +122,10 @@
           this.postsListDatas.timestamp = data.timestamp
           
           let rows = data.rows
+          
+          if(rows.length == 0){
+            this.loadMoreText = this.postsListDatas.count ? '无更多' : '无数据'
+          }
           rows.forEach(row => {
             this.postsListDatas.list.push(row)
           })

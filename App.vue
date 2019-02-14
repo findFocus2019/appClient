@@ -27,6 +27,13 @@ page {
   line-height: 1.8;
 }
 
+img {
+  max-width: 750upx;
+}
+uni-rich img {
+  max-width: 100% !important;
+}
+
 uni-rich-text img {
     max-width: 100% !important;
   }

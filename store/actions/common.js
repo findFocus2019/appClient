@@ -32,5 +32,17 @@ export default {
   async getNoticeList(store, data){
     let ret = await Request.post('pub/notices' , data)
     return ret
+  },
+  
+  async searchPosts(store, data = {}){
+    let ret = await Request.post('pub/searchPosts' , data)
+    return ret
+  },
+  
+  async searchGoods(store, data = {}){
+    let ret = await Request.post('pub/searchGoods' , data)
+    return ret
   }
+  
+  
 }

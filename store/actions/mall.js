@@ -152,6 +152,27 @@ export default {
   async mallOrderAfterApply(store, data){
     let ret = await Request.post('mall/orderAfterApply', data)
     return ret
+  },
+  
+  async mallSearchList(store){
+    let listStr = uni.getStorageSync('mall_search_list') || ''
+    return listStr ? JSON.parse(listStr) : []
+  },
+  
+  async mallSearchListAdd(store , data){
+    let item = data.item
+    let listStr = uni.getStorageSync('mall_search_list') || ''
+    let list = listStr ? JSON.parse(listStr) : [];
+    
+    let index = list.indexOf(item)
+    if(index > -1){
+      list.splice(index,1)
+    }
+    
+    list.unshift(item)
+    uni.setStorageSync('mall_search_list' , JSON.stringify(list))
+    
+    return list
   }
   
   

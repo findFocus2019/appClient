@@ -6,6 +6,7 @@ export default {
   apiDomain: config.apiDomain,
 	// apiDomain: 'http://47.91.250.144:5001',
   configs:{},
+  mainSearchText:'',
   appNoticeData:{
     page:1,
     count:0,
@@ -19,6 +20,12 @@ export default {
     video:'',
     audio:'',
     progress:0
+  },
+  userShareGoodsData:{
+    page:1,
+    list:[],
+    count:0,
+    timestamp:0
   },
   /**
    * 是否需要强制登录
@@ -75,8 +82,7 @@ export default {
   mallGoodsInfo:{},
   mallSearch:{
     open:false,
-    text:'',
-    hasDone: false
+    text:''
   },
   mallOrderTypes: [{
     name: 'default',

@@ -141,11 +141,24 @@
         	url:page
         })
       },
-      goToLogout(){
-        this.$store.dispatch('authLogout')
-        uni.navigateBack({
-        	delta:1
-        })
+      async goToLogout(){
+        await this.$store.dispatch('authLogout')
+        this.$store.state.userIndexData = {
+          balance:0,
+          score:0,
+          count: {
+            views:0,
+            comments:0,
+            likes:0,
+            shares:0
+          }
+        }
+        setTimeout(function() {
+          uni.navigateBack({
+          	delta:1
+          })
+        }, 1000);
+        
       },
       authWeixin(){
         let authLogin = () => {

@@ -280,8 +280,11 @@ export default {
         console.log('positionTop' , this.positionTop);
     },
     notLogin(){
-      uni.reLaunch({
-        url:'../news/list'
+//       uni.reLaunch({
+//         url:'../news/list'
+//       })
+      uni.navigateBack({
+      	delta:1
       })
     },
     goAuthBind(type = 0){

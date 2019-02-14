@@ -23,6 +23,19 @@
     </uni-nav-bar >
   	<!-- 使用非原生导航栏后需要在页面顶部占位 -->
   	<view :style="{height:topHideViewStyle + 'px'}" class="uni-common-pa">&nbsp;</view>
+    
+    <view class="uni-common-pa">
+    	<view class="uni-common-mb uni-common-pb uni-border-bottom" v-if="searchHistoryList.length">
+        
+        <view class="uni-bold">
+        	历史搜索
+        </view>
+        
+    		<view class="uni-inline-block uni-bg-gray uni-ellipsis search-item " v-for="(item,index) in searchHistoryList" :key="index" @tap="searchHistory(item)">
+    			{{item}}
+    		</view>
+    	</view>
+    </view>
 
   </view>
   
@@ -36,6 +49,7 @@
     data(){
       return {
         topHideViewStyle: 0,
+        searchHistoryList:[]
       }
     },
     components: {
@@ -48,6 +62,9 @@
     methods:{
       back(){
         console.log('back this.mallSearch.text' ,this.mallSearch.text)
+        if(!this.mallSearch.text){
+          this.mallSearch.open = false
+        }
         uni.navigateBack()
       },
       async confirm(){
@@ -55,27 +72,30 @@
         if(this.mallSearch.text){
           // 重新获取列表
           let category = 'all'
-          this.$store.state.mallGoodsList[category].page = 1
-          this.$store.state.mallGoodsList[category].rows = []
+          let type = this.$store.state.mallType
+          this.$store.state.mallGoodsListData[type][category].page = 1
+          this.$store.state.mallGoodsListData[type][category].rows = []
+          this.$store.state.mallGoodsListData[type][category].timestamp = 0
           // store.state.mallGoodsList[category].order = []
-          let timestamp = parseInt(Date.now() / 1000)
-          this.mallSearch.hasDone = true
-          await this.$store.dispatch('getGoodsList' , {category: category, timestamp : timestamp})
           
-          uni.navigateBack()
+          this.mallSearch.open = true
+          
+          uni.navigateBack({
+            delta:1
+          })
         }
+      },
+      searchHistory(item){
+        this.mallSearch.text = item
+        this.confirm()
       },
       async cancel(){
         
-        this.mallSearch.open = false
-        this.mallSearch.hasDone = false
+        this.mallSearch.open = true
         this.mallSearch.text = ''
         
         uni.navigateBack()
         
-//         uni.reLaunch({
-//         	url:'/pages/mall/index'
-//         })
       }
     },
     async onReady() {
@@ -86,6 +106,12 @@
     		this.topHideViewStyle = data.height
     	}).exec();
     },
+    
+    async onLoad() {
+      console.log('onLoad===========')
+    	this.searchHistoryList = await this.$store.dispatch('mallSearchList')
+      console.log('this.searchHistoryList' , this.searchHistoryList)
+    }
   };
 </script>
 
@@ -111,5 +137,19 @@
   	line-height:48upx;
   	width:90%;
   	padding: 0 3%;
+  }
+  
+  .search-item {
+    width: 150upx;
+    height: 60upx;
+    line-height: 60upx;
+    margin-right: 20upx;
+    margin-top: 10upx;
+    border-radius: 30upx;
+    padding: 0 30upx;
+  }
+  
+  .search-item.xl{
+    width: 260upx;
   }
 </style>

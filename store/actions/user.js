@@ -17,6 +17,7 @@ export default {
   },
   async userIndexDataGet(store, data){
     let ret = await Request.post('user/centerData')
+    console.log('userIndexDataGet ret' , JSON.stringify(ret))
     if(ret.code == 0){
       store.state.userIndexData = ret.data
     }

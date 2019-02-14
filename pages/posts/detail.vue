@@ -42,7 +42,7 @@
       </view>
       
     	<view class="uni-common-pa post-content">
-    	  <rich-text :nodes="postInfo.content"></rich-text>
+    	  <rich-text :nodes="postInfo.content" class="content-html"></rich-text>
     	</view>
     </view>
     
@@ -531,7 +531,7 @@
       
       setTimeout(() => {
         this.viewAction()
-      }, 5000)
+      }, 15000)
     },
     async onShow(){
       console.log('============= onShow')
@@ -554,6 +554,9 @@
     	this.commentListGet()
       
       uni.stopPullDownRefresh()
+    },
+    onHide() {
+    	this.viewActionOpen = false;
     }
   }
 </script>

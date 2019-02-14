@@ -157,6 +157,7 @@
     mapState,
     mapActions
   } from 'vuex'
+  import Share from '@/static/js/share.js';
   import uniIcon from '@/components/uni-icon.vue';
   import uniPopup from '@/components/uni-popup.vue';
   import uniNumberBox from '@/components/uni-number-box.vue'
@@ -382,8 +383,8 @@
     	}
     },
     onNavigationBarButtonTap(){
-      // this.goCart()
-			this.goodsShare()
+      this.goCart()
+			// this.goodsShare()
     }
   }
 </script>
