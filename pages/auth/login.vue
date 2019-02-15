@@ -3,7 +3,7 @@
      <view class="uni-padding-wrap uni-common-mt">
        <!-- <view class="uni-center uni-h3 uni-common-mt uni-common-pt">登录</view> -->
        <form class="uni-common-mt uni-common-pt" @submit="formSubmit">
-         <view class="uni-form-item uni-column">
+         <view class="uni-form-item uni-column uni-border-bottom">
            <input
              type="text"
              v-model="postData.mobile"
@@ -12,7 +12,7 @@
              class="uni-input"
            >
          </view>
-         <view class="uni-form-item uni-column">
+         <view class="uni-form-item uni-column uni-border-bottom">
            <view class="with-fun">
              <input
                v-model="postData.password"
@@ -34,7 +34,7 @@
            <view class="uni-column uni-flex-item uni-link">
              <!-- <navigator url="/pages/auth/register">没有账号去注册?</navigator>
               -->
-              <text @tap="goAuthBind(0)">没有账号去注册?</text>
+              <text @tap="goAuthBind(0)" >没有账号去注册?</text>
            </view>
      
            <view class="uni-column uni-flex-item uni-link" @tap="goAuthBind(1)">
@@ -42,11 +42,11 @@
            </view>
          </view>
      
-         <view :style="{position: 'absolute' ,top: positionTop + 'px', width: '100%'}">
+         <view :style="{position: 'absolute' ,top: positionTop + 'px', width: '100%', left:0}" class="uni-common-pb">
            <view class="uni-common-pa uni-common-mt uni-center uni-flex" v-if="hasProvider">
 
                 <view class="uni-column uni-flex-item" @tap="oauth(item.value)" v-for="(item,index) in providerList" :key="index">
-                  <image lazy-load="true"  :src="item.image" style="width:64px;height:64px;"></image>
+                  <image lazy-load="true"  :src="item.image" style="width:120upx;height:120upx;"></image>
                 </view>
  
            </view>

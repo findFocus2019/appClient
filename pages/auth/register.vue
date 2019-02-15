@@ -2,7 +2,7 @@
   <view class="uni-page-body uni-bg-white">
      <view class="uni-padding-wrap uni-common-mt">
        <form class="uni-common-mt uni-common-pt" @submit="formSubmit">
-         <view class="uni-form-item uni-column">
+         <view class="uni-form-item uni-column uni-border-bottom">
            <input
              type="text"
              v-model="postData.mobile"
@@ -11,7 +11,7 @@
              class="uni-input"
            >
          </view>
-         <view class="uni-form-item uni-column">
+         <view class="uni-form-item uni-column uni-border-bottom">
            <input
              type="password"
              v-model="postData.password"
@@ -21,30 +21,51 @@
            >
          </view>
      
-         <view class="uni-flex uni-common-mt">
-           <view class="uni-column uni-flex-item">
+         <view class="uni-flex uni-border-bottom uni-form-item">
+           <view class="uni-flex-item uni-column">
              <input
                type="password"
                v-model="postData.verify_code"
                required
                placeholder="请输入验证码"
                class="uni-input"
+               maxlength="6"
              >
            </view>
-           <view class="uni-column uni-flex-item uni-common-pl uni-common-pr">
-             <view @tap="smsSend" class="uni-border-btn-radius uni-bg-red uni-center" style="height: 80upx;line-height: 80upx;">{{ sms.text }}</view>
+           <view class="uni-common-pl uni-common-pr " >
+             <view @tap="smsSendClick" class="uni-border-btn-radius uni-center btn-sms" style="">{{ sms.text }}</view>
            </view>
+         </view>
+         
+         <view class="uni-flex uni-common-mt uni-common-pa">
+         	<view class="">
+            <checkbox @tap="checkChange" />
+          </view>
+          <view class="uni-flex-item uni-text-light">
+          	我已阅读并同意 <text class="uni-text-red">用户使用协议</text>
+          </view>
          </view>
      
          <view class="uni-common-mt uni-common-pl uni-common-pr">
            <button type="warn" formType="submit" class="uni-border-btn-radius">确定</button>
          </view>
+         
+         <view class="" style="position: relative;left: -30upx;height: 0;">
+            <image src="../../static/img/user/reg-bg.png" mode="widthFix" style="width: 750upx;"></image>
+         </view>
      
-         <view class="uni-common-pa uni-center uni-flex">
-           <view class="uni-column uni-flex-item uni-link" @tap="goBack">
-             <text>返回登录</text>
+         <view class="uni-common-pa uni-common-mt uni-center uni-flex" style="position: relative;">
+           
+           <view class="uni-column uni-flex-item uni-link " @tap="goBack">
+             <text class="uni-bold">返回登录</text>
+           </view>
+           
+           <view class="uni-column uni-flex-item uni-link" @tap="goIndex">
+             <text class="uni-bold">去首页</text>
            </view>
          </view>
+         
+         
        </form>
      </view>
   </view>
@@ -52,8 +73,12 @@
 </template>
 
 <script>
-import Request from "./../../store/request.js";
+import Request from "@/store/request.js";
+import uniIcon from "@/components/uni-icon.vue";
 export default {
+  components:{
+    uniIcon
+  },
   data() {
     return {
       postData: {
@@ -63,9 +88,11 @@ export default {
         type:0
       },
       sms: {
-        text: "发送",
-        second: 60
+        text: "获取验证码",
+        second: 60,
+        click: 0
       },
+      checked:0
     };
   },
   computed:{
@@ -105,6 +132,10 @@ export default {
     uni.getStorageSync('auth_reg_type' , 0)
   },
   methods: {
+    checkChange(){
+      this.checked = !this.checked
+      console.log('checkChange' , this.checked)
+    },
     async formSubmit() {
       let postData = this.postData;
 			postData.pid = this.inviteUserId;
@@ -162,15 +193,23 @@ export default {
         });
       }
     },
+    async smsSendClick(){
+      if(!this.sms.click){
+        this.smsSend()
+      }
+    },
     async smsSend() {
+      
       if (this.sms.second == 60) {
         // 发送
         console.log("sms send ... ...");
+        this.sms.click = 1
       }
-
+      
       if (this.sms.second == 0) {
         this.sms.second = 60;
         this.sms.text = "发送";
+        this.sms.click = 0
       } else {
         this.sms.text = "(" + this.sms.second-- + "s)";
         console.log("sms send ... ...", this.sms.second);
@@ -180,11 +219,20 @@ export default {
           }, 1000);
         }
       }
+      
     },
     goBack() {
-      uni.navigateBack({
-        delta: 1
-      });
+//       uni.navigateBack({
+//         delta: 1
+//       });
+      uni.redirectTo({
+        url:'/pages/auth/login'
+      })
+    },
+    goIndex(){
+      uni.reLaunch({
+      	url:'/pages/main/main'
+      })
     }
   },
   onLoad(opt) {
@@ -196,5 +244,13 @@ export default {
 </script>
 
 <style>
+  .btn-sms {
+    width:200upx;
+    height: 80upx;
+    line-height: 80upx;
+    border: 1px solid #d81e06;
+    border-radius: 40upx;
+    color: #d81e06;
+  }
 </style>
 
