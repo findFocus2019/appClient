@@ -183,7 +183,8 @@ export default {
       paymentInfo: {
         id: 0
       },
-			isVipOrder:0
+			isVipOrder:0,
+      isMpWeixin:0
       // payTypeCheck:0,
       // payMethodCheck:'',
     };
@@ -272,10 +273,31 @@ export default {
     
         if (this.paymentInfo.amount > 0) {
           // 去第三方下单
-          uni.showToast({
-            title: "调用第三方支付，金额：" + this.paymentInfo.amount
-          });
-          let info = this.paymentInfo.info; // TODO
+//           uni.showToast({
+//             title: "调用第三方支付，金额：" + this.paymentInfo.amount
+//           });
+          if(data.pay_method == 'alipay'){
+            console.log('orderInfo'+ this.paymentInfo.info)
+            uni.requestPayment({
+                provider: 'alipay',
+                orderInfo: this.paymentInfo.info, //微信、支付宝订单数据
+                success: function (res) {
+                    console.log('success:' + JSON.stringify(res));
+                },
+                fail: function (err) {
+                    console.log('fail:' + JSON.stringify(err));
+                }
+            });
+          }else if(data.pay_method == 'wx'){
+            // 微信支付
+            uni.showToast({
+              title: "微信支付，金额：" + this.paymentInfo.amount
+            });
+          }
+          
+//           
+//           let info = this.paymentInfo.info; // TODO
+          // console.log('paymentCreate info' , JSON.stringify(info))
         } else {
           // 弹出密码框
           uni.showToast({
@@ -384,6 +406,12 @@ export default {
 		if(isVipOrder){
 			this.payTypes.splice(1,2)
 		}
+    
+    // #ifdef MP-WEIXIN
+    this.isMpWeixin = 1
+    this.payTypes[0].items.splice(1,1)
+    this.payMethodExts.splice(2,1)
+    // #endif
   }
 };
 </script>

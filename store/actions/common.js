@@ -42,6 +42,11 @@ export default {
   async searchGoods(store, data = {}){
     let ret = await Request.post('pub/searchGoods' , data)
     return ret
+  },
+  
+  async sendSmsCode(store, data= {}){
+    let ret = await Request.post('pub/sendSmsCode' , {mobile: data.mobile})
+    return ret
   }
   
   

@@ -271,9 +271,13 @@
         let totals = isVip ? (useScore ? totalVip : totalVip + scoreVip) : (useScore ? total : total + score)
         totals = totals / 100
         this.$store.state.mallPayment.totals = totals
-
+        
+        let page = '/pages/mall/payment'
+        if(order.order_type == 0){
+          page += '?isVipOrder=1'
+        }
         uni.navigateTo({
-          url: '/pages/mall/payment'
+          url: page
         })
       },
       async getData() {

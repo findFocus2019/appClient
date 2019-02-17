@@ -289,7 +289,7 @@ export default {
     },
     goAuthBind(type = 0){
       uni.setStorageSync('auth_reg_type' , type)
-      uni.redirectTo({
+      uni.navigateTo({
       	url:'../auth/register'
       })
     }

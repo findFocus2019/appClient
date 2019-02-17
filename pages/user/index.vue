@@ -11,9 +11,7 @@
       <view class="uni-flex uni-common-pt uni-common-pb"  v-if="hasLogin">
    
         <view class="user-avatar"  @tap="goToPage('/pages/user/setting')">
-          <image lazy-load="true"  :src="userInfo.avatar" mode="scaleToFill" v-if="userInfo.avatar" ></image>
-          <image lazy-load="true"  src="/static/icon/qq.png" mode="scaleToFill" v-else></image>
-          
+          <image lazy-load="true"  :src="userInfo.avatar" mode="scaleToFill" v-if="userInfo.avatar" ></image>       
         </view>
  
         <view class="uni-flex uni-flex-item uni-common-pl">
@@ -42,7 +40,6 @@
       
       <view class="uni-flex uni-common-pt uni-common-pb" v-else>
       	<view class="user-avatar"  @tap="goToPage('/pages/user/setting')">
-      	  <image lazy-load="true"  src="../../static/icon/qq.png" mode="scaleToFill"></image>
       	</view>
         
         <view class="uni-flex uni-flex-item uni-common-pl">

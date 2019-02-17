@@ -42,7 +42,7 @@
             <checkbox @tap="checkChange" />
           </view>
           <view class="uni-flex-item uni-text-light">
-          	我已阅读并同意 <text class="uni-text-red">用户使用协议</text>
+          	我已阅读并同意 <text class="uni-text-red">《用户使用协议》</text>
           </view>
          </view>
      
@@ -137,7 +137,25 @@ export default {
       console.log('checkChange' , this.checked)
     },
     async formSubmit() {
+      if(!this.checked){
+        uni.showToast({
+          title: "请阅读并同意《用户使用协议》",
+          duration: 2000,
+          icon: "none"
+        });
+        return
+      }
+      
       let postData = this.postData;
+      if(postData.mobile == '' || postData.password == '' || postData.verify_code == ''){
+        uni.showToast({
+          title: "注册信息未正确填写",
+          duration: 2000,
+          icon: "none"
+        });
+        return
+      }
+      
 			postData.pid = this.inviteUserId;
       if(postData.type == 3){
         // 设置oauth的数据
@@ -203,7 +221,32 @@ export default {
       if (this.sms.second == 60) {
         // 发送
         console.log("sms send ... ...");
+        if(!this.postData.mobile || this.postData.mobile.length != 11){
+          uni.showToast({
+            icon: 'none',
+            title: '输入正确手机号'
+          })
+          return
+        }
+        
         this.sms.click = 1
+        
+        let smsRet = await this.$store.dispatch('sendSmsCode', {
+          mobile: this.postData.mobile
+        })
+        if (smsRet.code == 0) {
+          uni.showToast({
+            icon: 'success',
+            title: '验证码发送成功'
+          })
+        } else {
+          uni.showToast({
+            icon: 'none',
+            title: ret.message
+          })
+          
+          return
+        }
       }
       
       if (this.sms.second == 0) {
@@ -237,7 +280,10 @@ export default {
   },
   onLoad(opt) {
 		let inviteUserId = opt.puid || 0
-		this.$store.state.inviteUserId = inviteUserId
+    if(inviteUserId){
+      this.$store.state.inviteUserId = inviteUserId
+    }
+		
 		
 	}
 };

@@ -1,6 +1,6 @@
 <template>
 
-  <scroll-view class="page" scroll-y="true" style="height: 100%;overflow-x: auto;" @scroll="pageScroll">
+  <scroll-view class="page" scroll-y="true"  @scroll="pageScroll">
 
     <view class="uni-bg-white uni-common-pa" id="post-content">
       <view class="uni-bold">
@@ -476,9 +476,9 @@
             if(index == 0){
               Share.qq(shareData)
             }else if(index == 1){
-              Share.mini(shareData, 0)
+              Share.wx(shareData, 0)
             } else if (index == 2){
-              Share.mini(shareData , 1)
+              Share.wx(shareData , 1)
             }
           }
         })

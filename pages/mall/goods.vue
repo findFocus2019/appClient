@@ -88,10 +88,19 @@
           收藏
         </view>
       </view>
-      <view class="uni-flex-item uni-bg-yellow uni-text-light" @tap="cartAdd">
+      <view class="uni-flex-item uni-text-light" @tap="goodsShare">
+        <view class="" style="height: 40upx;padding-top: 8upx;">
+        	<image src="../../static/icon/posts/share.png" mode="" style="width: 40upx;height: 40upx;"></image>
+        </view>
+        
+        <view class="">
+          分享
+        </view>
+      </view>
+      <view class="uni-bg-yellow uni-text-light" @tap="cartAdd" style="width: 200upx;">
         <text>加入购物车</text>
       </view>
-      <view class="uni-flex-item uni-bg-red" @tap="readyToBuy">
+      <view class=" uni-bg-red" @tap="readyToBuy" style="width: 200upx;">
         <text>立即购买</text>
       </view>
     </view>
@@ -138,16 +147,9 @@
 
     </uni-popup>
     
-    <!-- #ifdef APP-PLUS -->
-     <!-- <view class="cart-icon bottom" @tap="goCart">
-    	<image lazy-load="true"  src="/static/icon/mall/cart.png" mode="widthFix" style="width: 60upx;height: 60upx;"></image>
-    </view> -->
-    <!-- #endif -->
-    <!-- #ifdef MP-WEIXIN -->
-     <view class="cart-icon top" @tap="goCart">
+    <view class="cart-icon bottom" @tap="goCart">
     	<image lazy-load="true"  src="/static/icon/mall/cart.png" mode="widthFix" style="width: 60upx;height: 60upx;"></image>
     </view>
-    <!-- #endif -->
   
   </view>
 </template>
@@ -226,6 +228,7 @@
 					uni.navigateTo({
 						url:'/pages/auth/login'
 					})
+          return
 				}
 				this.addType = 1
 				this.showPopupBottom = true
@@ -362,9 +365,9 @@
 			      if(index == 0){
 			        Share.qq(shareData)
 			      }else if(index == 1){
-			        Share.mini(shareData, 0)
+			        Share.wx(shareData, 0)
 			      } else if (index == 2){
-			        Share.mini(shareData , 1)
+			        Share.wx(shareData , 1)
 			      }
 			    }
 			  })

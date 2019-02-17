@@ -8,10 +8,12 @@
     "app-plus" : {
         /* 5+App特有相关 */
         "modules" : {
-            "OAuth" : {},
             "Share" : {},
-            "Payment" : {},
-            "Statistic" : {}
+            "Statistic" : {},
+            "OAuth" : {},
+            "Maps" : {},
+            "Push" : {},
+            "Payment" : {}
         },
         /* 模块配置 */
         "distribute" : {
@@ -62,7 +64,39 @@
             /* ios打包配置 */
             "sdkConfigs" : {
                 "push" : {},
-                "statics" : {}
+                "statics" : {},
+                "maps" : {
+                    "amap" : {
+                        "appkey_ios" : "e2e2120606bbcec20300691a8fc221c3",
+                        "appkey_android" : "ad6594794abea239b17090e3727cece7"
+                    }
+                },
+                "oauth" : {
+                    "weixin" : {
+                        "appid" : "wx41b753c9ce99ea27",
+                        "appsecret" : "b7c08b3d30f29f4bc050f1187c422bf5"
+                    },
+                    "qq" : {
+                        "appid" : "101535969"
+                    }
+                },
+                "share" : {
+                    "weixin" : {
+                        "appid" : "wx41b753c9ce99ea27",
+                        "appsecret" : "b7c08b3d30f29f4bc050f1187c422bf5"
+                    },
+                    "qq" : {
+                        "appid" : "101535969"
+                    }
+                },
+                "payment" : {
+                    "weixin" : {
+                        "appid" : "wx41b753c9ce99ea27"
+                    },
+                    "alipay" : {
+                        "scheme" : ""
+                    }
+                }
             },
             "icons" : {
                 "ios" : {

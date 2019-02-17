@@ -164,6 +164,7 @@
           miniAppId: this.miniAppId,
           miniPage: sharePage
         }
+        console.log('share shareData' , JSON.stringify(shareData))
         uni.showActionSheet({
         	itemList:['分享给QQ好友','分享到微信聊天','分享到微信朋友圈'],
           success: (e) => {
@@ -171,9 +172,9 @@
             if(index == 0){
               Share.qq(shareData)
             }else if(index == 1){
-              Share.mini(shareData, 0)
+              Share.wx(shareData, 0)
             } else if (index == 2){
-              Share.mini(shareData , 1)
+              Share.wx(shareData , 1)
             }
           }
         })

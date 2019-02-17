@@ -13,7 +13,7 @@
         <view class="swiper-item news-swiper-item">
 
           <scroll-view :scroll-top="scrollTop" scroll-y="true" class="scroll-Y" @scrolltoupper="refresh(item)"
-            @scrolltolower="loadMore(item)" :style="{height:swiperHeight}" v-if="newsItems[item.id] && newsItems[item.id].count" @scroll="scroll">
+            @scrolltolower="loadMore(item)" :style="{height:swiperHeight}" v-if="newsItems[item.id] && newsItems[item.id].count">
 
             <view class="uni-bg-white uni-common-pl uni-common-pr" v-for="(news,index2) in newsItems[item.id].list"
               :key="index2">
@@ -94,6 +94,7 @@
         await this.$store.dispatch('postChannelsGet' , {type : 1})
       }
       
+      let currentItem = {}
       for (var i = 0; i < this.postChannels.length; i++) {
       	let item = this.postChannels[i]
         
@@ -104,9 +105,16 @@
         if (item == channel) {
           this.currentIndex = i + 1
         }
-        
-      }
 
+      }
+      
+      if(this.currentIndex >= 5){
+        this.scrollLeft = 75 * this.currentIndex
+      }else {
+        this.scrollLeft = 0
+      }
+      console.log(this.scrollLeft , 'scrollLeftscrollLeftscrollLeftscrollLeftscrollLeftscrollLeft')
+      // this.tapChannel(currentItem, this.currentIndex)
       if(!this.newsItems[channel] || !this.newsItems[channel].list || !this.newsItems[channel].list.length){
         let item = this.channels[this.currentIndex]
         
@@ -137,13 +145,7 @@
 
     },
     methods: {
-      async tapChannel(item, index) {
-        this.currentIndex = index
-        
-        // this.getNewsData(item)
-        let channel = item.id
-        
-        console.log('tapChannel' , channel)
+      async getChannelData(channel){
         if(!this.newsItems[channel] || !this.newsItems[channel].list || !this.newsItems[channel].list.length){
           let item = this.channels[this.currentIndex]
           
@@ -155,7 +157,11 @@
           } , 500)
         }
       },
-      changeTab(e) {
+      async tapChannel(item, index) {
+        this.currentIndex = index        
+      },
+      async changeTab(e) {
+        console.log('changeTab' , e)
         let index = e.detail.current;
         this.currentIndex = index;
         if(index >= 5){
@@ -165,7 +171,8 @@
         }
 				
 				let item = this.channels[index]
-				this.tapChannel(item, index)
+        await this.getChannelData(item.id)
+				// this.tapChannel(item, index)
         
       },
       goToDetail(item) {
@@ -196,13 +203,14 @@
         console.log('channel', channel)
         let newsData = this.newsItems[channel]
         let params = {}
+        params.type= 1
         if(!newsData){
           this.newsItems[channel] = {}
           this.newsItems[channel].list = []
         }
         
         if(newsData && newsData.list.length){
-          params.page = newsData.page + 1
+          params.page = newsData.page
           params.channel = channel
           params.timestamp = newsData.timestamp
 
@@ -231,7 +239,7 @@
           let rows = data.rows
 
           this.newsItems[channel].count = data.count
-          this.newsItems[channel].page = data.page
+          this.newsItems[channel].page = data.page + 1
           this.newsItems[channel].timestamp = data.timestamp
 
           for (var i = 0; i < rows.length; i++) {
@@ -262,9 +270,6 @@
         }
 
 
-      },
-      scroll(e){
-        // console.log(e.detail.scrollTop)
       }
     }
   }

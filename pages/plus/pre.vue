@@ -73,7 +73,7 @@
           
           if(content.paths && content.paths.length){
             content.paths.forEach(path => {
-              html += '<p><img src="' + path +'" /></p>'
+              html += '<p><img src="' + path +'" style="max-width:100%;"/></p>'
             })
           }
         })

@@ -144,15 +144,7 @@
                 "navigationBarBackgroundColor" : "#d81e06",
                 "app-plus" : {
                     "titleNView" : {
-                        "type":"transparent",
-                        "buttons":[{
-//                             "text":"购物车",
-//                             "fontSize":"14",
-//                             "width":"auto",
-//                             "background":"none",
-//                             "color":"#FFFFFF"
-													"type":"share"
-                        }]
+                        "type":"transparent"
                     }
                 }
             }
@@ -219,13 +211,13 @@
                 "enablePullDownRefresh":true,
                 "app-plus" : {
                     "titleNView" : {
-                        "buttons" : [
-                            {
-                                "fontSrc" : "/static/fonts/uni.ttf",
-                                "text" : "\ue502",
-                                "background":"none"
-                            }
-                        ],
+//                         "buttons" : [
+//                             {
+//                                 "fontSrc" : "/static/fonts/uni.ttf",
+//                                 "text" : "\ue502",
+//                                 "background":"#d81e06"
+//                             }
+//                         ],
                         "type":"transparent"
                     }
                 }

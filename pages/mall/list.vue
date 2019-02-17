@@ -8,9 +8,15 @@
   				<uni-icon type="search" size="22" color="#666666"></uni-icon>
   			</view>
   		</block>
-  		<view class="input-view uni-center uni-bold" @tap="changeMallType" v-if="!mallSearch.open">
-  			{{ mallTypes[mallType] }} 
-        <uni-icon type="arrowdown" size="24"></uni-icon>
+  		<view class="input-view uni-center"  v-if="!mallSearch.open">
+  			<!-- {{ mallTypes[mallType] }} 
+        <uni-icon type="arrowdown" size="24"></uni-icon> -->
+        <view class="uni-inline-block uni-common-pl uni-common-pr" v-for="(type,index) in mallTypes" :key="index" v-if="type" @tap="changeMallType(index)">
+        	<text v-if="index== mallType" class="uni-bold">{{type}}</text>
+          <text v-else>{{type}}</text>
+        </view>
+        
+        
   		</view>
       <view class="input-view uni-flex uni-bg-gray" style="border-radius: 30upx;" v-else >
       	<uni-icon type="search" size="22" color="#666666"></uni-icon>
@@ -174,21 +180,26 @@
       ...mapState(['mallType', 'mallCategorysData','mallGoodsListData', 'mallSearch', 'mallOrderTypes', 'mallOrderActive'])
     },
     methods:{
-      changeMallType(){
+      changeMallType(index){
         let type = this.mallType
-        let item = (type == 1) ? this.mallTypes[2] : this.mallTypes[1]
-        uni.showActionSheet({
-        	itemList:[ '切换' + item],
-          success:(e)=> {
-            this.tabIndex = 0
-          	let index = e.tapIndex
-            if(index == 0){
-              this.$store.state.mallType = (type == 1) ? 2 : 1
-            }
-            
-            this.getDatas()
-          }
-        })
+        if(type == index){
+          return
+        }
+        
+        this.$store.state.mallType = index
+        this.getDatas()
+//         let item = (type == 1) ? this.mallTypes[2] : this.mallTypes[1]
+//         uni.showActionSheet({
+//         	itemList:[ '切换' + item],
+//           success:(e)=> {
+//             this.tabIndex = 0
+//           	let index = e.tapIndex
+//             if(index == 0){
+//               his.$store.state.mallType = (type == 1) ? 2 : 1
+//             }
+//   
+//           }
+//         })
       },
       tapCategoryTab(index){
         this.tabIndex = index

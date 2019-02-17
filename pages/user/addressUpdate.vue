@@ -96,6 +96,9 @@
         uni.navigateBack({
         	delta:1
         })
+      },
+      chooseAddress(){
+        
       }
     },
     onLoad(opt) {

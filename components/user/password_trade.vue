@@ -1,47 +1,49 @@
 <template>
 	<view class="uni-password-trade" :style="{display: show ? 'block' : 'none'}">
     
-    <view class="uni-right uni-common-pa" style="margin-top: 100upx;">
-    	<text @tap="close">关闭</text>
+    <view class="password-trade-bg" @tap="close" >
+
     </view>
     
-    <view class="uni-center uni-common-mt uni-common-mb uni-common-pa">
-    	<view class="uni-h4" v-if="title">
-    		{{ title }}
-    	</view>
-      <view class="" v-if="description">
-      	<rich-text :nodes="description"></rich-text>
-      </view>
-    </view>
-    
-		<view class="uni-common-pa uni-comment-mt">
-      <view class="uni-common-pl uni-common-pr">
-        <view class="text-nums uni-flex ">
-        	<view class="text-num uni-flex-item border-right" >
-            <text v-if="password[0] !== undefined">*</text>
-        	</view>
-        	<view class="text-num uni-flex-item border-right">
-            <text v-if="password[1] !== undefined">*</text>
-        	</view>
-        	<view class="text-num uni-flex-item border-right">
-            <text v-if="password[2] !== undefined">*</text>
-        	</view>
-        	<view class="text-num uni-flex-item border-right">
-            <text v-if="password[3] !== undefined">*</text>
-        	</view>
-        	<view class="text-num uni-flex-item border-right">
-            <text v-if="password[4] !== undefined">*</text>
-        	</view>
-        	<view class="text-num uni-flex-item ">
-            <text v-if="password[5] !== undefined">*</text>
-        	</view>
-        </view>
-  	
-      </view>
-			
-		</view>
     
    <view class="keyboard-nums uni-bg-gray uni-center">
+     
+     <view class="uni-center uni-common-mt uni-common-mb uni-common-pa">
+     	<view class="uni-h4" v-if="title">
+     		{{ title }}
+     	</view>
+       <view class="" v-if="description">
+       	<rich-text :nodes="description"></rich-text>
+       </view>
+     </view>
+     
+     <view class="uni-common-pa uni-comment-mt">
+       <view class="uni-common-pl uni-common-pr">
+         <view class="text-nums uni-flex ">
+         	<view class="text-num uni-flex-item border-right" >
+             <text v-if="password[0] !== undefined">*</text>
+         	</view>
+         	<view class="text-num uni-flex-item border-right">
+             <text v-if="password[1] !== undefined">*</text>
+         	</view>
+         	<view class="text-num uni-flex-item border-right">
+             <text v-if="password[2] !== undefined">*</text>
+         	</view>
+         	<view class="text-num uni-flex-item border-right">
+             <text v-if="password[3] !== undefined">*</text>
+         	</view>
+         	<view class="text-num uni-flex-item border-right">
+             <text v-if="password[4] !== undefined">*</text>
+         	</view>
+         	<view class="text-num uni-flex-item ">
+             <text v-if="password[5] !== undefined">*</text>
+         	</view>
+         </view>
+     
+       </view>
+     	
+     </view>
+     
     	<view class="uni-flex">
     		<view class="uni-flex-item keyboard-num" @tap="inputPassword('1')">
     			1
@@ -139,18 +141,18 @@
         this.password.splice(this.password.length - 1,1)
       },
       close(){
-        this.show = false
+        // this.show = false
+        this.$emit('close')
       }
     },
     watch:{
       show(newVal,oldVal){
-        if(newVal == true){
-          this.password = []
-        }else {
-          this.title = ''
-          this.description = ''
-        }
+        console.log('show ==========' , newVal)
+        this.password = []
       },
+    },
+    mounted() {
+    	this.password = []
     }
   }
 </script>
@@ -161,9 +163,14 @@
     width: 100%;
     height: 100%;
     top: 0;
-    background: #FFFFFF;
+    background: rgba(0,0,0,0.5);
   }
   
+  .password-trade-bg{
+    position: relative;
+    width: 100%;
+    height: 100%;
+  },
   .text-nums {
     border: 1px solid #999;
     border-radius: 8upx;

@@ -135,5 +135,15 @@ export default {
 	async userShareInfoGet(store, data= {}){
 		let ret = await Request.post('user/shareAction' , data)
 		return ret
-	}
+	},
+  // 提现申请
+  async userTransOut(store, data) {
+    let ret = await Request.post('user/transOutApply' , data)
+    return ret
+  },
+  // 设置支付密码
+  async userPasswordTradeSet(store, data){
+    let ret = await Request.post('user/passwordTradeSet' , data)
+    return ret
+  }
 }

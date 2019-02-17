@@ -54,11 +54,11 @@
         </view> -->
         
         <view class="buttons">
-          <view class="button checkout" @tap="goDailySign">
+          <view class="button checkout left" @tap="goDailySign">
             <image lazy-load="true" src="/static/icon/home/icon_checkout.png" />
-            <text>签到</text>
+            <text class="uni-text-white">签到</text>
           </view>
-          <view class="button view-points" @tap="goBannerHref">
+          <view class="button view-points right" @tap="goBannerHref">
             <image lazy-load="true" src="/static/icon/home/icon_pig.png" />
             <text>查看</text>
           </view>
@@ -85,7 +85,7 @@
           <navigator url="/pages/posts/recommend"><text class="uni-text-small">更多</text></navigator>
         </view>
         <view class="body">
-          <swiper>
+          <swiper autoplay="true" interval="3000" duration="1000" circular="true">
             <swiper-item class="suggestion-swiper-item" v-for="(item,index) in recommendList" :key="index" v-if="index < 10">
               <view class="" @tap="goToDetail(item)">
                 <image lazy-load="true" :src="item.cover" mode="scaleToFill" style="width: 280upx;height: 210upx;"></image>
@@ -103,8 +103,8 @@
         <view class="menu-navigator">
           <swiper class="menu-swiper">
             <!-- 定义菜单 -->
-            <swiper-item v-for="(menu, index) in menus" class="swiper-menu-item" :key="index" @tap="goToPage(menu,index)">
-              <view class="menu" :class="index === 0 ? 'activate' : ''">
+            <swiper-item v-for="(menu, index) in menus" class="swiper-menu-item" :key="index" @tap="changeNewsChannel(menu,index)">
+              <view class="menu" :class="menu.id === newsCurrentchannel ? 'activate' : ''">
                 <view class="menu">
                   <text>{{ menu.name }}</text>
                 </view>
@@ -155,8 +155,12 @@
             </view>
           </block>
 
-          <view class="uni-border-top uni-bg-white uni-common-pa ">
-            <navigator url="/pages/news/list">查看更多</navigator>
+          <view class="uni-border-top uni-bg-white uni-common-pa" v-if="newsCount > 10" @tap="goToMore">
+            查看更多
+          </view>
+          
+          <view class="uni-bg-white uni-common-pa ">
+          	
           </view>
         </view>
       </view>
@@ -206,40 +210,46 @@
             link: "#"
           }
         }],
-        //       suggestionList: [
-        //         {title: "测试标题", link: "#", img: "/static/img/home/pic_1.png", views: 0, shares: 0},
-        //         {title: "测试标题2", link: "#", img: "/static/img/home/pic_2.png", views: 0, shares: 0},
-        //         {title: "测试标题2", link: "#", img: "/static/img/home/pic_2.png", views: 0, shares: 0}
-        //       ],
         recommendList: [],
         newsList: [],
+        newsCount:0,
+        newsItems:{},
+        newsCurrentchannel:'all',
         menus: [{
+          "id":"all",
           name: "焦点资讯",
           url: "/pages/posts/list"
-        }]
+        }],
+        
       }
     },
     computed: {
       ...mapState(['hasLogin', 'userInfo','mainSearchText', 'postChannels', 'newsDatas', 'recommendDatas', 'configs'])
     },
-
-    onShow() {},
+    onShow() {
+      console.log('onShow ================')
+    },
 
     async onLoad() {
+      console.log('onLoad ======================')
+      
       // 获取配置
       let configs = this.configs
       if (Object.keys(configs).length == 0) {
         this.$store.dispatch('getConfigs')
       }
-
+      
+      // 获取新闻频道
       let channelRet = await this.$store.dispatch('postChannelsGet', {
         type: 1
       })
       if (channelRet.code == 0) {
+        
         let channels = this.postChannels
         console.log('onLoad', channels)
         channels.forEach(channel => {
           this.menus.push({
+            id:channel,
             name: channel,
             url: '/pages/news/list'
           })
@@ -247,62 +257,37 @@
       }
 
       // 获取数据,焦点资讯
-      let postsAllDatas = this.$store.state.newsDatas.all || {}
-      let params = {}
-      if (!postsAllDatas.list || postsAllDatas.list.length <= 0) {
-        params.page = 1
-        params.type = 1
-        params.channel = 'all'
-        params.timestamp = parseInt(Date.now() / 100)
-      } else {
-        params.page = postsAllDatas.page
-        params.type = 1
-        params.channel = 'all'
-        params.timestamp = postsAllDatas.timestamp
+      this.newsItems = this.newsDatas
+      
+      let channel = this.newsCurrentchannel
+      let newsListRet = await this.getNewsList(channel , 0)
+      if(newsListRet.code == 0){
+        let data = newsListRet.data
+        
+        this.newsItems[channel] = {}
+        this.newsItems[channel].count = data.count
+        this.newsItems[channel].page = data.page + 1
+        this.newsItems[channel].timestamp = data.timestamp
+        this.newsItems[channel].list = data.rows
+        
+        this.newsList = data.rows
+        this.newsCount = data.count
       }
-
-      let ret = await this.$store.dispatch('postListGet', params)
-      if (ret.code == 0) {
-        this.$store.state.newsDatas.all = {
-          page: ret.data.page,
-          list: ret.data.rows,
-          count: ret.data.count,
-          newCount: ret.data.newCount,
-          timestamp: ret.data.timestamp
-        }
-      }
-      this.newsList = this.newsDatas.all.list
 
       // 获取数据，焦点推荐
-      let recommendDatas = this.$store.state.recommendDatas
-      params = {}
-      params.page = this.recommendDatas.page || 1
-      params.recommend = 1
-      params.timestamp = this.recommendDatas.timestamp || parseInt(Date.now() / 100)
-
-      let retR = await this.$store.dispatch('postListGet', params)
-      console.log('retR===============', retR)
-      if (retR.code == 0) {
-        this.$store.state.recommendDatas = {
-          page: retR.data.page + 1,
-          list: retR.data.rows,
-          count: retR.data.count,
-          newCount: retR.data.newCount,
-          timestamp: retR.data.timestamp
-        }
+      let recommendListRet = await this.getNewsList('' , 1)
+      console.log('recommendListRet===============', recommendListRet)
+      if (recommendListRet.code == 0) {
+        let data = recommendListRet.data
+        console.log('recommendListRet===============', data.timestamp)
+        this.recommendDatas.list = data.rows
+        this.recommendDatas.page = data.page + 1
+        this.recommendDatas.count = data.count
+        this.recommendDatas.timestamp = data.timestamp
+        
+        this.recommendList = data.rows
       }
-      this.recommendList = this.recommendDatas.list
-
-      // 检查登录状态
-//       let token = uni.getStorageSync('user_auth_token')
-//       if (token && !this.hasLogin) {
-//         console.log('获取用户信息')
-//         await this.$store.dispatch('userInfoGet')
-//         if (this.userInfo.id) {
-//           this.$store.state.hasLogin = true
-//         }
-//       }
-
+ 
     },
     methods: {
       goToPage(item, index) {
@@ -311,6 +296,12 @@
             url: item.url + '?channel=' + item.name
           })
         }
+      },
+      goToMore(){
+        
+        uni.navigateTo({
+          url: '/pages/news/list?channel=' + this.newsCurrentchannel
+        })
       },
       goToDetail(news) {
         uni.navigateTo({
@@ -331,6 +322,60 @@
         uni.navigateTo({
         	url:'/pages/main/search'
         })
+      },
+      async changeNewsChannel(menu,index){
+        this.newsCurrentchannel = menu.id
+        let channel = this.newsCurrentchannel
+        
+        let newsData = this.newsItems[channel]
+        if(!newsData){
+          let newsListRet = await this.getNewsList(channel , 0)
+          if(newsListRet.code == 0){
+            let data = newsListRet.data
+            
+            this.newsItems[channel] = {}
+            this.newsItems[channel].count = data.count
+            this.newsItems[channel].page = data.page + 1
+            this.newsItems[channel].timestamp = data.timestamp
+            this.newsItems[channel].list = data.rows
+            
+            this.newsList = data.rows
+            this.newsCount = data.count
+          }
+        }else {
+          this.newsList = newsData.list || []
+          this.newsCount = newsData.count || 0
+        }
+      },
+      async getNewsList(channel = '', recommend = 0){
+        console.log('channel', channel)
+        let now = parseInt(Date.now() / 1000)
+        if(channel){
+          let newsData = this.newsItems[channel]
+          if(!newsData){
+            this.newsItems[channel] = {}
+            this.newsItems[channel].list = []
+          }    
+        }
+        
+        let params = {}
+  
+        params.page = 1
+        params.timestamp = now
+        
+        if(channel){
+          params.channel = channel
+          params.type = 1
+        }
+
+        if(recommend){
+          params.recommend = 1
+        }
+      
+        console.log('params' , params)
+        let ret = await this.$store.dispatch('postListGet', params)
+        return ret
+        
       }
 
     }
@@ -391,18 +436,18 @@
         display: flex;
         flex-flow: row nowrap;
         justify-content: space-between;
-
+        
         color: #fff;
         font-size: 25upx;
 
         .button {
           width: 150upx;
           height: 60upx;
-          background: rgba(0, 0, 0, 1);
-          opacity: 0.2;
-          border-radius: 20upx;
+          background: rgba(0, 0, 0, 0.5);
+          // opacity: 0.2;
+          
 
-          color: inherit;
+          color: #fff;
           font-size: inherit;
           display: flex;
           flex-flow: row nowrap;
@@ -414,8 +459,15 @@
             height: 34upx;
             line-height: 1;
             margin-right: 10upx;
-
           }
+        }
+        
+        .button.left {
+          border-radius: 0 20upx 20upx 0;
+        }
+        
+        .button.right {
+          border-radius: 20upx 0 0 20upx;
         }
       }
 
