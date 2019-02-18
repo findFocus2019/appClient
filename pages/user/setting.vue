@@ -1,14 +1,14 @@
 <template>
 	<view class="uni-page-body uni-bg-white">
     
-		<view class="uni-flex uni-common-pa uni-border-bottom" >
-			<view class="uni-flex-item">
+		<view class="uni-flex uni-common-pa uni-border-bottom" @tap="authWeixin">
+			<view class="uni-flex-item" style="line-height: 80upx;">
         头像
 			</view>
-      <view class="uni-flex-item uni-right" v-if="userInfo.avatar">
+      <view class="uni-flex-item uni-right" v-if="userInfo.avatar" style="height: 80upx;">
       	<image lazy-load="true"  :src="userInfo.avatar" mode="" v-if="userInfo.avatar" style="width: 80upx;height: 80upx; border-radius: 40upx;"></image>
       </view>
-      <view class="uni-flex-item uni-right" v-else @tap="goToPage('/pages/user/avatar')">
+      <view class="uni-flex-item uni-right" v-else >
       	上传头像
         <uni-icon type="arrowright" size="22"></uni-icon>
       </view>
@@ -62,7 +62,7 @@
       </view>
     </view>
     
-    <view class="uni-flex uni-common-pa uni-border-bottom" @tap="authWeixin">
+    <!-- <view class="uni-flex uni-common-pa uni-border-bottom" @tap="authWeixin">
     	<view class="uni-flex-item">
         绑定微信
     	</view>
@@ -70,7 +70,7 @@
         <text v-if="userInfo.openid" class="uni-text-gray uni-text-small">已设置</text>
         <uni-icon type="arrowright" size="22"></uni-icon>
       </view>
-    </view>
+    </view> -->
     
     <view class="uni-flex uni-common-pa uni-border-bottom" >
     	<view class="uni-flex-item">
@@ -177,30 +177,33 @@
                 success: async (infoRes) => {
                   // console.log('用户昵称为：' + infoRes.userInfo.nickName);
                   let openid = infoRes.userInfo.openId || infoRes.userInfo.openid;
+									let avatarUrl = infoRes.userInfo.avatarUrl
                   
                   // #ifdef MP-WEIXIN
                   console.log('login 小程序，去后台取openid');
-                  let jscodeRet = await this.$store.dispatch('authCodeToSession' , {jscode: jscode})
-                  if(jscodeRet.code == 0){
-                    openid = jscodeRet.data.openid
-                  }else {
-                    uni.showToast({
-                      icon:'none',
-                    	title: '小程序授权获取openid失败，请稍后重试',
-                    	mask: false,
-                    	duration: 1500
-                    });
-                    return
-                  }
+//                   let jscodeRet = await this.$store.dispatch('authCodeToSession' , {jscode: jscode})
+//                   if(jscodeRet.code == 0){
+//                     openid = jscodeRet.data.openid
+//                   }else {
+//                     uni.showToast({
+//                       icon:'none',
+//                     	title: '小程序授权获取openid失败，请稍后重试',
+//                     	mask: false,
+//                     	duration: 1500
+//                     });
+//                     return
+//                   }
                   // #endif
            
-                  this.updateName = 'openid'
-                  this.updateVal = openid
+//                   this.updateName = 'openid'
+//                   this.updateVal = openid
+									this.updateName = 'avatar'
+									this.updateVal = avatarUrl
                   
                   let ret = await this.updateUserInfo()
                   if(ret.code == 0){
                     uni.showToast({
-                    	title: '绑定成功',
+                    	title: '设置头像成功',
                     	mask: false,
                     	duration: 1500
                     });
@@ -219,8 +222,20 @@
           });
         }
         
-        uni.showActionSheet({
-          itemList: [this.userInfo.openid ? '重新绑定':'授权绑定'],
+//         uni.showActionSheet({
+//           itemList: [this.userInfo.openid ? '重新绑定':'授权绑定'],
+//           success: (res) => {
+//               if(res.tapIndex == 0){
+//                 authLogin()
+//               }
+//           },
+//           fail: function (res) {
+//               console.log(res.errMsg);
+//           }
+//         })
+
+				uni.showActionSheet({
+          itemList: [this.userInfo.openid ? '重新获取头像':'获取微信头像'],
           success: (res) => {
               if(res.tapIndex == 0){
                 authLogin()
@@ -230,8 +245,7 @@
               console.log(res.errMsg);
           }
         })
-        
-        
+   
       },
       chooseSex(){
         let sexItems = this.sexItems
