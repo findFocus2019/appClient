@@ -20,33 +20,39 @@
 
               <view class="uni-common-pt uni-common-pb uni-border-bottom" @tap="goToDetail(news)">
                 <view class="uni-flex">
-                  <view class="uni-flex-item" v-for="(img,index3) in news.imgs" :key="index3" v-if="index3 < 3">
-                    <image lazy-load="true"  :src="img.url" mode="scaleToFill" style="width: 200upx;height: 160upx;border-radius: 4upx;"></image>
+                  <view class="uni-common-mr" v-for="(img,index3) in news.imgs" :key="index3" v-if="index3 < 3" >
+                    <image lazy-load="true"  :src="img.url" mode="scaleToFill" class="post-list-cover-inline"></image>
                   </view>
                 </view>
-                <view class="uni-bold">
-                  {{news.title}}
-                </view>
-                <view class="uni-common-pt-sm uni-text-gray uni-flex">
-                	<view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
-                    <image lazy-load="true"  src="/static/icon/posts/eye.png" mode="" style="width: 36upx;height: 36upx;"></image>  
-                  </view>
-                  <view class="uni-flex-item uni-common-ml-sm">
-                    <text >{{news.views}}</text> 
-                  </view>
-                  <view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
-                    <image lazy-load="true"  src="/static/icon/posts/zan.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image> 
-                   </view>
-                  <view class="uni-flex-item uni-common-ml-sm">
-                  	<text>{{news.likes}}</text> 
-                  </view>
-                  <view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
-                    <image lazy-load="true"  src="/static/icon/posts/share.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image> 
-                   </view>
-                  <view class="uni-flex-item uni-common-ml-sm">
-                  	<text>{{news.shares}}</text> 
-                  </view>
-                </view>
+								<view class="post-list-content-inline">
+									
+									<view class="uni-bold title">
+									  {{news.title}}
+									</view>
+									
+									<view class="uni-text-gray uni-flex icon-items">
+										<view class="icon-img">
+										  <image lazy-load="true" src="/static/icon/posts/eye.png" mode="" class="icon-img"></image>
+										</view>
+										<view class="uni-flex-item ">
+										  <text>{{news.views}}</text>
+										</view>
+										<view class="icon-img">
+										  <image lazy-load="true" src="/static/icon/posts/zan.png" mode="" class="icon-img"></image>
+										</view>
+										<view class="uni-flex-item">
+										  <text>{{news.likes}}</text>
+										</view>
+										<view class="icon-img">
+										  <image lazy-load="true" src="/static/icon/posts/share.png" mode="" class="icon-img"></image>
+										</view>
+										<view class="uni-flex-item">
+										  <text>{{news.shares}}</text>
+										</view>
+									</view>
+								</view>
+                
+                
               </view>
             </view>
           </scroll-view>

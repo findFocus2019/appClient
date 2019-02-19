@@ -34,31 +34,17 @@
       
               </view>
             </swiper-item>
-            
-            <!-- <swiper-item>
-              <view class="swiper-item" style="text-align: center;">
-                
-                <view class="uni-bg-red uni-inline-block" style="width: 320upx;height: 320upx;border-radius: 160upx;margin-top: 152upx;overflow: hidden;">
-                	<image src="../../static/img/home/pic_2.png" mode="scaleToFill" style="width: 320upx;height: 320upx;border-radius: 160upx;"></image>
-                </view>
-                  
-              </view>
-            </swiper-item> -->
-            
+                       
           </swiper>
 
         </view>
-
-        <!-- <view class="search-bar-container" @tap="goSearch">
-          <search-bar />
-        </view> -->
         
         <view class="buttons">
           <view class="button checkout left" @tap="goDailySign">
             <image lazy-load="true" src="/static/icon/home/icon_checkout.png" />
             <text class="uni-text-white">签到</text>
           </view>
-          <view class="button view-points right" @tap="goBannerHref">
+          <view class="button view-points right" @tap="goUserCenter">
             <image lazy-load="true" src="/static/icon/home/icon_pig.png" />
             <text>查看</text>
           </view>
@@ -66,14 +52,14 @@
       </view>
 
       <view class="uni-bg-white uni-common-pa uni-flex">
-        <view class="uni-flex-item uni-left">
+        <view class="uni-flex-item uni-left" style="height:200upx;">
           <navigator :url="configs.main_sub_url_1">
-            <image lazy-load="true" :src="configs.main_sub_img_1" mode="" style="width: 324upx;height:200upx ;"></image>
+            <image lazy-load="true" :src="configs.main_sub_img_1" mode="" style="width: 320upx;height:200upx;"></image>
           </navigator>
         </view>
-        <view class="uni-flex-item uni-right">
+        <view class="uni-flex-item uni-right" style="height:200upx;">
           <navigator :url="configs.main_sub_url_2">
-            <image lazy-load="true" :src="configs.main_sub_img_2" mode="" style="width: 324upx;height:200upx ;"></image>
+            <image lazy-load="true" :src="configs.main_sub_img_2" mode="" style="width: 320upx;height:200upx;"></image>
           </navigator>
         </view>
       </view>
@@ -85,10 +71,12 @@
           <navigator url="/pages/posts/recommend"><text class="uni-text-small">更多</text></navigator>
         </view>
         <view class="body">
-          <swiper autoplay="true" interval="3000" duration="1000" circular="true">
+          <swiper autoplay="true" interval="3000" duration="1000" circular="true" style="height: 280upx;">
             <swiper-item class="suggestion-swiper-item" v-for="(item,index) in recommendList" :key="index" v-if="index < 10">
               <view class="" @tap="goToDetail(item)">
-                <image lazy-load="true" :src="item.cover" mode="scaleToFill" style="width: 280upx;height: 210upx;"></image>
+								<view class="post-list-cover-xl">
+									<image lazy-load="true" :src="item.cover" mode="scaleToFill" class="post-list-cover-xl"></image>
+								</view>
                 <view class="uni-ellipsis uni-bold">
                   {{item.title}}
                 </view>
@@ -116,38 +104,35 @@
         <!-- <view style="width: 100%;height: 1px;background: rgba(229,229,229,1);"></view> -->
         <view class="">
           <block v-for="(news, index) in newsList" :key="index" v-if="index < 10">
-            <!-- <news-item :cover="news.cover" :title="news.title" 
-                        :publish_time="news.publish_time" :visits="news.visits"
-                        :likes="news.likes" :shares="news.shares"/> -->
+
             <view class="uni-flex uni-border-top uni-bg-white uni-common-pa uni-left" @tap="goToDetail(news)">
-              <view class="">
-                <image lazy-load="true" :src="news.cover" mode="scaleToFill" style="width: 280upx;height: 210upx;"></image>
+              <view class="post-list-cover">
+                <image lazy-load="true" :src="news.cover" mode="scaleToFill" class="post-list-cover"></image>
               </view>
-              <view class="uni-flex-item uni-common-pl">
-                <view class="uni-ellipsis-2 uni-left uni-bold" style="height: 80upx;">
+              <view class="uni-flex-item uni-common-pl post-list-content">
+                <view class="uni-ellipsis-2 uni-left uni-bold title" >
                   {{news.title}}
                 </view>
-                <view class="uni-common-pt uni-text-gray uni-text-small">
+                <view class="uni-text-gray uni-text-small time" >
                   {{ news.publish_time}}
                 </view>
-                <view class="uni-common-pt-sm uni-text-gray uni-flex">
-                  <view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
-                    <image lazy-load="true" src="/static/icon/posts/eye.png" mode="" style="width: 36upx;height: 36upx;"></image>
+                <view class="uni-text-gray uni-flex icon-items">
+                  <view class="icon-img">
+                    <image lazy-load="true" src="/static/icon/posts/eye.png" mode="" class="icon-img"></image>
                   </view>
-                  <view class="uni-flex-item uni-common-ml-sm">
+                  <view class="uni-flex-item">
                     <text>{{news.views}}</text>
                   </view>
-                  <view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
-                    <image lazy-load="true" src="/static/icon/posts/zan.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image>
+                  <view class="icon-img">
+                    <image lazy-load="true" src="/static/icon/posts/zan.png" mode="" class="icon-img"></image>
                   </view>
-                  <view class="uni-flex-item uni-common-ml-sm">
+                  <view class="uni-flex-item ">
                     <text>{{news.likes}}</text>
                   </view>
-                  <view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
-                    <image lazy-load="true" src="/static/icon/posts/share.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image>
+                  <view class="icon-img">
+                    <image lazy-load="true" src="/static/icon/posts/share.png" mode="" class="icon-img"></image>
                   </view>
-                  <view class="uni-flex-item uni-common-ml-sm">
-
+                  <view class="uni-flex-item ">
                     <text>{{news.shares}}</text>
                   </view>
                 </view>
@@ -175,21 +160,12 @@
   } from "vuex";
 
   import uniNavBar from "@/components/uni-nav-bar.vue";
-
   import uniIcon from "@/components/uni-icon.vue";
-
-  import RecommendedFocusItem from "@/components/home/recommended-focus-item.vue";
-  import NewsItem from "@/components/home/news-item.vue";
-
-  import SearchBar from "@/components/search-bar.vue";
 
   export default {
     components: {
       uniNavBar,
-      uniIcon,
-      RecommendedFocusItem,
-      NewsItem,
-      SearchBar,
+      uniIcon
     },
 
     data() {
@@ -202,16 +178,7 @@
         },
 				banners:[],
 				bannerIndex:0,
-        imgList: [{
-          item1: {
-            img: "/static/img/home/banner-bg.png",
-            link: "#"
-          },
-          item2: {
-            img: "/static/img/home/pic_2.png",
-            link: "#"
-          }
-        }],
+        imgList: [],
         recommendList: [],
         newsList: [],
         newsCount:0,
@@ -333,6 +300,11 @@
 				
 				this.bannerTap(banner)
       },
+			goUserCenter(){
+				uni.switchTab({
+					url:'/pages/user/index'
+				})
+			},
       goSearch(){
         uni.navigateTo({
         	url:'/pages/main/search'
@@ -484,8 +456,6 @@
           width: 150upx;
           height: 60upx;
           background: rgba(0, 0, 0, 0.5);
-          // opacity: 0.2;
-          
 
           color: #fff;
           font-size: inherit;
@@ -516,12 +486,10 @@
         left: 50%;
         top: 53upx;
         transform: translateX(-50%);
-
         display: block;
         width: 549upx;
         height: 49upx;
         border-radius: 24upx;
-
         overflow: hidden;
       }
 
@@ -537,27 +505,8 @@
         height: 568upx;
       }
 
-      // margin-top: -30px;
-
-      // background: #fff;
-      // border-radius: 41.667upx 41.667upx 0px 0px;
-
       .swiper-item {
         height: 568upx;
-        //       display: flex;
-        //       flex-flow: row nowrap;
-        //       justify-content: space-between;
-        //       align-items: center;
-        // 
-        //       .banner {
-        //         width: 336.806upx;
-        //         height: 208.333upx;
-        // 
-        //         .banner-img {
-        //           width: 100%;
-        //           height: 100%;
-        //         }
-        //       }
       }
     }
 
@@ -566,36 +515,30 @@
       width: 100%;
       height: auto;
       box-sizing: border-box;
-      margin-top: 10.417upx;
+      margin-top: 20upx;
       background-color: #fff;
 
       .header {
         display: flex;
         width: 100%;
-        height: 80upx;
+        height: 100upx;
         box-sizing: border-box;
         margin: 0;
-        padding: 0 27.778upx;
-
+        padding: 0 30upx;
         flex-flow: row nowrap;
         justify-content: space-between;
         align-items: center;
-
-        font-size: 33.333upx;
-        font-weight: 400;
-        color: rgba(51, 51, 51, 1);
-        line-height: 25upx;
+        font-size: 32upx;
+        line-height: 40upx;
 
         .title {
-          border-left: 8.333upx solid #c73441;
-          padding-left: 12.5upx;
+          border-left: 8upx solid #c73441;
+          padding-left: 12upx;
           font-size: inherit;
           color: inherit;
           line-height: inherit;
           font-weight: inherit;
         }
-
-
       }
 
       .body {
@@ -603,17 +546,16 @@
         height: auto;
 
         .suggestion-swiper-item {
-          width: 305.556upx !important;
+          width: 300upx !important;
           height: auto;
           line-height: 1;
-          // margin-left: 27.778upx;
-          padding-left: 27.778upx;
+          padding-left: 30upx;
         }
       }
     }
 
     .the-focus-list {
-      margin-top: 10.417upx !important;
+      margin-top: 20upx !important;
       background-color: #fff;
 
       .menu-navigator {
@@ -622,8 +564,8 @@
         justify-content: space-between;
         align-items: center;
         width: 100%;
-        height: 97.917upx;
-        line-height: 97.917upx;
+        height: 100upx;
+        line-height: 100upx;
         box-sizing: border-box;
 
         .menu-swiper {
@@ -642,15 +584,15 @@
 
               width: auto !important;
               height: 100%;
-              font-size: 29.167upx;
+              font-size: 30upx;
               color: #666;
               box-sizing: border-box;
 
               &.activate {
-                font-size: 26.389upx;
+                font-size: 26upx;
                 font-weight: bold;
                 color: #333;
-                border-bottom: 6.944upx solid #E03C45;
+                border-bottom: 6upx solid #E03C45;
               }
             }
           }

@@ -33,9 +33,9 @@
         	<view class="uni-flex uni-common-pr">
         		<view class="uni-flex-item uni-common-pl"  v-for="(img,index1) in news.imgs" :key="index1" v-if="index1 < 3">
               
-        			<image lazy-load="true"  :src="img.url" mode="scaleToFill"  style="width: 690upx;height: 400upx;border-radius: 4upx;" v-if="news.imgs.length == 1"></image>  
-              <image lazy-load="true"  :src="img.url" mode="scaleToFill"  style="width: 330upx;height: 240upx;border-radius: 4upx;" v-if="news.imgs.length == 2"></image>
-              <image lazy-load="true"  :src="img.url" mode="scaleToFill"  style="width: 210upx;height: 160upx;border-radius: 4upx;" v-if="news.imgs.length >= 3"></image>
+        			<image lazy-load="true"  :src="img.url" mode="scaleToFill"  style="width: 690upx;height: 460upx;border-radius: 8upx;" v-if="news.imgs.length == 1"></image>  
+              <image lazy-load="true"  :src="img.url" mode="scaleToFill"  style="width: 330upx;height: 220upx;border-radius: 8upx;" v-if="news.imgs.length == 2"></image>
+              <image lazy-load="true"  :src="img.url" mode="scaleToFill"  style="width: 210upx;height: 140upx;border-radius: 8upx;" v-if="news.imgs.length >= 3"></image>
         		</view>
       
         	</view>

@@ -55,6 +55,7 @@ export default {
 
 <style>
 @import "./common/uni.css";
+@import "./static/css/common.css";
 
 page {
   background-color: #f4f5f6;

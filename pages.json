@@ -127,16 +127,6 @@
             }
         },
         {
-            "path" : "pages/mall/index",
-            "style" : {
-                "navigationBarTitleText" : "焦点商城",
-                "enablePullDownRefresh" : true, //开启下拉刷新
-                "app-plus" : {
-                    "titleNView" : false
-                }
-            }
-        },
-        {
             "path" : "pages/mall/goods",
             "style" : {
                 "navigationBarTitleText" : "商品详情",

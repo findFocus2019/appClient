@@ -15,7 +15,7 @@
 
         <view v-show="current === 0">
 
-          <view class="uni-common-pa uni-common-mb uni-bg-white uni-flex" v-for="(item,index) in listDataGoods.list" :key="index">
+          <view class="uni-common-pa uni-common-mb uni-bg-white uni-flex" v-for="(item,index) in listDataGoods.list" :key="index" @tap="goToDetail(item , 'goods')">
             <view class="" style="width: 200upx;height: 200upx;">
               <image lazy-load="true"  :src="item.info.cover" mode="" style="width: 200upx;height: 200upx;"></image>
             </view>
@@ -45,7 +45,7 @@
         </view>
         <view v-show="current === 1">
 
-          <view class="uni-common-pa uni-common-mb uni-bg-white uni-flex" v-for="(item,index) in listDataPosts[current].list" :key="index">
+          <view class="uni-common-pa uni-common-mb uni-bg-white uni-flex" v-for="(item,index) in listDataPosts[current].list" :key="index"  @tap="goToDetail(item , 'posts')">
             <view class="" style="width: 200upx;height: 200upx;">
               <image lazy-load="true"  :src="item.info.cover" mode="" style="width: 200upx;height: 200upx;"></image>
             </view>
@@ -88,7 +88,7 @@
         </view>
         <view v-show="current === 2">
 
-          <view class="uni-common-pa uni-common-mb uni-bg-white uni-flex" v-for="(item,index) in listDataPosts[current].list" :key="index">
+          <view class="uni-common-pa uni-common-mb uni-bg-white uni-flex" v-for="(item,index) in listDataPosts[current].list" :key="index" @tap="goToDetail(item , 'posts')">
             <view class="" style="width: 200upx;height: 200upx;">
               <image lazy-load="true"  :src="item.info.cover" mode="" style="width: 200upx;height: 200upx;"></image>
             </view>
@@ -132,7 +132,7 @@
 
         <view v-show="current === 3">
 
-          <view class="uni-common-pa uni-common-mb uni-bg-white uni-flex" v-for="(item,index) in listDataPosts[current].list" :key="index">
+          <view class="uni-common-pa uni-common-mb uni-bg-white uni-flex" v-for="(item,index) in listDataPosts[current].list" :key="index" @tap="goToDetail(item , 'posts')">
             <view class="" style="width: 200upx;height: 200upx;">
               <image lazy-load="true"  :src="item.info.cover" mode="" style="width: 200upx;height: 200upx;"></image>
             </view>
@@ -379,7 +379,20 @@
             icon:'none'
           })
         }
-      }
+      },
+			
+			
+			async goToDetail(item , type){
+				if(type == 'goods'){
+					uni.navigateTo({
+						url: '/pages/mall/goods?id=' + item.goods_id
+					})
+				}else if(type == 'posts'){
+					uni.navigateTo({
+						url: '/pages/posts/detail?id=' + item.post_id
+					})
+				}
+			}
     },
     onLoad() {
       this.getData()
@@ -396,7 +409,7 @@
       setTimeout(() => {
         this.showLoadMore = false
       }, 1000)
-    }
+    },
   }
 </script>
 

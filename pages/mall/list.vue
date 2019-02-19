@@ -85,47 +85,44 @@
                     </view>
                      
                   </view>
-                  <view class="uni-right uni-flex-item uni-common-pt">
-                    <image lazy-load="true"  src="/static/icon/mall/cart1.png" mode="widthFix" style="width: 100upx;"></image>
-                  </view>
+                  
                 </view>
               </view>
               
             </view>
           </block>
           
-          <block v-if="mallType == 1 && jdShowType == 1">
+          <block v-if="mallType == 1">
           
             <view class="mall-list-item type-jd uni-bg-white uni-border-top uni-flex uni-common-pa" v-for="(item,index) in mallGoodsList.list" :key="index" @tap="goToDetail(item)">
-              <view class="" style="width: 200upx;height: 200upx;">
-                <image lazy-load="true"  :src="item.cover" mode="scaleToFill" style="width: 200upx;height: 200upx;border-radius: 8upx;"></image>
+              <view class="goods-list-cover" >
+                <image lazy-load="true" :src="item.cover" mode="scaleToFill" class="goods-list-cover"></image>
               </view>
               
-              <view class="uni-common-pl " >
-                <view class="uni-bold uni-ellipsis-2" style="width: 450upx;height: 100upx;line-height: 50upx;">
-                  {{ item.title }}
+              <view class="uni-common-pl goods-list-content" >
+                <view class="uni-bold uni-ellipsis-2 title" >
+                  {{ item.title }}{{ item.title }}{{ item.title }}{{ item.title }}{{ item.title }}{{ item.title }}
                 </view>
-                <view class="uni-flex">
-                  <view class="">
-                    <view class="uni-text-red" style="display: inline-block;">
-                      <money :nums="[item.price_sell,item.price_score_sell]" size="36" /> 
-                    </view>
-                    <view class="uni-text-yellow" style="display: inline-block;">
-                     <text class="uni-common-ml-sm">VIP</text>
-                     <money :nums="[item.price_vip,item.price_score_vip]" size="24"/> 
-                     
-                    </view>
-                    <view class="uni-text-gray uni-text-small">
-                    	积分可抵扣
-                      <money :num="item.price_score_sell"></money>
-                      /vip
-                      <money :num="item.price_score_vip"></money>
-                    </view>
-                     
-                  </view>
-                  <view class="uni-right uni-flex-item uni-common-pt">
-                    <image lazy-load="true"  src="/static/icon/mall/cart1.png" mode="widthFix" style="width: 80upx;"></image>
-                  </view>
+								<view class="">
+								  <view class="uni-text-red uni-bold" style="display: inline-block;">
+								    <money :nums="[item.price_sell,item.price_score_sell]" size="32" /> 
+								  </view>
+								  <view class="uni-text-yellow" style="display: inline-block;">
+										 <text class="uni-common-ml-sm">VIP</text>
+										 <money :nums="[item.price_vip,item.price_score_vip]" size="24"/>        
+								  </view>
+								    
+								</view>
+								<view class="" >
+									<view class="uni-text-gray uni-text-small">
+										积分可抵扣
+									  <money :num="item.price_score_sell"></money>
+									  /vip
+									  <money :num="item.price_score_vip"></money>
+									</view>
+								</view>
+                <view class="uni-text-light uni-text-small" >
+                  已有{{ item.sales }}付款
                 </view>
               </view>
               

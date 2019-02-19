@@ -352,7 +352,7 @@ form {
 	word-break: break-all;
 	display: -webkit-box;
 	overflow: hidden;
-	line-height: 1.5;
+	line-height: 48upx;
 	text-overflow: ellipsis;
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: 2;

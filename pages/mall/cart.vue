@@ -203,11 +203,11 @@
     },
     onLoad() {
     	console.log('onLoad')
-      this.cartInfo = Cart.info()
-      console.log('cart info' , JSON.stringify(this.cartInfo))
     },
     onShow() {
     	console.log('onShow')
+			this.cartInfo = Cart.info()
+			console.log('cart info' , JSON.stringify(this.cartInfo))
     },
     onReady() {
     	console.log('onReady')
