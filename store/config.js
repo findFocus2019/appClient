@@ -5,4 +5,5 @@ export default {
 	// apiDomain: 'http://127.0.0.1:5001',
   // apiDomain:'http://10.66.130.105:5001', // 局域网
 	apiDomain:'https://api.faxianjiaodian.com',
+
 }

@@ -11,7 +11,7 @@
         <input confirm-type="搜索" @confirm="confirm" class="input uni-flex-item" type="text" placeholder="输入搜索关键词" />
       </view>
       <block slot="right">
-        <view class="uni-common-pr">
+        <view class="uni-common-pr" @tap="goNotice">
         	<uni-icon type="chat" size="22" color="#ffffff"></uni-icon>
         </view>
       </block>
@@ -24,18 +24,18 @@
         <view class="swiper-banners" style="background: url('/static/img/home/banner-bg.png');background-size: 750upx;height: 568upx;background-repeat: no-repeat;">
 
           <swiper class="swiper" :indicator-dots="swiper.indicatorDots" :autoplay="swiper.autoplay" :interval="swiper.interval"
-            :duration="0" circular="false">
-            <swiper-item>
+            :duration="0" circular="false" :current="bannerIndex">
+            <swiper-item v-for="(banner,index) in banners" :key="index" @tap="bannerTap(banner)">
               <view class="swiper-item" style="text-align: center;">
                 
                 <view class="uni-bg-red uni-inline-block" style="width: 320upx;height: 320upx;border-radius: 160upx;margin-top: 152upx;overflow: hidden;">
-                	<image src="../../static/img/home/pic_1.png" mode="scaleToFill" style="width: 320upx;height: 320upx;border-radius: 160upx;"></image>
+                	<image lazy-load="true" :src="banner.img" mode="scaleToFill" style="width: 320upx;height: 320upx;border-radius: 160upx;"></image>
                 </view>
       
               </view>
             </swiper-item>
             
-            <swiper-item>
+            <!-- <swiper-item>
               <view class="swiper-item" style="text-align: center;">
                 
                 <view class="uni-bg-red uni-inline-block" style="width: 320upx;height: 320upx;border-radius: 160upx;margin-top: 152upx;overflow: hidden;">
@@ -43,7 +43,7 @@
                 </view>
                   
               </view>
-            </swiper-item>
+            </swiper-item> -->
             
           </swiper>
 
@@ -200,6 +200,8 @@
           interval: 3000,
           duration: 500
         },
+				banners:[],
+				bannerIndex:0,
         imgList: [{
           item1: {
             img: "/static/img/home/banner-bg.png",
@@ -238,6 +240,8 @@
       if (Object.keys(configs).length == 0) {
         this.$store.dispatch('getConfigs')
       }
+			
+			await this.getAlbums()
       
       // 获取新闻频道
       let channelRet = await this.$store.dispatch('postChannelsGet', {
@@ -290,6 +294,11 @@
  
     },
     methods: {
+			goNotice(){
+				uni.navigateTo({
+				  url: '/pages/notice/notice'
+				})
+			},
       goToPage(item, index) {
         if (index > 0) {
           uni.navigateTo({
@@ -298,7 +307,6 @@
         }
       },
       goToMore(){
-        
         uni.navigateTo({
           url: '/pages/news/list?channel=' + this.newsCurrentchannel
         })
@@ -313,16 +321,30 @@
         	url:'/pages/user/dailySign'
         })
       },
-      goBannerHref(page){
-        uni.navigateTo({
-        	url:page
-        })
+      goBannerHref(){
+				let bannerIndex = this.bannerIndex
+				let banner = this.banners[bannerIndex] || {}
+				
+				this.bannerTap(banner)
       },
       goSearch(){
         uni.navigateTo({
         	url:'/pages/main/search'
         })
       },
+			bannerTap(banner){
+				if(banner.url){
+					uni.navigateTo({
+						url:banner.url,
+						fail: () => {
+							console.log('fail')
+							uni.switchTab({
+								url:banner.url
+							})
+						}
+					})
+				}
+			},
       async changeNewsChannel(menu,index){
         this.newsCurrentchannel = menu.id
         let channel = this.newsCurrentchannel
@@ -376,7 +398,19 @@
         let ret = await this.$store.dispatch('postListGet', params)
         return ret
         
-      }
+      },
+			async getAlbums(){
+				let albumsRet = await this.$store.dispatch('getAlbums' , {type: 'banner'})
+				if(albumsRet.code == 0){
+					let rows = albumsRet.data.rows || []
+					rows.forEach(row => {
+						this.banners.push({
+							img: row.img,
+							url: row.url
+						})
+					})
+				}
+			}
 
     }
   };

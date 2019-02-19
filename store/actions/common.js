@@ -47,7 +47,12 @@ export default {
   async sendSmsCode(store, data= {}){
     let ret = await Request.post('pub/sendSmsCode' , {mobile: data.mobile})
     return ret
-  }
+  },
+	
+	async getAlbums(store, data = {}){
+		let ret = await Request.post('pub/albums' , data)
+		return ret
+	}
   
   
 }

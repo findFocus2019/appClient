@@ -1,10 +1,14 @@
 <template>
   <view class="uni-page-body mall-goods-page">
-    <swiper indicator-dots="true">
+    <swiper indicator-dots="true" v-if="imgUrls.length">
       <swiper-item v-for="(img,key) in imgUrls" :key="key">
         <image lazy-load="true"  :src="img" />
       </swiper-item>
     </swiper>
+		
+		<view class="" v-else>
+			<image :src="mallGoodsInfo.cover" mode="widthFix" style="width: 100%;"></image>
+		</view>
 
     <view class="uni-common-pa uni-bg-white">
       <view class="uni-text-dark uni-h4">
@@ -183,8 +187,8 @@
         ],
         current: 0,
         imgUrls: [
-          "https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/muwu.jpg",
-          "https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/cbd.jpg"
+//           "https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/muwu.jpg",
+//           "https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/cbd.jpg"
         ],
         showPopupBottom: false,
         cartAddNum: 1,
@@ -379,11 +383,22 @@
 			    }
 			  })
 			},
+			async getAlbums(id){
+				let albumsRet = await this.$store.dispatch('getAlbums' , {type: 'goods' , type_id: id})
+				if(albumsRet.code == 0){
+					let rows = albumsRet.data.rows || []
+					rows.forEach(row => {
+						this.imgUrls.push(row.img)
+					})
+				}
+			}
     },
     async onLoad(opt) {
       // 获取商品信息
       let id = opt.id
-      this.$store.state.mallGoodsInfo = {}
+			this.$store.state.mallGoodsInfo = {}
+			await this.getAlbums(this.mallGoodsInfo.id)
+			
       await this.$store.dispatch('getGoodsInfo', {
         id: id
       })
@@ -409,12 +424,16 @@
 
       // 设置添加数量
       this.cartAddNum = (this.goodsInfoStock > 0) ? 1 : 0
+			
+			
+			
     },
     async onShow() {
     	if(this.mallGoodsInfo.id){
     	  let ret = await this.$store.dispatch('getGoodsInfo' , {id: this.mallGoodsInfo.id})
     	  console.log('onShow getGoodsInfo ret ==============' , JSON.stringify(ret))
-    	  
+				
+				this.getAlbums(this.mallGoodsInfo.id)
     	}
     },
     onNavigationBarButtonTap(){
