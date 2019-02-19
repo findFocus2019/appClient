@@ -101,7 +101,7 @@
               
               <view class="uni-common-pl goods-list-content" >
                 <view class="uni-bold uni-ellipsis-2 title" >
-                  {{ item.title }}{{ item.title }}{{ item.title }}{{ item.title }}{{ item.title }}{{ item.title }}
+                  {{ item.title }}
                 </view>
 								<view class="">
 								  <view class="uni-text-red uni-bold" style="display: inline-block;">
