@@ -317,6 +317,12 @@
         })
       },
       goDailySign(){
+        if(!this.hasLogin){
+          uni.navigateTo({
+          	url:'/pages/auth/login'
+          })
+          return
+        }
         uni.navigateTo({
         	url:'/pages/user/dailySign'
         })

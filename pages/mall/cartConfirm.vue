@@ -290,8 +290,8 @@
 					score = this.isVip ? Cart.scoreVip : Cart.score
 				}else {
 					let item = this.$store.state.cartListBuyItem
-					score = this.isVip ? item.price_score_vip : item.price_score_sell
-					total = this.isVip ? item.price_vip : item.price_sell 
+					score = this.isVip ? item.price_score_vip * item.num : item.price_score_sell * item.num
+					total = this.isVip ? item.price_vip * item.num : item.price_sell * item.num 
 				}
         
         if(this.postData.score){
@@ -338,8 +338,8 @@
 				datas[item.type].push(item)
 				this.cartList = datas
 				
-				this.score = this.isVip ? item.price_score_vip : item.price_score_sell
-				this.total = this.isVip ? (item.price_vip * 100 + this.score * 100)/100 : (item.price_sell * 100 + this.score * 100) / 100
+				this.score = this.isVip ? item.price_score_vip * item.num : item.price_score_sell * item.num
+				this.total = this.isVip ? (item.price_vip * 100 + this.score * 100)/100 * item.num  : (item.price_sell * 100 + this.score * 100) / 100 * item.num
 			}
       
       console.log('onLoad this.cartList:' + JSON.stringify(this.cartList))

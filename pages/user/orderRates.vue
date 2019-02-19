@@ -45,6 +45,9 @@
 								</view>
                 
               </view>
+              <view class="uni-text-gray uni-text-small">
+              	购买完成时间：{{ item.create_date}}
+              </view>
             </view>
         	</view>
         </view>
@@ -111,6 +114,7 @@
       async getData(){
         let params = {}
         params.page = this.listData.page
+        params.rate = 1
         
         let ret = await this.$store.dispatch('mallOrderItemListGet' , params)
 				console.log('mallOrderItemListGet ret' , ret)

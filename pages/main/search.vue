@@ -21,7 +21,7 @@
 		  </block>
 		</uni-nav-bar >
     
-    <view style="height: 110upx;"></view>
+    <view style="height: 150upx;"></view>
     
     <view class="uni-common-pa">
       

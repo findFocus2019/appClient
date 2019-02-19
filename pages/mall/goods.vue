@@ -274,6 +274,7 @@
 				}else if(this.addType == 1){
 					// 直接购买
 					item.num = this.cartAddNum
+          console.log('立即购买 item:' , JSON.stringify(item))
 					this.$store.state.cartListBuyItem = item
 					// 发票默认不选
 					this.$store.state.mallOrderConfirm.invoice = 0 //

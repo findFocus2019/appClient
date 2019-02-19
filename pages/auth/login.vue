@@ -301,6 +301,9 @@ export default {
       // #ifdef MP-WEIXIN
       this.oauth('weixin');
       // #endif
+      
+      this.$store.state.hasLogin = false
+      uni.setStorageSync("user_auth_token", "");
   }
 };
 </script>

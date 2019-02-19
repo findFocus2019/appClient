@@ -11,7 +11,6 @@
             "Share" : {},
             "Statistic" : {},
             "Maps" : {},
-            "Push" : {},
             "Payment" : {},
             "OAuth" : {},
             "VideoPlayer" : {},
@@ -141,10 +140,11 @@
     /* 快应用特有相关 */
     "mp-weixin" : {
         /* 小程序特有相关 */
-        "appid" : "wx2e40960c5cfb7723",
+        "appid" : "wxbdffe470695eab18",
         "setting" : {
             "urlCheck" : false,
-            "es6" : true
+            "es6" : true,
+            "minified" : true
         },
         "permission" : {}
     },
