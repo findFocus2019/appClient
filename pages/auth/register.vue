@@ -50,7 +50,7 @@
            <button type="warn" formType="submit" class="uni-border-btn-radius">确定</button>
          </view>
          
-         <view class="" style="position: relative;left: -30upx;height: 0;">
+         <view class="" style="position: relative;left: -30upx;height: 0;" v-if="postData.type == 0">
             <image src="../../static/img/user/reg-bg.png" mode="widthFix" style="width: 750upx;"></image>
          </view>
      
@@ -65,6 +65,16 @@
            </view>
          </view>
          
+         <view class="uni-common-mt uni-text-gray uni-common-pa uni-border-top" v-if="postData.type == 2">
+            老用户绑定请重新设置新密码
+         </view>
+         
+         <view class="uni-common-mt uni-text-gray uni-common-pa uni-border-top" v-if="postData.type == 3">
+            <view>1.绑定已有账户，请输入已有账户密码</view>
+            <view>
+            	2.绑定新账户，设置一个新的密码
+            </view>
+         </view>
          
        </form>
      </view>

@@ -143,7 +143,7 @@ export default {
               id: 1,
               name: "微信支付",
               pay_type: "3",
-              pay_method: "wx"
+              pay_method: "wxpay"
             },
             {
               id: 2,
@@ -176,7 +176,7 @@ export default {
       ],
       payMethodExts: [
         { id: 1, text: "账户余额", method: "balance" },
-        { id: 1, text: "微信支付", method: "wx" },
+        { id: 1, text: "微信支付", method: "wxpay" },
         { id: 1, text: "支付宝", method: "alipay" }
       ],
       ecardCountCanUse: 0,
@@ -214,9 +214,12 @@ export default {
       let ret = await this.$store.dispatch('mallOrderPayConfirm', params)
       uni.hideLoading()
       if(ret.code == 0){
+        this.$store.state.ordersListStatus = 1
+        this.$store.state.userDataRefresh = true
         uni.showToast({
-        	title:'操作成功',
+        	title:'交易成功',
           success: () => {
+            
           	uni.redirectTo({
           		url: '/pages/user/orders?status=1'
           	})
@@ -225,7 +228,7 @@ export default {
       }else {
         uni.showToast({
         	icon:'none',
-          title:'操作失败:' + ret.message
+          title:'交易失败:' + ret.message
         })
       }
     },
@@ -270,34 +273,55 @@ export default {
         //           	url:'/pages/mall/paymentSuccess'
         //           })
         this.paymentInfo = ret.data;
+        console.log('paymentInfo id:' + this.paymentInfo.id)
     
         if (this.paymentInfo.amount > 0) {
           // 去第三方下单
 //           uni.showToast({
 //             title: "调用第三方支付，金额：" + this.paymentInfo.amount
 //           });
-          if(data.pay_method == 'alipay'){
+          if(data.pay_method == 'alipay' || data.pay_method == 'wxpay'){
             console.log('orderInfo'+ this.paymentInfo.info)
+            let provider = data.pay_method
             uni.requestPayment({
-                provider: 'alipay',
+                provider: provider,
                 orderInfo: this.paymentInfo.info, //微信、支付宝订单数据
-                success: function (res) {
+                success: (res) => {
                     console.log('success:' + JSON.stringify(res));
+                    this.$store.state.ordersListStatus = 1
+                    this.$store.state.userDataRefresh = true
+                    uni.showToast({
+                    	icon:'success',
+                      title:'支付成功',
+                      success: () => {
+                      	uni.redirectTo({
+                      		url:'/pages/user/orders?status=1'
+                      	})
+                      }
+                    })
+                    
                 },
-                fail: function (err) {
+                fail: (err) => {
                     console.log('fail:' + JSON.stringify(err));
+                    uni.showToast({
+                    	icon:'none',
+                      title:err.errMsg,
+                      success: () => {
+                        
+                      	uni.navigateBack({
+                      		delta:1
+                      	})
+                      }
+                    })
                 }
             });
-          }else if(data.pay_method == 'wx'){
+          }else {
             // 微信支付
             uni.showToast({
-              title: "微信支付，金额：" + this.paymentInfo.amount
+              title: "不支持的支付方式"
             });
           }
-          
-//           
-//           let info = this.paymentInfo.info; // TODO
-          // console.log('paymentCreate info' , JSON.stringify(info))
+
         } else {
           // 弹出密码框
           uni.showToast({
@@ -398,7 +422,7 @@ export default {
     //       let data = {
     //         order_ids: this.$store.state.mallPayment.orderIds,
     //         pay_type : 3,
-    //         pay_method: 'wx'
+    //         pay_method: 'wxpay'
     //       }
     //     	this.$store.dispatch('mallOrderPayPre' , data)
 		let isVipOrder = opt.isVipOrder || 0

@@ -149,7 +149,7 @@
       }
     },
     computed: {
-      ...mapState(["hasLogin", "userDataRefresh"])
+      ...mapState(["hasLogin", "userDataRefresh", "ordersListStatus"])
     },
     methods: {
       changeStatus(status) {
@@ -313,7 +313,10 @@
     },
     async onLoad(opt) {
       this.status = opt.status || 0
+      this.ordersListStatus = this.status
       await this.getData()
+      
+      console.log('onLoad =========status' , this.status)
 
       this.orderListData = this.orderListDatas[this.status]
     },
@@ -336,6 +339,7 @@
       console.log('onShow ==================')
       if (this.userDataRefresh) {
         console.log('onShow userDataRefresh  =====================')
+        this.status = this.ordersListStatus
         uni.startPullDownRefresh({
           success: async () => {
             this.orderListDatas[this.status].page = 1

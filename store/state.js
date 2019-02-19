@@ -121,7 +121,7 @@ export default {
     info:{}
   },
 	cartListBuyItem:{},
-  
+  ordersListStatus: 0,
   // 资讯相关
   postInfo:{},
   postChannels:[],

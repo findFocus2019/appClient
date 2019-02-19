@@ -7,7 +7,7 @@
     <view class="uni-common-pa uni-center" :style="{display: refreshDisplay}" >
     	加载中...
     </view>
-    <swiper :indicator-dots="false" :autoplay="false" :interval="3000" :duration="1000" :current="currentIndex" class="swiper-box"
+    <swiper :indicator-dots="false" :autoplay="false" :interval="3000" :duration="500" :current="currentIndex" class="swiper-box"
       @change="changeTab" :style="{height:swiperHeight}">
       <swiper-item v-for="(item,index) in channels" :key="index">
         <view class="swiper-item news-swiper-item">

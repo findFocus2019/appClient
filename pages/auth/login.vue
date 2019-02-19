@@ -240,7 +240,7 @@ export default {
           });
         },
         fail:(err)=> {
-        	console.error('授权登录失败，' , JSON.stringify((err)))
+        	console.error('授权登录失败:' + JSON.stringify((err)))
           uni.showToast({
             title: "授权登录失败, " + err.errMsg || '请稍后再试',
             duration: 1500,

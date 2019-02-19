@@ -10,10 +10,12 @@
         "modules" : {
             "Share" : {},
             "Statistic" : {},
-            "OAuth" : {},
             "Maps" : {},
             "Push" : {},
-            "Payment" : {}
+            "Payment" : {},
+            "OAuth" : {},
+            "VideoPlayer" : {},
+            "LivePusher" : {}
         },
         /* 模块配置 */
         "distribute" : {

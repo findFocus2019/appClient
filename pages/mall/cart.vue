@@ -187,9 +187,16 @@
           // 发票默认不选
           this.$store.state.mallOrderConfirm.invoice = 0 //
           // return 
-          uni.navigateTo({
-          	url:'/pages/mall/cartConfirm'
+          uni.showLoading({
+          	title:'提交中'
           })
+          setTimeout(() => {
+            uni.navigateTo({
+            	url:'/pages/mall/cartConfirm'
+            })
+            uni.hideLoading()
+          }, 500)
+          
         }
 				
 			}

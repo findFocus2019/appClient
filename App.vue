@@ -1,10 +1,38 @@
 <script>
+  import config from '@/store/config.js'
 export default {
   onLaunch: function() {
     console.log("App Launch");
     // 检查
-    let res = uni.getSystemInfoSync();
-    console.log('divice info' , JSON.stringify(res));
+    let device = uni.getSystemInfoSync();
+    console.log('divice info:' + JSON.stringify(device));
+    
+    //  检查更新
+    var server = config.apiDomain + "/update"; //检查更新地址  
+    
+    uni.request({  
+        url: server, 
+        data: {
+          version: config.version
+        },
+        success: (res) => {  
+          console.log('check update ret:' , JSON.stringify(res.data))
+            if (res.statusCode == 200 && res.data.status === 1) {  
+              let url = res.data.url
+                uni.showModal({ //提醒用户更新  
+                    title: "更新提示",  
+                    content: res.data.note,  
+                    success: (res) => {  
+                        if (res.confirm) {  
+                          if(device.platform == 'android'){
+                            plus.runtime.openURL(url)
+                          }          
+                        }  
+                    }  
+                })  
+            }  
+        }  
+    }) 
   },
   async onShow() {
     console.log("App Show");

@@ -320,6 +320,7 @@
 			
 			let type = opt.type || 0 // 结算类型 0：购物车 1：直接购买
 			let isVipOrder = opt.isVipOrder || 0 // 是否VIP充值订单
+      console.log('onLoad======= isVipOrder :' + isVipOrder)
       if(type == 0){
 				let cartInfo = Cart.info()
 				
@@ -340,6 +341,8 @@
 				this.score = this.isVip ? item.price_score_vip : item.price_score_sell
 				this.total = this.isVip ? (item.price_vip * 100 + this.score * 100)/100 : (item.price_sell * 100 + this.score * 100) / 100
 			}
+      
+      console.log('onLoad this.cartList:' + JSON.stringify(this.cartList))
 
 			this.type = type
 			this.isVipOrder = isVipOrder
