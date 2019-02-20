@@ -196,9 +196,10 @@
   .keyboard-num {
     background: #FFFFFF;
     margin: 8upx;
-    height: 80upx;
-    line-height: 80upx;
+    height: 120upx;
+    line-height: 120upx;
     font-size: 40upx;
+    font-weight: 400;
     color: #333333;
     border-radius: 8upx;
   }

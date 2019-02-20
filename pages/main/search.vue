@@ -106,7 +106,7 @@
       },
       goToDetailGoods(item){
         uni.navigateTo({
-        	url:'/pages/mall/goods?id=' + item.id
+        	url:'/pagesMall/mall/goods?id=' + item.id
         })
       },
       async confirm(){

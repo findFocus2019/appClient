@@ -4,7 +4,7 @@ export default {
 
   goCart(store) {
     uni.navigateTo({
-      url: '/pages/mall/cart'
+      url: '/pagesMall/mall/cart'
     })
   },
 

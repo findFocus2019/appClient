@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import Request from "./../../store/request.js";
+import Request from "@/store/request.js";
 export default {
   data() {
     return {
@@ -86,18 +86,29 @@ export default {
         device: '',
         avatar:'',
         nickname:'',
-        openid:''
+        openid:'',
+        type:''
       }
     };
   },
   onShow() {
   	let systemInfo = uni.getSystemInfoSync();
+    let type = ''
+    // #ifdef APP-PLUS
+    type = 'app'
+    // #endif
+    // #ifdef H5
+    type = 'h5'
+    // #endif
+    
   	this.postData.auth_info = {
   	  platform: systemInfo.platform,
-  	  device: systemInfo.model
+  	  device: systemInfo.model,
+      type: type
   	}
     this.oauth_info.platform = systemInfo.platform
     this.oauth_info.device = systemInfo.model
+    this.oauth_info.type = type
   },
   methods: {
     changePassword(){
@@ -289,21 +300,34 @@ export default {
     },
     goAuthBind(type = 0){
       uni.setStorageSync('auth_reg_type' , type)
-      uni.navigateTo({
-      	url:'../auth/register'
-      })
+      
+      if(type == 1){
+        uni.navigateTo({
+        	url:'../auth/register'
+        })
+      }else {
+        uni.redirectTo({
+        	url:'../auth/register'
+        })
+      }
+      
     }
   },
   onLoad() {
       this.initProvider();
       this.initPosition();
       
-      // #ifdef MP-WEIXIN
-      this.oauth('weixin');
-      // #endif
-      
       this.$store.state.hasLogin = false
       uni.setStorageSync("user_auth_token", "");
+      
+      // #ifdef MP-WEIXIN
+      // this.oauth('weixin');
+      uni.redirectTo({
+      	url:'/pages/auth/mp'
+      })
+      // #endif
+      
+      
   }
 };
 </script>

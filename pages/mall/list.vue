@@ -155,7 +155,7 @@
         scrollLeft:0,
         tabIndex:0,
         topHideViewHeight:0,
-        mallTypes:['','自营商城','京选商城'],
+        mallTypes:['','焦点商城','京选商城'],
         mallCategorys:[],
         mallGoodsList:{
           page:1,
@@ -177,14 +177,20 @@
       ...mapState(['mallType', 'mallCategorysData','mallGoodsListData', 'mallSearch', 'mallOrderTypes', 'mallOrderActive'])
     },
     methods:{
-      changeMallType(index){
+      async changeMallType(index){
+        //
+        uni.showLoading({
+        	mask:true,
+          title:'数据加载中...'
+        })
         let type = this.mallType
         if(type == index){
           return
         }
         
         this.$store.state.mallType = index
-        this.getDatas()
+        await this.getDatas()
+        uni.hideLoading()
 //         let item = (type == 1) ? this.mallTypes[2] : this.mallTypes[1]
 //         uni.showActionSheet({
 //         	itemList:[ '切换' + item],
@@ -310,18 +316,18 @@
       },
       goCart() {
         uni.navigateTo({
-          url: '/pages/mall/cart'
+          url: '/pagesMall/mall/cart'
         })
       },
       goSearch() {
         this.mallSearch.open = true
         uni.navigateTo({
-          url: '/pages/mall/search'
+          url: '/pagesMall/mall/search'
         })
       },
       goToDetail(item){
         uni.navigateTo({
-          url: '/pages/mall/goods?id=' + item.id
+          url: '/pagesMall/mall/goods?id=' + item.id
         })
       }
  

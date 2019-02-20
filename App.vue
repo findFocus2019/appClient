@@ -7,13 +7,16 @@ export default {
     let device = uni.getSystemInfoSync();
     console.log('divice info:' + JSON.stringify(device));
     
-    //  检查更新
-    var server = config.apiDomain + "/update"; //检查更新地址  
     
+    //  检查更新
+    // #ifdef APP-PLUS
+    var server = config.apiDomain + "/update"; //检查更新地址  
+    let platform = device.platform
     uni.request({  
         url: server, 
         data: {
-          version: config.version
+          version: config.version,
+          platform: platform
         },
         success: (res) => {  
           console.log('check update ret:' , JSON.stringify(res.data))
@@ -24,15 +27,19 @@ export default {
                     content: res.data.note,  
                     success: (res) => {  
                         if (res.confirm) {  
-                          if(device.platform == 'android'){
+                          if(platform == 'android'){
                             plus.runtime.openURL(url)
-                          }          
+                          } else if (platform == 'ios'){
+                            plus.runtime.openURL(url)
+                          }       
                         }  
                     }  
                 })  
             }  
         }  
     }) 
+    // #endif
+    
   },
   async onShow() {
     console.log("App Show");

@@ -49,9 +49,9 @@
          <view class="uni-common-mt uni-common-pl uni-common-pr">
            <button type="warn" formType="submit" class="uni-border-btn-radius">确定</button>
          </view>
-         
+          
          <view class="" style="position: relative;left: -30upx;height: 0;" v-if="postData.type == 0">
-            <image src="../../static/img/user/reg-bg.png" mode="widthFix" style="width: 750upx;"></image>
+            <image src="http://img-juren.oss-cn-shenzhen.aliyuncs.com/assets/images/reg-bg.png" mode="widthFix" style="width: 750upx;"></image>
          </view>
      
          <view class="uni-common-pa uni-common-mt uni-center uni-flex" style="position: relative;">
@@ -132,10 +132,21 @@ export default {
       })
     }
     
+    let otype = ''
+    // #ifdef APP-PLUS
+    otype = 'app'
+    // #endif
+    // #ifdef H5
+    otype = 'h5'
+    // #endif
+    // #ifdef MP-WEIXIN
+    otype = 'mpwx'
+    // #endif
     let systemInfo = uni.getSystemInfoSync();
     this.postData.oauth_info = {
       platform: systemInfo.platform,
-      device: systemInfo.model
+      device: systemInfo.model,
+      type: otype
     }
   },
   onHide(){
@@ -252,7 +263,7 @@ export default {
         } else {
           uni.showToast({
             icon: 'none',
-            title: ret.message
+            title: smsRet.message
           })
           
           return

@@ -152,7 +152,20 @@
       this.newsDatas = this.postsListDatas
       // console.log(this.postsListDatas)
   
-    }
+    },
+    onNavigationBarButtonTap(e) {
+      if(!this.hasLogin){
+        uni.navigateTo({
+        	url:'/pages/auth/login'
+        })
+        return
+      }
+    	if(e.index === 0){
+       uni.navigateTo({
+       	url:'/pagesPlus/plus/post'
+       })
+     }
+    },
   }
 </script>
 

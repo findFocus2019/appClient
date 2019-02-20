@@ -43,9 +43,11 @@ class Share {
   }
   
   mini(data, sence = 0 , callback = null){
+    console.log('mini data：', JSON.stringify(data))
     uni.share({
       provider: "weixin",
-      scene: (sence == 0) ? "WXSceneSession" : "WXSenceTimeline",
+      scene:'WXSceneSession',
+      // scene: (sence == 0) ? "WXSceneSession" : "WXSenceTimeline",
       type: 5,
       title: data.title,
       summary: data.description,

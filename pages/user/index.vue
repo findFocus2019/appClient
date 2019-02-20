@@ -10,25 +10,25 @@
       
       <view class="uni-flex uni-common-pt uni-common-pb"  v-if="hasLogin">
    
-        <view class="user-avatar"  @tap="goToPage('/pages/user/setting')">
+        <view class="user-avatar"  @tap="goToPage('/pagesUser/user/setting')">
           <image lazy-load="true"  :src="userInfo.avatar" mode="scaleToFill" v-if="userInfo.avatar" ></image>       
         </view>
  
         <view class="uni-flex uni-flex-item uni-common-pl">
         	<view class="uni-flex-item">
-            <view class="" @tap="goToPage('/pages/user/setting')">
+            <view class="" @tap="goToPage('/pagesUser/user/setting')">
             	{{ userInfo.nickname || '还未设置'}}
             </view>
             <view class="" v-if="isVip">
             	<image lazy-load="true"  src="/static/icon/user/vip-tag.png" mode="scaleToFill" style="width: 120upx;height: 30upx;"></image>
             </view>
 						<view class="uni-text-yellow uni-text-small" v-else>
-							<navigator url="/pages/user/vipOrder">vip充值</navigator>
+							<navigator url="/pagesUser/user/vipOrder">vip充值</navigator>
 						</view>
         		
         	</view>
           <view class="uni-flex-item uni-right">
-            <navigator url="/pages/notice/notice">
+            <navigator url="/pagesMain/notice/notice">
             <!-- <image lazy-load="true"  src="/static/icon/user/msg.png" mode="widthFix" style="width: 110upx;height: 110upx;"></image> -->
             <uni-icon type="chat" size="32"></uni-icon>
             </navigator>
@@ -39,7 +39,7 @@
       </view>
       
       <view class="uni-flex uni-common-pt uni-common-pb" v-else>
-      	<view class="user-avatar"  @tap="goToPage('/pages/user/setting')">
+      	<view class="user-avatar"  @tap="goToPage('/pagesUser/user/setting')">
       	</view>
         
         <view class="uni-flex uni-flex-item uni-common-pl">
@@ -53,7 +53,7 @@
         		
         	</view>
           <view class="uni-flex-item uni-right">
-            <navigator url="/pages/notice/notice">
+            <navigator url="/pagesMain/notice/notice">
               <!-- <image lazy-load="true"  src="/static/icon/user/msg.png" mode="widthFix" style="width: 110upx;height: 110upx;"></image> -->
               <uni-icon type="chat" size="32" color="#ffffff"></uni-icon>
             </navigator>
@@ -77,7 +77,7 @@
             	{{userIndexData.balance}}
             </view>
     			</view>
-          <view class="uni-flex-item uni-common-pt" @tap="goToPage('/pages/user/assetsOut')">
+          <view class="uni-flex-item uni-common-pt" @tap="goToPage('/pagesUser/user/assetsOut')">
           	<text class="uni-bg-red" style="padding: 12upx 36upx;border-radius: 8upx;">提现</text>
           </view>
           <view class="uni-flex-item">
@@ -130,7 +130,7 @@
       </view>
       
       <view class="uni-common-mt uni-flex">
-      	<view class="uni-flex-item uni-flex user-box-vip uni-common-pa" @tap="goToPage('/pages/user/vip')">
+      	<view class="uni-flex-item uni-flex user-box-vip uni-common-pa" @tap="goToPage('/pagesUser/user/vip')">
       		<view class="uni-flex-item uni-common-pr" style="width: 120upx;height: 120upx;">
       			<image lazy-load="true"  src="/static/icon/user/vip.png" mode="scaleToFill" style="width: 120upx;height: 120upx;"></image>
       		</view>
@@ -140,7 +140,7 @@
           	</view>
           </view>
       	</view>
-        <view class="uni-flex-item uni-flex user-box-ecard uni-common-pa" @tap="goToPage('/pages/user/ecard')">
+        <view class="uni-flex-item uni-flex user-box-ecard uni-common-pa" @tap="goToPage('/pagesMain/user/ecard')">
         	<view class="uni-flex-item uni-common-pr" style="width: 120upx;height: 120upx;">
         		<image lazy-load="true"  src="/static/icon/user/ecard.png" mode="scaleToFill" style="width: 120upx;height: 120upx;"></image>
         	</view>
@@ -152,8 +152,8 @@
         </view>
       </view>
       
-      <view class="uni-common-mt" @tap="goToPage('/pages/user/dailySignHongbao')">
-      	<image lazy-load="true"  src="/static/img/user-daily-sign.png" mode="widthFix" style="width: 100%;"></image>
+      <view class="uni-common-mt" @tap="goToPage('/pagesMain/user/dailySignHongbao')">
+      	<image lazy-load="true"  src="/static/img/user/user-daily-sign.png" mode="widthFix" style="width: 100%;"></image>
       </view>
       
       <view class="uni-common-mt">
@@ -221,7 +221,7 @@
           
         }else{
           uni.navigateTo({
-          	url:'/pages/user/setting'
+          	url:'/pagesUser/user/setting'
           })
         }
         
@@ -231,22 +231,22 @@
        return {
          cards : [
            {title : '我的服务' ,items: [
-             {text: '收支记录' , icon : 'trade' , path: '/pages/user/trade'},
-             {text: '商城订单' , icon : 'order' , path: '/pages/user/orders'},
-             {text: '我的售后' , icon : 'after' , path: '/pages/user/orderAfters'},
-             {text: '我的团队' , icon : 'team', path: '/pages/user/inviteList'},
-             {text: '我的评价' , icon : 'rate', path: '/pages/user/orderRates'},
-             {text: '品牌申请' , icon : 'brand', path: '/pages/user/brandApply'},
+             {text: '收益记录' , icon : 'trade' , path: '/pagesUser1/user/trade'},
+             {text: '商城订单' , icon : 'order' , path: '/pagesMain/user/orders'},
+             {text: '我的售后' , icon : 'after' , path: '/pagesUser1/user/orderAfters'},
+             {text: '我的团队' , icon : 'team', path: '/pagesUser/user/inviteList'},
+             {text: '我的评价' , icon : 'rate', path: '/pagesUser1/user/orderRates'},
+             {text: '品牌申请' , icon : 'brand', path: '/pagesUser1/user/brandApply'},
            ]},
            {title : '我的足迹' ,items: [
-             {text: '收货地址' , icon : 'address', path: '/pages/user/address'},
-             {text: '我的评论' , icon : 'comment', path: '/pages/user/postComments'},
-             {text: '我的收藏' , icon : 'like', path: '/pages/user/collection'},
-             {text: '我的评测' , icon : 'posts', path: '/pages/user/postsList'}
+             {text: '收货地址' , icon : 'address', path: '/pagesMain/user/address'},
+             {text: '我的评论' , icon : 'comment', path: '/pagesUser1/user/postComments'},
+             {text: '我的收藏' , icon : 'like', path: '/pagesUser1/user/collection'},
+             {text: '我的评测' , icon : 'posts', path: '/pagesUser1/user/postsList'}
            ]},
            {title : '每日任务' ,items: [
-             {text: '推荐注册' , icon : 'invite-reg', path: '/pages/user/invite'},
-             {text: '登录签到' , icon : 'daily-sign', path: '/pages/user/dailySign'},
+             {text: '推荐注册' , icon : 'invite-reg', path: '/pagesUser/user/invite'},
+             {text: '登录签到' , icon : 'daily-sign', path: '/pagesMain/user/dailySign'},
              {text: '文章评论' , icon : 'post-comment',path: '/pages/news/list'},
              {text: '内容点赞' , icon : 'post-like',path: '/pages/news/list'}
            ]}
@@ -263,7 +263,8 @@
         this.refresh()
      },
      async onPullDownRefresh() {
-        this.refresh()
+        await this.refresh()
+        uni.startPullDownRefresh()
      }
    }
 </script>

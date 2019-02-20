@@ -2,6 +2,7 @@ import config from './config.js';
 export default {
   version:config.version,
   miniAppId:config.miniAppId,
+  miniAppOrId:config.miniAppOrId,
   webDomain: config.webDomain,
   apiDomain: config.apiDomain,
 	// apiDomain: 'http://47.91.250.144:5001',

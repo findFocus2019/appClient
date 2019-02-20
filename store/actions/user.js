@@ -141,6 +141,11 @@ export default {
     let ret = await Request.post('user/transOutApply' , data)
     return ret
   },
+  // 提现申请记录
+  async userTransactionListGet(store ,data){
+    let ret = await Request.post('user/transactionList' , data)
+    return ret
+  },
   // 设置支付密码
   async userPasswordTradeSet(store, data){
     let ret = await Request.post('user/passwordTradeSet' , data)

@@ -48,7 +48,7 @@
     
     
     <view class="uni-bg-white uni-common-pa" v-if="postInfo.goods_id">
-      <navigator :url="'/pages/mall/goods?id=' + postInfo.goods_id + '&post_id=' + postInfo.id + '&share_id=' + shareId">
+      <navigator :url="'/pagesMall/mall/goods?id=' + postInfo.goods_id + '&post_id=' + postInfo.id + '&share_id=' + shareId">
         <button type="warn" class="uni-border-btn-radius">产品链接</button>
       </navigator>
     </view>
@@ -193,7 +193,7 @@
       }
     },
     computed:{
-      ...mapState(['hasLogin' ,'userInfo', 'postInfo' , 'webDomain' , 'miniAppId' ]),
+      ...mapState(['hasLogin' ,'userInfo', 'postInfo' , 'webDomain' , 'miniAppId', 'miniAppOrId' ]),
 			shareId(){
 				return this.$store.state.inviteShareId
 			}
@@ -466,19 +466,19 @@
           description: this.postInfo.description,
           href: shareUrl,
           imgUrl: this.postInfo.cover,
-          miniAppId: this.miniAppId,
+          miniAppId: this.miniAppOrId,
           miniPage: sharePage
         }
         uni.showActionSheet({
-        	itemList:['分享给QQ好友','分享到微信聊天','分享到微信朋友圈'],
+        	itemList:['分享给QQ好友','分享到微信朋友圈','分享到微信小程序'],
           success: (e) => {
           	let index = e.tapIndex
             if(index == 0){
               Share.qq(shareData)
             }else if(index == 1){
-              Share.wx(shareData, 0)
+              Share.wx(shareData, 1)
             } else if (index == 2){
-              Share.wx(shareData , 1)
+              Share.mini(shareData , 0)
             }
           }
         })

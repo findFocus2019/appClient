@@ -21,7 +21,7 @@
       <!-- 顶部的大背景 -->
       <view class="top-panel">
         <!-- <image lazy-load="true" class="top-panel-bg" src="../../static/img/home/banner-bg.png" /> -->
-        <view class="swiper-banners" style="background: url('/static/img/home/banner-bg.png');background-size: 750upx;height: 568upx;background-repeat: no-repeat;">
+        <view class="swiper-banners" style="background: url('../../static/img/home/banner-bg.png');background-size: 750upx;height: 568upx;background-repeat: no-repeat;">
 
           <swiper class="swiper" :indicator-dots="swiper.indicatorDots" :autoplay="swiper.autoplay" :interval="swiper.interval"
             :duration="0" circular="false" :current="bannerIndex">
@@ -263,7 +263,7 @@
     methods: {
 			goNotice(){
 				uni.navigateTo({
-				  url: '/pages/notice/notice'
+				  url: '/pagesMain/notice/notice'
 				})
 			},
       goToPage(item, index) {
@@ -291,7 +291,7 @@
           return
         }
         uni.navigateTo({
-        	url:'/pages/user/dailySign'
+        	url:'/pagesMain/user/dailySign'
         })
       },
       goBannerHref(){

@@ -27,7 +27,7 @@
     <view class="uni-page-plus-down uni-common-pl uni-common-pr">
       
     	<view class="uni-common-pl uni-common-pr uni-flex">
-    		<view class="uni-flex-item uni-common-pl uni-common-pr" @tap="goToPage('/pages/plus/post')">
+    		<view class="uni-flex-item uni-common-pl uni-common-pr" @tap="goToPage('/pagesPlus/plus/post')">
     			<view class="">
     				<image lazy-load="true"  src="../../static/img/plus/post.png" mode="scaleToFill" style="width: 160upx;height: 160upx;"></image>
     			</view>
@@ -35,7 +35,7 @@
           	发布评测
           </view>
     		</view>
-        <view class="uni-flex-item uni-right uni-common-pl uni-common-pr"  @tap="goToPage('/pages/plus/goods')">
+        <view class="uni-flex-item uni-right uni-common-pl uni-common-pr"  @tap="goToPage('/pagesPlus/plus/post')">
         	<view class="">
         		<image lazy-load="true"  src="../../static/img/plus/share.png" mode="scaleToFill" style="width: 160upx;height: 160upx;"></image>
         	</view>

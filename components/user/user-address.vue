@@ -42,7 +42,7 @@ export default {
     },
     toPage: {
       type: String,
-      default: "/pages/user/address"
+      default: "/pagesMain/user/address"
     },
     current: {
       type: Number,
