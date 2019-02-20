@@ -222,8 +222,12 @@
         } else {
           if (orderType.name !== 'sales') {
             orderType.type = (orderType.type) === 'desc' ? 'asc' : 'desc'
+						
+						this.mallOrderActive.type = orderType.type
           }
         }
+				
+				this.refresh()
       
       },
       listOrderTypeInit(){
@@ -271,6 +275,7 @@
         params.category = category
         params.page = mallGoodsList.page
         params.timestamp = mallGoodsList.timestamp
+				params.order = this.mallOrderActive
         
         let search = this.mallSearch.text || ''
         if(search){

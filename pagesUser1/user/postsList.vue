@@ -1,7 +1,7 @@
 <template>
 	<view class="uni-page-body">
 
-    <view class="uni-bg-white uni-common-pt uni-common-pb uni-common-mt" v-for="(item,index) in listData.list" :key="index" >
+    <view class="uni-bg-white uni-common-pt uni-common-pb uni-common-mt-md" v-for="(item,index) in listData.list" :key="index" >
       
       <view class="uni-right uni-common-pl uni-common-pr" style="position: relative;height: 0;" v-if="item.status == 0">
       	<image lazy-load="true"  src="../../static/img/user/audit-no.png" mode="widthFix" style="width: 160upx;"></image>
@@ -11,7 +11,7 @@
       	<view class="" style="width: 80upx;height: 80upx;">
       		<image lazy-load="true"  :src="userInfo.avatar" mode="" style="width: 80upx;height: 80upx;border-radius: 80upx;"></image>
       	</view>
-        <view class="uni-flex-item uni-h4 uni-common-pl">
+        <view class="uni-flex-item uni-h4 uni-common-pl uni-text-darker">
         	<text style="">{{ userInfo.nickname}}</text>
         </view>
         <view class="uni-flex-item uni-text-gray uni-right" >
@@ -31,9 +31,9 @@
       
       <view class="uni-flex uni-common-mt uni-common-pl" @tap="goToDetail(item)">
       	<view class="uni-flex-item uni-common-pr" v-for="(img,index1) in item.imgs" :key="index1" v-if="index1 < 3">
-      		<image lazy-load="true"  :src="img.url" mode="scaleToFill" style="width: 100%;height: 400upx;" v-if="item.imgs.length == 1"></image>
-          <image lazy-load="true"  :src="img.url" mode="scaleToFill" style="width: 100%;height: 240upx;" v-if="item.imgs.length == 2"></image>
-          <image lazy-load="true"  :src="img.url" mode="scaleToFill" style="width: 100%;height: 160upx;" v-if="item.imgs.length >= 3"></image>
+      		<image lazy-load="true"  :src="img.url" mode="scaleToFill" style="width: 100%;height: 420upx;border-radius: 8upx;" v-if="item.imgs.length == 1"></image>
+          <image lazy-load="true"  :src="img.url" mode="scaleToFill" style="width: 100%;height: 220upx;border-radius: 8upx;" v-if="item.imgs.length == 2"></image>
+          <image lazy-load="true"  :src="img.url" mode="scaleToFill" style="width: 100%;height: 140upx;border-radius: 8upx;" v-if="item.imgs.length >= 3"></image>
       	</view>
       </view>
       
@@ -148,7 +148,7 @@
         }
         
         uni.navigateTo({
-        	url:'/pages/posts/detail?id=' + item.id
+        	url:'/pagesPost/posts/detail?id=' + item.id
         })
       },
       async refresh(){

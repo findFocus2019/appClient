@@ -13,7 +13,7 @@
 
     <view v-if="orderListData.count" class="">
 
-      <view class="uni-bg-white uni-common-mt" v-for="(order,index) in orderListData.list" :key="index">
+      <view class="uni-bg-white uni-common-mt-md" v-for="(order,index) in orderListData.list" :key="index">
 
         <view class="uni-flex uni-common-pa" @tap="goToDetail(order)">
           <view class="uni-flex-item">

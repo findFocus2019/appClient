@@ -53,6 +53,13 @@
 	background: #EEEEEE;
 }
 
+.goods-list-cover-md {
+	width: 200upx;
+	height: 200upx;
+	border-radius: 8upx;
+	background: #EEEEEE;
+}
+
 .goods-list-content .title {
 	height: 100upx;
 	line-height: 50upx;

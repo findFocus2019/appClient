@@ -1,5 +1,5 @@
 <template>
-  <view class="uni-page-body uni-bg-white">
+  <view class="uni-page-body uni-bg-white uni-border-top">
     <scroll-view scroll-x="true" :scroll-left="scrollLeft" class="uni-swiper-tab news-channels">
       <view v-for="(item,index) in channels" :key="index" :class="['swiper-tab-list' , currentIndex == index ? 'active' : '']"
         @tap="tapChannel(item,index)">{{item.name}}</view>
@@ -183,7 +183,7 @@
       },
       goToDetail(item) {
         uni.navigateTo({
-          url: '/pages/posts/detail?id=' + item.id
+          url: '/pagesPost/posts/detail?id=' + item.id
         })
       },
       async refresh(item) {

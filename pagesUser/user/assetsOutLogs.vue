@@ -2,7 +2,7 @@
 	<view class="uni-page-body">
 
     <view class="uni-bg-white">
-    	<view class="uni-flex uni-common-pa uni-border-bottom uni-bg-white" v-for="(item , index) in assetsOutLogs.list" :key="index" >
+    	<view class="uni-flex uni-common-pa uni-border-top uni-bg-white" v-for="(item , index) in assetsOutLogs.list" :key="index" >
     		<view class="uni-flex-item" >
           <view class="">
             提取金额：{{ item.balance }}

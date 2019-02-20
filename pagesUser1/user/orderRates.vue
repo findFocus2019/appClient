@@ -2,7 +2,7 @@
 	<view class="uni-page-body">
 		<view class="" v-if="listData.count">
       
-			<view class="uni-bg-white uni-common-pt uni-common-pb uni-common-mt" v-for="(item,index) in listData.list" :key="index">
+			<view class="uni-bg-white uni-common-pt uni-common-pb uni-common-mt-md" v-for="(item,index) in listData.list" :key="index">
 			  
 			  <view class="uni-flex uni-common-pl uni-common-pr">
 			  	<view class="" style="width: 80upx;height: 80upx;">

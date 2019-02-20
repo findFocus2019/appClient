@@ -152,7 +152,7 @@
       },
       goToCommentDetail(item){
         uni.navigateTo({
-        	url: '/pages/posts/commentDetail?post_id=' + this.postId + '&comment_id=' + item.id
+        	url: '/pagesPost/posts/commentDetail?post_id=' + this.postId + '&comment_id=' + item.id
         })
       },
     },

@@ -1,7 +1,7 @@
 <template>
 	<view class="uni-page-body">
 		<view class="" v-if="newsDatas.count">
-      <view class="uni-bg-white uni-common-mt uni-common-pt uni-common-pb" v-for="(news,index) in newsDatas.list" :key="index" @tap="goToDetail(news)">
+      <view class="uni-bg-white uni-common-pt uni-common-pb uni-border-top" v-for="(news,index) in newsDatas.list" :key="index" @tap="goToDetail(news)">
 
         <view class="uni-flex uni-common-pl uni-common-pr">
           <view class="">
@@ -134,7 +134,7 @@
       },
       goToDetail(news){
         uni.navigateTo({
-        	url:'/pages/posts/detail?id=' + news.id
+        	url:'/pagesPost/posts/detail?id=' + news.id
         })
       }
     },

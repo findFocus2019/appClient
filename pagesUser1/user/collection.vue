@@ -3,21 +3,21 @@
     <view class="uni-common-pa uni-bg-white uni-border-top">
       <view class="uni-common-pl uni-common-pr uni-flex uni-center">
         <view class="uni-flex-item" v-for="(item ,i) in types" :key="i" @tap="changeType(item , i)">
-          <text v-if="category == item.category && item.type == type" class="uni-bold">{{item.name}}</text>
+          <text v-if="category == item.category && item.type == type" class="uni-bold uni-text-red">{{item.name}}</text>
           <text v-else>{{item.name}}</text>
         </view>
 
       </view>
     </view>
 
-    <view class="uni-common-mt">
+    <view class="">
       <view class="content">
 
         <view v-show="current === 0">
 
-          <view class="uni-common-pa uni-common-mb uni-bg-white uni-flex" v-for="(item,index) in listDataGoods.list" :key="index" @tap="goToDetail(item , 'goods')">
-            <view class="" style="width: 200upx;height: 200upx;">
-              <image lazy-load="true"  :src="item.info.cover" mode="" style="width: 200upx;height: 200upx;"></image>
+          <view class="uni-common-pa uni-common-mt-md uni-bg-white uni-flex" v-for="(item,index) in listDataGoods.list" :key="index" @tap="goToDetail(item , 'goods')">
+            <view class="goods-list-cover-md">
+              <image lazy-load="true"  :src="item.info.cover" mode="" class="goods-list-cover-md"></image>
             </view>
             <view class="uni-flex-item uni-common-pl">
               <view class="list-title">
@@ -45,18 +45,18 @@
         </view>
         <view v-show="current === 1">
 
-          <view class="uni-common-pa uni-common-mb uni-bg-white uni-flex" v-for="(item,index) in listDataPosts[current].list" :key="index"  @tap="goToDetail(item , 'posts')">
-            <view class="" style="width: 200upx;height: 200upx;">
-              <image lazy-load="true"  :src="item.info.cover" mode="" style="width: 200upx;height: 200upx;"></image>
+          <view class="uni-common-pa uni-common-mt-md uni-bg-white uni-flex" v-for="(item,index) in listDataPosts[current].list" :key="index"  @tap="goToDetail(item , 'posts')">
+            <view class="post-list-cover">
+              <image lazy-load="true"  :src="item.info.cover" mode="" class="post-list-cover"></image>
             </view>
-            <view class="uni-flex-item uni-common-pl">
-              <view class="list-title">
+            <view class="uni-flex-item uni-common-pl post-list-content">
+              <view class="title">
                 {{ item.info.title }}
               </view>
-              <view class="uni-text-small uni-text-gray">
+              <view class="uni-text-small uni-text-gray time">
                 {{ item.info.pub_date }}
               </view>
-              <view class="uni-flex">
+              <view class="uni-flex icon-items">
                 <view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
                   <image lazy-load="true"  src="/static/icon/posts/eye.png" mode="" style="width: 36upx;height: 36upx;"></image>
                 </view>
@@ -88,18 +88,18 @@
         </view>
         <view v-show="current === 2">
 
-          <view class="uni-common-pa uni-common-mb uni-bg-white uni-flex" v-for="(item,index) in listDataPosts[current].list" :key="index" @tap="goToDetail(item , 'posts')">
-            <view class="" style="width: 200upx;height: 200upx;">
-              <image lazy-load="true"  :src="item.info.cover" mode="" style="width: 200upx;height: 200upx;"></image>
+          <view class="uni-common-pa uni-common-mt-md uni-bg-white uni-flex" v-for="(item,index) in listDataPosts[current].list" :key="index" @tap="goToDetail(item , 'posts')">
+            <view class="post-list-cover" >
+              <image lazy-load="true"  :src="item.info.cover" mode="" class="post-list-cover"></image>
             </view>
-            <view class="uni-flex-item uni-common-pl">
-              <view class="list-title">
+            <view class="uni-flex-item uni-common-pl post-list-content">
+              <view class="title">
                 {{ item.info.title }}
               </view>
-              <view class="uni-text-small uni-text-gray">
+              <view class="uni-text-small uni-text-gray time">
                 {{ item.info.pub_date }}
               </view>
-              <view class="uni-flex">
+              <view class="uni-flex icon-items">
                 <view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
                   <image lazy-load="true"  src="/static/icon/posts/eye.png" mode="" style="width: 36upx;height: 36upx;"></image>
                 </view>
@@ -132,18 +132,18 @@
 
         <view v-show="current === 3">
 
-          <view class="uni-common-pa uni-common-mb uni-bg-white uni-flex" v-for="(item,index) in listDataPosts[current].list" :key="index" @tap="goToDetail(item , 'posts')">
-            <view class="" style="width: 200upx;height: 200upx;">
-              <image lazy-load="true"  :src="item.info.cover" mode="" style="width: 200upx;height: 200upx;"></image>
+          <view class="uni-common-pa uni-common-mt-md uni-bg-white uni-flex" v-for="(item,index) in listDataPosts[current].list" :key="index" @tap="goToDetail(item , 'posts')">
+            <view class="post-list-cover">
+              <image lazy-load="true"  :src="item.info.cover" mode="" class="post-list-cover"></image>
             </view>
-            <view class="uni-flex-item uni-common-pl">
-              <view class="list-title">
+            <view class="uni-flex-item uni-common-pl post-list-content">
+              <view class="title">
                 {{ item.info.title }}
               </view>
-              <view class="uni-text-small uni-text-gray">
+              <view class="uni-text-small uni-text-gray time">
                 {{ item.info.pub_date }}
               </view>
-              <view class="uni-flex">
+              <view class="uni-flex icon-items">
                 <view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
                   <image lazy-load="true"  src="/static/icon/posts/eye.png" mode="" style="width: 36upx;height: 36upx;"></image>
                 </view>
@@ -389,7 +389,7 @@
 					})
 				}else if(type == 'posts'){
 					uni.navigateTo({
-						url: '/pages/posts/detail?id=' + item.post_id
+						url: '/pagesPost/posts/detail?id=' + item.post_id
 					})
 				}
 			}

@@ -320,6 +320,11 @@ export default {
       this.$store.state.hasLogin = false
       uni.setStorageSync("user_auth_token", "");
       
+			// #ifdef H5
+// 			uni.redirectTo({
+// 				url:'/pages/auth/down'
+// 			})
+			// #endif
       // #ifdef MP-WEIXIN
       // this.oauth('weixin');
       uni.redirectTo({

@@ -247,8 +247,8 @@
            {title : '每日任务' ,items: [
              {text: '推荐注册' , icon : 'invite-reg', path: '/pagesUser/user/invite'},
              {text: '登录签到' , icon : 'daily-sign', path: '/pagesMain/user/dailySign'},
-             {text: '文章评论' , icon : 'post-comment',path: '/pages/news/list'},
-             {text: '内容点赞' , icon : 'post-like',path: '/pages/news/list'}
+             {text: '文章评论' , icon : 'post-comment',path: '/pagesPost/posts/news'},
+             {text: '内容点赞' , icon : 'post-like',path: '/pagesPost/posts/news'}
            ]}
          ]
        }

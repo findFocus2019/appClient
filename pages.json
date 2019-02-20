@@ -18,78 +18,6 @@
             }
         },
         {
-            "path": "pages/news/list",
-            "style": {
-                "navigationBarTitleText": "焦点资讯"
-            }
-        },
-        {
-            "path": "pages/posts/recommend",
-            "style": {
-                "navigationBarTitleText": "焦点推荐",
-                "enablePullDownRefresh": true //开启下拉刷新
-            }
-        },
-        {
-            "path": "pages/posts/detail",
-            "style": {
-                "navigationBarTitleText": "焦点资讯详情",
-                "enablePullDownRefresh": true,
-                "app-plus": {
-                    "titleNView": {
-                        "buttons": [
-                            {
-                                "type": "share"
-                            }
-                        ]
-                    }
-                }
-            }
-        },
-        {
-            "path": "pages/posts/commentList",
-            "style": {
-                "navigationBarTitleText": "评论列表",
-                "enablePullDownRefresh": true //开启下拉刷新
-            }
-        },
-        {
-            "path": "pages/posts/commentDetail",
-            "style": {
-                "navigationBarTitleText": "评论详情"
-            }
-        },
-        {
-            "path": "pages/posts/list",
-            "style": {
-                "navigationBarTitleText": "焦点评测",
-                "enablePullDownRefresh": true, //开启下拉刷新
-                "app-plus": {
-                    "titleNView": {
-                        "buttons": [
-                            {
-                                "fontSrc": "/static/fonts/uni.ttf",
-                                "text": "\ue301"
-                            }
-                        ]
-                    }
-                }
-            }
-        },
-        {
-            "path": "pages/posts/list2",
-            "style": {
-                "navigationBarTitleText": "品牌故事",
-                "enablePullDownRefresh": true //开启下拉刷新
-            }
-        },
-        {
-            "path": "pages/posts/error",
-            "style": {
-                "navigationBarTitleText": "未找到文章"
-            }
-        },
-        {
             "path": "pages/mall/list",
             "style": {
                 "navigationBarTitleText": "商城",
@@ -108,7 +36,21 @@
                 }
             }
         },
-        
+        {
+            "path": "pages/posts/list",
+            "style": {
+                "navigationBarTitleText": "焦点评测",
+                "enablePullDownRefresh": true, //开启下拉刷新
+                "app-plus": {
+                    "titleNView": {
+                        "buttons": [{
+                            "fontSrc": "/static/fonts/uni.ttf",
+                            "text": "\ue301"
+                        }]
+                    }
+                }
+            }
+        },
         {
             "path": "pages/auth/login",
             "style": {
@@ -132,6 +74,17 @@
                 }
             }
         },
+        //#ifdef H5			
+        {
+            "path": "pages/auth/guide",
+            "style": {
+                "navigationBarTitleText": "下载引导",
+                "app-plus": {
+                    "titleNView": false
+                }
+            }
+        },
+        // #endif
         {
             "path": "pages/user/index",
             "style": {
@@ -146,12 +99,11 @@
                 }
             }
         }
-        
+
     ],
-    "subPackages":[{
-        "root":"pagesMain",
-        "pages":[
-            {
+    "subPackages": [{
+        "root": "pagesMain",
+        "pages": [{
                 "path": "user/dailySign",
                 "style": {
                     "navigationBarTitleText": "登录签到",
@@ -159,12 +111,10 @@
                     "navigationBarBackgroundColor": "#d81e06",
                     "app-plus": {
                         "titleNView": {
-                            "buttons": [
-                                {
-                                    "fontSrc": "/static/fonts/uni.ttf",
-                                    "text": "\ue560"
-                                }
-                            ]
+                            "buttons": [{
+                                "fontSrc": "/static/fonts/uni.ttf",
+                                "text": "\ue560"
+                            }]
                         }
                     }
                 }
@@ -233,10 +183,66 @@
                 }
             }
         ]
-    },{
-        "root":"pagesPlus",
-        "pages":[
-            
+    }, {
+        "root": "pagesPost",
+        "pages": [{
+                "path": "posts/news",
+                "style": {
+                    "navigationBarTitleText": "焦点资讯"
+                }
+            }, {
+                "path": "posts/recommend",
+                "style": {
+                    "navigationBarTitleText": "焦点推荐",
+                    "enablePullDownRefresh": true //开启下拉刷新
+                }
+            },
+            {
+                "path": "posts/detail",
+                "style": {
+                    "navigationBarTitleText": "焦点资讯详情",
+                    "enablePullDownRefresh": true,
+                    "app-plus": {
+                        "titleNView": {
+                            "buttons": [{
+                                "type": "share"
+                            }]
+                        }
+                    }
+                }
+            },
+            {
+                "path": "posts/commentList",
+                "style": {
+                    "navigationBarTitleText": "评论列表",
+                    "enablePullDownRefresh": true //开启下拉刷新
+                }
+            },
+            {
+                "path": "posts/commentDetail",
+                "style": {
+                    "navigationBarTitleText": "评论详情"
+                }
+            },
+
+            {
+                "path": "posts/list2",
+                "style": {
+                    "navigationBarTitleText": "品牌故事",
+                    "enablePullDownRefresh": true //开启下拉刷新
+                }
+            },
+            {
+                "path": "posts/error",
+                "style": {
+                    "navigationBarTitleText": "未找到文章"
+                }
+            }
+        ]
+    }, {
+        "root": "pagesPlus",
+        "pages": [
+
             {
                 "path": "plus/post",
                 "style": {
@@ -275,10 +281,10 @@
                 }
             }
         ]
-    },{
-        "root":"pagesUser",
-        "pages":[
-             
+    }, {
+        "root": "pagesUser",
+        "pages": [
+
             {
                 "path": "user/assetsOut",
                 "style": {
@@ -331,12 +337,10 @@
                     "navigationBarBackgroundColor": "#ff5d44",
                     "app-plus": {
                         "titleNView": {
-                            "buttons": [
-                                {
-                                    "fontSrc": "/static/fonts/uni.ttf",
-                                    "text": "\ue560"
-                                }
-                            ]
+                            "buttons": [{
+                                "fontSrc": "/static/fonts/uni.ttf",
+                                "text": "\ue560"
+                            }]
                         }
                     }
                 }
@@ -354,19 +358,16 @@
                 }
             }
         ]
-    },{
-        "root":"pagesMall",
-        "pages":[
-            {
+    }, {
+        "root": "pagesMall",
+        "pages": [{
                 "path": "mall/goods",
                 "style": {
                     "navigationBarTitleText": "商品详情",
                     "navigationBarTextStyle": "white",
                     "navigationBarBackgroundColor": "#d81e06",
                     "app-plus": {
-                        "titleNView": {
-                            "type": "transparent"
-                        }
+                        "titleNView": false
                     }
                 }
             },
@@ -387,7 +388,7 @@
                 "style": {
                     "navigationBarTitleText": "支付"
                 }
-            },   
+            },
             {
                 "path": "mall/search",
                 "style": {
@@ -398,10 +399,9 @@
                 }
             }
         ]
-    },{
-        "root":"pagesUser1",
-        "pages":[
-            {
+    }, {
+        "root": "pagesUser1",
+        "pages": [{
                 "path": "user/trade",
                 "style": {
                     "navigationBarTitleText": "收支记录",
@@ -428,7 +428,7 @@
                     "navigationBarTitleText": "我的评测",
                     "enablePullDownRefresh": true
                 }
-            },  
+            },
             {
                 "path": "user/orderRates",
                 "style": {
@@ -467,35 +467,28 @@
                     "navigationBarTitleText": "品牌申请"
                 }
             }
-           
+
         ]
     }],
-    "preloadRule":{
-        "pages/main/main":{
-            "packages": ["pagesMain"]
+    "preloadRule": {
+        "pages/main/main": {
+            "packages": ["pagesMain", "pagesPost"]
         },
-        "pages/mall/list":{
+        "pages/mall/list": {
             "packages": ["pagesMall"]
         },
-        "pages/plus/plus":{
+        "pages/plus/plus": {
             "packages": ["pagesPlus"]
         },
-        "pages/user/index":{
-            "packages": ["pagesUser" , "pagesUser1"]
-        },
-        "pagesMall/mall/goods":{
-            "packages":["__APP__" , "pagesMain"]
-        },
-        "pages/posts/detail":{
-            "packages":["__APP__"]
+        "pages/user/index": {
+            "packages": ["pagesUser", "pagesUser1"]
         }
     },
     "tabBar": {
         "color": "#7a7e83",
         "selectedColor": "#E03c45",
         "backgroundColor": "#ffffff",
-        "list": [
-            {
+        "list": [{
                 "pagePath": "pages/main/main",
                 "text": "首页",
                 "iconPath": "static/icon/home.png",
@@ -512,14 +505,14 @@
                 "pagePath": "pages/plus/plus",
                 "iconPath": "static/icon/plus.png",
                 "selectedIconPath": "static/icon/plus_a.png",
-                "text":"发布"
+                "text": "发布"
             },
             // #endif
             //#ifndef MP-WEIXIN
             {
-            	"pagePath": "pages/plus/plus",
-            	"iconPath": "static/icon/plus.png",
-            	"selectedIconPath": "static/icon/plus_a.png" 
+                "pagePath": "pages/plus/plus",
+                "iconPath": "static/icon/plus.png",
+                "selectedIconPath": "static/icon/plus_a.png"
             },
             //#endif
             {

@@ -3,7 +3,7 @@
     
     <view class="uni-border-top" v-if="listData.count">
     	
-      <view class="uni-flex uni-common-mt uni-common-pa uni-bg-white uni-border-bottom" v-for="(item,index) in listData.list" :key="index">
+      <view class="uni-flex uni-common-mt-sm uni-common-pa uni-bg-white uni-border-bottom" v-for="(item,index) in listData.list" :key="index">
       	<view class="">
       		<image lazy-load="true"  :src="userInfo.avatar" mode="widthFix" style="width: 80upx;height: 80upx;border-radius: 40upx;"></image>
       	</view>
@@ -11,17 +11,17 @@
         	<view class="uni-text-darker">
         		{{ userInfo.nickname }}
         	</view>
-          <view class="uni-text-small uni-text-light">
+          <view class="uni-text-small uni-text-gray">
           	{{ item.create_date }}
           </view>
           
-          <view class="">
+          <view class="uni-text-light">
           	{{ item.info }}
           </view>
           
-          <view class="uni-bg-gray uni-common-pa uni-flex" @tap="goToPostDetail(item.post)">
-          	<view class="" style="width: 160upx;height: 100upx;">
-          		<image lazy-load="true"  :src="item.post.cover" mode="scaleToFill" style="width: 160upx;height: 100upx;"></image>
+          <view class="uni-bg-gray uni-common-pa uni-common-mt-sm uni-flex" @tap="goToPostDetail(item.post)">
+          	<view class="" style="width: 150upx;height: 100upx;border-radius: 6upx;">
+          		<image lazy-load="true"  :src="item.post.cover" mode="scaleToFill" style="width: 150upx;height: 100upx;border-radius: 6upx;"></image>
           	</view>
             <view class="uni-flex-item uni-ellipsis-2 uni-common-pl" style="height: 100upx;line-height: 50upx;">
             	{{ item.post.title}}
@@ -122,7 +122,7 @@
       },
       goToPostDetail(post){
         uni.navigateTo({
-        	url:'/pages/posts/detail?id=' + post.id
+        	url:'/pagesPost/posts/detail?id=' + post.id
         })
       }
     },

@@ -4,7 +4,7 @@
 			共邀请好友 <text class="uni-text-red uni-h3">{{ inviteListDatas.count }}</text> 人
 		</view>
       
-    <view class="uni-common-mt">
+    <view class="uni-common-mt-md">
     	<view class="uni-flex uni-common-pa uni-border-bottom uni-bg-white" v-for="(item , index) in inviteListDatas.list" :key="index" >
     		<view class="" style="width: 60upx;height: 60upx;">
     			<image lazy-load="true"  :src="item.cover" mode="scaleToFill" style="width: 60upx;height: 60upx;border-radius: 100%;"></image>

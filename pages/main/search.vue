@@ -101,7 +101,7 @@
       },
       goToDetailPosts(item){
         uni.navigateTo({
-        	url:'/pages/posts/detail?id=' + item.id
+        	url:'/pagesPost/posts/detail?id=' + item.id
         })
       },
       goToDetailGoods(item){

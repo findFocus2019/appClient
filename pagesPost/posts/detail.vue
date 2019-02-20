@@ -1,16 +1,16 @@
 <template>
 
-  <scroll-view class="page" scroll-y="true"  @scroll="pageScroll">
+  <scroll-view class="uni-page-body uni-bg-white" scroll-y="true"  @scroll="pageScroll">
 
-    <view class="uni-bg-white uni-common-pa" id="post-content">
-      <view class="uni-bold">
+    <view class="uni-bg-white uni-common-pa" id="post-content uni-border-top">
+      <view class="uni-bold uni-h4">
         {{postInfo.title}}
       </view>
       <view class="uni-common-mt-sm uni-text-gray uni-text-small">
         发布时间: {{postInfo.publish_time}}
       </view>
 
-      <view class="uni-common-pt-sm uni-text-gray uni-flex">
+      <view class="uni-common-mt-sm uni-text-gray uni-flex ">
         <view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
           <image lazy-load="true"  src="/static/icon/posts/eye.png" mode="" style="width: 36upx;height: 36upx;"></image>
         </view>
@@ -32,7 +32,7 @@
       </view>
     </view>
 
-    <view class="uni-common-mt uni-bg-white ">
+    <view class="uni-bg-white uni-border-top">
       <view class="uni-common-pa" v-if="postInfo.video">
       	<video :src="postInfo.video" controls style="width: 100%;"></video>
       </view>
@@ -47,13 +47,13 @@
     </view>
     
     
-    <view class="uni-bg-white uni-common-pa" v-if="postInfo.goods_id">
+    <view class="uni-bg-white uni-common-pa uni-border-top" v-if="postInfo.goods_id">
       <navigator :url="'/pagesMall/mall/goods?id=' + postInfo.goods_id + '&post_id=' + postInfo.id + '&share_id=' + shareId">
         <button type="warn" class="uni-border-btn-radius">产品链接</button>
       </navigator>
     </view>
 
-    <view class="uni-bg-white uni-common-mt post-comments" v-if="commentList.length">
+    <view class="uni-bg-white uni-common-mt post-comments uni-border-top" v-if="commentList.length">
       <view class="uni-center uni-common-pa">
         全部评论
       </view>
@@ -65,7 +65,7 @@
           </view>
           <view class="uni-flex-item">
             <view class="uni-flex">
-              <view class="uni-flex-item">
+              <view class="uni-flex-item uni-text-darker">
                 {{item.user_info.nickname}}
               </view>
               <view class="uni-right" @tap="commentLike(item)">
@@ -86,7 +86,7 @@
               {{ item.create_date }}
             </view>
 
-            <view class="uni-comment-content" >
+            <view class="uni-comment-content uni-text-light" >
               {{ item.info }}
             </view>
 
@@ -96,7 +96,7 @@
                 <view class="uni-text-dark">
                   {{ reply.user_info.nickname || ''}}
                 </view>
-                <view class="uni-text-small">
+                <view class="uni-text-small uni-text-light">
                   {{ reply.info }}
                 </view>
               </view>
@@ -107,12 +107,12 @@
 
       </view>
       <view class="uni-center uni-border-top uni-common-pa" v-if="commentCount > 10">
-        <navigator :url="'/pages/posts/commentList?post_id=' + postInfo.uuid">查看更多</navigator>
+        <navigator :url="'/pagesPost/posts/commentList?post_id=' + postInfo.uuid">查看更多</navigator>
       </view>
     </view>
 
     <view class="uni-bg-white uni-common-mt post-comments" v-else>
-      <view class="uni-common-pa uni-center">
+      <view class="uni-common-pa uni-center uni-border-top">
         暂无评论
       </view>
     </view>
@@ -122,7 +122,7 @@
     </view>
 
 
-    <view class="uni-bg-white uni-flex uni-common-pt uni-common-pb post-bottom">
+    <view class="uni-bg-white uni-flex uni-common-pt uni-common-pb post-bottom uni-border-top">
       <view class="uni-flex-item uni-common-pl uni-common-pr" @tap="commentPost">
         <view class="comment-text uni-bg-gray uni-ellipsis" style="width: 350upx;">
           <text class="uni-text-gray">{{commentText}}</text>
@@ -310,12 +310,12 @@
       },
       goToCommentList(){
         uni.navigateTo({
-        	url: '/pages/posts/commentList?post_id=' + this.postInfo.uuid
+        	url: '/pagesPost/posts/commentList?post_id=' + this.postInfo.uuid
         })
       },
       goToCommentDetail(item){
         uni.navigateTo({
-        	url: '/pages/posts/commentDetail?post_id=' + this.postInfo.uuid + '&comment_id=' + item.id
+        	url: '/pagesPost/posts/commentDetail?post_id=' + this.postInfo.uuid + '&comment_id=' + item.id
         })
       },
       async postCollection(){
@@ -455,7 +455,7 @@
 					return 
 				}
 				
-        let sharePage = 'pages/posts/detail'
+        let sharePage = 'pagesPost/posts/detail'
 				sharePage = sharePage + '?id=' + this.postInfo.id + '&puid=' + this.userInfo.id + '&share_id=' + shareId
         let shareUrl = this.webDomain + '/' + sharePage
         let postType = this.postInfo.type
@@ -525,7 +525,7 @@
       
       if(this.postInfo.status == 0){
         uni.redirectTo({
-        	url:'/pages/posts/error'
+        	url:'/pagesPost/posts/error'
         })
       }
       

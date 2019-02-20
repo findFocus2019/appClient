@@ -1,5 +1,5 @@
 <template>
-  <view class="uni-flex uni-bg-white uni-common-pa uni-border-bottom">
+  <view class="uni-flex uni-bg-white uni-common-pa uni-border-top">
     <view class="uni-left uni-common-pt" style="width: 80upx;" @tap="choose">
       <uni-icon
         type="location"

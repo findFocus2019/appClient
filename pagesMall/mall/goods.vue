@@ -1,5 +1,21 @@
 <template>
-  <view class="uni-page-body mall-goods-page">
+  <view class="uni-page-body mall-goods-page uni-bg-white">
+		
+		<uni-nav-bar color="#333333" background-color="transparent" fixed="true" @click-left="goBack" @click-right="goCart">
+		  <!-- #ifndef MP -->
+		  <block slot="left">
+		  	<view class="uni-common-pl">
+		  		<uni-icon type="back" size="22" color="#666666" style="background: rgba(0,0,0,0.6);border-radius: 100%;"></uni-icon>
+		  	</view>
+		  </block>
+		  <!-- #endif -->
+		  <block slot="right">
+		    <view class="uni-common-pl uni-common-pr">
+		      <image lazy-load="true"  src="/static/icon/mall/cart.png" mode="widthFix" style="width: 48upx;height: 48upx;"></image>
+		    </view>
+		  </block>
+		</uni-nav-bar >
+			
     <swiper indicator-dots="true" v-if="imgUrls.length">
       <swiper-item v-for="(img,key) in imgUrls" :key="key">
         <image lazy-load="true"  :src="img" />
@@ -55,9 +71,12 @@
 
     </view>
 
-    <view class="uni-common-mt uni-common-pt uni-bg-white">
-      <uni-segmented-control :current="current" :values="items" v-on:clickItem="onClickItem" styleType="text"
-        activeColor="#d81e06"></uni-segmented-control>
+    <view class="uni-common-mt uni-bg-white  uni-border-top">
+			<view class="uni-border-bottom">
+				<uni-segmented-control :current="current" :values="items" v-on:clickItem="onClickItem" styleType="text"
+				  activeColor="#d81e06"></uni-segmented-control>
+			</view>
+      
 
       <view class="content uni-common-mt uni-common-pa">
         <view v-show="current === 0">
@@ -168,6 +187,7 @@
   import uniPopup from '@/components/uni-popup.vue';
   import uniNumberBox from '@/components/uni-number-box.vue'
   import uniSegmentedControl from '@/components/uni-segmented-control.vue';
+	import uniNavBar from '@/components/uni-nav-bar.vue';
   import money from '@/components/money.vue';
   import Cart from '@/static/js/cart.js';
   export default {
@@ -176,6 +196,7 @@
       uniIcon,
       uniPopup,
       uniNumberBox,
+			uniNavBar,
       money
     },
     data() {
@@ -213,6 +234,11 @@
     },
     methods: {
       ...mapActions(['goCart','goToLoginPage', 'callServicePhone']),
+			goBack(){
+				uni.navigateBack({
+					delta:1
+				})
+			},
       onClickItem(e){
         console.log(e)
         this.current = e

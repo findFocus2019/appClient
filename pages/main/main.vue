@@ -68,7 +68,7 @@
       <view class="the-focus-sugguestions">
         <view class="header">
           <text class="title">焦点推荐</text>
-          <navigator url="/pages/posts/recommend"><text class="uni-text-small">更多</text></navigator>
+          <navigator url="/pagesPost/posts/recommend"><text class="uni-text-small">更多</text></navigator>
         </view>
         <view class="body">
           <swiper autoplay="true" interval="3000" duration="1000" circular="true" style="height: 280upx;">
@@ -187,7 +187,7 @@
         menus: [{
           "id":"all",
           name: "焦点资讯",
-          url: "/pages/posts/list"
+          url: "/pages/posts/news"
         }],
         
       }
@@ -222,7 +222,7 @@
           this.menus.push({
             id:channel,
             name: channel,
-            url: '/pages/news/list'
+            url: '/pagesPost/posts/news'
           })
         })
       }
@@ -275,12 +275,12 @@
       },
       goToMore(){
         uni.navigateTo({
-          url: '/pages/news/list?channel=' + this.newsCurrentchannel
+          url: '/pagesPost/posts/news?channel=' + this.newsCurrentchannel
         })
       },
       goToDetail(news) {
         uni.navigateTo({
-          url: '/pages/posts/detail?id=' + news.id
+          url: '/pagesPost/posts/detail?id=' + news.id
         })
       },
       goDailySign(){
