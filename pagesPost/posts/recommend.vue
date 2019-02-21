@@ -1,19 +1,21 @@
 <template>
 	<view class="uni-page-body">
 		<view class="" v-if="recommendDatas && recommendDatas.list">
-      <view class="uni-bg-white uni-common-mt" v-for="(news,index) in recommendDatas.list" :key="index">
+      
+      <view class="uni-bg-white uni-border-top" v-for="(news,index) in recommendDatas.list" :key="index">
         <view class="uni-flex uni-bg-white uni-common-pa uni-left" @tap="goToDetail(news)" >
-        	<view class="">
-        		<image lazy-load="true"  :src="news.cover" mode="scaleToFill" style="width: 280upx;height: 210upx;"></image>
+        	<view class="post-list-cover">
+        		<image lazy-load="true"  :src="news.cover" mode="scaleToFill" class="post-list-cover"></image>
         	</view>
-          <view class="uni-flex-item uni-common-pl">
-          	<view class="uni-ellipsis-2 uni-left uni-bold" style="height: 80upx;">
+          <view class="uni-flex-item uni-common-pl post-list-content">
+          	<view class="uni-ellipsis-2 uni-left uni-bold title" >
           		{{news.title}}
           	</view>
-            <view class="uni-common-pt uni-text-gray uni-text-small">
+            <view class="uni-text-gray uni-text-small time">
             	{{ news.publish_time}}
             </view>
-            <view class="uni-common-pt-sm uni-text-gray uni-flex">
+            <view class="uni-text-gray uni-flex icon-items">
+              
             	<view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
                 <image lazy-load="true"  src="/static/icon/posts/eye.png" mode="" style="width: 36upx;height: 36upx;"></image>  
               </view>

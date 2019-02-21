@@ -4,6 +4,13 @@
 	border-radius: 8upx;
 	background: #EEEEEE;
 }
+
+.post-list-cover-sm{
+  width: 180upx;
+  height: 120upx;
+  border-radius: 8upx;
+  background: #EEEEEE;
+}
 .post-list-cover-xl {
 	width: 300upx;
 	height: 200upx;

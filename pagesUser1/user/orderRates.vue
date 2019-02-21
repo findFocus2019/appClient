@@ -132,6 +132,18 @@
             this.listData.list.push(row)
           })
         }
+      },
+      async refresh(){
+        uni.startPullDownRefresh({
+        	success: async () => {
+        		this.listData.page = 0
+        		this.listData.count = 0
+        		this.listData.list = []
+        		
+        		await this.getData()
+        		uni.stopPullDownRefresh()
+        	}
+        })
       }
     },
     onLoad() {
@@ -149,6 +161,12 @@
     	this.showLoadMore = false
       await this.getData()
       this.showLoadMore = true
+    },
+    onShow() {
+    	if(this.$store.state.userDataRefresh){
+        this.refresh()
+        this.$store.state.userDataRefresh = false
+      }
     }
   }
 </script>

@@ -99,24 +99,29 @@
 
     <view class="goods-info-toolbar uni-flex uni-center uni-border-top">
       <view class="uni-flex-item uni-text-light" @tap="callServicePhone">
-        <uni-icon type="phone" size="24"></uni-icon>
-        <view class="">
-          联系客服
+        <view class="" style="height: 50upx;line-height: 50upx;">
+        	<uni-icon type="phone" size="24"></uni-icon>
+        </view>
+        
+        <view class="" style="height: 50upx;line-height: 50upx;">
+          客服
         </view>
       </view>
       <view class="uni-flex-item uni-text-light" @tap="collectionAction">
-        <uni-icon type="star-filled" size="24" v-if="mallGoodsInfo.isCollection == 1" color="#d81e06"></uni-icon>
-        <uni-icon type="star" size="24" v-else></uni-icon>
-        <view class="">
+        <view class="" style="height: 50upx;line-height: 50upx;">
+        	<uni-icon type="star-filled" size="24" v-if="mallGoodsInfo.isCollection == 1" color="#d81e06"></uni-icon>
+        	<uni-icon type="star" size="24" v-else></uni-icon>
+        </view>
+        
+        <view class="" style="height: 50upx;line-height: 50upx;">
           收藏
         </view>
       </view>
       <view class="uni-flex-item uni-text-light" @tap="goodsShare">
-        <view class="" style="height: 40upx;padding-top: 8upx;">
-        	<image src="../../static/icon/posts/share.png" mode="" style="width: 40upx;height: 40upx;"></image>
+        <view class="" style="height: 50upx;line-height: 50upx;">
+        	<image src="../../static/icon/posts/share.png" mode="" style="width: 40upx;height: 40upx;margin-top: 10upx;"></image>
         </view>
-        
-        <view class="">
+        <view class="" style="height: 50upx;line-height: 50upx;">
           分享
         </view>
       </view>
@@ -170,10 +175,11 @@
 
     </uni-popup>
     
-    <view class="cart-icon bottom" @tap="goCart">
+   <!-- <view class="cart-icon bottom" @tap="goCart">
     	<image lazy-load="true"  src="/static/icon/mall/cart.png" mode="widthFix" style="width: 60upx;height: 60upx;"></image>
-    </view>
+    </view> -->
   
+  <score-show :info="scoreInfo"></score-show>
   </view>
 </template>
 
@@ -189,6 +195,7 @@
   import uniSegmentedControl from '@/components/uni-segmented-control.vue';
 	import uniNavBar from '@/components/uni-nav-bar.vue';
   import money from '@/components/money.vue';
+  import scoreShow from '@/components/score-show.vue';
   import Cart from '@/static/js/cart.js';
   export default {
     components: {
@@ -197,6 +204,7 @@
       uniPopup,
       uniNumberBox,
 			uniNavBar,
+      scoreShow,
       money
     },
     data() {
@@ -211,6 +219,7 @@
         showPopupBottom: false,
         cartAddNum: 1,
 				addType:0,
+        scoreInfo:''
         // shareId:0,
         // postId:0
       }
@@ -239,6 +248,12 @@
 					delta:1
 				})
 			},
+      scoreShowPop(info){
+        this.scoreInfo = info
+        setTimeout(() => {
+          this.scoreInfo = ''
+        }, 3000)
+      },
       onClickItem(e){
         console.log(e)
         this.current = e
@@ -336,13 +351,18 @@
         let ret = await this.$store.dispatch('userCollectionAction' , params)
         uni.hideLoading()
         if(ret.code== 0){
+          uni.showToast({
+          	title:ret.message,
+            icon:'success'
+          })
           if(ret.data){
             let score = ret.data.score || 0
             if(score){
-              uni.showToast({
-              	title:'收藏商品获得'+ ret.data.score + '积分',
-                icon:'success'
-              })
+              this.scoreShowPop('收藏商品获得'+ ret.data.score + '积分')
+//               uni.showToast({
+//               	title:'收藏商品获得'+ ret.data.score + '积分',
+//                 icon:'success'
+//               })
             }
           }
           this.$store.dispatch('getGoodsInfo' , {id: this.mallGoodsInfo.id})
@@ -354,6 +374,11 @@
         }
       },
 			async goodsShare(){
+        // #ifdef MP-WEIXIN
+        uni.navigateTo({
+        	url:'/pages/auth/guide'
+        })
+        // #endif
 			  // 分享
 				if(!this.hasLogin){
 				  uni.navigateTo({

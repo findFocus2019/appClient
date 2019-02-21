@@ -27,7 +27,7 @@
           			<image lazy-load="true"  :src="item.cover" mode="scaleToFill" style="width: 160upx;height: 160upx;border-radius: 8upx;"></image>
           		</view>
               <view class="uni-flex-item uni-common-pl" >
-              	<view class="uni-ellipsis-2 uni-bold" style="height: 80upx;">
+              	<view class="uni-ellipsis-2 uni-bold" style="height: 80upx;line-height: 40upx;">
               		{{item.title}}
               	</view>
                 <view class="uni-flex ">

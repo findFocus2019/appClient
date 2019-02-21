@@ -76,8 +76,10 @@
   	</view>
     
     <view class="uni-common-pa">
-    	<button type="warn" class="uni-border-btn-radius" @tap="rateConfirm">提交评价</button>
+    	<button type="warn" class="uni-border-btn-radius" @tap="rateConfirm" v-if="!isSubmit">提交评价</button>
     </view>
+    
+    <score-show :info="scoreInfo"></score-show>
   </view>
 </template>
 
@@ -86,10 +88,12 @@
   import Request from '@/store/request.js';
 	import money from '@/components/money.vue';
 	import uniIcon from '@/components/uni-icon.vue';
+  import scoreShow from '@/components/score-show.vue';
 	export default {
 		components:{
 			money,
-			uniIcon
+			uniIcon,
+      scoreShow
 		},
 		data(){
 			return {
@@ -100,10 +104,18 @@
 					imgs:[]
 				},
 				levels:[1,2,3,4,5],
-        imgs:[]
+        imgs:[],
+        scoreInfo:'',
+        isSubmit:0
 			}
 		},
 		methods:{
+      scoreShowPop(info){
+        this.scoreInfo = info
+        setTimeout(() => {
+          this.scoreInfo = ''
+        }, 3000)
+      },
 			async rateConfirm(){
 				if(!this.rate.level){
           uni.showToast({
@@ -129,20 +141,29 @@
         params.id = this.info.id
         params.rate = this.rate
         let ret = await this.$store.dispatch('mallOrderItemRate' , params)
+        console.log('mallOrderItemRate ret:', JSON.stringify(ret))
         uni.hideLoading()
         if(ret.code == 0){
           let score = ret.data.score || 0
           let title = '提交成功'
-          if(score){
-            title += '，获取' + score + '积分奖励'
-          }
           uni.showToast({
           	icon:'success',
             title:title
           })
-          uni.navigateBack({
-          	delta:1
-          })
+          if(score){
+            title = '提交评价获取' + score + '积分奖励'
+            this.scoreShowPop(title)
+          }
+          
+          this.isSubmit = 1
+          this.$store.state.userDataRefresh = true
+          // return
+          setTimeout(() => {
+            uni.navigateBack({
+            	delta:1
+            })
+          },3000)
+          
         }else {
           uni.showToast({
           	icon:'none',

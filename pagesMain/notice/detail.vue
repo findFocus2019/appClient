@@ -9,7 +9,7 @@
       </view>
 		</view>
     
-    <view class="uni-common-pa uni-bg-white uni-common-mt">
+    <view class="uni-common-pa uni-bg-white uni-border-top">
     	<rich-text :nodes="info.info"></rich-text>
     </view>
 	</view>

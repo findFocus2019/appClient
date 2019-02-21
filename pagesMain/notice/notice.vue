@@ -1,16 +1,13 @@
 <template>
   <view class="uni-page-body">
     <view class="" v-if="listData.count">
-      <view class="uni-common-pa uni-common-mt uni-bg-white uni-flex" @tap="goToDetail(item)" v-for="(item,index) in listData.list" :key="index">
-        <view class="" style="width: 200upx;height: 120upx;">
-          <image lazy-load="true"  :src="item.cover" mode="scaleToFill" style="width: 200upx;height: 120upx;"></image>
+      <view class="uni-common-pa uni-border-top uni-bg-white uni-flex" @tap="goToDetail(item)" v-for="(item,index) in listData.list" :key="index">
+        <view class="post-list-cover-sm">
+          <image lazy-load="true"  :src="item.cover" mode="scaleToFill" class="post-list-cover-sm"></image>
         </view>
         <view class="uni-flex-item uni-common-pl">
-          <view class="post-list-title">
+          <view class="uni-ellipsis-2" style="line-height: 40upx;">
             {{ item.title }}
-          </view>
-          <view class="uni-text-small uni-text-gray">
-
           </view>
           <view class="uni-flex">
             <view class="uni-flex-item uni-text-small uni-text-gray">

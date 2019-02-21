@@ -35,7 +35,7 @@
           	发布评测
           </view>
     		</view>
-        <view class="uni-flex-item uni-right uni-common-pl uni-common-pr"  @tap="goToPage('/pagesPlus/plus/post')">
+        <view class="uni-flex-item uni-right uni-common-pl uni-common-pr"  @tap="goToPage('/pagesPlus/plus/goods')">
         	<view class="">
         		<image lazy-load="true"  src="../../static/img/plus/share.png" mode="scaleToFill" style="width: 160upx;height: 160upx;"></image>
         	</view>

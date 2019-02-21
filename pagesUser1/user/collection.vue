@@ -15,15 +15,15 @@
 
         <view v-show="current === 0">
 
-          <view class="uni-common-pa uni-common-mt-md uni-bg-white uni-flex" v-for="(item,index) in listDataGoods.list" :key="index" @tap="goToDetail(item , 'goods')">
-            <view class="goods-list-cover-md">
+          <view class="uni-common-pa uni-common-mt-md uni-bg-white uni-flex" v-for="(item,index) in listDataGoods.list" :key="index" >
+            <view class="goods-list-cover-md" @tap="goToDetail(item , 'goods')">
               <image lazy-load="true"  :src="item.info.cover" mode="" class="goods-list-cover-md"></image>
             </view>
             <view class="uni-flex-item uni-common-pl">
-              <view class="list-title">
+              <view class="list-title" @tap="goToDetail(item , 'goods')">
                 {{ item.info.title}}
               </view>
-              <view class="uni-text-small uni-text-gray">
+              <view class="uni-text-small uni-text-gray" @tap="goToDetail(item , 'goods')">
                 积分可抵扣 ￥{{item.info.score}}
               </view>
               <view class="uni-flex">
@@ -45,15 +45,15 @@
         </view>
         <view v-show="current === 1">
 
-          <view class="uni-common-pa uni-common-mt-md uni-bg-white uni-flex" v-for="(item,index) in listDataPosts[current].list" :key="index"  @tap="goToDetail(item , 'posts')">
-            <view class="post-list-cover">
+          <view class="uni-common-pa uni-common-mt-md uni-bg-white uni-flex" v-for="(item,index) in listDataPosts[current].list" :key="index"  >
+            <view class="post-list-cover" @tap="goToDetail(item , 'posts')">
               <image lazy-load="true"  :src="item.info.cover" mode="" class="post-list-cover"></image>
             </view>
             <view class="uni-flex-item uni-common-pl post-list-content">
-              <view class="title">
+              <view class="title" @tap="goToDetail(item , 'posts')">
                 {{ item.info.title }}
               </view>
-              <view class="uni-text-small uni-text-gray time">
+              <view class="uni-text-small uni-text-gray time" >
                 {{ item.info.pub_date }}
               </view>
               <view class="uni-flex icon-items">
@@ -88,12 +88,12 @@
         </view>
         <view v-show="current === 2">
 
-          <view class="uni-common-pa uni-common-mt-md uni-bg-white uni-flex" v-for="(item,index) in listDataPosts[current].list" :key="index" @tap="goToDetail(item , 'posts')">
-            <view class="post-list-cover" >
+          <view class="uni-common-pa uni-common-mt-md uni-bg-white uni-flex" v-for="(item,index) in listDataPosts[current].list" :key="index" >
+            <view class="post-list-cover" @tap="goToDetail(item , 'posts')">
               <image lazy-load="true"  :src="item.info.cover" mode="" class="post-list-cover"></image>
             </view>
             <view class="uni-flex-item uni-common-pl post-list-content">
-              <view class="title">
+              <view class="title" @tap="goToDetail(item , 'posts')">
                 {{ item.info.title }}
               </view>
               <view class="uni-text-small uni-text-gray time">
@@ -132,12 +132,12 @@
 
         <view v-show="current === 3">
 
-          <view class="uni-common-pa uni-common-mt-md uni-bg-white uni-flex" v-for="(item,index) in listDataPosts[current].list" :key="index" @tap="goToDetail(item , 'posts')">
-            <view class="post-list-cover">
+          <view class="uni-common-pa uni-common-mt-md uni-bg-white uni-flex" v-for="(item,index) in listDataPosts[current].list" :key="index">
+            <view class="post-list-cover"  @tap="goToDetail(item , 'posts')">
               <image lazy-load="true"  :src="item.info.cover" mode="" class="post-list-cover"></image>
             </view>
             <view class="uni-flex-item uni-common-pl post-list-content">
-              <view class="title">
+              <view class="title"  @tap="goToDetail(item , 'posts')">
                 {{ item.info.title }}
               </view>
               <view class="uni-text-small uni-text-gray time">

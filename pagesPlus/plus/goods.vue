@@ -3,7 +3,7 @@
 		
     <view class="" v-if="listData.count">
     	
-      <view class="uni-common-mt uni-bg-white" v-for="(item,index) in listData.list" :key="index">
+      <view class="uni-common-mt-md uni-bg-white" v-for="(item,index) in listData.list" :key="index">
       	<view class="" @tap="goToDetail(item)">
       		<image :src="item.cover" mode="widthFix" style="width: 100%;"></image>
       	</view>
@@ -33,6 +33,9 @@
                 <view class="uni-flex-item">
                 	<text>库存:</text>
                 	<text>{{ (item.stock >= 0 ) ? item.stock : '充足'}}</text>
+                </view>
+                <view class="uni-flex-item">
+                	已有{{item.sales}}人付款
                 </view>
               	
               </view>
@@ -125,6 +128,11 @@
         await this.getData()
       },
       async goodsShare(item){
+        // #ifdef MP-WEIXIN
+        uni.navigateTo({
+        	url:'/pages/auth/guide'
+        })
+        // #endif
         // 分享
         if(!this.hasLogin){
           uni.navigateTo({

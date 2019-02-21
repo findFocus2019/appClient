@@ -84,11 +84,17 @@
 
       </view>
     </view>
+    
+    <score-show :info="scoreInfo"></score-show>
 	</view>
 </template>
 
 <script>
+  import scoreShow from '@/components/score-show.vue';
   export default {
+    components:{
+      scoreShow
+    },
     data(){
       return {
         weekdays: ['日','一','二','三','四','五','六'],
@@ -103,7 +109,8 @@
           score:0,
           balance:0,
           today_sign:0
-        }
+        },
+        scoreInfo:'',
       }
     },
     computed:{
@@ -116,6 +123,12 @@
      }
     },
     methods:{
+      scoreShowPop(info){
+        this.scoreInfo = info
+        setTimeout(() => {
+          this.scoreInfo = ''
+        }, 3000)
+      },
       async dailySignAction(){
         uni.showLoading({
         	mask:true,
@@ -132,13 +145,14 @@
           if(score){
             title += ',获得' + score + '积分奖励'
           }
-          if(balance){
-            title += ',获得' + balance + '现金奖励'
-          }
-          uni.showToast({
-          	icon:'success',
-            title:title
-          })
+//           if(balance){
+//             title += ',获得' + balance + '现金奖励'
+//           }
+//           uni.showToast({
+//           	icon:'success',
+//             title:title
+//           })
+          this.scoreShowPop(title)
           
           this.getDailySignData()
         }else {

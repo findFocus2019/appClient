@@ -132,5 +132,6 @@ export default {
     story:{},
     activity:{}
   },
-  postsListDatas:{} //焦点评测
+  postsListDatas:{}, //焦点评测
+  viewActionOpen:false
 }

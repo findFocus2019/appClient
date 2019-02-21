@@ -1,6 +1,6 @@
 <template>
 
-  <scroll-view class="uni-page-body uni-bg-white" scroll-y="true"  @scroll="pageScroll">
+  <scroll-view class="page uni-bg-white" scroll-y="true"  @scroll="pageScroll" style="height: 100%;">
 
     <view class="uni-bg-white uni-common-pa" id="post-content uni-border-top">
       <view class="uni-bold uni-h4">
@@ -22,13 +22,13 @@
         </view>
         <view class="uni-flex-item uni-common-ml-sm">
           <text>{{postInfo.likes}}</text>
-        </view>
+        </view>       
         <view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
           <image lazy-load="true"  src="/static/icon/posts/share.png" mode="" style="width: 36upx;height: 36upx;display: inline-block;"></image>
         </view>
         <view class="uni-flex-item uni-common-ml-sm">
           <text>{{postInfo.shares}}</text>
-        </view>
+        </view>     
       </view>
     </view>
 
@@ -159,9 +159,10 @@
             style="height: 100upx;line-height: 50upx;font-size: 24upx;" />
           </view>
       </view>
-        
+      
     </uni-popup>
   	
+    <score-show :info="scoreInfo"></score-show>
   </scroll-view>
   
 </template>
@@ -171,10 +172,12 @@
   import Share from '@/static/js/share.js';
   import uniIcon from '@/components/uni-icon.vue';
   import uniPopup from '@/components/uni-popup.vue';
+  import scoreShow from '@/components/score-show.vue';
   export default {
     components:{
       uniIcon,
-      uniPopup
+      uniPopup,
+      scoreShow
     },
     data() {
       return {
@@ -188,17 +191,24 @@
         commentId: 0,
         commentList:[],
         commentCount:0,
-        viewActionOpen: false,
+        // viewActionOpen: false,
+        scoreInfo:''
 				// shareId:0
       }
     },
     computed:{
-      ...mapState(['hasLogin' ,'userInfo', 'postInfo' , 'webDomain' , 'miniAppId', 'miniAppOrId' ]),
+      ...mapState(['hasLogin' ,'userInfo', 'postInfo' , 'webDomain' , 'miniAppId', 'miniAppOrId','viewActionOpen' ]),
 			shareId(){
 				return this.$store.state.inviteShareId
 			}
     },
     methods:{
+      scoreShowPop(info){
+        this.scoreInfo = info
+        setTimeout(() => {
+          this.scoreInfo = ''
+        }, 3000)
+      },
       postComments(){
         if(!this.hasLogin){
           uni.navigateTo({
@@ -242,10 +252,11 @@
           if(ret.data){
             let score = ret.data.score || 0
             if(score){
-              uni.showToast({
-              	title:'点赞评论获得'+ ret.data.score + '积分',
-                icon:'success'
-              })
+              this.scoreShowPop('点赞评论获得'+ ret.data.score + '积分')
+//               uni.showToast({
+//               	title:'点赞评论获得'+ ret.data.score + '积分',
+//                 icon:'success'
+//               })
             }
           }
           
@@ -280,21 +291,20 @@
 				console.log('postCommentConfirm ret' , JSON.stringify(ret))
         uni.hideLoading()
         if(ret.code == 0){
+          uni.showToast({
+          	title:'发布评论成功',
+            icon:'success'
+          })
           if(ret.data.score){
-            uni.showToast({
-            	title:'发布评论获得'+ ret.data.score + '积分',
-              icon:'success'
-            })
-          }else {
-						uni.showToast({
-							title:'发布评论成功',
-						  icon:'success'
-						})
-					}
+            this.scoreShowPop('发布评论获得'+ ret.data.score + '积分')
+//             uni.showToast({
+//             	title:'发布评论获得'+ ret.data.score + '积分',
+//               icon:'success'
+//             })
+          }
           
           this.commentTextVal = ''
           this.commentPopupHide()
-          
           this.commentListGet()
         }else {
           uni.showToast({
@@ -341,17 +351,18 @@
         console.log('userCollectionAction ret'  , JSON.stringify(ret))
         uni.hideLoading()
         if(ret.code== 0){
+          uni.showToast({
+          	title:ret.message || '收藏成功',
+            icon:'success'
+          })
+          
           let score = ret.data ? (ret.data.score || 0) : 0
           if(score){
-            uni.showToast({
-            	title:'收藏文章获得'+ ret.data.score + '积分',
-              icon:'success'
-            })
-          }else {
-            uni.showToast({
-            	title:ret.message,
-              icon:'success'
-            })
+            this.scoreShowPop('收藏文章获得'+ ret.data.score + '积分')
+//             uni.showToast({
+//             	title:'收藏文章获得'+ ret.data.score + '积分',
+//               icon:'success'
+//             })
           }
           this.$store.dispatch('postInfoGet' , {id: this.postInfo.id})
           console.log('postInfoGet again postInfo' , this.postInfo)
@@ -382,17 +393,17 @@
         console.log('postLikeAction ret' , ret)
         uni.hideLoading()
         if(ret.code== 0){
+          uni.showToast({
+          	title:'点赞成功',
+            icon:'success'
+          })
           let score = ret.data ? (ret.data.score || 0) : 0
           if(score){
-            uni.showToast({
-            	title:'点赞文章获得'+ ret.data.score + '积分',
-              icon:'success'
-            })
-          }else {
-            uni.showToast({
-            	title:'点赞成功',
-              icon:'success'
-            })
+            this.scoreShowPop('点赞文章获得'+ ret.data.score + '积分')
+//             uni.showToast({
+//             	title:'点赞文章获得'+ ret.data.score + '积分',
+//               icon:'success'
+//             })
           }
           await this.$store.dispatch('postInfoGet' , {id: this.postInfo.id})
           console.log('postInfoGet again postInfo' , this.postInfo)
@@ -403,11 +414,12 @@
           })
         }
       },
+      
       async viewAction(){
         console.log('viewAction=========================start')
-        let viewActionOpen = this.viewActionOpen
+        let viewActionOpen = this.$store.state.viewActionOpen
         console.log('viewAction=========================' , viewActionOpen)
-        if(!this.viewActionOpen || !this.hasLogin){
+        if(!viewActionOpen || !this.hasLogin){
           return
         }
         
@@ -421,15 +433,24 @@
           if(ret.data){
             let score = ret.data.score || 0
             if(score){
-              uni.showToast({
-              	title:'阅读文章获得'+ ret.data.score + '积分',
-                icon:'success'
-              })
+              this.scoreShowPop('阅读文章获得'+ ret.data.score + '积分')
+//               uni.showToast({
+//               	title:'阅读文章获得'+ ret.data.score + '积分',
+//                 icon:'success'
+//               })
+              
             }
           }
         }
       },
       async postShare(){
+        
+        // #ifdef MP-WEIXIN
+        uni.navigateTo({
+        	url:'/pages/auth/guide'
+        })
+        return
+        // #endif
         // 分享
 				if(!this.hasLogin){
 				  uni.navigateTo({
@@ -496,8 +517,8 @@
         return commentRet
       },
       pageScroll(e){
-        // console.log('onPageScroll==================' , e.detail.scrollTop)
-        this.viewActionOpen = true
+        console.log('onPageScroll==================' , e.detail.scrollTop)
+        this.$store.state.viewActionOpen = true
       }
     },
     
@@ -531,7 +552,7 @@
       
       setTimeout(() => {
         this.viewAction()
-      }, 15000)
+      }, 5000)
     },
     async onShow(){
       console.log('============= onShow')
@@ -556,7 +577,15 @@
       uni.stopPullDownRefresh()
     },
     onHide() {
-    	this.viewActionOpen = false;
+    	this.$store.state.viewActionOpen = false;
+      console.log('onHide ============' , this.$store.state.viewActionOpen)
+    },
+    onReachBottom() {
+    	console.log('到底部')
+    },
+    onUnload(){
+      this.$store.state.viewActionOpen = false;
+      console.log('onUnload ============' , this.$store.state.viewActionOpen)
     }
   }
 </script>
