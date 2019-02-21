@@ -91,9 +91,7 @@
                 "navigationBarBackgroundColor": "#d81e06",
                 "enablePullDownRefresh": true,
                 "app-plus": {
-                    "titleNView": {
-                        "type": "transparent"
-                    }
+                    "titleNView": false
                 }
             }
         }
@@ -469,18 +467,18 @@
         ]
     }],
     "preloadRule": {
-        "pages/main/main": {
-            "packages": ["pagesMain", "pagesPost"]
-        },
-        "pages/mall/list": {
-            "packages": ["pagesMall"]
-        },
-        "pages/plus/plus": {
-            "packages": ["pagesPlus"]
-        },
-        "pages/user/index": {
-            "packages": ["pagesUser", "pagesUser1"]
-        }
+//         "pages/main/main": {
+//             "packages": ["pagesMain", "pagesPost"]
+//         },
+//         "pages/mall/list": {
+//             "packages": ["pagesMall"]
+//         },
+//         "pages/plus/plus": {
+//             "packages": ["pagesPlus"]
+//         },
+//         "pages/user/index": {
+//             "packages": ["pagesUser", "pagesUser1"]
+//         }
     },
     "tabBar": {
         "color": "#7a7e83",

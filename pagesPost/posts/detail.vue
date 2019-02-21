@@ -465,6 +465,7 @@
 				params.post_id = this.postInfo.id
 				params.goods_id = this.postInfo.goods_id || 0
 				let shareRet = await this.$store.dispatch('userShareInfoGet', params)
+				console.log('userShareInfoGet shareRet:' + JSON.stringify(shareRet))
 				if(shareRet.code == 0){
 					let shareData = shareRet.data.info
 					shareId = shareData.id
@@ -523,13 +524,9 @@
     },
     
     async onLoad(opt) {
-      console.log('============= onLoad')
+      console.log('onLoad ============= ')
       this.$store.state.postInfo = {}
       
-      let id = opt.id 
-      let ret = await this.$store.dispatch('postInfoGet' , {id: id})
-      console.log('onLoad postInfoGet ret ==============' , ret)
-			
 			// 分享
 			let shareId = opt.share_id || 0
 			if(shareId){
@@ -540,7 +537,10 @@
 				this.$store.state.inviteUserId = inviteUserId
 			}
 			
-      
+      let id = opt.id 
+      let ret = await this.$store.dispatch('postInfoGet' , {id: id , share_id : shareId})
+      console.log('onLoad postInfoGet ret ==============' , ret)
+
       // 获取评论列表
       this.commentListGet()
       
@@ -552,7 +552,7 @@
       
       setTimeout(() => {
         this.viewAction()
-      }, 5000)
+      }, 6000)
     },
     async onShow(){
       console.log('============= onShow')

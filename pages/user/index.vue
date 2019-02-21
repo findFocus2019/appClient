@@ -2,11 +2,22 @@
   <view class="page-user">
     
   	<view class="uni-padding-wrap page-user-head">
-      <!-- #ifndef MP-WEIXIN -->
-        <view class="uni-center uni-common-pa">
-        	个人中心
-        </view>
-      <!-- #endif -->
+
+			<!-- #ifndef MP-WEIXIN -->
+			<uni-nav-bar color="#333333" background-color="transparent" fixed="false" @click-right="goToPage('/pagesUser/user/setting')">
+				<block slot="left">
+				</block>
+				<slot>
+					<view class="uni-center uni-text-white uni-common-ml">
+						个人中心
+					</view>
+				</slot>
+			  <block slot="right">
+			    <uni-icon type="gear-filled" size="24" color="#fff"></uni-icon>
+			  </block>
+			</uni-nav-bar>
+			<!-- #endif -->
+			
       
       <view class="uni-flex uni-common-pt uni-common-pb"  v-if="hasLogin">
    
@@ -173,8 +184,9 @@
 </template>
 
 <script>
-  import UserCard from '../../components/user/user-card.vue';
+  import UserCard from '@/components/user/user-card.vue';
   import uniIcon from '@/components/uni-icon.vue';
+	import uniNavBar from '@/components/uni-nav-bar.vue';
   import {
     mapState,
     mapActions
@@ -182,7 +194,8 @@
    export default {
      components:{
        UserCard,
-       uniIcon
+       uniIcon,
+			 uniNavBar
      },
      computed: {
        ...mapState(["hasLogin", "userInfo","isVip","userIndexData" , "userDataRefresh"])

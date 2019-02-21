@@ -10,8 +10,8 @@
 		  </block>
 		  <!-- #endif -->
 		  <block slot="right">
-		    <view class="uni-common-pl uni-common-pr">
-		      <image lazy-load="true"  src="/static/icon/mall/cart.png" mode="widthFix" style="width: 48upx;height: 48upx;"></image>
+		    <view class="uni-common-pl uni-common-pr">	
+						<image lazy-load="true"  src="/static/icon/mall/cart.png" mode="widthFix" style="width: 48upx;height: 48upx;"></image>   
 		    </view>
 		  </block>
 		</uni-nav-bar >
@@ -450,14 +450,9 @@
 			this.$store.state.mallGoodsInfo = {}
 			await this.getAlbums(id)
 			
-      await this.$store.dispatch('getGoodsInfo', {
-        id: id
-      })
-			
-			// 分享
-      let shareId = opt.share_id || 0
+			// 分享，评测
+			let shareId = opt.share_id || 0
 			let postId = opt.post_id || 0
- 
 			if(shareId){
 				this.$store.state.inviteShareId = shareId
 			}
@@ -465,6 +460,11 @@
 				this.$store.state.invitePostId = postId
 			}
 			
+      await this.$store.dispatch('getGoodsInfo', {
+        id: id,
+				share_id:shareId
+      })
+
 			// 邀请人
 			let inviteUserId = opt.puid || 0
 			if(inviteUserId){

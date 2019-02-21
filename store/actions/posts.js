@@ -35,7 +35,7 @@ export default {
   },
   // 获取新闻资讯详情
   async postInfoGet(store, data){
-    let ret = await Request.post('posts/info' , {post_id: data.id})
+    let ret = await Request.post('posts/info' , {post_id: data.id, share_id: data.share_id})
     store.state.postInfo = ret.data
     
     return ret

@@ -304,8 +304,6 @@ export default {
     if(inviteUserId){
       this.$store.state.inviteUserId = inviteUserId
     }
-		
-		
 	}
 };
 </script>

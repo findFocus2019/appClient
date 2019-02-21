@@ -1,6 +1,6 @@
 <template>
 	<view class="" style="display: inline;">
-		<text :style="{fontSize: size + 'upx'}">{{ money }}</text>
+		<text :style="{fontSize: size / 2 + 'px'}">{{ money }}</text>
 	</view>
 </template>
 
