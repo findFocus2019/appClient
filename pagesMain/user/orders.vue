@@ -313,7 +313,7 @@
     },
     async onLoad(opt) {
       this.status = opt.status || 0
-      this.ordersListStatus = this.status
+      this.$store.state.ordersListStatus = this.status
       await this.getData()
       
       console.log('onLoad =========status' , this.status)

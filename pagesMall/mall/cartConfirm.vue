@@ -6,7 +6,7 @@
     	<user-address v-else ></user-address>
     </view>
     
-    <view class="uni-common-mt uni-bg-white ">
+    <view class="uni-common-mt-md uni-bg-white ">
     	<view class="" v-for="(list,index) in cartList" :key="index">
         
     		<view class="" v-if="list.length">
@@ -61,7 +61,7 @@
     	</view>
     </view>
     
-    <view class="uni-common-mt uni-common-pl uni-common-pr uni-bg-white uni-border-top" v-if="!isVipOrder">
+    <view class="uni-common-mt-md uni-common-pl uni-common-pr uni-bg-white uni-border-top" v-if="!isVipOrder">
       
     	<view class="uni-flex uni-common-pt uni-common-pb uni-border-bottom " >
     		<view class="uni-flex-item input-label">
@@ -110,7 +110,7 @@
 			</view>
 		</view>
     
-    <view class="uni-common-mt uni-common-pl uni-common-pr uni-bg-white uni-border-top">
+    <view class="uni-common-mt-md uni-common-pl uni-common-pr uni-bg-white uni-border-top">
     	<view class="uni-flex uni-common-pt uni-common-pb">
     		<view class="uni-flex-item input-label">
     			发票信息
