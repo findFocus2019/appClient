@@ -33,7 +33,7 @@ class Request {
           r(res.data)
           let ret = res.data
            console.log('request response code:', ret.code);
-           console.log('request response code:', ret.message);
+           console.log('request response message:', ret.message);
           // this.text = 'request success';
           if(ret.code == -100){
             uni.showToast({

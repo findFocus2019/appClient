@@ -76,7 +76,6 @@
 				<uni-segmented-control :current="current" :values="items" v-on:clickItem="onClickItem" styleType="text"
 				  activeColor="#d81e06"></uni-segmented-control>
 			</view>
-      
 
       <view class="content uni-common-mt uni-common-pa">
         <view v-show="current === 0">

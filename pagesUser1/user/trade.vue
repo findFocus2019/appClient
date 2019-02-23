@@ -34,6 +34,9 @@
         		<view class="uni-flex-item">
         			<view class="uni-text-dark">
         				{{item.task.title}}
+                <text class="uni-text-small uni-text-red uni-common-ml" v-if="item.status == 0">未结算</text>
+                <!-- <text class="uni-text-" v-if="item.status == 1">已结算</text> -->
+                <text class="uni-text-small uni-text-gray uni-common-ml" v-if="item.status == -1">已失效</text>
         			</view>
         	    <view class="uni-text-small uni-text-gray">
         	    	{{ item.create_date}}

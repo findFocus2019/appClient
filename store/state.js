@@ -7,6 +7,11 @@ export default {
   apiDomain: config.apiDomain,
 	// apiDomain: 'http://47.91.250.144:5001',
   configs:{},
+  push:{
+    client_id:'',
+    platform:'',
+    token:''
+  },
   mainSearchText:'',
   appNoticeData:{
     page:1,

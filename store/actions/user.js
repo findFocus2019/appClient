@@ -150,5 +150,12 @@ export default {
   async userPasswordTradeSet(store, data){
     let ret = await Request.post('user/passwordTradeSet' , data)
     return ret
-  }
+  },
+  // #ifdef APP-PLUS
+  async userPushInfo(store, data = {}){
+    let ret = await Request.post('user/pushInfo' , data)
+    return ret
+  },
+  // #endif
+  
 }

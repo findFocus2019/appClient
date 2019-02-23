@@ -52,7 +52,14 @@ export default {
 	async getAlbums(store, data = {}){
 		let ret = await Request.post('pub/albums' , data)
 		return ret
-	}
+	},
+  // #ifdef APP-PLUS
+  async pushInfo(store, data = {}){
+    let ret = await Request.post('pub/getPushInfo' , data)
+    return ret
+  },
+  // #endif
+ 
   
   
 }

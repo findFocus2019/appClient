@@ -59,8 +59,8 @@
 
         <view class="mall-list-ul" v-if="mallGoodsList.count">
         	
-          <block v-if="mallType == 2">
-            <view class="mall-list-item type-self uni-bg-white uni-common-mb" v-for="(item,index) in mallGoodsList.list" :key="index" @tap="goToDetail(item)">
+          <block v-if="mallType == 1">
+            <view class="mall-list-item type-self uni-bg-white uni-border-top" v-for="(item,index) in mallGoodsList.list" :key="index" @tap="goToDetail(item)">
               <view class="">
                 <image lazy-load="true"  :src="item.cover" mode="widthFix" style="width: 100%;"></image>
               </view>
@@ -77,22 +77,27 @@
                     <view class="uni-text-yellow" style="display: inline-block;">
                       / VIP <money :nums="[item.price_vip, item.price_score_vip]" size="36"/>
                     </view>
-                    <view class="uni-text-gray uni-text-small">
-                    	积分可抵扣
-                      <money :num="item.price_score_sell"></money>
-                      /vip
-                      <money :num="item.price_score_vip"></money>
-                    </view>
-                     
                   </view>
                   
                 </view>
+                <view class="uni-flex">
+                  <view class="uni-text-gray uni-text-small">
+                  	积分可抵扣
+                    <money :num="item.price_score_sell"></money>
+                    /vip
+                    <money :num="item.price_score_vip"></money>
+                  </view>
+                	<view class="uni-text-light uni-text-small uni-right uni-flex-item" >
+                	  已有{{ item.sales }}付款
+                	</view>
+                </view>
+                
               </view>
               
             </view>
           </block>
           
-          <block v-if="mallType == 1">
+          <block v-if="mallType == 2">
           
             <view class="mall-list-item type-jd uni-bg-white uni-border-top uni-flex uni-common-pa" v-for="(item,index) in mallGoodsList.list" :key="index" @tap="goToDetail(item)">
               <view class="goods-list-cover" >
@@ -188,8 +193,13 @@
           return
         }
         
+        this.tabIndex = 0
+        this.scrollLeft = 0
         this.$store.state.mallType = index
+
         await this.getDatas()
+        
+        
         uni.hideLoading()
 //         let item = (type == 1) ? this.mallTypes[2] : this.mallTypes[1]
 //         uni.showActionSheet({
@@ -206,12 +216,11 @@
       },
       tapCategoryTab(index){
         this.tabIndex = index
-        if(index > 3){
-          this.scrollLeft = ((index - 1) * 160)
+        if(index >= 5){
+          this.scrollLeft = ((index - 1) * 80)
         }else {
           this.scrollLeft = 0
         }
-        
         this.getLists()
       },
       listOrderTypeChoose(orderType) {
@@ -249,6 +258,7 @@
       async getCategorys(){
         let type = this.mallType
         let ret = await this.$store.dispatch('getGoodsCategory')
+        console.log('getCategorys ret: =================================' + JSON.stringify(ret))
         if(ret.code == 0){
           this.mallCategorys = this.mallCategorysData[type]
         }

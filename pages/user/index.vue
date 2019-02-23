@@ -1,23 +1,28 @@
 <template>
   <view class="page-user">
+  
+  <!-- #ifndef MP-WEIXIN -->
+  <uni-nav-bar color="#333333" :background-color="barBgColor" fixed="true" shadow="false" @click-right="goToPage('/pagesUser/user/setting')">
+  	<block slot="left">
+  	</block>
+     
+    <view class="uni-center uni-text-white uni-common-ml uni-bold">
+      个人中心
+    </view>
     
+    <block slot="right">
+      <view class="uni-common-pr">
+      	<uni-icon type="gear-filled" size="24" color="#fff"></uni-icon>
+      </view>
+    </block>
+  </uni-nav-bar>
+  <!-- #endif -->
   	<view class="uni-padding-wrap page-user-head">
-
-			<!-- #ifndef MP-WEIXIN -->
-			<uni-nav-bar color="#333333" background-color="transparent" fixed="false" @click-right="goToPage('/pagesUser/user/setting')">
-				<block slot="left">
-				</block>
-				<slot>
-					<view class="uni-center uni-text-white uni-common-ml">
-						个人中心
-					</view>
-				</slot>
-			  <block slot="right">
-			    <uni-icon type="gear-filled" size="24" color="#fff"></uni-icon>
-			  </block>
-			</uni-nav-bar>
-			<!-- #endif -->
-			
+      
+      <!-- #ifndef MP-WEIXIN -->
+      <view class="" style="height: 160upx;">
+      </view>
+      <!-- #endif -->
       
       <view class="uni-flex uni-common-pt uni-common-pb"  v-if="hasLogin">
    
@@ -242,6 +247,7 @@
      },
      data(){
        return {
+         barBgColor:'transparent',
          cards : [
            {title : '我的服务' ,items: [
              {text: '收益记录' , icon : 'trade' , path: '/pagesUser1/user/trade'},
@@ -278,6 +284,15 @@
      async onPullDownRefresh() {
         await this.refresh()
         uni.startPullDownRefresh()
+     },
+     onPageScroll(e){
+       console.log('onPageScroll' , e)
+       let top = e.scrollTop
+       if(top > 0){
+         this.barBgColor = '#d81e06'
+       }else {
+         this.barBgColor = 'transparent'
+       }
      }
    }
 </script>
