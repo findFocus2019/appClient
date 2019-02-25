@@ -20,15 +20,18 @@
     <view class="content">
       <!-- 顶部的大背景 -->
       <view class="top-panel">
-        <!-- <image lazy-load="true" class="top-panel-bg" src="../../static/img/home/banner-bg.png" /> -->
-        <view class="swiper-banners" style="background: url('../../static/img/home/banner-bg.png');background-size: 750upx;height: 568upx;background-repeat: no-repeat;">
+        <view class="top-panel-bg" style="width: 750upx;height: 554upx;">
+        	<image lazy-load="true"  src="https://img-juren.oss-cn-shenzhen.aliyuncs.com/assets/images/banner-bg.png" mode="widthFix" style="width: 750upx;height: 554upx;" />
+        </view>
+        
+        <view class="swiper-banners" >
 
           <swiper class="swiper" :indicator-dots="swiper.indicatorDots" :autoplay="swiper.autoplay" :interval="swiper.interval"
             :duration="0" circular="false" :current="bannerIndex">
             <swiper-item v-for="(banner,index) in banners" :key="index" @tap="bannerTap(banner)">
               <view class="swiper-item" style="text-align: center;">
                 
-                <view class="uni-bg-red uni-inline-block" style="width: 320upx;height: 320upx;border-radius: 160upx;margin-top: 152upx;overflow: hidden;">
+                <view class="uni-bg-red uni-inline-block" style="width: 320upx;height: 320upx;border-radius: 160upx;margin-top: 138upx;overflow: hidden;">
                 	<image lazy-load="true" :src="banner.img" mode="scaleToFill" style="width: 320upx;height: 320upx;border-radius: 160upx;"></image>
                 </view>
       
@@ -51,15 +54,15 @@
         </view>
       </view>
 
-      <view class="uni-bg-white uni-common-pa uni-flex">
+      <view class="uni-bg-white uni-common-pa uni-flex" style="position: relative;top: -2upx;">
         <view class="uni-flex-item uni-left" style="height:200upx;">
           <navigator :url="configs.main_sub_url_1">
-            <image lazy-load="true" :src="configs.main_sub_img_1" mode="" style="width: 320upx;height:200upx;"></image>
+            <image lazy-load="true" :src="configs.main_sub_img_1" mode="" style="width: 320upx;height:200upx;border-radius: 8upx;background: #EEEEEE;"></image>
           </navigator>
         </view>
         <view class="uni-flex-item uni-right" style="height:200upx;">
           <navigator :url="configs.main_sub_url_2">
-            <image lazy-load="true" :src="configs.main_sub_img_2" mode="" style="width: 320upx;height:200upx;"></image>
+            <image lazy-load="true" :src="configs.main_sub_img_2" mode="" style="width: 320upx;height:200upx;border-radius: 8upx;background: #EEEEEE;"></image>
           </navigator>
         </view>
       </view>
@@ -171,7 +174,7 @@
     data() {
       return {
         swiper: {
-          indicatorDots: true,
+          indicatorDots: false,
           autoplay: true,
           interval: 3000,
           duration: 500
@@ -426,7 +429,7 @@
       align-items: center;
 
       width: 750upx;
-      height: 568upx;
+      height: 554upx;
       background-position: center;
       background-size: 100% 100%;
 
@@ -498,15 +501,15 @@
     .swiper-banners {
       position: relative;
       width: 750upx;
-      height: 568upx;
+      height: 554upx;
       margin: 0 auto;
 
       .swiper {
-        height: 568upx;
+        height: 554upx;
       }
 
       .swiper-item {
-        height: 568upx;
+        height: 554upx;
       }
     }
 

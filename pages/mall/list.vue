@@ -51,15 +51,21 @@
       		    <uni-icon type="arrowup" size="22" v-else></uni-icon>
       		
       		  </view>
-      		  <view class="uni-flex-item uni-center">
-      		
+      		  <view class="uni-flex-item uni-center" @tap="changeMallShowType">
+              <view class="" style="width: 40upx;height: 40upx;display: inline-block;" v-if="mallShowType == 1">
+              	<image lazy-load="true" src="/static/icon/mall/list-2.png" mode="scaleToFill" style="width: 40upx;height: 40upx;"></image>
+              </view>
+              
+              <view class="" style="width: 40upx;height: 40upx;display: inline-block;" v-if="mallShowType == 0">
+              	<image lazy-load="true" src="/static/icon/mall/list-1.png" mode="scaleToFill" style="width: 40upx;height: 40upx;"></image>
+              </view>
       		  </view>
       		</view>
       	</view>
 
         <view class="mall-list-ul" v-if="mallGoodsList.count">
         	
-          <block v-if="mallType == 1">
+          <block v-if="mallType == 1 && mallShowType == 0">
             <view class="mall-list-item type-self uni-bg-white uni-border-top" v-for="(item,index) in mallGoodsList.list" :key="index" @tap="goToDetail(item)">
               <view class="">
                 <image lazy-load="true"  :src="item.cover" mode="widthFix" style="width: 100%;"></image>
@@ -97,7 +103,7 @@
             </view>
           </block>
           
-          <block v-if="mallType == 2">
+          <block v-if="mallType == 2 && mallShowType == 0">
           
             <view class="mall-list-item type-jd uni-bg-white uni-border-top uni-flex uni-common-pa" v-for="(item,index) in mallGoodsList.list" :key="index" @tap="goToDetail(item)">
               <view class="goods-list-cover" >
@@ -126,6 +132,47 @@
 									  <money :num="item.price_score_vip"></money>
 									</view>
 								</view>
+                <view class="uni-text-light uni-text-small" >
+                  已有{{ item.sales }}付款
+                </view>
+              </view>
+              
+            </view>
+          </block>
+          
+          <block v-if="mallShowType == 1">
+          
+            <view class="mall-goods-list type-jd uni-bg-white uni-border-top" v-for="(item,index) in mallGoodsList.list" :key="index" @tap="goToDetail(item)">
+              <view class="uni-center uni-common-pt" >
+                <image lazy-load="true" :src="item.cover" mode="scaleToFill" class="goods-list-cover"></image>
+              </view>
+              
+              
+              <view class="uni-common-pa" >
+                <view class="uni-bold uni-ellipsis " >
+                  {{ item.title }}
+                </view>
+          			<view class="">
+          			  <view class="uni-text-red uni-bold" style="display: inline-block;">
+          			    <money :nums="[item.price_sell,item.price_score_sell]" size="32" /> 
+          			  </view>
+          			  <view class="uni-text-yellow" style="display: inline-block;">
+          					 <text class="uni-common-ml-sm">VIP</text>
+          					 <money :nums="[item.price_vip,item.price_score_vip]" size="24"/>        
+          			  </view>
+          			    
+          			</view>
+          			<view class="" >
+                  
+          				<view class="uni-text-gray uni-text-small">
+          					<view class="uni-text-gray uni-text-small">
+          						积分可抵扣
+          					</view>
+          				  <money :num="item.price_score_sell"></money>
+          				  /vip
+          				  <money :num="item.price_score_vip"></money>
+          				</view>
+          			</view>
                 <view class="uni-text-light uni-text-small" >
                   已有{{ item.sales }}付款
                 </view>
@@ -170,7 +217,7 @@
         },
         showLoadMore: false,
         loadMoreText:'加载中...',
-        jdShowType:1,
+        // mallShowType:1,
       }
     },
     components: {
@@ -179,9 +226,12 @@
       money
     },
     computed:{
-      ...mapState(['mallType', 'mallCategorysData','mallGoodsListData', 'mallSearch', 'mallOrderTypes', 'mallOrderActive'])
+      ...mapState(['mallType', 'mallCategorysData','mallGoodsListData', 'mallSearch', 'mallOrderTypes', 'mallOrderActive', 'mallShowType'])
     },
     methods:{
+      changeMallShowType(){
+        this.$store.state.mallShowType = (this.mallShowType == 0) ? 1 : 0
+      },
       async changeMallType(index){
         //
         uni.showLoading({
@@ -424,5 +474,10 @@
   
   .mall-list-item.type-self {
     width: 100%;
+  }
+  
+  .mall-goods-list.type-jd {
+    width: 50%;
+    display: inline-block;
   }
 </style>

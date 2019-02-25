@@ -1,6 +1,6 @@
 <template>
-  <view class="uni-flex uni-bg-white uni-common-pa uni-border-top">
-    <view class="uni-left uni-common-pt" style="width: 80upx;" @tap="choose">
+  <view class="uni-flex uni-bg-white uni-common-pt uni-common-pb uni-border-top">
+    <view class="uni-center" style="width: 120upx;line-height: 100upx;" @tap="choose">
       <uni-icon
         type="location"
         size="22"
@@ -19,7 +19,7 @@
         style="width: 500upx;"
       >{{address.info}}</view>
     </view>
-    <view class="uni-right uni-common-pt" style="width: 80upx;" @tap="goToAddress">
+    <view class="uni-center" style="width: 120upx;line-height: 100upx;" @tap="goToAddress">
       <uni-icon type="arrowright" size="22"></uni-icon>
     </view>
   </view>

@@ -1,6 +1,7 @@
 <template>
   <view class="uni-bg-white uni-page-body">
-     <view class="uni-padding-wrap uni-common-mt">
+    
+     <view class="uni-padding-wrap uni-common-pt">
        <!-- <view class="uni-center uni-h3 uni-common-mt uni-common-pt">登录</view> -->
        <form class="uni-common-mt uni-common-pt" @submit="formSubmit">
          <view class="uni-form-item uni-column uni-border-bottom">
@@ -41,28 +42,32 @@
              <text>忘记密码</text>
            </view>
          </view>
-     
-         <view :style="{position: 'absolute' ,top: positionTop + 'px', width: '100%', left:0}" class="uni-common-pb">
-           <view class="uni-common-pa uni-common-mt uni-center uni-flex" v-if="hasProvider">
-
-                <view class="uni-column uni-flex-item" @tap="oauth(item.value)" v-for="(item,index) in providerList" :key="index">
-                  <image lazy-load="true"  :src="item.image" style="width:120upx;height:120upx;"></image>
-                </view>
- 
-           </view>
-     
-           <view class="uni-common-pa uni-center uni-flex">
-             <view class="uni-column uni-flex-item uni-link" @tap="goAuthBind(2)">
-               <text>老用户入口</text>
-             </view>
-             <view class="uni-column uni-flex-item uni-link" @tap="notLogin">
-               <text>暂不登录</text>
-             </view>
-           </view>
-         </view>
          
        </form>
      </view>
+     
+     
+     <view style="position: absolute;bottom: 0;width: 100%;">
+       <view class="" style="height: 180upx;">
+       	<view class="uni-common-pa uni-common-mt uni-center uni-flex" v-if="hasProvider">
+       	
+       	     <view class="uni-column uni-flex-item" @tap="oauth(item.value)" v-for="(item,index) in providerList" :key="index">
+       	       <image lazy-load="true"  :src="item.image" style="width:120upx;height:120upx;"></image>
+       	     </view>
+       	 
+       	</view>
+       </view>
+     
+       <view class="uni-center uni-flex" style="height: 100upx;line-height: 100upx;">
+         <view class="uni-column uni-flex-item uni-link" @tap="goAuthBind(2)">
+           <text>老用户入口</text>
+         </view>
+         <view class="uni-column uni-flex-item uni-link" @tap="notLogin">
+           <text>暂不登录</text>
+         </view>
+       </view>
+     </view> 
+     
   </view>
   
 </template>
@@ -91,25 +96,7 @@ export default {
       }
     };
   },
-  onShow() {
-  	let systemInfo = uni.getSystemInfoSync();
-    let type = ''
-    // #ifdef APP-PLUS
-    type = 'app'
-    // #endif
-    // #ifdef H5
-    type = 'h5'
-    // #endif
-    
-  	this.postData.auth_info = {
-  	  platform: systemInfo.platform,
-  	  device: systemInfo.model,
-      type: type
-  	}
-    this.oauth_info.platform = systemInfo.platform
-    this.oauth_info.device = systemInfo.model
-    this.oauth_info.type = type
-  },
+  
   methods: {
     changePassword(){
       this.showPassword = !this.showPassword
@@ -287,7 +274,9 @@ export default {
          * 使用 absolute 定位，并且设置 bottom 值进行定位。软键盘弹出时，底部会因为窗口变化而被顶上来。
          * 反向使用 top 进行定位，可以避免此问题。
          */
-        this.positionTop = uni.getSystemInfoSync().windowHeight - 160;
+        let systemInfo =  uni.getSystemInfoSync()
+        console.log('systemInfo :' + JSON.stringify(systemInfo))
+        this.positionTop = systemInfo.windowHeight - 140;
         console.log('positionTop' , this.positionTop);
     },
     notLogin(){
@@ -333,7 +322,27 @@ export default {
       // #endif
       
       
-  }
+  },
+  onShow() {
+
+  	let systemInfo = uni.getSystemInfoSync();
+    let type = ''
+    // #ifdef APP-PLUS
+    type = 'app'
+    // #endif
+    // #ifdef H5
+    type = 'h5'
+    // #endif
+    
+  	this.postData.auth_info = {
+  	  platform: systemInfo.platform,
+  	  device: systemInfo.model,
+      type: type
+  	}
+    this.oauth_info.platform = systemInfo.platform
+    this.oauth_info.device = systemInfo.model
+    this.oauth_info.type = type
+  },
 };
 </script>
 

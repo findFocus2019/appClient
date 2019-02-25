@@ -258,7 +258,7 @@
              {text: '品牌申请' , icon : 'brand', path: '/pagesUser1/user/brandApply'},
            ]},
            {title : '我的足迹' ,items: [
-             {text: '收货地址' , icon : 'address', path: '/pagesMain/user/address'},
+             {text: '收货地址' , icon : 'address', path: '/pagesMain/user/address?from=user'},
              {text: '我的评论' , icon : 'comment', path: '/pagesUser1/user/postComments'},
              {text: '我的收藏' , icon : 'like', path: '/pagesUser1/user/collection'},
              {text: '我的评测' , icon : 'posts', path: '/pagesUser1/user/postsList'}

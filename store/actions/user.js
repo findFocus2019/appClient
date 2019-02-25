@@ -15,6 +15,7 @@ export default {
     let ret = await Request.post('user/infoUpdate' , data)
     return ret
   },
+  
   async userIndexDataGet(store, data){
     let ret = await Request.post('user/centerData')
     console.log('userIndexDataGet ret' , JSON.stringify(ret))
@@ -39,6 +40,10 @@ export default {
   },
   async userAddressUpdate(store, data){
     let ret = await Request.post('user/addressUpdate', data)
+    return ret
+  },
+  async userAddressDelete(score, data){
+    let ret = await Request.post('user/addressDelete', data)
     return ret
   },
   async userInvoiceGet(store, data){

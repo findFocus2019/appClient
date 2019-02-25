@@ -194,7 +194,7 @@
       },
     },
     
-    onLoad() {
+    async onLoad() {
     	
       if(!this.hasLogin){
         uni.navigateTo({
@@ -202,7 +202,10 @@
         })
         return
       }else {
-        this.$store.dispatch('userInfoGet')
+        let userInfoRet = await this.$store.dispatch('userInfoGet')
+        if(userInfoRet.code == 0){
+          this.forzenNum = userInfoRet.data.balance_frozen
+        }
       }
       
       console.log('userInfo' , JSON.stringify(this.userInfo))

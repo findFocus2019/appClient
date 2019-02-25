@@ -20,7 +20,11 @@
   } from 'vuex';
   import userAddress from '../../components/user/user-address.vue'
   export default {
-    
+    data(){
+      return {
+        from: ''
+      }
+    },
     components:{
       userAddress
     },
@@ -38,12 +42,16 @@
       choose(address){
         console.log('choose id' , address)
         this.$store.state.userAddressCurrent = address
-        uni.navigateBack({
-        	delta:1
-        })
+        
+        if(!this.from){
+          uni.navigateBack({
+          	delta:1
+          })
+        }
+        
       }
     },
-    onLoad() {
+    onLoad(opt) {
     	if(!this.hasLogin){
         this.goToLoginPage()
         return
@@ -53,6 +61,8 @@
         this.$store.dispatch('userAddressGet')
         console.log('userAddressCurrent' , this.userAddressCurrent)
       }
+      
+      this.from = opt.from || ''
       
     },
   }

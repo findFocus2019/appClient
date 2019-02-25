@@ -1,6 +1,6 @@
 <template>
 
-  <scroll-view class="page uni-bg-white" scroll-y="true"  @scroll="pageScroll" style="height: 100%;">
+  <view class="uni-page-body uni-bg-white" sstyle="height: 100%;">
 
     <view class="uni-bg-white uni-common-pa" id="post-content uni-border-top">
       <view class="uni-bold uni-h4">
@@ -34,7 +34,10 @@
 
     <view class="uni-bg-white uni-border-top">
       <view class="uni-common-pa" v-if="postInfo.video">
-      	<video :src="postInfo.video" controls style="width: 100%;"></video>
+        <view class="">
+        	<video :src="postInfo.video" controls style="width: 100%;"></video>
+        </view>
+      	
       </view>
       
       <view class="uni-common-pa" v-if="postInfo.audio">
@@ -163,7 +166,7 @@
     </uni-popup>
   	
     <score-show :info="scoreInfo"></score-show>
-  </scroll-view>
+  </view>
   
 </template>
 
@@ -586,6 +589,9 @@
     onUnload(){
       this.$store.state.viewActionOpen = false;
       console.log('onUnload ============' , this.$store.state.viewActionOpen)
+    },
+    onPageScroll() {
+    	this.$store.state.viewActionOpen = true
     }
   }
 </script>

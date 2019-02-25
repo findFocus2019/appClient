@@ -20,21 +20,21 @@
           </view>
         </view>
 
-        <view class="uni-flex uni-common-pa uni-bg-white uni-border-bottom">
+        <!-- <view class="uni-flex uni-common-pa uni-bg-white uni-border-bottom">
           <view class="uni-text-dark input-label">
             所在地区
           </view>
           <view class="uni-flex-item">
 
           </view>
-        </view>
+        </view> -->
 
         <view class="uni-flex uni-common-pa uni-bg-white uni-border-bottom">
           <view class="uni-text-dark input-label">
             详细地址
           </view>
           <view class="uni-flex-item">
-            <textarea type="text" v-model="postData.info" placeholder="详细地址请填写到楼栋号" auto-height="true" style="width: 500upx;"/>
+            <textarea type="text" v-model="postData.info" placeholder="详细地址请填写到楼栋号" style="width: 500upx;height: 200upx;"/>
           </view>
           <view class="uni-right" @tap="chooseAddress">
             <uni-icon type="location" size="22"></uni-icon>
@@ -43,8 +43,11 @@
 
       </view>
 
-      <view class="uni-common-pa">
+      <view class="uni-common-pa ">
         <button type="warn" formType="submit" >保存</button>
+      </view>
+      <view class="uni-common-pa uni-center uni-text-light " @tap="addressDel" v-if="postData.id">
+      	删除
       </view>
 
     </form>
@@ -98,7 +101,31 @@
         })
       },
       chooseAddress(){
-        
+        uni.chooseLocation({
+            success: (res)=> {
+                console.log('位置名称：' + res.name);
+                console.log('详细地址：' + res.address);
+                console.log('纬度：' + res.latitude);
+                console.log('经度：' + res.longitude);
+                
+                this.postData.info = res.address + res.name
+            }
+        });
+      },
+      addressDel(){
+        uni.showActionSheet({
+        	itemList:['确认删除'],
+          success: async (e) =>  {
+          	if(e.tapIndex == 0){
+              console.log('删除地址')
+              await this.$store.dispatch('userAddressDelete' , {address_id: this.postData.id})
+              await this.$store.dispatch('userAddressGet')
+              uni.navigateBack({
+              	delta:1
+              })
+            }
+          }
+        })
       }
     },
     onLoad(opt) {

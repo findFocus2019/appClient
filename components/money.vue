@@ -49,7 +49,7 @@
         if(this.nums.length){
           let num = 0
           this.nums.forEach(n => {
-            num += n * 100
+            num += parseInt(n * 100)
           })
           let numStr = num / 100
           

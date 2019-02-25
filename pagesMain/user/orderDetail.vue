@@ -154,7 +154,7 @@
     				物流单号
     			</view>
     		  <view class="uni-flex-item uni-right">
-    		  	{{ order.express.no }}
+    		  	{{ order.express.express_no }}
     		  </view>
     		</view>
     	</view>

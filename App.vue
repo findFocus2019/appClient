@@ -38,41 +38,11 @@
           }
         }
       })
-
-      // #endif
-
-    },
-    async onShow() {
-      console.log("App Show ==============");
-      let token = uni.getStorageSync('user_auth_token')
-      if (token && !this.$store.state.hasLogin) {
-        console.log('App Show userInfoGet')
-        await this.$store.dispatch('userInfoGet')
-        if (this.$store.state.userInfo.id) {
-          this.$store.state.hasLogin = true
-          console.log('App Show hasLogin', this.$store.state.hasLogin)
-        }
-      }
-
-      // #ifdef APP-PLUS
-      // 检查推送
       uni.subscribePush({
         provider: 'igexin',
         success: async (res) => {
           console.log('subscribePush success:' + JSON.stringify(res));
-
-          // 监听推送透传
-          uni.onPush({
-            provider: 'igexin',
-            success: function() {
-              console.log('监听透传成功');
-            },
-            callback: function(data) {
-              console.log("接收到透传数据：" + JSON.stringify(data));
-            }
-          });
-
-
+      
           let clientId = res.clientid
           let pushToken = res.token
           let platform = uni.getSystemInfoSync().platform
@@ -96,10 +66,63 @@
             console.log('pushInfo no client id')
           }
           
-
+          // 监听推送透传
+          uni.onPush({
+            provider: 'igexin',
+            success: function() {
+              console.log('监听透传成功');
+            },
+            callback: function(data) {
+              console.log("接收到透传数据：" + JSON.stringify(data));
+              let jsonData = data.data
+              let errMsg = data.errMsg
+              if(jsonData.title){
+                uni.showToast({
+                	title: jsonData.title,
+                	mask: false,
+                	duration: 1500,
+                  success(){
+                    if(!jsonData.page){
+                      return 
+                    }
+                    uni.navigateTo({
+                    	url: jsonData.page,
+                    	fail: () => {
+                        uni.switchTab({
+                          url: jsonData.page
+                        })
+                      },
+                    });
+                  }
+                });
+              }
+            },
+            fail:()=>{
+              console.log('监听透传失败');
+            }
+          });
+          
+      
         }
       });
+      
+      
+
       // #endif
+
+    },
+    async onShow() {
+      console.log("App Show ==============");
+      let token = uni.getStorageSync('user_auth_token')
+      if (token && !this.$store.state.hasLogin) {
+        console.log('App Show userInfoGet')
+        await this.$store.dispatch('userInfoGet')
+        if (this.$store.state.userInfo.id) {
+          this.$store.state.hasLogin = true
+          console.log('App Show hasLogin', this.$store.state.hasLogin)
+        }
+      }
+
     },
     async onHide() {
       console.log("App Hide ================");
@@ -107,17 +130,17 @@
       // #ifdef APP-PLUS
 
       // 设置推送状态
-      if(this.$store.state.push.client_id){
-        let body = {
-          client_id: this.$store.state.push.client_id,
-          platform: this.$store.state.push.platform,
-          push_token: this.$store.state.push.token,
-          status: 0
-        }
-        
-        let pushRet = await this.$store.dispatch('pushInfo', body)
-        console.log('pushInfo pushRet:' + JSON.stringify(pushRet))
-      }
+//       if(this.$store.state.push.client_id){
+//         let body = {
+//           client_id: this.$store.state.push.client_id,
+//           platform: this.$store.state.push.platform,
+//           push_token: this.$store.state.push.token,
+//           status: 0
+//         }
+//         
+//         let pushRet = await this.$store.dispatch('pushInfo', body)
+//         console.log('pushInfo pushRet:' + JSON.stringify(pushRet))
+//       }
       
       // #endif
     }

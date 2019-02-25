@@ -25,27 +25,27 @@
 			  
 			  <view class="uni-common-mt uni-common-pl" v-if="item.rate_imgs.length">
 			  	<view class="uni-common-pr" style="display: inline-block;width: 100upx;height: 100upx;" v-for="(img,index1) in item.rate_imgs" :key="index1" @tap="preImg(item.rate_imgs, img)">
-			  		<image lazy-load="true"  :src="img" mode="scaleToFill" style="width: 100upx;height: 100upx;border-radius: 4upx;"></image>
+			  		<image lazy-load="true"  :src="img" mode="scaleToFill" style="width: 100upx;height: 100upx;border-radius: 4upx;border: 1px solid #EEEEEE;"></image>
 			  	</view>
 			  </view>
         
         <view class="uni-common-pl uni-common-pr">
         	<view class="uni-common-pa uni-bg-gray uni-common-mt-sm uni-flex">
-        		<view class="" style="width: 160upx;height: 160upx;">
-        			<image lazy-load="true"  :src="item.goods_cover" mode="scaleToFill" style="width: 160upx;height: 160upx;border-radius: 8upx;"></image>
+        		<view class="" style="width: 200upx;height: 200upx;">
+        			<image lazy-load="true"  :src="item.goods_cover" mode="scaleToFill" style="width: 200upx;height: 200upx;border-radius: 8upx;"></image>
         		</view>
             <view class="uni-flex-item uni-common-pl">
-            	<view class="uni-ellipsis-2 " style="height: 80upx;">
+            	<view class="uni-ellipsis-2 uni-bold" style="height: 100upx;line-height: 50upx;">
             		{{ item.goods_title }}
             	</view>
               <view class="">
-              	<text class="uni-text-gray">商品价格:</text>
+              	<text class="uni-text-light">商品购买价格:</text>
 								<view class="uni-inline-block uni-text-red">
-									<money :num="item.goods_amount" size="40" />
+									<money :num="item.goods_amount" size="36" />
 								</view>
                 
               </view>
-              <view class="uni-text-gray uni-text-small">
+              <view class="uni-text-light uni-text-small">
               	购买完成时间：{{ item.create_date}}
               </view>
             </view>
