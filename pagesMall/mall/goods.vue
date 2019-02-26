@@ -34,12 +34,12 @@
         <view class="">
           <text class="uni-text-small">优惠价:</text>
           <view class="uni-text-red uni-inline-block">
-            <money :nums="[mallGoodsInfo.price_sell,mallGoodsInfo.price_score_sell]" size="30" />
+            <money :num="mallGoodsInfo.price_sell" size="30" />
           </view>
         </view>
         <view class="uni-text-gray uni-common-pl" style="text-decoration: line-through;" >
           <text class="uni-text-small">原价:</text>
-					<money :num="mallGoodsInfo.price_market" />
+					<money :num="mallGoodsInfo.price" />
         </view>
         <view class="uni-text-light uni-common-pl" >
           <text class="uni-text-small">积分可抵扣:</text>
@@ -50,7 +50,7 @@
       <view class="">
         <text class="uni-text-small">VIP价:</text>
         <view class="uni-text-red uni-inline-block">
-          <money :nums="[mallGoodsInfo.price_vip, mallGoodsInfo.price_score_vip]" size="30" />
+          <money :num="mallGoodsInfo.price_vip" size="30" />
         </view>
       	
         <text class="uni-text-small uni-common-ml-sm ">积分可抵扣:</text>
@@ -144,7 +144,7 @@
           </view>
           <view class="">
             <view class="uni-text-red" >
-              <money :nums="[mallGoodsInfo.price_sell,mallGoodsInfo.price_score_sell]" size="36" />
+              <money :num="mallGoodsInfo.price_sell" size="36" />
               <view class="uni-text-small uni-text-gray uni-common-ml-sm uni-inline-block" >
                 积分可抵扣:
                 <money :num="mallGoodsInfo.price_score_sell" />
@@ -152,7 +152,7 @@
             </view>
             <view class="uni-text-red">
               
-              <money :nums="[mallGoodsInfo.price_vip,mallGoodsInfo.price_score_vip]" size="30" />
+              <money :num="mallGoodsInfo.price_vip" size="30" />
               <view class="uni-text-small uni-text-gray uni-common-ml-sm uni-inline-block" >
                 积分可抵扣:
                 <money :num="mallGoodsInfo.price_score_vip" />
@@ -448,6 +448,7 @@
 				let albumsRet = await this.$store.dispatch('getAlbums' , {type: 'goods' , type_id: id})
         console.log('albumsRet =========:' + JSON.stringify(albumsRet))
 				if(albumsRet.code == 0){
+          this.imgUrls = []
 					let rows = albumsRet.data.rows || []
 					rows.forEach(row => {
 						this.imgUrls.push(row.img)

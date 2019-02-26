@@ -43,8 +43,8 @@
                 </view>
                 <view class="uni-flex ">
                 	<view class="uni-flex-item uni-text-red">
-                    <money :nums="[item.price_sell, item.price_score_sell]" size="28" v-if="!isVip"/>
-                    <money :nums="[item.price_vip, item.price_score_vip]" size="28" v-else/>
+                    <money :num="item.price_sell" size="28" v-if="!isVip"/>
+                    <money :num="item.price_vip" size="28" v-else/>
                 	</view>
                   <view class="uni-flex-item uni-right uni-text-light">
                     <text>x</text>

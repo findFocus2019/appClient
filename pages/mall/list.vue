@@ -78,10 +78,10 @@
                 <view class="uni-flex">
                   <view class="">
                     <view class="uni-text-red" style="display: inline-block;">
-                      <money :nums="[item.price_sell,item.price_score_sell]" size="48" /> 
+                      <money :num="item.price_sell" size="48" /> 
                     </view>
                     <view class="uni-text-yellow" style="display: inline-block;">
-                      / VIP <money :nums="[item.price_vip, item.price_score_vip]" size="36"/>
+                      / VIP <money :num="item.price_vip" size="36"/>
                     </view>
                   </view>
                   
@@ -116,11 +116,11 @@
                 </view>
 								<view class="">
 								  <view class="uni-text-red uni-bold" style="display: inline-block;">
-								    <money :nums="[item.price_sell,item.price_score_sell]" size="32" /> 
+								    <money :num="item.price_sell" size="32" /> 
 								  </view>
 								  <view class="uni-text-yellow" style="display: inline-block;">
 										 <text class="uni-common-ml-sm">VIP</text>
-										 <money :nums="[item.price_vip,item.price_score_vip]" size="24"/>        
+										 <money :num="item.price_vip" size="24"/>        
 								  </view>
 								    
 								</view>
@@ -154,11 +154,11 @@
                 </view>
           			<view class="uni-ellipsis">
           			  <view class="uni-text-red uni-bold" style="display: inline-block;">
-          			    <money :nums="[item.price_sell,item.price_score_sell]" size="32" /> 
+          			    <money :num="item.price_sell" size="32" /> 
           			  </view>
           			  <view class="uni-text-yellow" style="display: inline-block;">
           					 <text class="uni-common-ml-sm">VIP</text>
-          					 <money :nums="[item.price_vip,item.price_score_vip]" size="24"/>        
+          					 <money :num="item.price_vip" size="24"/>        
           			  </view>
           			    
           			</view>

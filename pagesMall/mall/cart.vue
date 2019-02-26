@@ -41,14 +41,14 @@
 				            <view class="uni-flex">
 				            	<view class="uni-flex-item uni-text-small uni-text-gray">
 				            		积分可抵扣:
-                        <money :nums="[item.price_score_sell]" size="24" v-if="!isVip"/> 
-                        <money :nums="[item.price_score_vip]" size="24" v-else/> 
+                        <money :num="item.price_score_sell" size="24" v-if="!isVip"/> 
+                        <money :num="item.price_score_vip" size="24" v-else/> 
 				            	</view>
 				            </view>
 				            <view class="uni-flex">
 				              <view class="uni-text-red uni-flex-item">
-				              	<money :nums="[item.price_sell,item.price_score_sell]" size="36" v-if="!isVip" />
-                        <money :nums="[item.price_vip,item.price_score_vip]" size="36" v-else />
+				              	<money :num="item.price_sell" size="36" v-if="!isVip" />
+                        <money :num="item.price_vip" size="36" v-else />
 				              </view>
 				            	<view class="uni-right uni-flex-item">
 				            		<uni-number-box  @change="onNumberChange" :value="item.num" :cartItem="item"></uni-number-box>
@@ -90,8 +90,8 @@
         <view class="" style="line-height: 50upx;">
           <text>总计:</text>
         	<view class="uni-text-red uni-inline-block"> 
-            <money :nums="[cartInfo.total,cartInfo.score]" size="32" v-if="!isVip"/>
-            <money :nums="[cartInfo.totalVip,cartInfo.scoreVip]" size="32" v-else/>
+            <money :num="cartInfo.total" size="32" v-if="!isVip"/>
+            <money :num="cartInfo.totalVip" size="32" v-else/>
           </view>
         </view>
 				<view class="" style="line-height: 50upx;">
