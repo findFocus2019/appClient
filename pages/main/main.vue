@@ -8,7 +8,7 @@
   
       <view class="input-search-view uni-flex" style="border-radius: 30upx;background: #FFFFFF;opacity: 0.5;" @tap="goSearch">
         <uni-icon type="search" size="22" color="#666666"></uni-icon>
-        <input confirm-type="搜索" @confirm="confirm" class="input uni-flex-item" type="text" placeholder="输入搜索关键词" />
+        <input confirm-type="search" @confirm="confirm" class="input uni-flex-item" type="text" placeholder="输入搜索关键词" />
       </view>
       <block slot="right">
         <view class="uni-common-pr" @tap="goNotice">

@@ -28,13 +28,13 @@
                 签到记录
       				</view>
               <view class="uni-flex-item">
-              	<text class="dot uni-bg-blue"></text>已签到
+              	<text class="sign-dot uni-bg-blue"></text>已签到
               </view>
               <view class="uni-flex-item">
-              	<text class="dot uni-bg-gray"></text>未签到
+              	<text class="sign-dot uni-bg-gray"></text>未签到
               </view>
               <view class="uni-flex-item">
-              	<text class="dot uni-bg-pink"></text>今日
+              	<text class="sign-dot uni-bg-pink"></text>今日
               </view>
       			</view>
             
@@ -46,11 +46,11 @@
             
             <view class="uni-flex uni-common-mt" v-for="(days,index1) in monthDays" :key="index1">
             	<view class="uni-center" v-for="(item,index2) in days" :key="index2" style="width: 90upx;">
-            		<text class="month-day-item today" v-if="item == day">{{ item }}</text> 
-                <text class="month-day-item" v-if="item > day">{{ item }}</text>
-                <block v-if="item < day && item > 0">
-                  <text class="month-day-item active" v-if="dailySignData.active_days.indexOf(item) > -1">{{ item }}</text>
-                  <text class="month-day-item no-active" v-else>{{ item }}</text>
+            		<text class="month-day-item month-day-item-today" v-if="item.day == day">{{ item.day }}</text> 
+                <text class="month-day-item" v-if="item.day > day">{{ item.day }}</text>
+                <block v-if="item.day < day && item.day > 0">
+                  <text class="month-day-item month-day-item-active" v-if="item.active">{{ item.day }}</text>
+                  <text class="month-day-item month-day-item-no-active" v-else>{{ item.day }}</text>
                 </block>
                 
             	</view>
@@ -195,11 +195,21 @@
         count++
       }
       
+      await this.getDailySignData()
+      
       for (var index =0 ; index < monthDayCount; index++){
         if(!weekdays[i]){
           weekdays[i] = []
         }
-        weekdays[i].push(dayCount)
+        let dayData = {}
+        if(this.dailySignData.active_days.indexOf(dayCount) > -1){
+          dayData.day = dayCount
+          dayData.active = true
+        }else {
+          dayData.day = dayCount
+          dayData.active = false
+        }
+        weekdays[i].push(dayData)
         dayCount++
         count++
         
@@ -212,7 +222,7 @@
       console.log(weekdays)
       this.monthDays = weekdays
       
-      this.getDailySignData()
+      
     }
   }
 </script>
@@ -224,7 +234,7 @@
     height: 500upx;
   }
   
-  .dot {
+  .sign-dot {
     display: inline-block;
     width: 20upx;
     height: 20upx;
@@ -241,17 +251,17 @@
     border-radius: 24upx;
   }
   
-  .month-day-item.today {
+  .month-day-item-today {
     background: #ff6262;
     color: #FFFFFF;
   }
   
-  .month-day-item.active {
+  .month-day-item-active {
     background: #007aff;
     color: #FFFFFF;
   }
   
-  .month-day-item.no-active {
+  .month-day-item-no-active {
     background: #EEEEEE;
     /* color: #333333; */
   }

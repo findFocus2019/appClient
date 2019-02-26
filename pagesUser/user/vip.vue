@@ -6,6 +6,11 @@
       <view class="uni-common-pa" style="height:328upx;">
       	<image lazy-load="true"  src="/static/img/user/vip-card.png" mode="widthFix" style="width:600upx;height:328upx;border-radius: 12upx;overflow: hidden;"></image>
       </view>
+      
+      <view class="uni-left" style="height: 100upx;line-height: 100upx;position: relative;top: -120upx;left: 100upx;color: #faf4c7;" v-if="isVip">
+      	到期时间: {{ userInfo.deadDate }}
+      </view>
+      
       <view class="uni-common-pt">
       	<image lazy-load="true"  src="/static/img/user/vip-title.png" mode="widthFix" style="width: 500upx;height: 144upx;"></image>
       </view>
@@ -33,6 +38,7 @@
 </template>
 
 <script>
+  import {mapState} from 'vuex';
   export default {
     data(){
       return {
@@ -48,6 +54,9 @@
         ]
 
       }
+    },
+    computed:{
+      ...mapState(['hasLogin','userInfo','isVip'])
     }
   }
 </script>

@@ -180,7 +180,7 @@ export default {
 			// 发票默认不选
 			this.$store.state.mallOrderConfirm.invoice = 0 //
 			// return 
-			uni.navigateTo({
+			uni.redirectTo({
 				url:'/pagesMall/mall/cartConfirm?type=1&isVipOrder=1'
 			})
 		}

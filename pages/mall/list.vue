@@ -20,7 +20,7 @@
   		</view>
       <view class="input-view uni-flex uni-bg-gray" style="border-radius: 30upx;" v-else >
       	<uni-icon type="search" size="22" color="#666666"></uni-icon>
-      	<input class="input uni-flex-item" type="text" placeholder="输入搜索关键词" v-model="mallSearch.text" @tap="goSearch"/>
+      	<input confirm-type="search" class="input uni-flex-item" type="text" placeholder="输入搜索关键词" v-model="mallSearch.text" @tap="goSearch"/>
       	<uni-icon type="clear" size="22" color="#666666" @click="cancelSearch"></uni-icon>
       </view>
       <block slot="right">
@@ -152,7 +152,7 @@
                 <view class="uni-bold uni-ellipsis " >
                   {{ item.title }}
                 </view>
-          			<view class="">
+          			<view class="uni-ellipsis">
           			  <view class="uni-text-red uni-bold" style="display: inline-block;">
           			    <money :nums="[item.price_sell,item.price_score_sell]" size="32" /> 
           			  </view>

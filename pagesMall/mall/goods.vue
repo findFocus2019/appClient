@@ -169,7 +169,10 @@
       </view>
 
       <view class="uni-common-pa">
-        <button type="warn" @tap="cartAddConfirm">确定</button>
+        <button type="warn" @tap="cartAddConfirm" v-if="goodsInfoStock != 0">确定</button>
+        <view class="uni-bg-gray uni-border-btn-radius uni-common-pt uni-common-pb" v-else>
+        	无库存
+        </view>
       </view>
 
     </uni-popup>
@@ -302,6 +305,15 @@
         item.post_id = this.postId
 				
 				console.log('cartAddConfirm item =======', item )
+        
+        let num = this.cartAddNum
+        if(num <= 0){
+          uni.showToast({
+          	icon:'none',
+            title:'请选择商品数量'
+          })
+          return 
+        }
 				
 				if(this.addType == 0){
 					Cart.plus(item , this.cartAddNum)
@@ -444,6 +456,8 @@
 			}
     },
     async onLoad(opt) {
+      console.log('onLoad=======================')
+      console.log('opt:' + JSON.stringify(opt))
       // 获取商品信息
       let id = opt.id
 			this.$store.state.mallGoodsInfo = {}
@@ -479,6 +493,7 @@
 			
     },
     async onShow() {
+      console.log('onShow=======================')
     	if(this.mallGoodsInfo.id){
     	  let ret = await this.$store.dispatch('getGoodsInfo' , {id: this.mallGoodsInfo.id})
     	  console.log('onShow getGoodsInfo ret ==============' , JSON.stringify(ret))

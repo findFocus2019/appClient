@@ -16,7 +16,7 @@ export default {
 
   async callServicePhone(store) {
     uni.makePhoneCall({
-      phoneNumber: '18676669410' //仅为示例
+      phoneNumber: '4008365151' //仅为示例
     });
   },
   

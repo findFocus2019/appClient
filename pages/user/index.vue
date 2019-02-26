@@ -35,7 +35,7 @@
             <view class="" @tap="goToPage('/pagesUser/user/setting')">
             	{{ userInfo.nickname || '还未设置'}}
             </view>
-            <view class="" v-if="isVip">
+            <view class="" v-if="isVip" @tap="goToPage('/pagesUser/user/vip')">
             	<image lazy-load="true"  src="/static/icon/user/vip-tag.png" mode="scaleToFill" style="width: 120upx;height: 30upx;"></image>
             </view>
 						<view class="uni-text-yellow uni-text-small" v-else>
@@ -228,6 +228,7 @@
          if(this.hasLogin){
            this.$store.dispatch('userIndexDataGet')
          }
+        
        }
      },
      onNavigationBarButtonTap(e) {
@@ -272,9 +273,9 @@
          ]
        }
      },
-     onLoad() {
+     async onLoad() {
         if(this.hasLogin){
-          this.$store.dispatch('userIndexDataGet')
+          await this.$store.dispatch('userIndexDataGet')
         }
 
      },
@@ -283,10 +284,10 @@
      },
      async onPullDownRefresh() {
         await this.refresh()
-        uni.startPullDownRefresh()
+        uni.stopPullDownRefresh()
      },
      onPageScroll(e){
-       console.log('onPageScroll' , e)
+       // console.log('onPageScroll' , e)
        let top = e.scrollTop
        if(top > 0){
          this.barBgColor = '#d81e06'

@@ -7,7 +7,7 @@
       <view class="uni-flex uni-border-bottom uni-form-item">
         <view class="uni-flex-item uni-column">
           <input type="password" v-model="postData.verify_code" required placeholder="请输入验证码" class="uni-input"
-            maxlength="6">
+            maxlength="4">
         </view>
         <view class="uni-common-pl uni-common-pr ">
           <view @tap="smsSendClick" class="uni-border-btn-radius uni-center btn-sms" style="">{{ sms.text }}</view>

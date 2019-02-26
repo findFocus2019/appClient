@@ -11,7 +11,7 @@
 		  
 		  <view class="input-view uni-flex uni-bg-gray " style="border-radius: 30upx;">
 		    <uni-icon type="search" size="22" color="#666666"></uni-icon>
-		    <input confirm-type="搜索" @confirm="confirm" class="input uni-flex-item" type="text" placeholder="输入搜索关键词" v-model="mainSearchText"/>
+		    <input confirm-type="search" @confirm="confirm" class="input uni-flex-item" type="text" placeholder="输入搜索关键词" v-model="mainSearchText"/>
 		    <uni-icon type="clear" size="22" color="#666666" @click="cancel"></uni-icon>
 		  </view>
 		  <block slot="right">

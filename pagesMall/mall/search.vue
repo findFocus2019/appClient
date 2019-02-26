@@ -12,7 +12,7 @@
       
       <view class="input-view">
         <uni-icon type="search" size="22" color="#666666"></uni-icon>
-        <input confirm-type="搜索" @confirm="confirm" class="input" type="text" placeholder="输入搜索关键词" v-model="mallSearch.text"/>
+        <input confirm-type="search" @confirm="confirm" class="input" type="text" placeholder="输入搜索关键词" v-model="mallSearch.text"/>
         <uni-icon type="clear" size="22" color="#666666" @click="cancel"></uni-icon>
       </view>
       <block slot="right">
