@@ -75,7 +75,8 @@
     	              <text style="margin-left: 10upx;">{{ item.num }}</text>
     		        	</view>
     		          <view class="uni-flex-item uni-right uni-text-small uni-text-light" >
-    		             <text class="uni-bg-gray" v-if="order.status == 9" @tap="goToAfterApply({order:order, items: [item]})">申请售后</text>
+    		             <text class="uni-bg-gray order-detail-item-action" v-if="order.status == 9" @tap="goToAfterApply({order:order, items: [item]})" >售后</text>
+                     <text class="uni-bg-gray order-detail-item-action" v-if="order.status == 9" @tap="goToOrderRate({order:order, items: [item]})" >评价</text>
     		          </view>
     		        </view>
     		      </view>
@@ -242,6 +243,16 @@
         	url:"/pagesUser1/user/orderRatePost"
         })
       },
+      goToOrderRate(data){
+        let order= data.order
+        let goodsItems = data.items
+        
+        this.$store.state.mallAfterData.order = order
+        this.$store.state.mallAfterData.goodsItems = goodsItems
+        uni.navigateTo({
+        	url:"/pagesUser1/user/orderRatePost?order_id="+order.id+"&item_id=" + goodsItems[0].id
+        })
+      },
       goToAfterApply(data){
         let order= data.order
         let goodsItems = data.items
@@ -402,5 +413,12 @@
     margin-left: 10upx;
     font-size: 24upx;
     width: 100upx;
+  }
+  
+  .order-detail-item-action {
+    margin-left: 10upx;
+    line-height: 40upx;
+    padding: 10upx 20upx;
+    border-radius: 30upx;
   }
 </style>

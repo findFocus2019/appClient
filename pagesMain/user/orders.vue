@@ -87,14 +87,14 @@
           </view>
           <view class="" v-if="order.status == 0">
             <text class="order-btn" @tap="goCancel(order)">取消</text>
-            <text class="order-btn uni-bg-red" @tap="goPayment(order)">去支付</text>
+            <text class="order-btn order-btn-red " @tap="goPayment(order)">去支付</text>
           </view>
           <view class="" v-if="order.status == 2">
             <text class="order-btn " @tap="goComplete(order)">确认收货</text>
           </view>
           <view class="" v-if="order.status == 9">
             <!-- <text class="order-btn" @tap="goRate(order)">评价</text> -->
-            <text class="order-btn" @tap="goAfter(order)">申请售后</text>
+            <!-- <text class="order-btn" @tap="goAfter(order)">申请售后</text> -->
           </view>
         </view>
 
@@ -370,5 +370,10 @@
     width: 120upx;
     text-align: center;
     font-size: 24upx;
+  }
+  
+  .order-btn-red {
+    color: #d81e06;
+    border-color: #d81e06;
   }
 </style>

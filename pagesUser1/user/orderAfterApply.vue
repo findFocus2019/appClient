@@ -47,7 +47,15 @@
           
         </view>
         
-			  
+			  <view class="uni-flex uni-common-pa uni-border-top">
+			    <view class="uni-flex-item">
+			      <text class="uni-text-dark uni-bold">售后类别:</text>
+			    </view>
+			    <view class="uni-right" @tap="chooseCategory">
+			      <text class="uni-text-gray uni-text-small">{{ postData.category }}</text>
+			      <uni-icon type="arrowright" size="22"></uni-icon>
+			    </view>
+			  </view>
 			  
 
         <view class="uni-flex uni-common-pa uni-border-top">
@@ -93,8 +101,13 @@
       	<button type="warn" class="uni-border-btn-radius">提交</button>
       </view>
       
-      <view class="uni-common-pa uni-center uni-text-gray uni-text-small">
-      	提交成功后将会有工作人员在24小时内与您进行联系办理售后事宜
+      <view class="uni-common-pa uni-left uni-text-gray uni-text-small">
+      	<view class="">
+      		1.提交成功后将会有工作人员在24小时内与您进行联系办理售后事宜
+      	</view>
+        <view class="">
+        	2.商品在收货7个工作日内可进行退货操作
+        </view>
       </view>
 		</view>
 	</view>
@@ -116,11 +129,17 @@
          order_id: 0,
          goods_ids: [],
          type:'',
+         category:'',
          imgs:[],
          info:''
        },
        order:{},
        goodsItems:[],
+       categorys:[
+         '退货',
+         '换货',
+         '其他'
+       ],
        types:[
          '缺件，少件',
          '商品降价',
@@ -146,6 +165,16 @@
         }
        })
      },
+     chooseCategory(){
+       uni.showActionSheet({
+       	itemList:this.categorys,
+        success: (e) => {
+          let index = e.tapIndex
+        	this.postData.category = this.categorys[index]
+        }
+       })
+     },
+     
      preImg(paths, current){
        uni.previewImage({
            urls: paths,
@@ -212,8 +241,8 @@
          	icon:'success',
           title:'提交成功'
          })
-         uni.navigateBack({
-         	delta:1
+         uni.redirectTo({
+         	url:'/pagesUser1/user/orderAfters'
          })
        }else {
          uni.showToast({
@@ -236,6 +265,11 @@
       goodsIds.push(item.id)
     })
     this.postData.goods_ids = goodsIds
+    
+    if ((parseInt(Date.now() / 1000) - this.order.update_time) > (7 * 3600 * 24)) {
+    	this.categorys.splice(0,1)
+    }
+    
    }
  }
 </script>
