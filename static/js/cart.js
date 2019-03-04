@@ -96,10 +96,14 @@ class Cart {
   /**
    * 勾选产品
    */
-  check(data){
+  check(data, check = ''){
     this.cart.forEach(item => {
       if(data.id === item.id){
-        data.check = !data.check
+				if(check !== ''){
+					data.check = check
+				}else {
+					data.check = !data.check  
+				}
       }
     })
     
@@ -123,7 +127,9 @@ class Cart {
     }
     
     this.cart.forEach(item => {
-      item.check = setCheck
+			if (item.check !== null){
+				item.check = setCheck
+			}  
     })
     
     this._setData()

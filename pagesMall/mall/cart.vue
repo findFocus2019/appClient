@@ -6,7 +6,7 @@
     </view>
     
 		<view class="" v-for="(list,index) in cartInfo.list" :key="index">
-			<view class="uni-common-mb" v-if="list.length">
+			<view class="uni-common-mt" v-if="list.length">
 				<view class="uni-bg-white uni-border-top uni-common-pa uni-flex" >
 					<view class="" style="width: 70upx;" @tap="cartCheckType(index)">
 						<uni-icon type="checkbox-filled" size="22" v-if="cartInfo.checkAllType[index]" color="#d81e06"></uni-icon>
@@ -27,7 +27,10 @@
 						<view class="scroll-view-item_H">
 				      <view class="">
 				      	<view class="uni-flex">
-				      		<view class="cart-list-check uni-flex-item uni-center" @tap="cartCheck(item)">
+									<view class="cart-list-check uni-flex-item uni-center uni-text-small" v-if="item.check === null">
+										无货
+									</view>
+				      		<view class="cart-list-check uni-flex-item uni-center" @tap="cartCheck(item)" v-else>
 				      			<uni-icon type="checkbox-filled" size="22" v-if="item.check" color="#d81e06"></uni-icon>
 										<uni-icon type="circle" size="22"  v-else></uni-icon>
 				      		</view>
@@ -75,6 +78,26 @@
 				
 			</view>
 
+			<view v-if="index == 2 && list.length" class="uni-bg-white">
+				<user-address :address="userAddressCurrent" v-if="userAddressCurrent.id"></user-address>
+				
+				<view class="uni-common-pa uni-flex uni-border-top">
+					<view class="uni-flex-item">
+						运费
+					</view>
+					<view class="uni-right">
+						<view class="" v-if="priceExpress">
+							<money :num="priceExpress"></money>
+						</view>
+						<view class="" v-if="priceExpress === 0">
+							0
+						</view>
+						<view class="" v-if="priceExpress === ''">
+							未获取
+						</view>
+					</view>
+				</view>
+			</view>
     </view>
 		
 		<view class="cart-toolbar uni-flex uni-center uni-bg-white">
@@ -122,19 +145,22 @@
   import uniNumberBox from '@/components/uni-number-box.vue';
   import uniIcon from '@/components/uni-icon.vue';
  import money from '@/components/money.vue';
+ import userAddress from '@/components/user/user-address.vue';
   export default {
     data(){
       return {
-        cartInfo:{}
+        cartInfo:{},
+				priceExpress:''
       }
     },
     components:{
       uniNumberBox,
       uniIcon,
-      money
+      money,
+			userAddress
     },
     computed:{
-      ...mapState(['hasLogin','isVip','mallOrderConfirm'])
+      ...mapState(['hasLogin','isVip','mallOrderConfirm' , 'userAddressList','userAddressCurrent'])
     },
     methods:{
       ...mapActions(['goToLoginPage']),
@@ -143,7 +169,7 @@
 				console.log(e)
 				// this.old.scrollTop = e.detail.scrollTop
 			},
-      onNumberChange(data){
+      async onNumberChange(data){
         console.log('onNumberChange:' ,data)
         let item = data.item
         let num = item.num - data.val
@@ -153,23 +179,40 @@
           Cart.plus(item , -num)
         }
         
+				let stockRet = await this.getStockJd(item.uuid, item.num)
+				if(!stockRet){
+					Cart.check(item , null)
+				}else {
+					Cart.check(item , item.check || false)
+				}
+				
         this.cartInfo = Cart.info()
+				
+				this.getFeight()
       },
       cartDel(item){
         Cart.minus(item ,item.num)
         this.cartInfo = Cart.info()
+				
+				this.getFeight()
       },
 			cartCheck(item){
 				Cart.check(item)
 				this.cartInfo = Cart.info()
+				
+				this.getFeight()
 			},
 			cartCheckType(index){
 				Cart.checkAllByType(index)
 				this.cartInfo = Cart.info()
+				
+				this.getFeight()
 			},
 			cartCheckAll(){
 				Cart.checkAllAction()
 				this.cartInfo = Cart.info()
+				
+				this.getFeight()
 			},
 			cartToOrder(){
         let total = Cart.total
@@ -181,33 +224,162 @@
           });
           return
         }
+				
+				console.log('this.priceExpress' , this.priceExpress)
+				if(this.priceExpress === ''){
+					uni.showToast({
+					    title: '京选商品运费获取失败，稍后重试',
+					    icon:'none',
+					    duration: 2000
+					});
+					return
+				}
+				
         if(!this.hasLogin){
           this.goToLoginPage()
         }else {
           // 发票默认不选
           this.$store.state.mallOrderConfirm.invoice = 0 //
+					this.$store.state.mallOrderConfirm.priceExpress = this.priceExpress
           // return 
           uni.showLoading({
           	title:'提交中'
           })
+					
+					let page = '/pagesMall/mall/cartConfirm'
+					let jdOrder = 0
+					this.cartInfo.list[2].forEach(item => {
+						if(item.check){
+							jdOrder = 1
+						}
+					})
+					page += '?jdOrder=' + jdOrder
           setTimeout(() => {
             uni.navigateTo({
-            	url:'/pagesMall/mall/cartConfirm'
+            	url:page
             })
             uni.hideLoading()
           }, 500)
           
         }
 				
+			},
+			async checkJdGoods(){
+				let cartInfo = Cart.info()
+				let jdList = cartInfo.list[2]
+				if(!jdList.length){
+					return 
+				}
+				for (let i = 0; i < jdList.length; i++) {
+					let goods = jdList[i]
+					let stockRet = await this.getStockJd(goods.uuid, goods.num)
+					if(!stockRet){
+						Cart.check(goods , null)
+					}else {
+						Cart.check(goods , goods.check || false)
+					}
+				}
+				
+				this.cartInfo = Cart.info()
+				
+				console.log('this.cartInfo' , this.cartInfo)
+			},
+			async getStockJd(skuId, num) {
+			  let address = this.userAddressCurrent
+			  if(!address.id){
+					
+			    return false
+			  }
+			  let areas = [address.province , address.city, address.county, address.town]
+			  let area = areas.join('_')
+			  let skuNums = JSON.stringify([{
+			      skuId: skuId,
+			      num: num
+			    }])
+			  let ret = await this.$store.dispatch('getJdGoodsStock', {
+			    skuNums:skuNums ,
+			    area: area
+			  })
+			  console.log('getJdGoodsStock ret:' + JSON.stringify(ret))
+			  if(ret.code == 0){
+			    let rets = ret.data
+			    let stockStateId= 0
+			    rets.forEach(item => {
+			      if(item.skuId == skuId){
+			        stockStateId = item.stockStateId
+			      }
+			    })
+			    
+			    if(stockStateId != 33){
+			      return false
+			    }
+			  }else {
+			    return false
+			  }
+			  
+			  // return false
+			  return true;
+			},
+			async getFeight(){
+				let cartInfo = Cart.info()
+				let jdList = cartInfo.list[2]
+				if(!jdList.length){
+					this.priceExpress = 0
+					return 
+				}
+				
+				let address = this.userAddressCurrent
+				if(!address.id){
+					this.priceExpress = ''
+				  return 
+				}
+				
+				let sku = []
+				for (let i = 0; i < jdList.length; i++) {
+					let goods = jdList[i]
+					if (goods.check){
+						sku.push({skuId: goods.uuid , num: goods.num})
+					}
+				}
+				if(!sku.length){
+					this.priceExpress = 0
+					return
+				}
+				
+				let ret = await this.$store.dispatch('getJdFreight' , {
+					sku: JSON.stringify(sku),
+					province: address.province,
+					city: address.city,
+					county: address.county,
+					town: address.town || 0,
+				})
+				
+				console.log('getJdFreight ret' , ret)
+				if(ret.code == 0){
+					this.priceExpress = ret.data.freight
+				}else {
+					this.priceExpress = ''
+				}
 			}
     },
+		
     onLoad() {
     	console.log('onLoad')
+			if (this.hasLogin && !this.userAddressList.length) {
+			  this.$store.dispatch('userAddressGet')
+			}
+			
+			console.log('userAddressCurrent', this.userAddressCurrent)
     },
-    onShow() {
+    async onShow() {
     	console.log('onShow')
 			this.cartInfo = Cart.info()
-			console.log('cart info' , JSON.stringify(this.cartInfo))
+			console.log('cart info :' + JSON.stringify(this.cartInfo))
+			
+			let address = this.userAddressCurrent
+			console.log('onShow address' , address)
+			await this.checkJdGoods()
+			await this.getFeight()
     },
     onReady() {
     	console.log('onReady')

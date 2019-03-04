@@ -69,6 +69,15 @@
     
     <view class="uni-common-mt-md uni-common-pl uni-common-pr uni-bg-white uni-border-top" v-if="!isVipOrder">
       
+			<view class="uni-flex uni-common-pt uni-common-pb uni-border-bottom " >
+				<view class="uni-flex-item input-label">
+					运费
+				</view>
+			  <view class="uni-flex-item uni-right">
+			  	<money :num="mallOrderConfirm.priceExpress" size="28"/>
+			  </view>
+			</view>
+			
     	<view class="uni-flex uni-common-pt uni-common-pb uni-border-bottom " >
     		<view class="uni-flex-item input-label">
     			积分余额
@@ -102,7 +111,7 @@
           <text style="margin-left: 10upx;">小计</text>
         	<!-- <text class="uni-text-red">￥</text> -->
           <view class="uni-inline-block uni-text-red">
-          	<money :num="total" size="36"/>
+          	<money :nums="[total , mallOrderConfirm.priceExpress]" size="36"/>
           </view>
         </view>
       </view>
@@ -223,7 +232,8 @@
         postData.score = this.postData.score * 1000
         postData.address = this.userAddressCurrent || {}
         postData.invoice = this.mallOrderConfirm.invoice ? this.userInvoice : ''
-        
+        postData.express_fee = this.mallOrderConfirm.priceExpress || 0
+				
         console.log('orderCreate postData' , postData)
         
         if(!postData.address.id){

@@ -68,6 +68,11 @@ export default {
   async getJdGoodsStock(store, data = {}){
     let ret = await Request.post('pub/getStock', data)
     return ret
-  }
+  },
+	
+	async getJdFreight(store, data = {}){
+	  let ret = await Request.post('pub/getFreight', data)
+	  return ret
+	},
   
 }

@@ -79,7 +79,7 @@
 
       <view class="content uni-common-mt uni-common-pa">
         <view v-show="current === 0">
-          <rich-text :nodes="mallGoodsInfo.content"></rich-text>
+          <rich-text :nodes="mallGoodsInfo.content" v-if="mallGoodsInfo.content"></rich-text>
         </view>
         <view v-show="current === 1">
           <view class="" v-if="mallGoodsInfo.img_1">
@@ -230,7 +230,8 @@
         showPopupBottom: false,
         cartAddNum: 1,
         addType: 0,
-        scoreInfo: ''
+        scoreInfo: '',
+				priceExpress:0
         // shareId:0,
         // postId:0
       }
@@ -347,12 +348,27 @@
             title: '添加购物车成功'
           })
         } else if (this.addType == 1) {
+					
+					await this.getFeight(this.cartAddNum)
+					
+					console.log('this.priceExpress' , this.priceExpress)
+
+					if(this.priceExpress === ''){
+						uni.showToast({
+						    title: '京选商品运费获取失败，稍后重试',
+						    icon:'none',
+						    duration: 2000
+						});
+						return
+					}
+					
           // 直接购买
           item.num = this.cartAddNum
           console.log('立即购买 item:', JSON.stringify(item))
           this.$store.state.cartListBuyItem = item
           // 发票默认不选
           this.$store.state.mallOrderConfirm.invoice = 0 //
+					this.$store.state.mallOrderConfirm.priceExpress = this.priceExpress
           // return 
           uni.showLoading({
             title: '提交中...'
@@ -501,7 +517,7 @@
         let area = areas.join('_')
         let skuNums = JSON.stringify([{
             skuId: skuId,
-            num: 100
+            num: num
           }])
         let ret = await this.$store.dispatch('getJdGoodsStock', {
           skuNums:skuNums ,
@@ -526,7 +542,34 @@
         
         // return false
         return true;
-      }
+      },
+			async getFeight(num){
+				
+				let address = this.userAddressCurrent
+				if(!address.id){
+					this.priceExpress = ''
+				  return 
+				}
+				
+				let sku = []
+				let goods = this.mallGoodsInfo
+				sku.push({skuId: goods.uuid , num: num})
+				
+				let ret = await this.$store.dispatch('getJdFreight' , {
+					sku: JSON.stringify(sku),
+					province: address.province,
+					city: address.city,
+					county: address.county,
+					town: address.town || 0,
+				})
+				
+				console.log('getJdFreight ret' , ret)
+				if(ret.code == 0){
+					this.priceExpress = ret.data.freight
+				}else {
+					this.priceExpress = ''
+				}
+			}
     },
     async onLoad(opt) {
       console.log('onLoad=======================')
@@ -569,6 +612,7 @@
 
       console.log('userAddressCurrent', this.userAddressCurrent)
     },
+		
     async onShow() {
       console.log('onShow=======================')
       if (this.mallGoodsInfo.id) {
