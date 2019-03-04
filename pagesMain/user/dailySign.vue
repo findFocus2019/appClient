@@ -46,7 +46,11 @@
             
             <view class="uni-flex uni-common-mt" v-for="(days,index1) in monthDays" :key="index1">
             	<view class="uni-center" v-for="(item,index2) in days" :key="index2" style="width: 90upx;">
-            		<text class="month-day-item month-day-item-today" v-if="item.day == day">{{ item.day }}</text> 
+                <block v-if="item.day == day">
+                  <text class="month-day-item month-day-item-active" v-if="item.active">{{ item.day }}</text>
+                  <text class="month-day-item month-day-item-today" v-else>{{ item.day }}</text>
+                </block>
+
                 <text class="month-day-item" v-if="item.day > day">{{ item.day }}</text>
                 <block v-if="item.day < day && item.day > 0">
                   <text class="month-day-item month-day-item-active" v-if="item.active">{{ item.day }}</text>
@@ -73,11 +77,11 @@
       		</view>
           
           <view class="uni-common-mt">
-            <view class="uni-text-dark" style="line-height: 100upx;">
+            <!-- view class="uni-text-dark" style="line-height: 100upx;">
             	<navigator url="/pagesMain/user/dailySignHongbao">
             	  查看连续签到情况
             	</navigator>
-            </view>
+            </view> -->
           	
           </view>
       	</view>

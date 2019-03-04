@@ -83,7 +83,7 @@
   	</view>
    
     <view class="uni-common-pa page-user-content" >
-    	<view class="uni-center uni-bg-white ">
+    	<view class="uni-center uni-bg-white " style="border-radius: 8upx 8upx 0 0;">
     		<view class="uni-flex uni-common-pt uni-common-pb uni-border-bottom uni-radius-big">
     			<view class="uni-flex-item">
     				<view class="uni-text-dark">
@@ -179,11 +179,9 @@
       <view class="uni-common-mt">
       	<user-card :title="cards[2].title" :items="cards[2].items" :hasLogin="hasLogin"></user-card>
       </view>
-      
-      
+           
     </view>
-    
-    
+
     
   </view>
 </template>
@@ -299,6 +297,7 @@
 </script>
 
 <style>
+  
   .page-user-head {
     /* #ifdef MP-WEIXIN */
     background: #d81e06;

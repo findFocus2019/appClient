@@ -317,7 +317,7 @@ export default {
       // #ifdef MP-WEIXIN
       // this.oauth('weixin');
       uni.redirectTo({
-      	url:'/pages/auth/mp'
+      	url:'/pages/auth/mp?isInvite=1&puid=34'
       })
       // #endif
       

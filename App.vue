@@ -1,6 +1,42 @@
 <script>
-  import config from '@/store/config.js'
+  import config from '@/store/config.js';
   export default {
+    methods:{
+      async signDaysSet(){
+        let date = new Date();
+        let year= date.getFullYear()
+        let month = date.getMonth() + 1
+        let day = date.getDate()
+        
+        month = (month < 10) ? ('0' + month) : month,
+        day = (day< 10) ? ('0' + day) : day
+        
+        let today = year.toString() + month.toString() + day.toString() 
+        console.log('today=======================:'+ today)
+        let signDayData = uni.getStorageSync('sign_day_date')
+        console.log('signDayData:'+ signDayData)
+        if(!signDayData){
+          uni.setStorageSync('sign_day_date', JSON.stringify({toady: today, num: 1}) ) 
+        }else {
+          signDayData = JSON.parse(signDayData)
+          if(today != signDayData.today){
+            signDayData.num += 1
+          }
+          
+          uni.setStorageSync('sign_day_date', JSON.stringify(signDayData)) 
+        }
+        
+        if(this.$store.state.hasLogin){
+          let ret = await this.$store.dispatch('userRecodeSignDay' , signDayData)
+          console.log('userRecodeSignDay ret:' + JSON.stringify(ret))
+          if(ret.code == 0){
+            signDayData.num = ret.data.num
+            uni.setStorageSync('sign_day_date', JSON.stringify(signDayData)) 
+          }
+        }
+   
+      }
+    },
     onLaunch: function() {
       console.log("App Launch");
       // 检查
@@ -110,6 +146,7 @@
 
       // #endif
 
+      this.signDaysSet()
     },
     async onShow() {
       console.log("App Show ==============");

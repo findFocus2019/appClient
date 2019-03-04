@@ -314,9 +314,20 @@ export default {
                     	icon:'success',
                       title:'支付成功',
                       success: () => {
-                      	uni.redirectTo({
-                      		url:'/pagesMain/user/orders?status=1'
-                      	})
+                        if(this.isVipOrder){
+                          // vip订单返回用户首页
+                          this.userInfoGet().then(ret => {
+                            uni.switchTab({
+                            	url:'/pages/user/index'
+                            })
+                          })
+                          
+                        }else {
+                          uni.redirectTo({
+                          	url:'/pagesMain/user/orders?status=1'
+                          })
+                        }
+                      	
                       }
                     })
                     
@@ -426,7 +437,8 @@ export default {
     this.userInfoGet();
 
     console.log("onLoad =========", this.$store.state.mallPayment);
-
+    this.$store.state.mallPayment.totals = parseInt(this.$store.state.mallPayment.totals * 100) / 100
+    
     await this.$store.dispatch("userEcardListGet");
 
     let userEcardList = this.$store.state.userEcardList;

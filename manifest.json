@@ -2,20 +2,20 @@
     "name" : "发现焦点",
     "appid" : "__UNI__26AFF07",
     "description" : "发现焦点APP",
-    "versionName" : "0.9.5",
-    "versionCode" : 90,
+    "versionName" : "0.9.6",
+    "versionCode" : 96,
     "transformPx" : true,
     "app-plus" : {
         /* 5+App特有相关 */
         "modules" : {
             "Share" : {},
-            "Statistic" : {},
             "Maps" : {},
             "Payment" : {},
             "OAuth" : {},
-            "VideoPlayer" : {},
             "LivePusher" : {},
-            "Push" : {}
+            "Push" : {},
+            "Bluetooth" : {},
+            "Statistic" : {}
         },
         /* 模块配置 */
         "distribute" : {
@@ -72,7 +72,14 @@
                         "appsecret" : "WeOHgklYJcALNyRa0W6dS5"
                     }
                 },
-                "statics" : {},
+                "statics" : {
+                    "umeng" : {
+                        "appkey_ios" : "5c774d2af1f5567456000e3b",
+                        "channelid_ios" : "faxianjiaodianios",
+                        "appkey_android" : "5c774c63f1f5567568000fa1",
+                        "channelid_android" : "faxianjiaodianand"
+                    }
+                },
                 "maps" : {
                     "amap" : {
                         "appkey_ios" : "e2e2120606bbcec20300691a8fc221c3",
@@ -108,7 +115,7 @@
             },
             "icons" : {
                 "ios" : {
-                    "appstore" : "/Users/lucong/Desktop/logo.png",
+                    "appstore" : "static/logo.png",
                     "ipad" : {
                         "app" : "unpackage/res/icons/76x76.png",
                         "app@2x" : "unpackage/res/icons/152x152.png",

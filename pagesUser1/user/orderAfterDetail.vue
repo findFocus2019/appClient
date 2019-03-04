@@ -15,8 +15,9 @@
         	    <view class="uni-text-small uni-text-gray">
         	    	<view class="uni-flex-item uni-text-small uni-text-gray"  v-if="order.score_use">
         	    		<text>使用积分抵扣:</text>
-        	    		<money :num="order.score" v-if="!order.vip" />
-        	    		<money :num="order.score_vip" v-else/>
+        	    		<money :num="item.price_score_sell" v-if="!order.vip" />
+        	    		<money :num="item.price_score_vip" v-else/>
+                  <text class="uni-common-pl"> x {{ item.num }}</text>
         	    	</view>
         	    	<view class="uni-flex-item uni-text-small uni-text-gray " v-else>
         	    		未使用积分抵扣
@@ -28,7 +29,7 @@
         	    		<money :nums="[item.price_vip,item.price_score_vip]" size="30" v-else/>
         	    	</view>
         	      <view class="uni-flex-item uni-right">
-        	      	x 2
+        	      	x {{ item.num }}
         	      </view>
         	    </view>
         	  </view>
@@ -55,14 +56,14 @@
         </view>
         
         
-        <!-- <view class="uni-flex uni-common-pa uni-border-top">
+        <view class="uni-flex uni-common-pa uni-border-top">
           <view class="uni-flex-item">
             <text class="uni-text-dark">服务类型:</text>
           </view>
           <view class="uni-right">
-            退货
+            {{ info.category }}
           </view>
-        </view> -->
+        </view>
         
         
         <view class="uni-flex uni-common-pa uni-border-top">
@@ -84,7 +85,7 @@
         </view>
         
         <view class="uni-common-pa uni-border-top uni-flex" v-if="info.imgs.length">
-        	<view class="uni-common-mr-sm imgs-pre-item" v-for="(img , index1) in info.imgs" :key="index1" @tap="preImg(rate.imgs, img)">
+        	<view class="uni-common-mr-sm imgs-pre-item" v-for="(img , index1) in info.imgs" :key="index1" @tap="preImg(info.imgs, img)">
         		<image lazy-load="true"  :src="img" mode="scaleToFill" style="width: 100upx;height: 100upx;"></image>
         	</view>
         </view>

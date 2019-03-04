@@ -12,7 +12,7 @@
     	      <text class="uni-common-ml-sm">{{ order.address.mobile }}</text>
     	  	</view>
     	    <view class="uni-ellipsis">
-    	    	{{ order.address.info }}
+    	    	{{ order.address.address }}{{ order.address.info }}
     	    </view>
     	  </view>
     	</view>
@@ -76,7 +76,7 @@
     		        	</view>
     		          <view class="uni-flex-item uni-right uni-text-small uni-text-light" >
     		             <text class="uni-bg-gray order-detail-item-action" v-if="order.status == 9" @tap="goToAfterApply({order:order, items: [item]})" >售后</text>
-                     <text class="uni-bg-gray order-detail-item-action" v-if="order.status == 9" @tap="goToOrderRate({order:order, items: [item]})" >评价</text>
+                     <text class="uni-bg-gray order-detail-item-action" v-if="order.status == 9" @tap="goToOrderRate({order:order, item: item})" >评价</text>
     		          </view>
     		        </view>
     		      </view>
@@ -234,7 +234,8 @@
       return {
         order:{
           
-        }
+        },
+        items: []
       }
     },
     methods:{
@@ -245,12 +246,16 @@
       },
       goToOrderRate(data){
         let order= data.order
-        let goodsItems = data.items
-        
-        this.$store.state.mallAfterData.order = order
-        this.$store.state.mallAfterData.goodsItems = goodsItems
+        let item = data.item
+        let itemId = 0
+        console.log('goToOrderRate ' , this.items )
+        this.items.forEach(itemData => {
+          if(itemData.goods_id == item.id){
+            itemId = itemData.id
+          }
+        })
         uni.navigateTo({
-        	url:"/pagesUser1/user/orderRatePost?order_id="+order.id+"&item_id=" + goodsItems[0].id
+        	url:"/pagesUser1/user/orderRatePost?id="+ itemId
         })
       },
       goToAfterApply(data){
@@ -381,6 +386,7 @@
         console.log('mallOrderInfoGet ret' , JSON.stringify(ret) , ret)
         if(ret.code == 0){
           this.order = ret.data.info
+          this.items = ret.data.items
         }else{
           this.order= {}
         }

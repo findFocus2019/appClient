@@ -2,8 +2,14 @@
 	<view class="page">
     
     <view class="uni-border-top" v-if="!isVipOrder">
-    	<user-address :address="userAddressCurrent" v-if="userAddressCurrent.id"></user-address>
-    	<user-address v-else ></user-address>
+      <view v-if="jdOrder">
+        <user-address :address="userAddressCurrent" :modify="false"></user-address>
+      </view>
+      <view v-else>
+      	<user-address :address="userAddressCurrent" v-if="userAddressCurrent.id"></user-address>
+      	<user-address v-else ></user-address>
+      </view>
+    	
     </view>
     
     <view class="uni-common-mt-md uni-bg-white ">
@@ -120,6 +126,7 @@
     	  		不开发票
     	  	</view>
     	    <view class="" v-else>
+            已选择
     	    	<uni-icon type="arrowright" size="22"></uni-icon>
     	    </view>
     	  </view>
@@ -130,7 +137,7 @@
     			备注
     		</view>
     	  <view class="uni-flex-item uni-right uni-common-pa uni-bg-gray uni-text-small" >
-    	  	<textarea type="text" placeholder="填写备注信息(非必填)" auto-height="true" style="width: 500upx;" v-model="postData.remark" placeholder-class="uni-text-small"/>
+    	  	<textarea type="text" placeholder="填写备注信息(非必填)" auto-height="true" style="width: 500upx;" v-model="postData.remark" placeholder-class="uni-text-small" maxlength="255"/>
     	  </view>
     	</view>
     </view>
@@ -178,6 +185,7 @@
         total:0,
 				type:0,
 				isVipOrder:0,
+        jdOrder:0
       }
     },
     components:{
@@ -218,13 +226,22 @@
         
         console.log('orderCreate postData' , postData)
         
+        if(!postData.address.id){
+          uni.showToast({
+          	title:'请选择收货地址',
+            icon:'none',
+            duration:2000
+          })
+          return
+        }
+        
         let ret = await this.$store.dispatch('mallOrderCreate' , postData)
         if(ret.code === 0){
           uni.hideLoading()
           let orderIds = ret.data.ids
           let totals = ret.data.totals
           this.$store.state.mallPayment.orderIds = orderIds
-          this.$store.state.mallPayment.totals = totals
+          this.$store.state.mallPayment.totals = parseInt(totals * 100) / 100
           
           console.log('this.$store.state.mallPayment' , this.$store.state.mallPayment)
 					if(this.type == 0){
@@ -349,6 +366,9 @@
       // 发票默认不选
       // this.$store.state.mallOrderConfirm.invoice = 0
       // this.address = this.userAddressCurrent
+      
+      // 京东订单
+      this.jdOrder = opt.jdOrder || 0
     }
 	}
 </script>

@@ -1,13 +1,13 @@
 <template>
   <view class="uni-page-body">
     
-    <uni-nav-bar color="#333333" background-color="transparent" fixed="true" >
+    <uni-nav-bar color="#333333" :background-color="barBgColor" fixed="true" >
        <block slot="left">
       	
       </block>
   
-      <view class="input-search-view uni-flex" style="border-radius: 30upx;background: #FFFFFF;opacity: 0.5;" @tap="goSearch">
-        <uni-icon type="search" size="22" color="#666666"></uni-icon>
+      <view class="input-search-view uni-flex" style="border-radius: 30upx;background: #ffffff;opacity: 0.5;padding-left: 20upx;" @tap="goSearch">
+        <uni-icon type="search" size="22" color="#333333"></uni-icon>
         <input confirm-type="search" @confirm="confirm" class="input uni-flex-item" type="text" placeholder="输入搜索关键词" />
       </view>
       <block slot="right">
@@ -71,7 +71,7 @@
       <view class="the-focus-sugguestions">
         <view class="header">
           <text class="title">焦点推荐</text>
-          <navigator url="/pagesPost/posts/recommend"><text class="uni-text-small">更多</text></navigator>
+          <navigator url="/pagesPost/posts/recommend"><text class="uni-text-small">更多>></text></navigator>
         </view>
         <view class="body">
           <swiper autoplay="true" interval="3000" duration="1000" circular="true" style="height: 280upx;">
@@ -173,6 +173,7 @@
 
     data() {
       return {
+        barBgColor:'transparent',
         swiper: {
           indicatorDots: false,
           autoplay: true,
@@ -391,8 +392,18 @@
 						})
 					})
 				}
-			}
+			},
+      
 
+    },
+    onPageScroll(e){
+      // console.log('onPageScroll' , e)
+      let top = e.scrollTop
+      if(top > 0){
+        this.barBgColor = '#d81e06'
+      }else {
+        this.barBgColor = 'transparent'
+      }
     }
   };
 </script>
@@ -458,7 +469,7 @@
         .button {
           width: 150upx;
           height: 60upx;
-          background: rgba(0, 0, 0, 0.5);
+          background: rgba(0, 0, 0, 0.2);
 
           color: #fff;
           font-size: inherit;

@@ -32,10 +32,12 @@
         	<view class="uni-right uni-flex-item">
         		<view class="uni-inline-block" v-for="(level,index2) in levels" :key="index2" @tap="chooseLevel(level)">
 							<view v-if="level <= rate.level">
-								<uni-icon type="star-filled" size="30" color="yellow" ></uni-icon>
+								<!-- <uni-icon type="star-filled" size="30" color="yellow" ></uni-icon> -->
+                <image src="/static/icon/user/start-a.png" mode="" style="width: 60upx;height: 60upx;margin-right: 30upx;"></image>
 							</view>
         			<view v-else>
-								<uni-icon type="star-filled" size="30" color="gray"></uni-icon>
+								<!-- <uni-icon type="star-filled" size="30" color="gray"></uni-icon> -->
+                <image src="/static/icon/user/start.png" mode="" style="width: 60upx;height: 60upx;margin-right: 30upx;"></image>
 							</view>
 							
         		</view>
@@ -50,7 +52,7 @@
       			评价详情
       		</view>
       	  <view class="uni-common-mt uni-bg-gray uni-common-pa">
-      	  	<textarea v-model="rate.info" placeholder="请填写你的评价详情" placeholder-class="uni-text-small" maxlength="500"/>
+      	  	<textarea v-model="rate.info" placeholder="请填写你的评价详情" placeholder-class="uni-text-small" maxlength="500" style="height: 200upx;"/>
       	  </view>
       	</view>
       </view>

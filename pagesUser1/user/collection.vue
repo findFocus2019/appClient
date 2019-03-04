@@ -56,7 +56,7 @@
               <view class="uni-text-small uni-text-gray time" >
                 {{ item.info.pub_date }}
               </view>
-              <view class="uni-flex icon-items">
+              <view class="uni-flex icon-items uni-text-gray">
                 <view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
                   <image lazy-load="true"  src="/static/icon/posts/eye.png" mode="" style="width: 36upx;height: 36upx;"></image>
                 </view>
@@ -99,7 +99,7 @@
               <view class="uni-text-small uni-text-gray time">
                 {{ item.info.pub_date }}
               </view>
-              <view class="uni-flex icon-items">
+              <view class="uni-flex icon-items uni-text-gray">
                 <view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
                   <image lazy-load="true"  src="/static/icon/posts/eye.png" mode="" style="width: 36upx;height: 36upx;"></image>
                 </view>
@@ -143,7 +143,7 @@
               <view class="uni-text-small uni-text-gray time">
                 {{ item.info.pub_date }}
               </view>
-              <view class="uni-flex icon-items">
+              <view class="uni-flex icon-items uni-text-gray">
                 <view class="" style="width: 36upx;height: 36upx;padding-top: 6upx;">
                   <image lazy-load="true"  src="/static/icon/posts/eye.png" mode="" style="width: 36upx;height: 36upx;"></image>
                 </view>

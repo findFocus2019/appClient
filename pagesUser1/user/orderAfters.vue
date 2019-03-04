@@ -10,9 +10,8 @@
             <text class="uni-text-gray">{{after.after_no}}</text>
       		</view>
           <view class="uni-right">
-            <text v-if="after.status == 0">待处理</text>
-            <text v-if="after.status == 1">处理中</text>
-            <text v-if="after.status == 2">已处理</text>
+            <text v-if="after.status == 0">处理中</text>
+            <text v-if="after.status == 1">已处理</text>
           </view>
       	</view>
         
@@ -28,8 +27,10 @@
         	    <view class="uni-text-small uni-text-gray">
         	    	<view class="uni-flex-item uni-text-small uni-text-gray"  v-if="after.order.score_use">
         	    		<text>使用积分抵扣:</text>
-        	    		<money :num="after.order.score" v-if="!after.order.vip" />
-        	    		<money :num="after.order.score_vip" v-else/>
+        	    		<money :num="item.price_score_sell" v-if="!after.order.vip" />
+        	    		<money :num="item.price_score_vip" v-else/>
+                  <text class="uni-common-pl"> x {{ item.num }}</text>
+                  
         	    	</view>
         	    	<view class="uni-flex-item uni-text-small uni-text-gray " v-else>
         	    		未使用积分抵扣
@@ -41,7 +42,7 @@
         	    		<money :nums="[item.price_vip,item.price_score_vip]" size="30" v-else/>
         	    	</view>
         	      <view class="uni-flex-item uni-right">
-        	      	x 2
+        	      	x {{ item.num }}
         	      </view>
         	    </view>
         	  </view>
@@ -130,7 +131,7 @@
     	this.getData()
     },
     async onPullDownRefresh() {
-    	this.listData.page = 0
+    	this.listData.page = 1
     	this.listData.count = 0
       this.listData.list = []
       

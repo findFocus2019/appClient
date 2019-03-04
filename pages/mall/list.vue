@@ -77,16 +77,23 @@
                 </view>
                 <view class="uni-flex">
                   <view class="">
-                    <view class="uni-text-red" style="display: inline-block;">
+                    <!-- <view class="uni-text-red" style="display: inline-block;">
                       <money :num="item.price_sell" size="48" /> 
+                    </view> -->
+                    <view class="uni-text-red uni-inline-block" >
+                       <image src="/static/icon/mall/vip.png" mode="" style="width: 36upx;height: 36upx;"></image>
+                       <money :num="item.price_vip" size="36"/>
                     </view>
-                    <view class="uni-text-yellow" style="display: inline-block;">
-                      / VIP <money :num="item.price_vip" size="36"/>
+                    <view class="uni-text-gray uni-inline-block uni-common-ml-sm" style="text-decoration: line-through;">
+                    	<money :num="item.price"></money>
                     </view>
                   </view>
                   
                 </view>
-                <view class="uni-flex">
+                <view class="uni-text-light uni-text-small uni-flex-item" >
+                  已有{{ item.sales }}付款
+                </view>
+               <!-- <view class="uni-flex">
                   <view class="uni-text-gray uni-text-small">
                   	积分可抵扣
                     <money :num="item.price_score_sell"></money>
@@ -96,7 +103,7 @@
                 	<view class="uni-text-light uni-text-small uni-right uni-flex-item" >
                 	  已有{{ item.sales }}付款
                 	</view>
-                </view>
+                </view> -->
                 
               </view>
               
@@ -114,24 +121,26 @@
                 <view class="uni-bold uni-ellipsis-2 title" >
                   {{ item.title }}
                 </view>
-								<view class="">
-								  <view class="uni-text-red uni-bold" style="display: inline-block;">
+								<view class="" style="line-height: 120upx;">
+								  <!-- <view class="uni-text-red uni-bold" style="display: inline-block;">
 								    <money :num="item.price_sell" size="32" /> 
+								  </view> -->
+								  <view class="uni-text-red uni-inline-block" style="">
+										 <image src="/static/icon/mall/vip.png" mode="" style="width: 36upx;height: 36upx;"></image>
+										 <money :num="item.price_vip" size="36"/>        
 								  </view>
-								  <view class="uni-text-yellow" style="display: inline-block;">
-										 <text class="uni-common-ml-sm">VIP</text>
-										 <money :num="item.price_vip" size="24"/>        
+								  <view class="uni-text-gray uni-inline-block uni-common-ml-sm" style="text-decoration: line-through;">
+								  	<money :num="item.price"></money>
 								  </view>
-								    
 								</view>
-								<view class="" >
+								<!-- <view class="" >
 									<view class="uni-text-gray uni-text-small">
 										积分可抵扣
 									  <money :num="item.price_score_sell"></money>
 									  /vip
 									  <money :num="item.price_score_vip"></money>
 									</view>
-								</view>
+								</view> -->
                 <view class="uni-text-light uni-text-small" >
                   已有{{ item.sales }}付款
                 </view>
@@ -153,16 +162,19 @@
                   {{ item.title }}
                 </view>
           			<view class="uni-ellipsis">
-          			  <view class="uni-text-red uni-bold" style="display: inline-block;">
+          			  <!-- <view class="uni-text-red uni-bold" style="display: inline-block;">
           			    <money :num="item.price_sell" size="32" /> 
+          			  </view> -->
+          			  <view class="uni-text-red uni-inline-block">
+          					 <image src="/static/icon/mall/vip.png" mode="" style="width: 36upx;height: 36upx;"></image>
+          					 <money :num="item.price_vip" size="36"/>        
           			  </view>
-          			  <view class="uni-text-yellow" style="display: inline-block;">
-          					 <text class="uni-common-ml-sm">VIP</text>
-          					 <money :num="item.price_vip" size="24"/>        
-          			  </view>
+                  <view class="uni-text-gray uni-inline-block uni-common-ml-sm" style="text-decoration: line-through;">
+                  	<money :num="item.price"></money>
+                  </view>
           			    
           			</view>
-          			<view class="" >
+          			<!-- <view class="" >
                   
           				<view class="uni-text-gray uni-text-small">
           					<view class="uni-text-gray uni-text-small">
@@ -172,7 +184,7 @@
           				  /vip
           				  <money :num="item.price_score_vip"></money>
           				</view>
-          			</view>
+          			</view> -->
                 <view class="uni-text-light uni-text-small" >
                   已有{{ item.sales }}付款
                 </view>

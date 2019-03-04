@@ -140,6 +140,9 @@ form {
 	color: #ccc;
 }
 
+.uni-text-blue{
+  color: #4273a3;
+}
 .uni-text-red {
 	color: #d81e06;
 }
@@ -176,6 +179,10 @@ form {
 
 .uni-common-pa {
 	padding: 30upx;
+}
+
+.uni-common-pa-md {
+	padding: 20upx;
 }
 
 .uni-common-pt {
@@ -261,7 +268,9 @@ form {
 }
 
 .uni-bg-gray {
-	background: #eeeeee;
+	/* background: #eeeeee;
+   */
+  background: #f5f6f7;
 	color: #333333;
 }
 

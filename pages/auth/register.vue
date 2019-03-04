@@ -102,7 +102,8 @@ export default {
         second: 60,
         click: 0
       },
-      checked:0
+      checked:0,
+      isInvite:0
     };
   },
   computed:{
@@ -205,10 +206,17 @@ export default {
           this.$store.dispatch('userInfoGet')
           
           setTimeout(() => {
-             uni.navigateBack({
-               delta: 1
-             });
-          }, 1000)
+            if(this.isInvite){
+              uni.switchTab({
+              	url:'/pages/main/main'
+              })
+            }else {
+              uni.navigateBack({
+                delta: 1
+              });
+            }
+             
+          }, 2000)
           
         }else{
            uni.showToast({
@@ -217,9 +225,15 @@ export default {
              icon: "success"
            });
            setTimeout(() => {
-              uni.navigateBack({
-                delta: 1
-              });
+              if(this.isInvite){
+                uni.switchTab({
+                	url:'/pages/main/main'
+                })
+              }else {
+                uni.navigateBack({
+                  delta: 1
+                });
+              }
            },2000)
         }
         
@@ -301,6 +315,8 @@ export default {
   },
   onLoad(opt) {
 		let inviteUserId = opt.puid || 0
+    this.isInvite = opt.isInvite || 0
+    console.log('onLoad======' ,inviteUserId, this.isInvite)
     if(inviteUserId){
       this.$store.state.inviteUserId = inviteUserId
     }

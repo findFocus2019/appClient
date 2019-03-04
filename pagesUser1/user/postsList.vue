@@ -11,7 +11,7 @@
       	<view class="" style="width: 80upx;height: 80upx;">
       		<image lazy-load="true"  :src="userInfo.avatar" mode="" style="width: 80upx;height: 80upx;border-radius: 80upx;"></image>
       	</view>
-        <view class="uni-flex-item uni-h4 uni-common-pl uni-text-darker">
+        <view class="uni-flex-item uni-h4 uni-common-pl uni-text-blue">
         	<text style="">{{ userInfo.nickname}}</text>
         </view>
         <view class="uni-flex-item uni-text-gray uni-right" >
@@ -24,7 +24,7 @@
       </view>
       
       <view class="uni-common-pl uni-common-pr" @tap="goToDetail(item)">
-      	<view class="uni-common-pa uni-bg-gray uni-common-mt-sm uni-text-small uni-text-light">
+      	<view class="uni-common-pa-md uni-bg-gray uni-common-mt-sm uni-text-small uni-text-light">
       		{{item.description}}
       	</view>
       </view>

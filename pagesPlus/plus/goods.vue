@@ -22,7 +22,7 @@
                   </view>
                 </view>
                 <view class="uni-flex-item">
-                  <text>单件佣金</text>
+                  <text>单件奖励</text>
                   <view class="uni-text-green uni-inline-block">
                     <money :num="(item.price_sell - item.price_cost) / 2" size="36"></money>
                   </view>
@@ -43,7 +43,7 @@
           	</view>
 
             <view class="uni-right" @tap="goodsShare(item)">
-            	<view class="uni-bg-blue uni-center uni-bold uni-inline-block" style="padding:20upx;width:80upx;height: 80upx;line-height:40upx;border-radius: 100%;border:10upx solid #e4eaff;">
+            	<view class=" uni-center uni-bold uni-inline-block" style="color: #ffffff;background:#7798ff;padding:20upx;width:80upx;height: 80upx;line-height:40upx;border-radius: 100%;border:10upx solid #e4eaff;">
             		一键代言
             	</view>
             </view>
@@ -168,7 +168,7 @@
           title: item.title,
           description: item.description,
           href: shareUrl,
-          imgUrl: item.cover,
+          imgUrl: item.cover + '!goodsCover',
           miniAppId: this.miniAppOrId,
           miniPage: sharePage
         }

@@ -49,7 +49,7 @@
     </view>
     
     <view class="uni-center plus-close">
-    	<uni-icon type="close" size="48" @click="back"></uni-icon>
+    	<uni-icon type="close" size="60" @click="back" color="#666666"></uni-icon>
     </view>
 	</view>
 </template>

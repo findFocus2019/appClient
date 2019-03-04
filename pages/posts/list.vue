@@ -7,7 +7,7 @@
           <view class="">
           	<image lazy-load="true"  :src="news.user_avatar" mode="" style="width: 60upx;height: 60upx;border-radius: 30upx;"></image>
           </view>
-          <view class="uni-common-ml-sm">
+          <view class="uni-common-ml-sm uni-text-blue">
           	{{news.user_nickname}}
           </view>
           <view class="uni-flex-item uni-right uni-text-gray uni-text-small">
@@ -21,7 +21,7 @@
         </view>
         
         <view class="uni-common-pl uni-common-pr">
-        	<view class="uni-bg-gray uni-bg-gray uni-common-pa uni-common-mt-sm " >
+        	<view class="uni-bg-gray uni-bg-gray uni-common-pa-md uni-common-mt-sm " >
         	  <view class="uni-ellipsis-2 uni-text-small uni-text-light">
         	  	{{news.description}}
         	  </view>

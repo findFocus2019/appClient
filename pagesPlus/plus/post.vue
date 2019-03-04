@@ -425,11 +425,11 @@ innerAudioContext.autoplay = true;
       }
       // 检查用户权限
       console.log(this.userInfo)
-      if(this.userInfo.share_level != 1){
-        uni.redirectTo({
-        	url:'/pagesPlus/plus/fail?type=1&msg=' + '您还未通过评测权限申请！'
-        })
-      }
+//       if(this.userInfo.share_level != 1){
+//         uni.redirectTo({
+//         	url:'/pagesPlus/plus/fail?type=1&msg=' + '您还未通过评测权限申请！'
+//         })
+//       }
       
       // 获取用户购买商品列表
       let ret = await this.$store.dispatch('userOrderItemsListGet', {page:1})

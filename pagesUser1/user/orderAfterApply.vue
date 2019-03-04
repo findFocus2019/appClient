@@ -26,8 +26,9 @@
         	    <view class="uni-text-small uni-text-gray">
         	    	<view class="uni-flex-item uni-text-small uni-text-gray"  v-if="order.score_use">
         	    		<text>使用积分抵扣:</text>
-        	    		<money :num="order.score" v-if="!order.vip" />
-        	    		<money :num="order.score_vip" v-else/>
+        	    		<money :num="item.price_score_sell" v-if="!order.vip" />
+        	    		<money :num="item.price_score_vip" v-else/>
+                  <text class="uni-common-pl"> x {{ item.num }}</text>
         	    	</view>
         	    	<view class="uni-flex-item uni-text-small uni-text-gray " v-else>
         	    		未使用积分抵扣
@@ -39,7 +40,7 @@
         	    		<money :nums="[item.price_vip,item.price_score_vip]" size="30" v-else/>
         	    	</view>
         	      <view class="uni-flex-item uni-right">
-        	      	x 2
+        	      	x {{ item.num }}
         	      </view>
         	    </view>
         	  </view>
@@ -146,7 +147,6 @@
          '发错货',
          '质量问题',
          '商品与页面描述不符',
-         '商品损坏',
          '其他'
        ],
        imgs:[]

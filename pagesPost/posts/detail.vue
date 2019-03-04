@@ -64,11 +64,11 @@
 
         <view class="uni-flex uni-common-pa" v-for="(item, index) in commentList" :key="index">
           <view class="uni-common-pr">
-            <image lazy-load="true"  :src="item.user_info.avatar" mode="" style="width: 60upx;height: 60upx;border-radius: 30upx;"></image>
+            <image lazy-load="true"  :src="item.user_info.avatar" mode="" style="width: 100upx;height: 100upx;border-radius: 50upx;"></image>
           </view>
           <view class="uni-flex-item">
             <view class="uni-flex">
-              <view class="uni-flex-item uni-text-darker">
+              <view class="uni-flex-item uni-text-blue uni-text-h4">
                 {{item.user_info.nickname}}
               </view>
               <view class="uni-right" @tap="commentLike(item)">
@@ -93,10 +93,10 @@
               {{ item.info }}
             </view>
 
-            <view class="uni-common-pa uni-bg-gray uni-common-mt-sm" v-if="item.replys.length" @tap="goToCommentDetail(item)">
+            <view class="uni-common-pa-md uni-bg-gray uni-common-mt-sm" v-if="item.replys.length" @tap="goToCommentDetail(item)">
 
               <view class="uni-common-mb-sm" v-for="(reply, index1) in item.replys" :key="index1">
-                <view class="uni-text-dark">
+                <view class="uni-text-blue">
                   {{ reply.user_info.nickname || ''}}
                 </view>
                 <view class="uni-text-small uni-text-light">
@@ -133,12 +133,13 @@
       </view>
       <view class="uni-flex-item uni-flex uni-center uni-common-pr">
         <view class="uni-flex-item" @tap="postLike" style="height: 48upx;">
-          <image lazy-load="true"  src="/static/icon/posts/zan.png" mode="" style="width: 48upx;height: 48upx;"></image>
+          <image lazy-load="true"  src="/static/icon/posts/zan-a.png" mode="" style="width: 48upx;height: 48upx;" v-if="postInfo.isLike == 1"></image>
+          <image lazy-load="true"  src="/static/icon/posts/zan.png" mode="" style="width: 48upx;height: 48upx;" v-else></image>
         </view>
         <view class="uni-flex-item" @tap="postCollection">
           <uni-icon type="star-filled" size="24" v-if="postInfo.isCollection == 1" color="#d81e06" ></uni-icon>
-          <uni-icon type="star" size="24" v-if="postInfo.isCollection == 0" ></uni-icon>
-          <uni-icon type="star" size="24" v-if="postInfo.isCollection == -1" ></uni-icon>
+          <uni-icon type="star" size="24" v-if="postInfo.isCollection == 0" color="#999999"></uni-icon>
+          <uni-icon type="star" size="24" v-if="postInfo.isCollection == -1" color="#999999"></uni-icon>
         </view>
         <view class="uni-flex-item" @tap="postShare" style="height: 48upx;">
           <image lazy-load="true"  src="/static/icon/posts/share.png" mode="" style="width: 48upx;height: 48upx;"></image>
@@ -552,6 +553,10 @@
         	url:'/pagesPost/posts/error'
         })
       }
+      
+      uni.setNavigationBarTitle({
+      	title:this.postInfo.title
+      })
       
       setTimeout(() => {
         this.viewAction()

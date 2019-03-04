@@ -163,4 +163,8 @@ export default {
   },
   // #endif
   
+  async userRecodeSignDay(store, data ={}){
+    let ret = await Request.post('user/recodeSignDay' , data)
+    return ret
+  }
 }

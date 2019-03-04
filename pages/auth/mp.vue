@@ -34,6 +34,8 @@
   export default {
     data(){
       return {
+        isInvite:0,
+        puid:0,
         jscode: '',
         openid: '',
         oauth_info: {
@@ -173,13 +175,26 @@
         });
       },
       goAuthBind(type = 0){
-        uni.setStorageSync('auth_reg_type' , type)
-        uni.redirectTo({
-        	url:'../auth/register'
-        })
+        let page = '/pages/auth/register'
+        if(this.isInvite){
+          page += '?isInvite=1&puid=' + this.puid
+          uni.setStorageSync('auth_reg_type' , type)
+          uni.navigateTo({
+          	url:page
+          })
+        }else {
+          uni.setStorageSync('auth_reg_type' , type)
+          uni.redirectTo({
+          	url:page
+          })
+        }
+        
       }
     },
-    async onLoad(){
+    async onLoad(opt){
+      this.isInvite = opt.isInvite || 0
+      this.puid = opt.puid || 0
+      console.log(this.isInvite , this.puid)
       this.login()
     },
     onShow() {

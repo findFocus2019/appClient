@@ -7,8 +7,8 @@
     
     <view class="uni-center" style="position: relative;">
     	<view class="invite-qrcode uni-center uni-common-mt">
-    		<image lazy-load="true"  src="" mode="widthFix" style="width: 540upx;height: 600upx;"></image>
-        <view class="qrcode-img" style="">
+    		<image lazy-load="true"  src="https://img-juren.oss-cn-shenzhen.aliyuncs.com/assets/images/hongbao.png" mode="widthFix" style="width: 650upx;height: 800upx;"></image>
+        <view class="qrcode-img" style="margin-top: -20upx;">
         	<image lazy-load="true"  :src="userInfo.avatar" mode="" style="width: 160upx;height: 160upx;border-radius: 80upx;" ></image>
         	<view class="uni-center uni-text-white">
         		{{ userInfo.nickname }}
@@ -16,7 +16,10 @@
         </view>
     	</view>
       <view class="invite-info">
-      	<image lazy-load="true"  src="/static/img/user/invite-info.png" mode="widthFix" style="width: 540upx;height: 323upx;"></image>
+        <view class="uni-inline-block" style="width: 540upx;height: 323upx;overflow: hidden;">
+        	<image lazy-load="true"  src="/static/img/user/invite-info.png" mode="widthFix" style="width: 540upx;height: 323upx;margin-left: -4upx;"></image>
+        </view>
+      	
         <view class="uni-common-pa user-info-box uni-flex uni-text-gray">
         	<view class="uni-flex-item uni-center uni-common-mt" @tap="inviteShare('wx')">
         		<image src="../../static/icon/weixin.png" mode="" style="width: 140upx;height: 140upx;border-radius: 80upx;"></image>
@@ -65,7 +68,7 @@
     methods:{
       inviteShare(type = 'wx'){
         let sharePage = 'pages/auth/register'
-        sharePage = sharePage + '?puid=' + this.userInfo.id
+        sharePage = sharePage + '?invite=1&puid=' + this.userInfo.id
         let shareUrl = this.webDomain + '/' + sharePage
         // let postType = this.postInfo.type
         // console.log()
@@ -74,12 +77,16 @@
           title: '发现焦点',
           description: '您的好友' + this.userInfo.nickname + '邀请您的注册',
           href: shareUrl,
-          imgUrl: this.userInfo.avatar,
+          imgUrl: 'http://img-juren.oss-cn-shenzhen.aliyuncs.com/assets/images/logo.png',
           miniAppId: this.miniAppOrId,
           miniPage: sharePage
         }
         console.log('inviteShare ：' , JSON.stringify(shareData))
         if(type == 'wx'){
+          sharePage = 'pages/auth/mp'
+          sharePage = sharePage + '?invite=1&puid=' + this.userInfo.id
+          let shareUrl = this.webDomain + '/' + sharePage
+          
           Share.mini(shareData)
         }else if (type == 'fr'){
           Share.wx(shareData , 1)
@@ -115,6 +122,7 @@
   .invite-info {
     position: relative;
     top: -20upx;
+    overflow: hidden;
   }
   
   .user-info-box {

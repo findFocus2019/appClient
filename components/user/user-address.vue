@@ -17,9 +17,9 @@
       <view
         class="uni-ellipsis uni-text-small uni-text-light"
         style="width: 500upx;"
-      >{{address.info}}</view>
+      >{{address.address}}{{address.info}}</view>
     </view>
-    <view class="uni-center" style="width: 120upx;line-height: 100upx;" @tap="goToAddress">
+    <view class="uni-center" style="width: 120upx;line-height: 100upx;" @tap="goToAddress" v-if="modify">
       <uni-icon type="arrowright" size="22"></uni-icon>
     </view>
   </view>
@@ -47,6 +47,10 @@ export default {
     current: {
       type: Number,
       default: 0
+    },
+    modify:{
+      type:Boolean,
+      default: true
     }
   },
   components: {

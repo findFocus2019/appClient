@@ -60,6 +60,14 @@ export default {
   },
   // #endif
  
+  async getAddressLevel(store, data = {}){
+    let ret = await Request.post('pub/getAddress' , data)
+    return ret
+  },
   
+  async getJdGoodsStock(store, data = {}){
+    let ret = await Request.post('pub/getStock', data)
+    return ret
+  }
   
 }

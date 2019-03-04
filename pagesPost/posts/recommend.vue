@@ -11,8 +11,22 @@
           	<view class="uni-ellipsis-2 uni-left uni-bold title" >
           		{{news.title}}
           	</view>
-            <view class="uni-text-gray uni-text-small time">
-            	{{ news.publish_time}}
+            <view class="uni-text-gray uni-text-small  uni-flex">
+              <view class="time">
+              	{{ news.publish_time}}
+              </view>
+              <view class="uni-flex-item recommend-type-inline uni-right">
+                <view class="">
+                	<text v-if="news.type == 1" class="recommend-type type-1">资讯</text>
+                	<text v-if="news.type == 1" class="recommend-type-triangle type-1"></text>
+                </view>
+              	<view class="">
+              		<text v-if="news.type == 2" class="recommend-type type-2">品牌</text>
+              		<text v-if="news.type == 2" class="recommend-type-triangle type-2"></text>
+              	</view>
+                
+              </view>
+            	
             </view>
             <view class="uni-text-gray uni-flex icon-items">
               
@@ -106,4 +120,37 @@
 </script>
 
 <style>
+  .recommend-type-inline {
+    display: inline-block;
+    line-height: 36upx;
+    height: 36upx;
+  }
+  
+  .recommend-type {
+    display: inline-block;
+    line-height: 36upx;
+    color: #FFFFFF;
+    padding: 0 30upx;
+    border-radius: 4upx;
+    font-size: 24upx;
+  }
+  
+  .recommend-type.type-1{
+    background: #d81e06;
+  }
+  
+  .recommend-type.type-2{
+    background: #09BB07;
+  }
+  
+  .recommend-type-triangle {
+   /*  width: 0;
+    height: 0;
+    border-top: 18upx solid transparent;
+    border-left: 18upx solid #d81e06;
+    border-bottom: 18upx solid transparent;
+    display: inline-block;
+    line-height: 36upx; */
+    /* margin-top: 10upx; */
+  }
 </style>

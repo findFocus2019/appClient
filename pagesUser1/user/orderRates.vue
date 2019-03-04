@@ -8,7 +8,7 @@
 			  	<view class="" style="width: 80upx;height: 80upx;">
 			  		<image lazy-load="true"  :src="userInfo.avatar" mode="" style="width: 80upx;height: 80upx;border-radius: 80upx;"></image>
 			  	</view>
-			    <view class="uni-flex-item uni-h4 uni-common-pl">
+			    <view class="uni-flex-item uni-h4 uni-common-pl uni-text-blue">
 			    	<text style="">{{ userInfo.nickname}}</text>
 			    </view>
 			    <view class="uni-flex-item uni-text-gray uni-right">
@@ -30,7 +30,7 @@
 			  </view>
         
         <view class="uni-common-pl uni-common-pr">
-        	<view class="uni-common-pa uni-bg-gray uni-common-mt-sm uni-flex">
+        	<view class="uni-common-pa-md uni-bg-gray uni-common-mt-sm uni-flex">
         		<view class="" style="width: 200upx;height: 200upx;">
         			<image lazy-load="true"  :src="item.goods_cover" mode="scaleToFill" style="width: 200upx;height: 200upx;border-radius: 8upx;"></image>
         		</view>
@@ -52,13 +52,16 @@
         	</view>
         </view>
 			  
-			  <view class="uni-flex uni-common-pl uni-common-pr uni-common-mt-sm " v-if="item.rate_level > 0">
+			  <view class="uni-flex uni-common-pl uni-common-pr uni-common-mt " v-if="item.rate_level > 0">
           <view class="uni-inline-block" v-for="(level,index2) in levels" :key="index2">
           	<view v-if="level <= item.rate_level">
-          		<uni-icon type="star-filled" size="30" color="yellow" ></uni-icon>
+          		<!-- <uni-icon type="star-filled" size="30" color="#e03c45" ></uni-icon>
+               -->
+               <image src="/static/icon/user/start-a.png" mode="" style="width: 60upx;height: 60upx;margin-right: 30upx;"></image>
           	</view>
           	<view v-else>
-          		<uni-icon type="star-filled" size="30" color="gray"></uni-icon>
+          		
+               <image src="/static/icon/user/start.png" mode="" style="width: 60upx;height: 60upx;margin-right: 30upx;"></image>
           	</view>
           	
           </view>
@@ -136,7 +139,7 @@
       async refresh(){
         uni.startPullDownRefresh({
         	success: async () => {
-        		this.listData.page = 0
+        		this.listData.page = 1
         		this.listData.count = 0
         		this.listData.list = []
         		
@@ -150,7 +153,7 @@
     	this.getData()
     },
     async onPullDownRefresh() {
-    	this.listData.page = 0
+    	this.listData.page = 1
     	this.listData.count = 0
       this.listData.list = []
       
