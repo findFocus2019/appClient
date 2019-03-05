@@ -4,7 +4,7 @@
     <view class="order-status-items">
       <view class="uni-flex uni-bg-white uni-common-pa uni-border-top">
         <view class="uni-flex-item uni-center" v-for="(item,i) in statusItems" :key="i" @tap="changeStatus(item.status)">
-          <text v-if="status === item.status" class="uni-bold uni-text-red">{{item.text}}</text>
+          <text v-if="status == item.status" class="uni-bold uni-text-red">{{item.text}}</text>
           <text v-else>{{item.text}}</text>
         </view>
       </view>

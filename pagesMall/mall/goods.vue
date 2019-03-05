@@ -156,7 +156,7 @@
               </view>
             </view>
             <view class="uni-text-red">
-              VIP
+              <image src="/static/icon/mall/vip.png" mode="" style="width: 30upx;height: 30upx;"></image>
               <money :num="mallGoodsInfo.price_vip" size="30" />
               <view class="uni-text-small uni-text-gray uni-common-ml-sm uni-inline-block">
                 积分可抵扣:

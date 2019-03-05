@@ -258,7 +258,7 @@
         this.tabIndex = 0
         this.scrollLeft = 0
         this.$store.state.mallType = index
-
+				this.mallGoodsListData[type]['all'] = null
         await this.getDatas()
         
         
