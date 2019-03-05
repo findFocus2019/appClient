@@ -68,7 +68,7 @@
     methods:{
       inviteShare(type = 'wx'){
         let sharePage = 'pages/auth/register'
-        sharePage = sharePage + '?invite=1&puid=' + this.userInfo.id
+        sharePage = sharePage + '?isInvite=1&puid=' + this.userInfo.id
         let shareUrl = this.webDomain + '/' + sharePage
         // let postType = this.postInfo.type
         // console.log()
@@ -84,9 +84,9 @@
         console.log('inviteShare ：' , JSON.stringify(shareData))
         if(type == 'wx'){
           sharePage = 'pages/auth/mp'
-          sharePage = sharePage + '?invite=1&puid=' + this.userInfo.id
+          sharePage = sharePage + '?isInvite=1&puid=' + this.userInfo.id
           let shareUrl = this.webDomain + '/' + sharePage
-          
+          shareData.shareUrl = shareUrl
           Share.mini(shareData)
         }else if (type == 'fr'){
           Share.wx(shareData , 1)

@@ -100,6 +100,9 @@
 			</view>
     </view>
 		
+    <view class="" style="height: 100upx;">
+    	
+    </view>
 		<view class="cart-toolbar uni-flex uni-center uni-bg-white">
 			<view class="uni-flex">
 				<view class="" style="width: 70upx;line-height: 100upx;" @tap="cartCheckAll">
@@ -179,15 +182,17 @@
           Cart.plus(item , -num)
         }
         
-				let stockRet = await this.getStockJd(item.uuid, item.num)
-				if(!stockRet){
-					Cart.check(item , null)
-				}else {
-					Cart.check(item , item.check || false)
-				}
-				
-        this.cartInfo = Cart.info()
-				
+        if (item.type == 2){
+          let stockRet = await this.getStockJd(item.uuid, item.num)
+          if(!stockRet){
+          	Cart.check(item , null)
+          }else {
+          	Cart.check(item , item.check || false)
+          }
+          
+        }
+
+        this.cartInfo = Cart.info()	
 				this.getFeight()
       },
       cartDel(item){
@@ -267,6 +272,7 @@
 			async checkJdGoods(){
 				let cartInfo = Cart.info()
 				let jdList = cartInfo.list[2]
+        console.log('checkJdGoods=================' ,jdList)
 				if(!jdList.length){
 					return 
 				}
@@ -328,6 +334,7 @@
 					return 
 				}
 				
+        console.log('getFeight===============')
 				let address = this.userAddressCurrent
 				if(!address.id){
 					this.priceExpress = ''

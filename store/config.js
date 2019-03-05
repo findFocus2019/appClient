@@ -1,5 +1,5 @@
 export default {
-	version:'0.9.6',
+	version:'0.9.8',
 	miniAppId:'wxbdffe470695eab18',
   miniAppOrId: 'gh_e512a95cc38f',
 	webDomain:'https://h5.faxianjiaodian.com',

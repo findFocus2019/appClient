@@ -487,11 +487,15 @@
         let postType = this.postInfo.type
         // console.log()
         console.log('分享 postType' , postType , shareUrl)
+        let imgUrl = this.postInfo.cover
+        if(postType != 1){
+          imgUrl += '!goodsCover'
+        }
         let shareData = {
           title: this.postInfo.title,
           description: this.postInfo.description,
           href: shareUrl,
-          imgUrl: this.postInfo.cover,
+          imgUrl: imgUrl,
           miniAppId: this.miniAppOrId,
           miniPage: sharePage
         }

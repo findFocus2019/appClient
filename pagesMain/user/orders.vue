@@ -35,15 +35,22 @@
               <view class="uni-ellipsis-2 uni-text-dark" style="height: 100upx;line-height: 50upx;">
                 {{ item.title }}
               </view>
-              <view class="uni-text-small uni-text-gray">
-                积分可抵扣
+              <view class="uni-text-small uni-text-gray" v-if="order.score_use">
+                使用积分抵扣
                 <money :num="item.price_score_sell" v-if="!order.vip" />
                 <money :num="item.price_score_vip" v-else />
               </view>
+              <view class="uni-text-small uni-text-gray" v-else>
+                未使用积分
+              </view>
               <view class="uni-flex">
-                <view class="uni-flex-item uni-text-red uni-h4">
-                  <money :nums="[item.price_sell,item.price_score_sell]" size="36" v-if="!order.vip" />
-                  <money :nums="[item.price_vip,item.price_score_vip]" size="36" v-else />
+                <view class="uni-flex-item uni-text-red uni-h4" v-if="order.score_use">
+                  <money :nums="[item.price_sell]" size="36" v-if="!order.vip" />
+                  <money :nums="[item.price_vip]" size="36" v-else />
+                </view>
+                <view class="uni-flex-item uni-text-red uni-h4" v-else>
+                  <money :nums="[item.price_sell, item.price_score_sell]" size="36" v-if="!order.vip" />
+                  <money :nums="[item.price_vip, item.price_score_vip]" size="36" v-else />
                 </view>
                 <view class="uni-flex-item uni-right">
                   x {{ item.num }}
@@ -69,8 +76,8 @@
           <view class="uni-inline-block" style="line-height: 1;">
             合计:<view class="uni-text-red uni-h3 uni-inline-block">
               <view v-if="order.score_use">
-                <money :num="order.total" size="36" v-if="!order.vip" />
-                <money :num="order.total_vip" size="36" v-else />
+                <money :nums="[order.total]" size="36" v-if="!order.vip" />
+                <money :nums="[order.total_vip]" size="36" v-else />
               </view>
               <view v-else>
                 <money :nums="[order.total, order.score]" size="36" v-if="!order.vip" />

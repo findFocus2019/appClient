@@ -2,7 +2,7 @@
 	<view class="page">
     
     <view class="uni-border-top" v-if="!isVipOrder">
-      <view v-if="jdOrder">
+      <view v-if="jdOrder == 1">
         <user-address :address="userAddressCurrent" :modify="false"></user-address>
       </view>
       <view v-else>
@@ -121,7 +121,7 @@
 			<text style="margin-left: 10upx;">小计</text>
 			<!-- <text class="uni-text-red">￥</text> -->
 			<view class="uni-inline-block uni-text-red">
-				<money :num="total" size="36"/>
+				<money :num="[total, mallOrderConfirm.priceExpress]" size="36"/>
 			</view>
 		</view>
     
@@ -251,7 +251,7 @@
           let orderIds = ret.data.ids
           let totals = ret.data.totals
           this.$store.state.mallPayment.orderIds = orderIds
-          this.$store.state.mallPayment.totals = parseInt(totals * 100) / 100
+          this.$store.state.mallPayment.totals = parseFloat(totals).toFixed(2)
           
           console.log('this.$store.state.mallPayment' , this.$store.state.mallPayment)
 					if(this.type == 0){
@@ -322,9 +322,9 @@
 				}
         
         if(this.postData.score){
-          this.total = total * 100 / 100
+          this.total = parseFloat(total).toFixed(2)
         }else{
-          this.total = (total * 100 + score * 100)/ 100
+          this.total = parseFloat(total + score).toFixed(2)
         }
       }
 		},
@@ -353,7 +353,7 @@
 				
 				console.log('cartInfo' , cartInfo)
 				this.score = this.isVip ? cartInfo.scoreVip : cartInfo.score
-				this.total = this.isVip ? (cartInfo.totalVip * 100 + this.score * 100) / 100 : (cartInfo.total * 100 + this.score * 100) / 100
+				this.total = this.isVip ? (cartInfo.totalVip  + this.score)  : (cartInfo.total  + this.score )
 				      
 				this.cartList = Cart.listChecked()
 				
@@ -365,12 +365,16 @@
 				datas[item.type].push(item)
 				this.cartList = datas
 				
-				this.score = this.isVip ? item.price_score_vip * item.num : item.price_score_sell * item.num
-				this.total = this.isVip ? (item.price_vip * 100 + this.score * 100)/100 * item.num  : (item.price_sell * 100 + this.score * 100) / 100 * item.num
+				this.score = this.isVip ? (item.price_score_vip * item.num) : (item.price_score_sell * item.num)
+				this.total = this.isVip ? (item.price_vip  + this.score  * item.num ) : (item.price_sell + this.score * item.num)
 			}
       
       console.log('onLoad this.cartList:' + JSON.stringify(this.cartList))
 
+      this.score = parseFloat(this.score).toFixed(2)
+      this.total = parseFloat(this.total).toFixed(2)
+      
+      console.log('this.total =============' , this.total)
 			this.type = type
 			this.isVipOrder = isVipOrder
       // 发票默认不选

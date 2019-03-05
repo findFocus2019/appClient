@@ -3,7 +3,7 @@
     <view class="uni-common-pa uni-bg-white uni-center uni-border-top">
       <view class="uni-common-pt">付款金额</view>
       <view class="uni-h2 uni-common-pb uni-text-red">
-        <money :num="mallPayment.totals * 100 / 100" size="48" />
+        <money :num="mallPayment.totals" size="48" />
       </view>
     </view>
 
@@ -437,7 +437,7 @@ export default {
     this.userInfoGet();
 
     console.log("onLoad =========", this.$store.state.mallPayment);
-    this.$store.state.mallPayment.totals = parseInt(this.$store.state.mallPayment.totals * 100) / 100
+    this.$store.state.mallPayment.totals = parseFloat(this.$store.state.mallPayment.totals).toFixed(2)
     
     await this.$store.dispatch("userEcardListGet");
 

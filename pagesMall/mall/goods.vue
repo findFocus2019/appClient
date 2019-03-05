@@ -470,11 +470,15 @@
         // let postType = this.postInfo.type
         // console.log()
         console.log('分享 ：', shareUrl)
+        let imgUrl= this.mallGoodsInfo.cover
+        if(this.mallGoodsInfo.type != 2){
+          imgUrl += '!goodsCover'
+        }
         let shareData = {
           title: this.mallGoodsInfo.title,
           description: this.mallGoodsInfo.description,
           href: shareUrl,
-          imgUrl: this.mallGoodsInfo.cover + '!goodsCover',
+          imgUrl: imgUrl,
           // imgUrl:'http://image.sinajs.cn/newchart/hk_stock/min_660/01652.gif',
           miniAppId: this.miniAppOrId,
           miniPage: sharePage

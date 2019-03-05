@@ -1,7 +1,7 @@
 <template>
   <view class="uni-page-body">
     
-    <uni-nav-bar color="#333333" :background-color="barBgColor" fixed="true" >
+    <uni-nav-bar color="#333333" :background-color="barBgColor" fixed="true" shadow="false">
        <block slot="left">
       	
       </block>

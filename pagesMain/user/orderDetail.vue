@@ -49,7 +49,7 @@
     		  			<image lazy-load="true"  :src="item.cover" mode="scaleToFill" style="width: 160upx;height: 160upx;border-radius: 8upx;"></image>
     		  		</view>
     		      <view class="uni-flex-item uni-common-pl" >
-    		      	<view class="uni-ellipsis-2 uni-text-darker" style="height: 80upx;">
+    		      	<view class="uni-ellipsis-2 uni-text-darker" style="height: 80upx;line-height: 40upx;">
     		      		{{item.title}}
     		      	</view>
     		        <view class="uni-flex ">
@@ -68,8 +68,15 @@
     		        <view class="uni-flex ">
     		        	<view class="uni-flex-item uni-text-red">
     		        		<!-- <text class="uni-text-small">￥</text> -->
-    		        		<money :nums="[item.price_sell,item.price_score_sell]" size="30" v-if="!order.vip" />
-    		        		<money :nums="[item.price_vip,item.price_score_vip]" size="30" v-else/>
+                    <view class="uni-inline-block" v-if="order.score_use">
+                        <money :nums="[item.price_sell]" size="30" v-if="!order.vip" />
+                        <money :nums="[item.price_vip]" size="30" v-else/>
+                    </view>
+    		        		<view class="uni-inline-block" v-else>
+    		        		    <money :nums="[item.price_sell,item.price_score_sell]" size="30" v-if="!order.vip" />
+    		        		    <money :nums="[item.price_vip,item.price_score_vip]" size="30" v-else/>
+    		        		</view>
+    		        		
                     
     	              <text style="margin-left: 10upx;">x</text>
     	              <text style="margin-left: 10upx;">{{ item.num }}</text>
@@ -95,6 +102,33 @@
     	  	{{ order.create_date }}
     	  </view>
     	</view>
+      
+      <view class="uni-common-pa uni-border-top uni-bg-white uni-flex" >
+      	<view class="">
+      		运费
+      	</view>
+        <view class="uni-flex-item uni-right">
+         
+        	  <money :num="order.express_fee" size="30"/>
+        	
+        </view>
+      </view>
+      
+      <view class="uni-common-pa uni-border-top uni-bg-white uni-flex" >
+      	<view class="">
+      		使用积分抵扣
+      	</view>
+        <view class="uni-flex-item uni-right">
+        	<view class="uni-text-light uni-common-mr-sm uni-inline-block" v-if="order.score_use">
+            -
+        	  <money :num="order.score" size="30" v-if="!order.vip" />
+        	  <money :num="order.score_vip" size="30" v-else/>
+        	</view>
+        	<view class="uni-text-light uni-common-mr-sm uni-inline-block" v-else>
+        		0
+        	</view>
+        </view>
+      </view>
     	
     	<view class="uni-common-pa uni-border-top uni-bg-white uni-flex" >
     		<view class="">
@@ -102,8 +136,8 @@
     		</view>
     	  <view class="uni-flex-item uni-right uni-text-red">
     	  	<view v-if="order.score_use">
-    	  	  <money :num="order.total" size="30" v-if="!order.vip" />
-    	  	  <money :num="order.total_vip" size="30" v-else/>
+    	  	  <money :nums="[order.total]" size="30" v-if="!order.vip" />
+    	  	  <money :nums="[order.total_vip]" size="30" v-else/>
     	  	</view>
     	  	<view v-else>
     	  	  <money :nums="[order.total, order.score]" size="30" v-if="!order.vip" />
@@ -112,21 +146,9 @@
     	  </view>
     	</view>
     	
-    	<view class="uni-common-pa uni-border-top uni-bg-white uni-flex" >
-    		<view class="">
-    			使用积分抵扣
-    		</view>
-    	  <view class="uni-flex-item uni-right">
-    	  	<view class="uni-text-light uni-common-mr-sm uni-inline-block" v-if="order.score_use">
-
-    	  	  <money :num="order.score" size="30" v-if="!order.vip" />
-    	  	  <money :num="order.score_vip" size="30" v-else/>
-    	  	</view>
-    	  	<view class="uni-text-light uni-common-mr-sm uni-inline-block" v-else>
-    	  		0
-    	  	</view>
-    	  </view>
-    	</view>
+    	
+      
+      
     	
     	<view class="uni-common-pa uni-border-top uni-bg-white uni-flex" v-if="order.payment">
     		<view class="">
