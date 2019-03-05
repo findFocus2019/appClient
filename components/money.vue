@@ -30,7 +30,7 @@
     methods:{
       formatNum(){
         if(this.num || this.num === 0 || this.num === '0'){
-          let numStr = parseFloat(this.num).toFixed(2).toString()
+          let numStr = parseFloat(this.num).toFixed(2)
           console.log(numStr)
           this.money = ' ￥' + numStr
 //           let numArr = numStr.split('.')
