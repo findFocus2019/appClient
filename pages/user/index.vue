@@ -224,6 +224,7 @@
        },
        refresh(){
          if(this.hasLogin){
+           this.$store.dispatch('userInfoGet')
            this.$store.dispatch('userIndexDataGet')
          }
         

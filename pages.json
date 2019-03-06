@@ -352,6 +352,12 @@
                 "style": {
                     "navigationBarTitleText": "推荐规则"
                 }
+            },
+            {
+                "path": "user/assetsRule",
+                "style": {
+                    "navigationBarTitleText": "会员收益规则"
+                }
             }
         ]
     }, {
@@ -401,7 +407,15 @@
                 "path": "user/trade",
                 "style": {
                     "navigationBarTitleText": "收支记录",
-                    "enablePullDownRefresh": true
+                    "enablePullDownRefresh": true,
+                    "app-plus": {
+                        "titleNView": {
+                            "buttons": [{
+                                "fontSrc": "/static/fonts/uni.ttf",
+                                "text": "\ue560"
+                            }]
+                        }
+                    }
                 }
             },
             {

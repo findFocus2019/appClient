@@ -67,27 +67,36 @@
     },
     methods:{
       inviteShare(type = 'wx'){
+        // #ifndef APP-PLUS
+        uni.navigateTo({
+        	url:'/pages/auth/guide'
+        })
+        return
+        // #endif
+        console.log('userInfo:' + JSON.stringify(this.userInfo))
         let sharePage = 'pages/auth/register'
-        sharePage = sharePage + '?isInvite=1&puid=' + this.userInfo.id
+        sharePage = sharePage + '?isInvite=1&puid=' + this.userInfo.user_id
         let shareUrl = this.webDomain + '/' + sharePage
         // let postType = this.postInfo.type
         // console.log()
         console.log('inviteShare ：' , shareUrl)
+        let imgUrl = 'https://img-juren.oss-cn-shenzhen.aliyuncs.com/assets/images/share.png';
         let shareData = {
           title: '发现焦点',
           description: '您的好友' + this.userInfo.nickname + '邀请您的注册',
           href: shareUrl,
-          imgUrl: 'http://img-juren.oss-cn-shenzhen.aliyuncs.com/assets/images/logo.png',
+          imgUrl: imgUrl,
           miniAppId: this.miniAppOrId,
           miniPage: sharePage
         }
         console.log('inviteShare ：' , JSON.stringify(shareData))
         if(type == 'wx'){
-          sharePage = 'pages/auth/mp'
-          sharePage = sharePage + '?isInvite=1&puid=' + this.userInfo.id
-          let shareUrl = this.webDomain + '/' + sharePage
-          shareData.shareUrl = shareUrl
-          Share.mini(shareData)
+//           sharePage = 'pages/auth/mp'
+//           sharePage = sharePage + '?isInvite=1&puid=' + this.userInfo.id
+//           let shareUrl = this.webDomain + '/' + sharePage
+//           shareData.shareUrl = shareUrl
+//           Share.mini(shareData)
+          Share.wx(shareData, 0)
         }else if (type == 'fr'){
           Share.wx(shareData , 1)
         }

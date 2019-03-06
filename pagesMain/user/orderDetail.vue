@@ -157,7 +157,7 @@
     	  <view class="uni-flex-item uni-right">
     	  	<text v-if="order.payment.type == 1">代金券</text>
 					<text v-if="order.payment.type == 2">账户余额</text>
-					<text v-if="order.payment.type == 3 && order.payment.method == 'wx'">微信支付</text>
+					<text v-if="order.payment.type == 3 && order.payment.method == 'wxpay'">微信支付</text>
 					<text v-if="order.payment.type == 3 && order.payment.method == 'alipay'">支付宝</text>
     	  </view>
     	</view>

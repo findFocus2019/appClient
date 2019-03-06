@@ -2,8 +2,8 @@
     "name" : "发现焦点",
     "appid" : "__UNI__26AFF07",
     "description" : "发现焦点APP",
-    "versionName" : "0.9.8",
-    "versionCode" : 98,
+    "versionName" : "0.9.9",
+    "versionCode" : 99,
     "transformPx" : true,
     "app-plus" : {
         /* 5+App特有相关 */

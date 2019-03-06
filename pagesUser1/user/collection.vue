@@ -328,15 +328,19 @@
         let i = data.i
         console.log('delCollection' , item , i)
         uni.showModal({
-          title: '确认删除？',
-          content: '',
+          title: '确认',
+          content: '删除收藏?',
           success: (res) => {
+            console.log('success res')
             if (res.confirm) {
               console.log('用户点击确定');
               this.delCollectionAction(item , i)
             } else if (res.cancel) {
               console.log('用户点击取消');
             }
+          },
+          fail() {
+          	console.log('fail')
           }
         })
       },

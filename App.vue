@@ -12,27 +12,11 @@
         day = (day< 10) ? ('0' + day) : day
         
         let today = year.toString() + month.toString() + day.toString() 
-        console.log('today=======================:'+ today)
-        let signDayData = uni.getStorageSync('sign_day_date')
-        console.log('signDayData:'+ signDayData)
-        if(!signDayData){
-          uni.setStorageSync('sign_day_date', JSON.stringify({toady: today, num: 1}) ) 
-        }else {
-          signDayData = JSON.parse(signDayData)
-          if(today != signDayData.today){
-            signDayData.num += 1
-          }
-          
-          uni.setStorageSync('sign_day_date', JSON.stringify(signDayData)) 
-        }
-        
+   
         if(this.$store.state.hasLogin){
-          let ret = await this.$store.dispatch('userRecodeSignDay' , signDayData)
+          let ret = await this.$store.dispatch('userRecodeSignDay' , {today:today})
           console.log('userRecodeSignDay ret:' + JSON.stringify(ret))
-          if(ret.code == 0){
-            signDayData.num = ret.data.num
-            uni.setStorageSync('sign_day_date', JSON.stringify(signDayData)) 
-          }
+        
         }
    
       }

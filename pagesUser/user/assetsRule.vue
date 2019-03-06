@@ -3,7 +3,7 @@
     <!-- <view class="uni-common-pa">
     	<rule-box :title="title" :subTitle="subTitle" :content="content"></rule-box>
     </view> -->
-		<image src="https://img-juren.oss-cn-shenzhen.aliyuncs.com/assets/images/inviteRule.jpg" mode="widthFix" style="width: 100%;"></image>
+		<image src="https://img-juren.oss-cn-shenzhen.aliyuncs.com/assets/images/vipRule.jpg" mode="widthFix" style="width: 100%;"></image>
 	</view>
 </template>
 

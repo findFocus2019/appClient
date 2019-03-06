@@ -241,7 +241,14 @@
     	setTimeout(() => {
     	  this.showLoadMore = false
     	} , 1000)
-    }
+    },
+    onNavigationBarButtonTap(e) {
+    	if(e.index === 0){
+       uni.navigateTo({
+       	url:'/pagesUser/user/assetsRule'
+       })
+     }
+    },
   }
 </script>
 

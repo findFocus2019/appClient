@@ -284,7 +284,16 @@
           success: async (e) =>  {
           	if(e.tapIndex == 0){
               console.log('删除地址')
-              await this.$store.dispatch('userAddressDelete' , {address_id: this.postData.id})
+              let ret = await this.$store.dispatch('userAddressDelete' , {address_id: this.postData.id})
+              if (ret.code == 1){
+                uni.showToast({
+                  icon:'none',
+                	title: ret.message,
+                	mask: false,
+                	duration: 1500
+                });
+                return
+              }
               await this.$store.dispatch('userAddressGet')
               uni.navigateBack({
               	delta:1

@@ -128,10 +128,12 @@
         await this.getData()
       },
       async goodsShare(item){
-        // #ifdef MP-WEIXIN
+ 
+        // #ifndef APP-PLUS
         uni.navigateTo({
         	url:'/pages/auth/guide'
         })
+        return
         // #endif
         // 分享
         if(!this.hasLogin){
@@ -158,9 +160,10 @@
         	return 
         }
         
-        let sharePage = 'pages/mall/goods'
-        sharePage = sharePage + '?id=' + item.id + '&puid=' + this.userInfo.id + '&share_id=' + shareId
+        let sharePage = 'pagesMall/mall/goods'
+        sharePage = sharePage + '?id=' + item.id + '&puid=' + this.userInfo.user_id + '&share_id=' + shareId
         let shareUrl = this.webDomain + '/' + sharePage
+        let imgUrl = 'https://img-juren.oss-cn-shenzhen.aliyuncs.com/assets/images/share.png';
         // let postType = this.postInfo.type
         // console.log()
         console.log('分享 ：' , shareUrl)
@@ -168,13 +171,14 @@
           title: item.title,
           description: item.description,
           href: shareUrl,
-          imgUrl: item.cover + '!goodsCover',
+          // imgUrl: item.cover + '!goodsCover',
+          imgUrl:imgUrl,
           miniAppId: this.miniAppOrId,
           miniPage: sharePage
         }
         console.log('share shareData' , JSON.stringify(shareData))
         uni.showActionSheet({
-        	itemList:['分享给QQ好友','分享到微信朋友圈','分享到微信小程序'],
+        	itemList:['分享给QQ好友','分享到微信朋友圈','分享到微信好友'],
           success: (e) => {
           	let index = e.tapIndex
             if(index == 0){
@@ -182,7 +186,8 @@
             }else if(index == 1){
               Share.wx(shareData, 1)
             } else if (index == 2){
-              Share.mini(shareData , 0)
+              // Share.mini(shareData , 0)
+              Share.wx(shareData,0)
             }
           }
         })

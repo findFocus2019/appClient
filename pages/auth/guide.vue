@@ -1,24 +1,24 @@
 <template>
-	<view class="uni-page-body uni-bg-white">
+	<view class="uni-page-body" style="background: #f7f8fa;">
 		
-		
-		<view class="uni-common-pa uni-right" v-if="isWeixin">
-			<uni-icon type="arrowthinup" size="80"></uni-icon>
-			<view class="">
-				点击在safari中打开
-			</view>
-		</view>
-		
-		<view class="uni-common-pa uni-common-mt uni-center">
-			<image src="/static/logo.png" mode="" style="width: 200upx;height: 200upx;margin-top: 100upx;"></image>
-			<view class="">
+		<view class="uni-center" style="position: absolute;top: 0;left: 0;width: 100%;" @click="download">
+			<image src="https://img-juren.oss-cn-shenzhen.aliyuncs.com/assets/images/guide.jpeg" mode="widthFix" style="width: 100%;"></image>
+			<!-- <view class="" @click="download">
 				下载发现焦点APP
 			</view>
 			
 			<view class="uni-common-pa" v-if="!isWeixin">
-				<button type="warn" class="uni-border-btn-radius">点击下载</button>
-			</view>
+				<button type="warn" class="uni-border-btn-radius"  @click="download">点击下载</button>
+			</view> -->
 		</view>
+    
+    <view class="uni-common-pa uni-right" v-if="isWeixin"  style="position: absolute;right: 30upx;top: 30upx;">
+    	<uni-icon type="arrowthinup" size="80"></uni-icon>
+    	<view class="">
+    		点击在safari中打开
+    	</view>
+    </view>
+    
 	</view>
 </template>
 
@@ -33,6 +33,27 @@
 		components: {
 			uniIcon
 		},
+    methods:{
+      download(){
+        if(this.isWeiXin){
+          
+          uni.showToast({
+          	icon:'none',
+            title:'请使用默认浏览器打开'
+          })
+          
+          return
+        }
+        
+        let device = uni.getSystemInfoSync();
+        console.log('divice info:' + JSON.stringify(device));
+        if(device.platform == 'ios'){
+          location.href = 'https://www.pgyer.com/DFcd'
+        }else if(device.platform == 'android') {
+          location.href = 'https://www.pgyer.com/iHri'
+        }
+      }
+    },
 		onLoad() {
 			// #ifdef H5
 			function isWeiXin(){
@@ -49,6 +70,8 @@
 			this.isWeixin = isWeiXin()
 			// #endif
 			
+      
+      
 		}
 	}
 </script>

@@ -67,42 +67,45 @@
     data(){
       return {
         nums:[1,2,3,4,5,6,7],
-        signNum:3,
-        dailySignData:{
-          continues_num: 0,
-          active_days: [],
-          score:0,
-          balance:0,
-          today_sign:0
-        },
-        signDayData:{}
+        // signNum:0,
+//         dailySignData:{
+//           continues_num: 0,
+//           active_days: [],
+//           score:0,
+//           balance:0,
+//           today_sign:0
+//         },
+        signDayData:{
+          num:0
+        }
       }
     },
     methods:{
       async getDailySignData(){
         // 获取数据
-        let ret = await this.$store.dispatch('userDailySignDataGet')
-        console.log('userDailySignDataGet =====' , ret)
-        if(ret.code == 0){
-          this.dailySignData = ret.data
-          this.signNum = ret.data.continues_num
-        }
+//         let ret = await this.$store.dispatch('userDailySignDataGet')
+//         console.log('userDailySignDataGet =====' , ret)
+//         if(ret.code == 0){
+//           this.dailySignData = ret.data
+//           this.signNum = ret.data.continues_num
+//         }
       },
       async getSignDatData(){
-        let signDayData = uni.getStorageSync('sign_day_date')
-        console.log('getSignDatData:' + signDayData)
-        signDayData = JSON.parse(signDayData)
+        let date = new Date();
+        let year= date.getFullYear()
+        let month = date.getMonth() + 1
+        let day = date.getDate()
         
-        this.signDayData = signDayData
+        month = (month < 10) ? ('0' + month) : month,
+        day = (day< 10) ? ('0' + day) : day
         
-        if(this.$store.state.hasLogin){
-          let ret = await this.$store.dispatch('userRecodeSignDay' , signDayData)
-          console.log('userRecodeSignDay ret:' + JSON.stringify(ret))
-          if(ret.code == 0){
-            signDayData.num = ret.data.num
-            uni.setStorageSync('sign_day_date', JSON.stringify(signDayData)) 
-          }
+        let today = year.toString() + month.toString() + day.toString() 
+        let ret = await this.$store.dispatch('userRecodeSignDay' , {today:today})
+        console.log('userRecodeSignDay ret:' + JSON.stringify(ret))
+        if(ret.code == 0){
+          this.signDayData.num = ret.data.num
         }
+        
       },
       
       goToPage(page){

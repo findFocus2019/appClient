@@ -349,18 +349,20 @@
           })
         } else if (this.addType == 1) {
 					
-					await this.getFeight(this.cartAddNum)
-					
-					console.log('this.priceExpress' , this.priceExpress)
+          if(goods.type == 2){
+            await this.getFeight(this.cartAddNum)
+            
+            console.log('this.priceExpress' , this.priceExpress)
 
-					if(this.priceExpress === ''){
-						uni.showToast({
-						    title: '京选商品运费获取失败，稍后重试',
-						    icon:'none',
-						    duration: 2000
-						});
-						return
-					}
+            if(this.priceExpress === ''){
+              uni.showToast({
+                  title: '京选商品运费获取失败，稍后重试',
+                  icon:'none',
+                  duration: 2000
+              });
+              return
+            }
+          }
 					
           // 直接购买
           item.num = this.cartAddNum
@@ -434,10 +436,11 @@
         }
       },
       async goodsShare() {
-        // #ifdef MP-WEIXIN
+        // #ifndef APP-PLUS
         uni.navigateTo({
-          url: '/pages/auth/guide'
+        	url:'/pages/auth/guide'
         })
+        return
         // #endif
         // 分享
         if (!this.hasLogin) {
@@ -465,15 +468,16 @@
         }
 
         let sharePage = 'pagesMall/mall/goods'
-        sharePage = sharePage + '?id=' + this.mallGoodsInfo.id + '&puid=' + this.userInfo.id + '&share_id=' + shareId
+        sharePage = sharePage + '?id=' + this.mallGoodsInfo.id + '&puid=' + this.userInfo.user_id + '&share_id=' + shareId
         let shareUrl = this.webDomain + '/' + sharePage
         // let postType = this.postInfo.type
         // console.log()
         console.log('分享 ：', shareUrl)
-        let imgUrl= this.mallGoodsInfo.cover
-        if(this.mallGoodsInfo.type != 2){
-          imgUrl += '!goodsCover'
-        }
+//         let imgUrl= this.mallGoodsInfo.cover
+//         if(this.mallGoodsInfo.type != 2){
+//           imgUrl += '!goodsCover'
+//         }
+        let imgUrl = 'https://img-juren.oss-cn-shenzhen.aliyuncs.com/assets/images/share.png';
         let shareData = {
           title: this.mallGoodsInfo.title,
           description: this.mallGoodsInfo.description,
@@ -485,7 +489,7 @@
         }
         console.log('shareData:', JSON.stringify(shareData))
         uni.showActionSheet({
-          itemList: ['分享给QQ好友', '分享到微信朋友圈', '分享到微信小程序'],
+          itemList: ['分享给QQ好友', '分享到微信朋友圈', '分享到微信好友'],
           success: (e) => {
             let index = e.tapIndex
             if (index == 0) {
@@ -493,7 +497,8 @@
             } else if (index == 1) {
               Share.wx(shareData, 1)
             } else if (index == 2) {
-              Share.mini(shareData, 0)
+              // Share.mini(shareData, 0)
+              Share.wx(shareData,0)
             }
           }
         })

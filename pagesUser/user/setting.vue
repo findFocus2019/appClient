@@ -9,8 +9,9 @@
       	<image lazy-load="true"  :src="userInfo.avatar" mode="" v-if="userInfo.avatar" style="width: 80upx;height: 80upx; border-radius: 40upx;"></image>
       </view>
       <view class="uni-flex-item uni-right" v-else >
-      	上传头像
-        <uni-icon type="arrowright" size="22"></uni-icon>
+      	<!-- 上传头像
+        <uni-icon type="arrowright" size="22"></uni-icon> -->
+        <navigator url="/pages/auth/guide">未设置</navigator>
       </view>
 		</view>
     

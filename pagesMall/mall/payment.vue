@@ -433,6 +433,14 @@ export default {
       this.goToLoginPage();
       return;
     }
+    
+    // h5引导下载
+    // #ifdef H5
+    uni.navigateTo({
+    	url:'/pages/auth/guide'
+    })
+    return
+    // #endif
 
     this.userInfoGet();
 

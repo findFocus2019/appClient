@@ -54,7 +54,7 @@
             <image src="http://img-juren.oss-cn-shenzhen.aliyuncs.com/assets/images/reg-bg.png" mode="widthFix" style="width: 750upx;"></image>
          </view>
      
-         <view class="uni-common-pa uni-common-mt uni-center uni-flex" style="position: relative;">
+         <view class="uni-common-pa uni-common-mt uni-center uni-flex" style="position: relative;" v-if="!isInvite">
            
            <view class="uni-column uni-flex-item uni-link " @tap="goBack">
              <text class="uni-bold">返回登录</text>
