@@ -31,6 +31,8 @@
           
           this.$store.state.mallPayment.ecardId = item.id
           this.$store.state.mallPayment.ecardAmount = item.amount
+          this.$store.state.mallPayment.payTypeCheck = 1
+          this.$store.state.mallPayment.payMethodCheck = 'ecard'
 
           uni.navigateBack({
           	delta:1

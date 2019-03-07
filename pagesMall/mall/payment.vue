@@ -8,100 +8,137 @@
     </view>
 
     <view class="uni-bg-white uni-border-top uni-common-mt uni-common-pl uni-common-pr">
-      <view class="uni-common-pt uni-common-pb">请选择支付方式</view>
-      <view class="uni-border-top" v-for="(type,index) in payTypes" :key="index">
-        <view class>
-          <view
-            class="uni-common-pt uni-common-pb uni-text-dark uni-bold"
-            v-if="type.name"
-          >{{type.name}}</view>
-          <view
-            class="uni-common-pt uni-common-pb"
-            v-for="(item,index2) in type.items"
-            :key="index2"
-          >
-            <view class="uni-flex">
-              <view class="uni-flex-item">{{item.name}}</view>
-              <view class="uni-right" @tap="payTypeChoose(item)">
-                <view class v-if="item.id == 4">
-                  
-                  <view class v-if="userInfo.balance > mallPayment.totals">
-                    <view class="uni-common-mb-sm uni-inline-block">
-                    	<money :num="userInfo.balance" />
-                    </view>
-                    <uni-icon
-                      type="checkbox-filled"
-                      size="22"
-                      v-if="mallPayment.payTypeCheck == item.pay_type && mallPayment.payMethodCheck == item.pay_method "
-                      color="#d81e06"
-                    ></uni-icon>
-                    <uni-icon type="circle" size="22" v-else></uni-icon>
-                  </view>
-                  <view
-                    class="uni-text-small uni-text-light"
-                    v-else
-                  >账户余额不足,剩余:
-                  <money :num="userInfo.balance" />
-                  </view>
-                </view>
-
-                <view class v-if="item.id == 3">
-                  <view class v-if="ecardCountCanUse > 0">
-                    <text style="margin-right: 10upx;">x {{ ecardCountCanUse }}</text>
-                    <uni-icon
-                      type="checkbox-filled"
-                      size="22"
-                      v-if="mallPayment.payTypeCheck == item.pay_type && mallPayment.payMethodCheck == item.pay_method && mallPayment.ecardId"
-                      color="#d81e06"
-                    ></uni-icon>
-                    <uni-icon type="circle" size="22" v-else></uni-icon>
-                  </view>
-                  <view class v-else>无可用代金券</view>
-                </view>
-
-                <view class v-if="item.id == 1 || item.id == 2">
-                  <view class>
-                    <uni-icon
-                      type="checkbox-filled"
-                      size="22"
-                      v-if="mallPayment.payTypeCheck == item.pay_type && mallPayment.payMethodCheck == item.pay_method "
-                      color="#d81e06"
-                    ></uni-icon>
-                    <uni-icon type="circle" size="22" v-else></uni-icon>
-                  </view>
-                </view>
-              </view>
-            </view>
+      
+      <view class="uni-common-pt uni-common-pb uni-flex">
+        <view class="uni-flex-item">
+        	请选择支付方式
+        </view>
+        <view class="uni-flex-item uni-right">
+          <view class="" v-if="mallPayment.ecardAmount" >
+          	代金券：<money :num="mallPayment.ecardAmount" size="24"></money>
           </view>
+        	
         </view>
       </view>
     </view>
-
-    <view
-      class="uni-common-pt uni-common-pb uni-text-small uni-text-light uni-center"
-      v-if="mallPayment.totals - mallPayment.ecardAmount > 0 && mallPayment.payTypeCheck == 1 && mallPayment.ecardId"
-    >代金券余额不足时，可使用账户余额或在线支付方式补齐
-      <view class="uni-common-pt uni-text-light uni-center">
-        <view class>
-          <text>还需支付</text>
-          <text class="uni-text-red">￥ {{ (mallPayment.totals - mallPayment.ecardAmount) * 100 / 100}}</text>
+    
+    <view class="uni-bg-white uni-common-pl uni-common-pr" v-if="isVipOrder == 0">
+    	<view class="uni-common-pt uni-common-pb uni-border-top uni-flex" >
+        <view class="uni-flex-item uni-bold ">
+        	代金券
         </view>
-        <view class="uni-flex uni-common-mt">
-          <view
-            class="uni-flex-item"
-            v-for="(item , index3) in payMethodExts"
-            :key="index3"
-            @tap="payMethodExtChoose(item)"
-          >
-            <text
-              v-if="mallPayment.payMethodExt == item.method"
-              class="uni-text-red"
-            >{{ item.text }}</text>
-            <text v-else>{{ item.text }}</text>
-          </view>
+        <view class="uni-flex-item uni-right" @tap="payTypeCheck(1)">
+        	<view class v-if="ecardCountCanUse > 0">
+        	  <text style="margin-right: 10upx;">x {{ ecardCountCanUse }}</text>
+        	  <uni-icon
+        	    type="checkbox-filled"
+        	    size="22"
+        	    v-if="mallPayment.payTypeCheck == 1 && mallPayment.ecardId"
+        	    color="#d81e06"
+        	  ></uni-icon>
+        	  <uni-icon type="circle" size="22" v-else></uni-icon>
+        	</view>
+        	<view class v-else>无可用代金券</view>
+        </view>
+      
+      </view>
+    	
+    	<view class=""  v-if="mallPayment.payTypeCheck == 1 && needAmount1 > 0">
+        <view class="uni-border-top uni-flex uni-common-pt uni-common-pb" v-for="(item,index) in payMethods" :key="index" @tap="payMethodChoose(item)">
+        	<view class="uni-flex-item uni-common-pl">
+        		{{ item.name }}
+        	</view>
+        	<view class="uni-flex-item uni-right" >
+        		<uni-icon
+        		  type="checkbox-filled"
+        		  size="22"
+        		  v-if="mallPayment.payMethodCheck == item.pay_method"
+        		  color="#d81e06"
+        		></uni-icon>
+        		<uni-icon type="circle" size="22" v-else></uni-icon>
+        	</view>
+        </view>
+    		
+    	</view>
+    </view>
+    
+    
+    <view class="uni-bg-white uni-common-pl uni-common-pr"  v-if="isVipOrder == 0">
+    	<view class="uni-common-pt uni-common-pb uni-border-top uni-flex" >
+        <view class="uni-flex-item uni-bold ">
+        	账户余额
+        </view>
+        <view class="uni-flex-item uni-right" @tap="payTypeCheck(2)" v-if="userInfo.balance">
+          <money :num="userInfo.balance"></money>
+        	<uni-icon
+        	  type="checkbox-filled"
+        	  size="22"
+        	  v-if="mallPayment.payTypeCheck == 2"
+        	  color="#d81e06"
+        	></uni-icon>
+        	<uni-icon type="circle" size="22" v-else></uni-icon>
+        </view>
+        <view class="" v-else>
+        	0
         </view>
       </view>
+    	
+    	<view class=""  v-if="mallPayment.payTypeCheck == 2 && needAmount2 > 0">
+        <view class="uni-border-top uni-flex uni-common-pt uni-common-pb" v-for="(item,index) in payMethods" :key="index" @tap="payMethodChoose(item)">
+        	<view class="uni-flex-item uni-common-pl">
+        		{{ item.name }}
+        	</view>
+        	<view class="uni-flex-item uni-right" >
+        		<uni-icon
+        		  type="checkbox-filled"
+        		  size="22"
+        		  v-if="mallPayment.payMethodCheck == item.pay_method"
+        		  color="#d81e06"
+        		></uni-icon>
+        		<uni-icon type="circle" size="22" v-else></uni-icon>
+        	</view>
+        </view>
+    		
+    	</view>
     </view>
+    
+    <view class="uni-bg-white uni-common-pl uni-common-pr">
+    	<view class="uni-common-pt uni-common-pb uni-border-top uni-flex" >
+        <view class="uni-flex-item uni-bold ">
+        	在线支付
+        </view>
+        <view class="uni-flex-item uni-right" @tap="payTypeCheck(3)">
+        	<uni-icon
+        	  type="checkbox-filled"
+        	  size="22"
+        	  v-if="mallPayment.payTypeCheck == 3"
+        	  color="#d81e06"
+        	></uni-icon>
+        	<uni-icon type="circle" size="22" v-else></uni-icon>
+        </view>
+  
+      </view>
+    	
+    	<view class=""  v-if="mallPayment.payTypeCheck == 3">
+        <view class="uni-border-top uni-flex uni-common-pt uni-common-pb" v-for="(item,index) in payMethods" :key="index" @tap="payMethodChoose(item)">
+        	<view class="uni-flex-item uni-common-pl">
+        		{{ item.name }}
+        	</view>
+        	<view class="uni-flex-item uni-right" >
+        		<uni-icon
+        		  type="checkbox-filled"
+        		  size="22"
+        		  v-if="mallPayment.payMethodCheck == item.pay_method"
+        		  color="#d81e06"
+        		></uni-icon>
+        		<uni-icon type="circle" size="22" v-else></uni-icon>
+        	</view>
+        </view>
+    		
+    	</view>
+    </view>
+    
+    
 
     <view class="uni-common-pa uni-bg-white">
       <view class="uni-common-pt" @tap="paymentCreate" v-if="paymentInfo.id == 0">
@@ -137,54 +174,40 @@ export default {
       },
       payTypes: [
         {
-          name: "在线支付",
-          items: [
-            {
-              id: 1,
-              name: "微信支付",
-              pay_type: "3",
-              pay_method: "wxpay"
-            },
-            {
-              id: 2,
-              name: "支付宝",
-              pay_type: "3",
-              pay_method: "alipay"
-            }
-          ]
+          id:3,
+          name: "代金券",
+          pay_type: "1",
+          pay_method: "ecard"
         },
         {
-          items: [
-            {
-              id: 3,
-              name: "代金券",
-              pay_type: "1",
-              pay_method: "ecard"
-            }
-          ]
-        },
-        {
-          items: [
-            {
-              id: 4,
-              name: "账户余额",
-              pay_type: "2",
-              pay_method: "balance"
-            }
-          ]
-        }
+          id:4,
+          name: "账户余额",
+          pay_type: "2",
+          pay_method: "balance"
+        }    
       ],
-      payMethodExts: [
-        { id: 1, text: "账户余额", method: "balance" },
-        { id: 1, text: "微信支付", method: "wxpay" },
-        { id: 1, text: "支付宝", method: "alipay" }
+      payMethods: [
+        {
+          id:1,
+          name: "微信支付",
+          pay_type: "3",
+          pay_method: "wxpay"
+        },
+        {
+          id:2,
+          name: "支付宝",
+          pay_type: "3",
+          pay_method: "alipay"
+        }
       ],
       ecardCountCanUse: 0,
       paymentInfo: {
         id: 0
       },
 			isVipOrder:0,
-      isMpWeixin:0
+      isMpWeixin:0,
+      needAmount1:0,
+      needAmount2:0,
       // payTypeCheck:0,
       // payMethodCheck:'',
     };
@@ -239,7 +262,7 @@ export default {
         mask:true
       });
       console.log("paymentCreate", this.$store.state.mallPayment);
-      if (!this.mallPayment.payTypeCheck) {
+      if (!this.mallPayment.payTypeCheck || this.mallPayment.payMethodCheck) {
         uni.showToast({
           title: "请选择支付方式",
           icon: "none"
@@ -260,9 +283,7 @@ export default {
       let data = {
         order_ids: this.$store.state.mallPayment.orderIds,
         pay_type: this.$store.state.mallPayment.payTypeCheck,
-        pay_method:
-          this.$store.state.mallPayment.payMethodExt ||
-          this.$store.state.mallPayment.payMethodCheck,
+        pay_method: this.$store.state.mallPayment.payMethodCheck,
         ecard_id: ecardId
       };
       
@@ -380,53 +401,50 @@ export default {
         url: "/pages/mall/list"
       });
     },
-    payTypeChoose(item) {
-      this.$store.state.mallPayment.payTypeCheck = item.pay_type;
-      this.$store.state.mallPayment.payMethodCheck = item.pay_method;
-
-      if (item.id == 3) {
+    payTypeCheck(type = 1){
+      this.$store.state.mallPayment.payTypeCheck = type;
+      this.$store.state.mallPayment.payMethodCheck = ''
+      this.$store.state.mallPayment.ecardId = 0
+      this.$store.state.mallPayment.ecardAmount = 0
+      
+      if(type == 1){
         if (this.ecardCountCanUse > 0) {
           uni.navigateTo({
             url: "/pagesMain/user/ecard?type=choose"
           });
         } else {
+          this.$store.state.mallPayment.payTypeCheck = 0
+          this.$store.state.mallPayment.payMethodCheck = ''
           uni.showToast({
             title: "无可用代金券",
             icon: "none"
           });
-					return;
+        	return;
         }
-      } else if (item.id == 4) {
+      }else if (type == 2){
         if (this.userInfo.balance < this.mallPayment.totals) {
-          uni.showToast({
-            title: "账户余额不足",
-            icon: "none"
-          });
-          return;
+          this.$store.state.mallPayment.payMethodCheck = ''
+          this.needAmount2 = this.mallPayment.totals - this.userInfo.balance
+        }else {
+          this.$store.state.mallPayment.payMethodCheck = 'balance'
+          this.needAmount2 = 0
         }
-      }
-
-      if (item.id != 3) {
-        this.$store.state.mallPayment.ecardId = 0;
-        this.$store.state.mallPayment.ecardAmount = 0;
-        this.$store.state.mallPayment.payMethodExt = "";
       }
     },
-    payMethodExtChoose(item) {
-      if (item.method == "balance") {
-        if (
-          this.userInfo.balance <
-          this.mallPayment.totals - this.mallPayment.ecardAmount
-        ) {
-          uni.showToast({
-            title: "账户余额不足",
-            icon: "none"
-          });
-          return;
-        }
-      }
-      this.$store.state.mallPayment.payMethodExt = item.method;
+    payMethodChoose(item){
+      this.$store.state.mallPayment.payMethodCheck = item.pay_method
     }
+
+  },
+  onShow() {
+  	console.log('onShow===============')
+    let ecardAmount = this.$store.state.mallPayment.ecardAmount
+    if(ecardAmount){
+      this.needAmount1 = this.$store.state.mallPayment.totals - ecardAmount
+      this.$store.state.mallPayment.payMethodCheck = ''
+      console.log('needAmount1======' , this.needAmount1)
+    }
+    
   },
   async onLoad(opt) {
     if (!this.hasLogin) {
@@ -435,12 +453,12 @@ export default {
     }
     
     // h5引导下载
-    // #ifdef H5
-    uni.navigateTo({
-    	url:'/pages/auth/guide'
-    })
-    return
-    // #endif
+//     // #ifdef H5
+//     uni.navigateTo({
+//     	url:'/pages/auth/guide'
+//     })
+//     return
+//     // #endif
 
     this.userInfoGet();
 
@@ -459,23 +477,21 @@ export default {
     this.$store.state.mallPayment.payTypeCheck = 0;
     this.$store.state.mallPayment.ecardId = 0;
     this.$store.state.mallPayment.ecardAmount = 0;
-    //       let data = {
-    //         order_ids: this.$store.state.mallPayment.orderIds,
-    //         pay_type : 3,
-    //         pay_method: 'wxpay'
-    //       }
-    //     	this.$store.dispatch('mallOrderPayPre' , data)
+    this.$store.state.mallPayment.payMethodCheck = ''
+    
+    console.log('this.$store.state.mallPayment:' , this.$store.state.mallPayment)
+    
 		let isVipOrder = opt.isVipOrder || 0
 		this.isVipOrder = isVipOrder
 		if(isVipOrder){
-			this.payTypes.splice(1,2)
+      
 		}
     
     // #ifdef MP-WEIXIN
     this.isMpWeixin = 1
-    this.payTypes[0].items.splice(1,1)
-    this.payMethodExts.splice(2,1)
+    this.payMethods.splice(1,1)
     // #endif
+
   }
 };
 </script>
