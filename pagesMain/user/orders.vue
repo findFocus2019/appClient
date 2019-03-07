@@ -36,9 +36,11 @@
                 {{ item.title }}
               </view>
               <view class="uni-text-small uni-text-gray" v-if="order.score_use">
-                使用积分抵扣
+                使用积分抵扣:
                 <money :num="item.price_score_sell" v-if="!order.vip" />
                 <money :num="item.price_score_vip" v-else />
+                <text class="uni-common-ml-sm"> x {{ item.num }}</text>
+                
               </view>
               <view class="uni-text-small uni-text-gray" v-else>
                 未使用积分

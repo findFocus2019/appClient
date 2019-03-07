@@ -75,4 +75,9 @@ export default {
 	  return ret
 	},
   
+  async getJdExpress(store, data = {}){
+    let ret = await Request.post('pub/orderTrack', data)
+    return ret
+  }
+  
 }

@@ -106,7 +106,7 @@
         	{{popupTitle}}
         </view>
       	<view class="uni-common-mt uni-common-mb uni-border-bottom">
-      		<input confirm-type="send" type="text" v-model="updateVal" class="uni-left" @confirm="updateConfirm"/>
+      		<input confirm-type="done" type="text" v-model="updateVal" class="uni-left" @confirm="updateConfirm"/>
       	</view>
         
         <view class="uni-common-pa">

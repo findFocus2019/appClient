@@ -64,7 +64,7 @@
           <text class="uni-text-small uni-text-gray">已有{{mallGoodsInfo.sales}}人付款</text>
         </view>
         <view class="uni-flex-item uni-right">
-          <text class="uni-text-small uni-text-gray">运费:包邮</text>
+          <text class="uni-text-small uni-text-gray"></text>
         </view>
       </view>
 

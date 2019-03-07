@@ -5,6 +5,7 @@ export default {
   miniAppOrId:config.miniAppOrId,
   webDomain: config.webDomain,
   apiDomain: config.apiDomain,
+  scoreExchangeNum: config.scoreExchangeNum,
 	// apiDomain: 'http://47.91.250.144:5001',
   configs:{},
   push:{

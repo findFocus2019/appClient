@@ -92,7 +92,7 @@
     			使用积分
     		</view>
     	  <view class="uni-flex-item uni-right" >
-          <text style="margin-right: 10upx;">{{score * 1000}}</text> 
+          <text style="margin-right: 10upx;">{{scoreNum}}</text> 
     	  	<uni-icon type="checkbox-filled" size="22" v-if="postData.score" color="#d81e06"></uni-icon>
     	  	<uni-icon type="circle" size="22" v-else></uni-icon>
     	  </view>
@@ -191,6 +191,7 @@
 //         ],
         // payTypeId:0,
         score:0,
+        scoreNum:0,
         total:0,
 				type:0,
 				isVipOrder:0,
@@ -203,7 +204,10 @@
       money
     },
     computed:{
-      ...mapState(['hasLogin','isVip', 'userInfo','userAddressList' , 'userAddressCurrent' , 'mallOrderConfirm', 'userInvoice'])
+      ...mapState(['hasLogin','isVip', 'userInfo','userAddressList' , 'userAddressCurrent' , 'mallOrderConfirm', 'userInvoice']),
+//       scoreNum(){
+//         return this.score * this.$store.state.scoreExchangeNum
+//       }
     },
 		methods:{
       
@@ -229,7 +233,7 @@
         
         let postData = this.postData
         postData.orders = orderDatas
-        postData.score = this.postData.score * 1000
+        postData.score = this.postData.score * this.$store.state.scoreExchangeNum
         postData.address = this.userAddressCurrent || {}
         postData.invoice = this.mallOrderConfirm.invoice ? this.userInvoice : ''
         postData.express_fee = this.mallOrderConfirm.priceExpress || 0
@@ -304,7 +308,7 @@
 //         this.payTypeId = item.id
 //       },
       scoreUse(){
-        if(this.score * 1000 > this.userInfo.score){
+        if(this.score * this.$store.state.scoreExchangeNum > this.userInfo.score){
           uni.showToast({ title: '积分余额不足', icon: "none" })
           return 
         }
@@ -353,8 +357,9 @@
 				
 				console.log('cartInfo' , cartInfo)
 				this.score = this.isVip ? cartInfo.scoreVip : cartInfo.score
+        console.log('this.score cart =============' , this.score)
 				this.total = this.isVip ? (cartInfo.totalVip  + this.score)  : (cartInfo.total  + this.score )
-				      
+				console.log('this.score total =============' , this.total)      
 				this.cartList = Cart.listChecked()
 				
 				console.log('cartList' , this.cartList)
@@ -366,11 +371,11 @@
 				this.cartList = datas
 				
 				this.score = this.isVip ? (item.price_score_vip * item.num) : (item.price_score_sell * item.num)
-				this.total = this.isVip ? (item.price_vip  + this.score  * item.num ) : (item.price_sell + this.score * item.num)
+				this.total = this.isVip ? ((item.price_vip  + this.score)  * item.num ) : ((item.price_sell + this.score) * item.num)
 			}
       
       console.log('onLoad this.cartList:' + JSON.stringify(this.cartList))
-
+      this.scoreNum = this.score * this.$store.state.scoreExchangeNum
       this.score = parseFloat(this.score).toFixed(2)
       this.total = parseFloat(this.total).toFixed(2)
       

@@ -147,9 +147,9 @@
             查看更多
           </view>
           
-          <view class="uni-bg-white uni-common-pa ">
+          <!-- <view class="uni-bg-white uni-common-pa ">
           	
-          </view>
+          </view> -->
         </view>
       </view>
     </view>

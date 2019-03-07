@@ -284,7 +284,7 @@ export default {
         mask:true
       });
       console.log("paymentCreate", this.$store.state.mallPayment);
-      if (!this.mallPayment.payTypeCheck || this.mallPayment.payMethodCheck) {
+      if (this.mallPayment.payTypeCheck == 0 || this.mallPayment.payMethodCheck == '') {
         uni.showToast({
           title: "请选择支付方式",
           icon: "none"
@@ -309,6 +309,8 @@ export default {
         ecard_id: ecardId
       };
       
+      console.log('mallOrderPayPre data: ' + JSON.stringify(data) , data)
+      // return
       // #ifdef MP-WEIXIN
       data.is_mp_wx = 1
       // #endif
@@ -366,9 +368,12 @@ export default {
                           })
                           
                         }else {
-                          uni.redirectTo({
-                          	url:'/pagesMain/user/orders?status=1'
-                          })
+                          setTimeout(() => {
+                            uni.redirectTo({
+                            	url:'/pagesMain/user/orders?status=1'
+                            })
+                          }, 1000)
+                          
                         }
                       	
                       }
@@ -420,7 +425,7 @@ export default {
     },
     paymentCancel() {
       uni.reLaunch({
-        url: "/pages/mall/list"
+        url: "/pages/main/main"
       });
     },
     payTypeCheck(type = 1){
@@ -461,11 +466,16 @@ export default {
   onShow() {
   	console.log('onShow===============')
     let ecardAmount = this.$store.state.mallPayment.ecardAmount
-    if(ecardAmount){
+    if(ecardAmount > 0){
       this.needAmount1 = this.$store.state.mallPayment.totals - ecardAmount
-      this.$store.state.mallPayment.payMethodCheck = ''
-      console.log('needAmount1======' , this.needAmount1)
+      if (this.needAmount1 > 0){
+        this.$store.state.mallPayment.payMethodCheck = ''
+        console.log('needAmount1 ====== ' , this.needAmount1)
+      }
+      
     }
+    
+    
     
   },
   async onLoad(opt) {
@@ -475,12 +485,12 @@ export default {
     }
     
     // h5引导下载
-//     // #ifdef H5
-//     uni.navigateTo({
-//     	url:'/pages/auth/guide'
-//     })
-//     return
-//     // #endif
+    // #ifdef H5
+    uni.navigateTo({
+    	url:'/pages/auth/guide'
+    })
+    return
+    // #endif
 
     this.userInfoGet();
 

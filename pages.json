@@ -116,6 +116,12 @@
                 }
             },
             {
+                "path": "user/agreement",
+                "style": {
+                    "navigationBarTitleText": "用户协议"
+                }
+            },
+            {
                 "path": "user/dailySignHongbao",
                 "style": {
                     "navigationBarTitleText": "累计登录"

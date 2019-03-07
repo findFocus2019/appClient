@@ -42,7 +42,7 @@
             <checkbox @tap="checkChange" />
           </view>
           <view class="uni-flex-item uni-text-light">
-          	我已阅读并同意 <text class="uni-text-red">《用户使用协议》</text>
+          	我已阅读并同意 <text class="uni-text-red" @tap="goToAgree">《用户使用协议》</text>
           </view>
          </view>
      
@@ -157,6 +157,11 @@ export default {
     checkChange(){
       this.checked = !this.checked
       console.log('checkChange' , this.checked)
+    },
+    goToAgree(){
+      uni.navigateTo({
+      	url:'/pagesMain/user/agreement'
+      })
     },
     async formSubmit() {
       if(!this.checked){

@@ -55,15 +55,13 @@
     		        <view class="uni-flex ">
     		        	<view class="uni-flex-item uni-text-small uni-text-gray"  v-if="order.score_use">
     		        		<text>使用积分抵扣:</text>
-    		        		<money :num="order.score" v-if="!order.vip" />
-    		        		<money :num="order.score_vip" v-else/>
+    		        		<money :num="item.price_score_sell" v-if="!order.vip" />
+    		        		<money :num="item.price_score_vip" v-else />
+                    <text style="margin-left: 10upx;">x {{ item.num }}</text>
     		        	</view>
                   <view class="uni-flex-item uni-text-small uni-text-gray " v-else>
                   	未使用积分抵扣
                   </view>
-    		          <view class="uni-flex-item uni-right ">
-    		            
-    		          </view>
     		        </view>
     		        <view class="uni-flex ">
     		        	<view class="uni-flex-item uni-text-red">
@@ -162,7 +160,7 @@
     	  </view>
     	</view>
     	
-    	<view class="uni-common-mt" v-if="order.express">
+    	<view class="uni-common-mt" v-if="order.express && order.order_type != 2">
     		<view class="uni-common-pa uni-border-top uni-bg-white uni-flex" >
     			<view class="">
     				物流信息
@@ -181,6 +179,23 @@
     		  </view>
     		</view>
     	</view>
+      
+      <view class="uni-common-mt" v-if="order.order_type == 2 && order.status >=2">
+      	<view class="uni-common-pa uni-border-top uni-bg-white uni-flex" >
+      		<view class="">
+      			物流信息
+      		</view>
+      	  <view class="uni-flex-item uni-right">
+      	  	京东物流
+      	  </view>
+      	</view>
+      	
+      	<view class="uni-common-pa uni-border-top uni-bg-white" v-for="(item,index) in orderTracks" :key="index" v-if="orderTracks.length">
+      		<view class="">
+      			{{item.msgTime}} {{item.content}}
+      		</view>
+      	</view>
+      </view>
     	
     	<view class="uni-common-mt" v-if="order.invoice">
     	  
@@ -257,6 +272,7 @@
         order:{
           
         },
+        orderTracks:[],
         items: []
       }
     },
@@ -414,10 +430,17 @@
         }
       }
     },
-    onLoad(opt) {
+    async onLoad(opt) {
     	let orderId = opt.id
       this.order.id = orderId
-      this.getData()
+      await this.getData()
+      
+      if(this.order.order_type == 2 && this.order.status >= 2){
+        console.log(this.order)
+        let expressRet = await this.$store.dispatch('getJdExpress' , {jdOrderId : this.order.jd_order_id})
+        console.log('expressRet========' + JSON.stringify(expressRet) , expressRet)
+        this.orderTracks = expressRet.data.orderTrack || []
+      }
     },
     async onPullDownRefresh() {
     	await this.getData()

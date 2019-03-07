@@ -16,7 +16,6 @@
         if(this.$store.state.hasLogin){
           let ret = await this.$store.dispatch('userRecodeSignDay' , {today:today})
           console.log('userRecodeSignDay ret:' + JSON.stringify(ret))
-        
         }
    
       }
