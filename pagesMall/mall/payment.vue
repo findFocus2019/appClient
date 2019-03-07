@@ -1,7 +1,7 @@
 <template>
   <view class="page">
     <view class="uni-common-pa uni-bg-white uni-center uni-border-top">
-      <view class="uni-common-pt">付款金额</view>
+      <view class="uni-common-pt uni-h4">账单金额</view>
       <view class="uni-h2 uni-common-pb uni-text-red">
         <money :num="mallPayment.totals" size="48" />
       </view>
@@ -15,7 +15,11 @@
         </view>
         <view class="uni-flex-item uni-right">
           <view class="" v-if="mallPayment.ecardAmount" >
-          	代金券：<money :num="mallPayment.ecardAmount" size="24"></money>
+            <text>代金券:</text>
+            <view class="uni-inline-block uni-text-red">
+            	<money :num="mallPayment.ecardAmount" size="30"></money>
+            </view>
+          	
           </view>
         	
         </view>
@@ -44,6 +48,15 @@
       </view>
     	
     	<view class=""  v-if="mallPayment.payTypeCheck == 1 && needAmount1 > 0">
+      <view class="uni-common-pt uni-common-pb uni-right ">
+        <text class="uni-text-gray">
+          代金券金额不足，还需使用在线支付金额
+        </text>
+        <view class="uni-inline-block uni-text-red">
+        	<money :num="needAmount1" size="30"></money>
+        </view>
+      	 
+      </view>
         <view class="uni-border-top uni-flex uni-common-pt uni-common-pb" v-for="(item,index) in payMethods" :key="index" @tap="payMethodChoose(item)">
         	<view class="uni-flex-item uni-common-pl">
         		{{ item.name }}
@@ -84,6 +97,15 @@
       </view>
     	
     	<view class=""  v-if="mallPayment.payTypeCheck == 2 && needAmount2 > 0">
+        <view class="uni-common-pt uni-common-pb uni-right ">
+          <text class="uni-text-gray">
+            账户余额不足，还需使用在线支付金额
+          </text>
+          <view class="uni-inline-block uni-text-red">
+          	<money :num="needAmount2" size="30"></money>
+          </view>
+        	 
+        </view>
         <view class="uni-border-top uni-flex uni-common-pt uni-common-pb" v-for="(item,index) in payMethods" :key="index" @tap="payMethodChoose(item)">
         	<view class="uni-flex-item uni-common-pl">
         		{{ item.name }}
