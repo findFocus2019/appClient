@@ -12,12 +12,12 @@
 			</view> -->
 		</view>
     
-    <view class="uni-common-pa uni-right" v-if="isWeixin"  style="position: absolute;right: 30upx;top: 30upx;">
+    <!-- <view class="uni-common-pa uni-right" v-if="isWeixin"  style="position: absolute;right: 30upx;top: 30upx;">
     	<uni-icon type="arrowthinup" size="80"></uni-icon>
     	<view class="">
     		点击在safari中打开
     	</view>
-    </view>
+    </view> -->
     
 	</view>
 </template>
@@ -35,42 +35,44 @@
 		},
     methods:{
       download(){
-        if(this.isWeiXin){
-          
-          uni.showToast({
-          	icon:'none',
-            title:'请使用默认浏览器打开'
-          })
-          
-          return
-        }
+//         if(this.isWeiXin){
+//           
+//           uni.showToast({
+//           	icon:'none',
+//             title:'请使用默认浏览器打开'
+//           })
+//           
+//           return
+//         }
         
         let device = uni.getSystemInfoSync();
         console.log('divice info:' + JSON.stringify(device));
         if(device.platform == 'ios'){
-          location.href = 'https://www.pgyer.com/DFcd'
+          location.href = 'https://www.pgyer.com/QcuX'
         }else if(device.platform == 'android') {
-          location.href = 'https://www.pgyer.com/iHri'
+          location.href = 'https://www.pgyer.com/j5Um'
         }
       }
     },
-		onLoad() {
+		onLoad(opt) {
 			// #ifdef H5
 			function isWeiXin(){
 				//window.navigator.userAgent属性包含了浏览器类型、版本、操作系统类型、浏览器引擎类型等信息，这个属性可以用来判断浏览器类型
 				var ua = window.navigator.userAgent.toLowerCase();
 				//通过正则表达式匹配ua中是否含有MicroMessenger字符串
 				if(ua.match(/MicroMessenger/i) == 'micromessenger'){
-				return true;
+          return true;
 				}else{
-				return false;
+          return false;
 				}
 			}
 			
 			this.isWeixin = isWeiXin()
 			// #endif
 			
-      
+      if(opt.operate){
+        this.download()
+      }
       
 		}
 	}

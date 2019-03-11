@@ -169,10 +169,10 @@
       </view>
       
       <view class="uni-common-mt" @tap="goToPage('/pagesMain/user/dailySignHongbao')">
-      	<image lazy-load="true"  src="/static/img/user/user-daily-sign.png" mode="widthFix" style="width: 100%;"></image>
+      	<image lazy-load="true"  src="https://img-juren.oss-cn-shenzhen.aliyuncs.com/assets/images/user-daily-sign.png" mode="widthFix" style="width: 100%;"></image>
       </view>
       
-      <view class="uni-common-mt">
+      <view class="uni-common-mt-md">
       	<user-card :title="cards[1].title" :items="cards[1].items" :hasLogin="hasLogin"></user-card>
       </view>
       

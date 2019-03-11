@@ -255,7 +255,7 @@
           let orderIds = ret.data.ids
           let totals = ret.data.totals
           this.$store.state.mallPayment.orderIds = orderIds
-          this.$store.state.mallPayment.totals = parseFloat(totals).toFixed(2)
+          this.$store.state.mallPayment.totals = parseFloat(parseFloat(totals).toFixed(2))
           
           console.log('this.$store.state.mallPayment' , this.$store.state.mallPayment)
 					if(this.type == 0){
@@ -326,9 +326,9 @@
 				}
         
         if(this.postData.score){
-          this.total = parseFloat(total).toFixed(2)
+          this.total = parseFloat(parseFloat(total).toFixed(2))
         }else{
-          this.total = parseFloat(total + score).toFixed(2)
+          this.total = parseFloat(parseFloat(total + score).toFixed(2))
         }
       }
 		},
@@ -375,9 +375,9 @@
 			}
       
       console.log('onLoad this.cartList:' + JSON.stringify(this.cartList))
-      this.scoreNum = this.score * this.$store.state.scoreExchangeNum
-      this.score = parseFloat(this.score).toFixed(2)
-      this.total = parseFloat(this.total).toFixed(2)
+      this.scoreNum = parseInt(this.score * this.$store.state.scoreExchangeNum)
+      this.score = parseFloat(parseFloat(this.score).toFixed(2))
+      this.total = parseFloat(parseFloat(this.total).toFixed(2))
       
       console.log('this.total =============' , this.total)
 			this.type = type

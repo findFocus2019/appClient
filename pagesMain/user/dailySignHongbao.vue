@@ -7,7 +7,7 @@
         	<image lazy-load="true"  src="/static/img/user/sign-title.png" mode="widthFix" style="width: 420upx;"></image>
         </view>
         <view class="uni-text-gray">
-        	累计登录7天，获得 <text class="uni-h3 uni-text-red">2元</text> 现金
+        	累计登录7天，赢积分大礼
         </view>
         
         <view class="uni-center uni-common-mt uni-common-pt">
