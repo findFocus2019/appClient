@@ -4,11 +4,13 @@
 			<view class="uni-flex-item uni-right uni-common-pr" @tap="changeType(1)">
 				<text v-if="type == 1" class="uni-bold">现金收益</text>
         <text v-else>现金收益</text>
+        
 			</view>
       <view class="uni-flex-item" @tap="changeType(2)">
       	<text v-if="type == 2" class="uni-bold">积分收益</text>
       	<text v-else>积分收益</text>
       </view>
+      
 		</view>
     
     <view class="uni-flex uni-bg-gray uni-common-pa">
@@ -78,6 +80,14 @@
         
       </view>
     </view>
+    
+    <view class="" style="height: 100upx;">
+    	
+    </view>
+    
+    <view class="uni-fixed-bottom uni-bg-white uni-border-top uni-flex uni-center" >
+    	<text @tap="goToPage('/pagesUser1/user/rabates')">未结算</text>
+    </view>
 	</view>
 </template>
 
@@ -117,6 +127,12 @@
         }
     },
     methods:{
+      goToPage(page){
+        uni.navigateTo({
+        	url:page
+        })
+        return
+      },
       changeType(i){
         this.type = i
         let type = this.type

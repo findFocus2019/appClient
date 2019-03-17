@@ -91,6 +91,18 @@
       </view>
     </view>
     
+    <!-- #ifdef H5 -->
+    <view class="uni-flex uni-common-pa " @tap="updateInputItem({name:'pid',text:'输入推荐人手机(老用户填写)',val:''})" v-if="userInfo.pid == 0">
+    	<view class="uni-flex-item">
+        老用户推荐人
+    	</view>
+      <view class="uni-flex-item uni-right">
+        <uni-icon type="arrowright" size="22"></uni-icon>
+      </view>
+    </view>
+    <!-- #endif -->
+    
+    
      <view class="uni-flex uni-common-pa " @tap="goToLogout">
     	<view class="uni-flex-item">
         退出登录
@@ -273,6 +285,11 @@
         console.log('userInfoUpdate' , JSON.stringify(ret))
         if(ret.code== 0){
           await this.$store.dispatch('userInfoGet')
+        }else {
+          uni.showToast({
+          	icon:'none',
+            title:ret.message
+          })
         }
         
         return ret

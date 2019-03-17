@@ -19,7 +19,7 @@
       </view>
     </view>
     
-    <view class="" v-if="userInfo.balance > 10">
+    <view class="" v-if="userInfo.balance >= 10">
     
     	<view class="uni-flex uni-common-pa uni-border-top" >
     		<view class="">
@@ -59,6 +59,10 @@
     	提现金额不足10元，无法提现
     </view>
     
+    <view class="uni-common-pa uni-center">
+    	<navigator url="/pagesUser/user/assetsOutLogs">提现记录</navigator>
+    </view>
+    
     <view class="uni-common-pa uni-common-mt">
     	<view class="uni-bold">
     		注意事项
@@ -68,9 +72,7 @@
       </view>
     </view>
     
-    <view class="uni-common-pa uni-center">
-    	<navigator url="/pagesUser/user/assetsOutLogs">提现记录</navigator>
-    </view>
+    
     
     
 	</view>

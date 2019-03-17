@@ -166,5 +166,10 @@ export default {
   async userRecodeSignDay(store, data ={}){
     let ret = await Request.post('user/recodeSignDay' , data)
     return ret
+  },
+  
+  async userRabates(store , data = {}){
+    let ret = await Request.post('user/rabates' , data)
+    return ret
   }
 }

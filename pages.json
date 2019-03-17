@@ -482,6 +482,12 @@
                 "style": {
                     "navigationBarTitleText": "品牌申请"
                 }
+            },
+            {
+                "path": "user/rabates",
+                "style": {
+                    "navigationBarTitleText": "未结算收益"
+                }
             }
 
         ]
