@@ -22,7 +22,7 @@
                   </view>
                 </view>
                 <view class="uni-flex-item">
-                  <text>单件奖励</text>
+                  <text>单件最高奖励</text>
                   <view class="uni-text-green uni-inline-block">
                     <money :num="(item.price_sell - item.price_cost) / 2" size="36"></money>
                   </view>

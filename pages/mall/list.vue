@@ -252,6 +252,7 @@
         })
         let type = this.mallType
         if(type == index){
+          uni.hideLoading()
           return
         }
         

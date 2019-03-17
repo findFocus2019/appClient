@@ -133,6 +133,11 @@ export default {
 		let ret = await Request.post('mall/orderComplete', data)
 		return ret
 	},
+  
+  async mallOrderCompleteExtend(store, data) {
+  	let ret = await Request.post('mall/orderCompleteExtend', data)
+  	return ret
+  },
 
 	async mallOrderItemListGet(store, data) {
 		let ret = await Request.post('mall/orderItemList', data)

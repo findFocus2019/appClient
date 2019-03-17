@@ -84,15 +84,17 @@
    
     <view class="uni-common-pa page-user-content" >
     	<view class="uni-center uni-bg-white " style="border-radius: 8upx 8upx 0 0;">
-    		<view class="uni-flex uni-common-pt uni-common-pb uni-border-bottom uni-radius-big">
-    			<view class="uni-flex-item">
-    				<view class="uni-text-dark">
-    					总收益
-    				</view>
+        
+        <!-- #ifndef H5 -->
+        <view class="uni-flex uni-common-pt uni-common-pb uni-border-bottom uni-radius-big">
+        	<view class="uni-flex-item">
+        		<view class="uni-text-dark">
+        			总收益
+        		</view>
             <view class="uni-h4">
             	{{userIndexData.balance}}
             </view>
-    			</view>
+        	</view>
           <view class="uni-flex-item uni-common-pt" @tap="goToPage('/pagesUser/user/assetsOut')">
           	<text class="uni-bg-red" style="padding: 12upx 36upx;border-radius: 8upx;">提现</text>
           </view>
@@ -104,7 +106,19 @@
           		{{ userIndexData.score}}
           	</view>
           </view>
-    		</view>
+        </view>
+        <!-- #endif -->
+        
+        <!-- #ifdef H5 -->
+        <view class="uni-common-pa uni-border-bottom uni-radius-big">
+          <view class="uni-common-pl uni-common-pr">
+          	<navigator url="/pages/auth/guide?operate=1" class="uni-border-btn-radius uni-bg-red" style="line-height: 80upx;font-size: 36upx;">立即下载APP</navigator>
+          </view>
+        	
+        </view>
+        <!-- #endif -->
+    		
+        
         <view class="uni-flex uni-common-pt uni-common-pb uni-text-lighter">
         	<view class="uni-flex-item">
         		<view class="">

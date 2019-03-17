@@ -99,7 +99,8 @@
             <text class="order-btn order-btn-red " @tap="goPayment(order)">去支付</text>
           </view>
           <view class="" v-if="order.status == 2">
-            <text class="order-btn " @tap="goComplete(order)">确认收货</text>
+            <text class="order-btn " @tap="goCompleteExtend(order)" v-if="order.express_extend_num == 0">延长收货</text>
+            <text class="order-btn order-btn-red" @tap="goComplete(order)">确认收货</text>
           </view>
           <view class="" v-if="order.status == 9">
             <!-- <text class="order-btn" @tap="goRate(order)">评价</text> -->
@@ -183,6 +184,49 @@
       goAfter(order){
         uni.navigateTo({
         	url: '/pagesUser1/user/orderAfterApply?id=' + order.id
+        });
+      },
+      goCompleteExtend(order){
+        uni.showModal({
+          title: '延长收货',
+          content: '确认还未收到货物延长收货时间',
+          success: async (res) => {
+            if (res.confirm) {
+              console.log('用户点击确定');
+              let ret = await this.$store.dispatch('mallOrderCompleteExtend', {
+                order_id: order.id
+              })
+              console.log('mallOrderCompleteExtend ret', ret)
+              if (ret.code == 0) {
+                uni.showToast({
+                  icon: 'success',
+                  title: '操作成功',
+                  mask: false,
+                  duration: 1500
+                });
+                
+                order.express_extend_num = 1;
+//                 uni.startPullDownRefresh({
+//                   success: async (res) => {
+//                     await this.getData()
+//                     uni.stopPullDownRefresh();
+//                   }
+//                 });
+        
+              } else {
+                uni.showToast({
+                  icon: 'none',
+                  title: '操作成功，' + ret.message,
+                  mask: false,
+                  duration: 1500
+                });
+              }
+        
+        
+            } else if (res.cancel) {
+              console.log('用户点击取消');
+            }
+          }
         });
       },
       goComplete(order) {
