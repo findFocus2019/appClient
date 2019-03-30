@@ -19,10 +19,13 @@
               :key="index2">
 
               <view class="uni-common-pt uni-common-pb uni-border-bottom" @tap="goToDetail(news)">
-                <view class="uni-flex">
+                <view class="uni-flex" v-if="news.type == 1">
                   <view class="uni-common-mr" v-for="(img,index3) in news.imgs" :key="index3" v-if="index3 < 3" >
                     <image lazy-load="true"  :src="img.url" mode="scaleToFill" class="post-list-cover-inline"></image>
                   </view>
+                </view>
+                <view class="uni-flex" v-if="news.type == 4">
+                    <image lazy-load="true"  :src="news.cover" mode="scaleToFill" style="width: 720upx;height:240upx;border-radius: 8upx;"></image>                
                 </view>
 								<view class="post-list-content-inline">
 									

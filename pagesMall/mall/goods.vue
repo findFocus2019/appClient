@@ -473,11 +473,11 @@
         // let postType = this.postInfo.type
         // console.log()
         console.log('分享 ：', shareUrl)
-//         let imgUrl= this.mallGoodsInfo.cover
-//         if(this.mallGoodsInfo.type != 2){
-//           imgUrl += '!goodsCover'
-//         }
-        let imgUrl = 'https://img-juren.oss-cn-shenzhen.aliyuncs.com/assets/images/share.png';
+        let imgUrl= this.mallGoodsInfo.cover
+        if(this.mallGoodsInfo.type != 2){
+          imgUrl += '!goodsCover'
+        }
+        // let imgUrl = 'https://img-juren.oss-cn-shenzhen.aliyuncs.com/assets/images/share.png';
         let shareData = {
           title: this.mallGoodsInfo.title,
           description: this.mallGoodsInfo.description,
@@ -497,8 +497,8 @@
             } else if (index == 1) {
               Share.wx(shareData, 1)
             } else if (index == 2) {
-              // Share.mini(shareData, 0)
-              Share.wx(shareData,0)
+              Share.mini(shareData, 0)
+              // Share.wx(shareData,0)
             }
           }
         })

@@ -184,8 +184,12 @@
       
       let monthDate = new Date(this.year, this.month, 0)
       let monthDayCount = monthDate.getDate()
-      let monthDateFirth = new Date(this.year, this.month, 1)
-      let monthFirstWeekday = monthDate.getDay()
+      let monthDateFirth = new Date(this.year, this.month - 1, 1)
+      let monthFirstWeekday = monthDateFirth.getDay()
+      
+      console.log('monthDayCount' , monthDayCount)
+      console.log('monthDateFirth' , monthDateFirth)
+      console.log('monthFirstWeekday' , monthFirstWeekday)
       
       let i = 0
       let count = 0

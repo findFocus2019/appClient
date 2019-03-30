@@ -487,8 +487,8 @@
         let postType = this.postInfo.type
         // console.log()
         console.log('分享 postType' , postType , shareUrl)
-        // let imgUrl = this.postInfo.cover
-        let imgUrl = 'https://img-juren.oss-cn-shenzhen.aliyuncs.com/assets/images/share.png';
+        let imgUrl = this.postInfo.cover
+        // let imgUrl = 'https://img-juren.oss-cn-shenzhen.aliyuncs.com/assets/images/share.png';
         if(postType != 1){
           imgUrl += '!goodsCover'
         }
@@ -509,8 +509,8 @@
             }else if(index == 1){
               Share.wx(shareData, 1)
             } else if (index == 2){
-              // Share.mini(shareData , 0)
-              Share.wx(shareData, 0)
+              Share.mini(shareData , 0)
+              // Share.wx(shareData, 0)
             }
           }
         })

@@ -290,6 +290,7 @@
         if(this.hasLogin){
           await this.$store.dispatch('userIndexDataGet')
         }
+        
 
      },
      onShow() {

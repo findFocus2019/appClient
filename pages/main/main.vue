@@ -90,7 +90,7 @@
       </view>
 
       <!-- 焦点咨询列表 -->
-      <view class="the-focus-list">
+      <view class="the-focus-list" v-if="configs.index_news_display">
         <view class="menu-navigator">
           <swiper class="menu-swiper">
             <!-- 定义菜单 -->
@@ -201,6 +201,9 @@
     },
     onShow() {
       console.log('onShow ================')
+      console.log('onShow ================', plus.storage.getLength())
+      
+      
     },
 
     async onLoad() {
@@ -213,6 +216,20 @@
       }
 			
 			await this.getAlbums()
+      
+      // 获取数据，焦点推荐
+      let recommendListRet = await this.getNewsList('' , 1)
+      console.log('recommendListRet===============', recommendListRet)
+      if (recommendListRet.code == 0) {
+        let data = recommendListRet.data
+        console.log('recommendListRet===============', data.timestamp)
+        this.recommendDatas.list = data.rows
+        this.recommendDatas.page = data.page + 1
+        this.recommendDatas.count = data.count
+        this.recommendDatas.timestamp = data.timestamp
+        
+        this.recommendList = data.rows
+      }
       
       // 获取新闻频道
       let channelRet = await this.$store.dispatch('postChannelsGet', {
@@ -249,19 +266,8 @@
         this.newsCount = data.count
       }
 
-      // 获取数据，焦点推荐
-      let recommendListRet = await this.getNewsList('' , 1)
-      console.log('recommendListRet===============', recommendListRet)
-      if (recommendListRet.code == 0) {
-        let data = recommendListRet.data
-        console.log('recommendListRet===============', data.timestamp)
-        this.recommendDatas.list = data.rows
-        this.recommendDatas.page = data.page + 1
-        this.recommendDatas.count = data.count
-        this.recommendDatas.timestamp = data.timestamp
-        
-        this.recommendList = data.rows
-      }
+      
+      
  
     },
     methods: {
@@ -401,6 +407,7 @@
       let top = e.scrollTop
       if(top > 0){
         this.barBgColor = '#d81e06'
+        // this.barBgColor = '#ffffff'
       }else {
         this.barBgColor = 'transparent'
       }

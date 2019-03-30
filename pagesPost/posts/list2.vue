@@ -3,7 +3,7 @@
 		<view class="" v-if="newsDatas && newsDatas.list">
       <view class="uni-bg-white uni-border-top" v-for="(news,index) in newsDatas.list" :key="index">
         <view class="" @tap="goToDetail(news)">
-        	<image lazy-load="true"  :src="news.cover" mode="widthFix" style="width: 100%"></image>
+        	<image lazy-load="true"  :src="news.cover" mode="scaleToFill" style="width: 750upx;height: 500upx;border-radius: 8upx;"></image>
         </view>
         <view class="uni-flex uni-bg-white uni-common-pa uni-left"  @tap="goToDetail(news)">
         	

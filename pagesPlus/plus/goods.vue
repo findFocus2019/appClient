@@ -171,8 +171,8 @@
           title: item.title,
           description: item.description,
           href: shareUrl,
-          // imgUrl: item.cover + '!goodsCover',
-          imgUrl:imgUrl,
+          imgUrl: item.cover + '!goodsCover',
+          // imgUrl:imgUrl,
           miniAppId: this.miniAppOrId,
           miniPage: sharePage
         }
@@ -186,8 +186,8 @@
             }else if(index == 1){
               Share.wx(shareData, 1)
             } else if (index == 2){
-              // Share.mini(shareData , 0)
-              Share.wx(shareData,0)
+              Share.mini(shareData , 0)
+              // Share.wx(shareData,0)
             }
           }
         })

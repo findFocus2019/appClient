@@ -7,7 +7,7 @@
     
     <view class="uni-center" style="position: relative;">
     	<view class="invite-qrcode uni-center uni-common-mt">
-    		<image lazy-load="true"  src="https://img-juren.oss-cn-shenzhen.aliyuncs.com/assets/images/hongbao.png" mode="widthFix" style="width: 650upx;height: 800upx;"></image>
+    		<image lazy-load="true"  src="https://img-juren.oss-cn-shenzhen.aliyuncs.com/assets/images/invite-qrcode.png" mode="widthFix" style="width: 540upx;height: 800upx;"></image>
         <view class="qrcode-img" style="margin-top: -20upx;">
         	<image lazy-load="true"  :src="userInfo.avatar" mode="" style="width: 160upx;height: 160upx;border-radius: 80upx;" ></image>
         	<view class="uni-center uni-text-white">
@@ -95,8 +95,8 @@
 //           sharePage = sharePage + '?isInvite=1&puid=' + this.userInfo.id
 //           let shareUrl = this.webDomain + '/' + sharePage
 //           shareData.shareUrl = shareUrl
-//           Share.mini(shareData)
-          Share.wx(shareData, 0)
+          Share.mini(shareData)
+          // Share.wx(shareData, 0)
         }else if (type == 'fr'){
           Share.wx(shareData , 1)
         }

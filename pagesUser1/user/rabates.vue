@@ -3,7 +3,7 @@
     <view class="" v-for="(item,index) in list" :key="index">
     	<view class="uni-common-pa uni-bg-white uni-border-top uni-flex" v-if="item.invite_user_id">
     		<view class="uni-flex-item">
-    			购买商品邀请人返利
+    			购买商品邀请人奖励
           <view class="uni-text-small uni-text-gray">
           	{{ item.create_date }}
           </view>
@@ -15,7 +15,7 @@
       
       <view class="uni-common-pa uni-bg-white uni-border-top uni-flex" v-if="item.share_user_id">
       	<view class="uni-flex-item">
-      		购买商品分享人返利
+      		购买商品分享人奖励
           <view class="uni-text-small uni-text-gray">
           	{{ item.create_date }}
           </view>
@@ -27,7 +27,7 @@
       
       <view class="uni-common-pa uni-bg-white uni-border-top uni-flex" v-if="item.post_user_id">
       	<view class="uni-flex-item">
-      		购买商品评测人返利
+      		购买商品评测人奖励
           <view class="uni-text-small uni-text-gray">
           	{{ item.create_date }}
           </view>

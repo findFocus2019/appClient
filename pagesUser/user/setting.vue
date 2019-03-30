@@ -78,7 +78,7 @@
         版本号
     	</view>
       <view class="uni-flex-item uni-right">
-       {{version}}
+       {{ version }}
       </view>
     </view>
     
@@ -101,7 +101,6 @@
       </view>
     </view>
     <!-- #endif -->
-    
     
      <view class="uni-flex uni-common-pa " @tap="goToLogout">
     	<view class="uni-flex-item">
@@ -135,6 +134,7 @@
   import {mapState,mapActions} from 'vuex';
   import uniPopup from '@/components/uni-popup.vue';
   import uniIcon from '@/components/uni-icon.vue';
+  import config from '@/store/config.js';
   export default {
     data(){
       return {
@@ -142,7 +142,8 @@
         popupTitle:'',
         updateName: '',
         updateVal:'',
-        sexItems: ['男','女']
+        sexItems: ['男','女'],
+        version:''
       }
     },
     components:{
@@ -150,7 +151,7 @@
       uniPopup
     },
     computed:{
-      ...mapState(['version','userInfo'])
+      ...mapState(['userInfo'])
     },
     methods:{
       goToPage(page){
@@ -293,7 +294,14 @@
         }
         
         return ret
+      },
+      clearData(){
+        alert('删除数据')
       }
+    },
+    onShow(){
+      this.version = plus.runtime.version
+      // console.log('version========' , JSON.stringify(config))
     }
   }
 </script>
