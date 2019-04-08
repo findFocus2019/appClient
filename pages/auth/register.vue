@@ -325,6 +325,10 @@ export default {
     if(inviteUserId){
       this.$store.state.inviteUserId = inviteUserId
     }
+    
+    uni.redirectTo({
+    	url:'/pages/auth/sign?sign_type=1'
+    })
 	}
 };
 </script>

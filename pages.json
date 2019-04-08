@@ -64,6 +64,12 @@
             }
         },
         {
+            "path": "pages/auth/sign",
+            "style": {
+                "navigationBarTitleText": ""
+            }
+        },
+        {
             "path": "pages/auth/mp",
             "style": {
                 "navigationBarTitleText": "授权",
@@ -377,6 +383,13 @@
                     "app-plus": {
                         "titleNView": false
                     }
+                }
+            },
+            {
+                "path": "mall/goodsRates",
+                "style": {
+                    "navigationBarTitleText": "商品评价",
+                    "enablePullDownRefresh": true
                 }
             },
             {

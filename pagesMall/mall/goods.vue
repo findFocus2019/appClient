@@ -72,6 +72,66 @@
     </view>
 
     <view class="uni-common-mt uni-bg-white  uni-border-top">
+      <view class="uni-common-pa uni-flex">
+        <view class="uni-flex-item" style="padding-left: 10upx;border-left: 8upx #d81e06 solid;">
+          评价
+        </view>
+        <view class="uni-flex-item">
+
+        </view>
+      </view>
+
+      <view class="uni-common-pa" v-for="(item, index) in goodsRate.list" :key="index">
+        <view class="uni-flex">
+          <view class="" style="width: 60upx;height: 60upx;">
+            <image lazy-load="true" :src="item.user_info.avatar" mode="" style="width: 60upx;height: 60upx;border-radius: 60upx;"></image>
+          </view>
+          <view class="uni-flex-item uni-common-pl uni-text-blue">
+            <text style="">{{ item.user_info.nickname}}</text>
+          </view>
+          <view class="uni-flex-item uni-text-gray uni-right">
+            <text style="">
+              {{ item.rate_date }}
+            </text>
+          </view>
+        </view>
+        
+        <view class="uni-flex uni-common-mt " v-if="item.rate_level > 0">
+          <view class="uni-inline-block" v-for="(level,index2) in levels" :key="index2">
+          	<view v-if="level <= item.rate_level">
+               <image src="/static/icon/user/start-a.png" mode="" style="width: 40upx;height: 40upx;margin-right: 20upx;"></image>
+          	</view>
+          	<view v-else>
+               <image src="/static/icon/user/start.png" mode="" style="width: 40upx;height: 40upx;margin-right: 20upx;"></image>
+          	</view>
+          	
+          </view>
+        </view>
+
+        <view class="uni-common-mt-sm">
+          {{ item.rate_info }}
+        </view>
+
+        <view class="uni-common-mt uni-border-bottom" v-if="item.rate_imgs.length">
+          <view class="uni-common-pr" style="display: inline-block;width: 100upx;height: 100upx;" v-for="(img,index1) in item.rate_imgs"
+            :key="index1" @tap="preImg(item.rate_imgs, img)">
+            <image lazy-load="true" :src="img" mode="scaleToFill" style="width: 100upx;height: 100upx;border-radius: 4upx;border: 1px solid #EEEEEE;"></image>
+          </view>
+        </view>
+      </view>
+      
+      <view class="uni-center" v-if="goodsRate.count > 3">
+      	<navigator :url="'/pagesMall/mall/goodsRates?goods_id=' + mallGoodsInfo.id">更多评论</navigator>
+      </view>
+      
+      <view class="uni-center" v-if="goodsRate.count == 0">
+      	暂无评价
+      </view>
+
+    </view>
+
+
+    <view class="uni-common-mt uni-bg-white  uni-border-top">
       <view class="uni-border-bottom">
         <uni-segmented-control :current="current" :values="items" v-on:clickItem="onClickItem" styleType="text"
           activeColor="#d81e06"></uni-segmented-control>
@@ -231,7 +291,13 @@
         cartAddNum: 1,
         addType: 0,
         scoreInfo: '',
-				priceExpress:0
+        priceExpress: 0,
+        goodsRate: {
+          list: [],
+          count: 0,
+          page: 1
+        },
+        levels:[1,2,3,4,5],
         // shareId:0,
         // postId:0
       }
@@ -267,6 +333,13 @@
         setTimeout(() => {
           this.scoreInfo = ''
         }, 3000)
+      },
+      preImg(paths, current) {
+        uni.previewImage({
+          urls: paths,
+          current: current,
+          indicator: 'number'
+        });
       },
       onClickItem(e) {
         console.log(e)
@@ -321,11 +394,11 @@
         console.log('cartAddConfirm item =======', item)
 
         let num = this.cartAddNum
-        
+
         // 判断jd商品库存
-        if(goods.type == 2){
+        if (goods.type == 2) {
           let stockRet = await this.getStockJd(goods.uuid, num)
-          if(!stockRet){
+          if (!stockRet) {
             uni.showToast({
               icon: 'none',
               title: '京选商品库存不足'
@@ -333,7 +406,7 @@
             return
           }
         }
-        
+
         if (num <= 0) {
           uni.showToast({
             icon: 'none',
@@ -341,36 +414,36 @@
           })
           return
         }
-        
+
         if (this.addType == 0) {
           Cart.plus(item, this.cartAddNum)
           uni.showToast({
             title: '添加购物车成功'
           })
         } else if (this.addType == 1) {
-					
-          if(goods.type == 2){
-            await this.getFeight(this.cartAddNum)
-            
-            console.log('this.priceExpress' , this.priceExpress)
 
-            if(this.priceExpress === ''){
+          if (goods.type == 2) {
+            await this.getFeight(this.cartAddNum)
+
+            console.log('this.priceExpress', this.priceExpress)
+
+            if (this.priceExpress === '') {
               uni.showToast({
-                  title: '京选商品运费获取失败，稍后重试',
-                  icon:'none',
-                  duration: 2000
+                title: '京选商品运费获取失败，稍后重试',
+                icon: 'none',
+                duration: 2000
               });
               return
             }
           }
-					
+
           // 直接购买
           item.num = this.cartAddNum
           console.log('立即购买 item:', JSON.stringify(item))
           this.$store.state.cartListBuyItem = item
           // 发票默认不选
           this.$store.state.mallOrderConfirm.invoice = 0 //
-					this.$store.state.mallOrderConfirm.priceExpress = this.priceExpress
+          this.$store.state.mallOrderConfirm.priceExpress = this.priceExpress
           // return 
           uni.showLoading({
             title: '提交中...'
@@ -438,7 +511,7 @@
       async goodsShare() {
         // #ifndef APP-PLUS
         uni.navigateTo({
-        	url:'/pages/auth/guide'
+          url: '/pages/auth/guide'
         })
         return
         // #endif
@@ -468,13 +541,14 @@
         }
 
         let sharePage = 'pagesMall/mall/goods'
-        sharePage = sharePage + '?id=' + this.mallGoodsInfo.id + '&puid=' + this.userInfo.user_id + '&share_id=' + shareId
+        sharePage = sharePage + '?id=' + this.mallGoodsInfo.id + '&puid=' + this.userInfo.user_id + '&share_id=' +
+          shareId
         let shareUrl = this.webDomain + '/' + sharePage
         // let postType = this.postInfo.type
         // console.log()
         console.log('分享 ：', shareUrl)
-        let imgUrl= this.mallGoodsInfo.cover
-        if(this.mallGoodsInfo.type != 2){
+        let imgUrl = this.mallGoodsInfo.cover
+        if (this.mallGoodsInfo.type != 2) {
           imgUrl += '!goodsCover'
         }
         // let imgUrl = 'https://img-juren.oss-cn-shenzhen.aliyuncs.com/assets/images/share.png';
@@ -519,66 +593,69 @@
       },
       async getStockJd(skuId, num) {
         let address = this.userAddressCurrent
-        if(!address.id){
+        if (!address.id) {
           return false
         }
-        let areas = [address.province , address.city, address.county, address.town]
+        let areas = [address.province, address.city, address.county, address.town]
         let area = areas.join('_')
         let skuNums = JSON.stringify([{
-            skuId: skuId,
-            num: num
-          }])
+          skuId: skuId,
+          num: num
+        }])
         let ret = await this.$store.dispatch('getJdGoodsStock', {
-          skuNums:skuNums ,
+          skuNums: skuNums,
           area: area
         })
         console.log('getJdGoodsStock ret:' + JSON.stringify(ret))
-        if(ret.code == 0){
+        if (ret.code == 0) {
           let rets = ret.data
-          let stockStateId= 0
+          let stockStateId = 0
           rets.forEach(item => {
-            if(item.skuId == skuId){
+            if (item.skuId == skuId) {
               stockStateId = item.stockStateId
             }
           })
-    
-          if(stockStateId != 33){
+
+          if (stockStateId != 33) {
             return false
           }
-        }else {
+        } else {
           return false
         }
-        
+
         // return false
         return true;
       },
-			async getFeight(num){
-				
-				let address = this.userAddressCurrent
-				if(!address.id){
-					this.priceExpress = ''
-				  return 
-				}
-				
-				let sku = []
-				let goods = this.mallGoodsInfo
-				sku.push({skuId: goods.uuid , num: num})
-				
-				let ret = await this.$store.dispatch('getJdFreight' , {
-					sku: JSON.stringify(sku),
-					province: address.province,
-					city: address.city,
-					county: address.county,
-					town: address.town || 0,
-				})
-				
-				console.log('getJdFreight ret' , ret)
-				if(ret.code == 0){
-					this.priceExpress = ret.data.freight
-				}else {
-					this.priceExpress = ''
-				}
-			}
+      async getFeight(num) {
+
+        let address = this.userAddressCurrent
+        if (!address.id) {
+          this.priceExpress = ''
+          return
+        }
+
+        let sku = []
+        let goods = this.mallGoodsInfo
+        sku.push({
+          skuId: goods.uuid,
+          num: num
+        })
+
+        let ret = await this.$store.dispatch('getJdFreight', {
+          sku: JSON.stringify(sku),
+          province: address.province,
+          city: address.city,
+          county: address.county,
+          town: address.town || 0,
+        })
+
+        console.log('getJdFreight ret', ret)
+        if (ret.code == 0) {
+          this.priceExpress = ret.data.freight
+        } else {
+          this.priceExpress = ''
+        }
+      }
     },
     async onLoad(opt) {
       console.log('onLoad=======================')
@@ -620,8 +697,20 @@
       }
 
       console.log('userAddressCurrent', this.userAddressCurrent)
+
+      let goodsRatesRet = await this.$store.dispatch('mallGoodsRateList', {
+        goods_id: id,
+        limit:3
+      })
+      console.log('goodsRatesRet', goodsRatesRet)
+      if (goodsRatesRet.code == 0) {
+        this.goodsRate = {
+          list: goodsRatesRet.data.rows,
+          count: goodsRatesRet.data.count
+        }
+      }
     },
-		
+
     async onShow() {
       console.log('onShow=======================')
       if (this.mallGoodsInfo.id) {

@@ -201,7 +201,7 @@
     },
     onShow() {
       console.log('onShow ================')
-      console.log('onShow ================', plus.storage.getLength())
+      // console.log('onShow ================', plus.storage.getLength())
       
       
     },

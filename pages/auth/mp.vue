@@ -100,8 +100,13 @@
         }else if(oauthRet.code == 2){
           // 设置oauth_id
           this.$store.state.oAuthId = oauthRet.data.oauth_id
+          
           // 去绑定
-          this.goAuthBind(3)
+          // this.goAuthBind(3)
+          console.log('=================gotobind:' , this.$store.state.oAuthId)
+          uni.redirectTo({
+          	url: '/pages/auth/sign?sign_type=3'
+          });
         }else {
           uni.showToast({
             title: "授权登录失败,请稍后重试",

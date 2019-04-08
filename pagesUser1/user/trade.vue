@@ -147,9 +147,9 @@
         }
       },
       bindDateChangeStart(e){
-        console.log('bindDateChangeStart' , this.date1)
-        this.date1 = e.target.value
         
+        this.date1 = e.target.value
+        console.log('bindDateChangeStart' , this.date1)
         if(this.date1.replace('-','') > this.date2.replace('-','')){
           console.log('bindDateChangeStart 超出')
           this.date1 = this.date2
@@ -194,8 +194,11 @@
         let day = date.getDate();
 
         if (type === 'start') {
+            year = 2019
+            month = 1
             day = 1
         } 
+        
         month = month > 9 ? month : '0' + month;;
         day = day > 9 ? day : '0' + day;
         return `${year}-${month}-${day}`;

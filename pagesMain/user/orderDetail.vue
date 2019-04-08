@@ -34,8 +34,8 @@
     		<view class="">
     			订单号
     		</view>
-    	  <view class="uni-flex-item uni-right">
-    	  	{{order.order_no}}
+    	  <view class="uni-flex-item uni-right" @tap="copyOrderNo(order.order_no)">
+    	  	{{order.order_no}} <text class="uni-text-small uni-text-gray">复制</text>
     	  </view>
     	</view>
     	
@@ -428,6 +428,18 @@
         }else{
           this.order= {}
         }
+      },
+      copyOrderNo(orderNo){
+        uni.setClipboardData({
+          data: orderNo,
+          success: function () {
+              // console.log('success');
+              uni.showToast({
+              	icon:'none',
+                title:'订单号已复制'
+              })
+          }
+      });
       }
     },
     async onLoad(opt) {

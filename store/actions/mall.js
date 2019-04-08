@@ -183,7 +183,12 @@ export default {
 		uni.setStorageSync('mall_search_list', JSON.stringify(list))
 
 		return list
-	}
+	},
+  
+  async mallGoodsRateList(store, data) {
+    let ret = await Request.post('mall/goodsRateList' , data)
+    return ret
+  }
 
 
 }

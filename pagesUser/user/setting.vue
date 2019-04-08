@@ -116,9 +116,15 @@
         <view class="">
         	{{popupTitle}}
         </view>
-      	<view class="uni-common-mt uni-common-mb uni-border-bottom">
-      		<input confirm-type="done" type="text" v-model="updateVal" class="uni-left" @confirm="updateConfirm"/>
-      	</view>
+        <view class="uni-flex">
+        	<view class="uni-common-mt uni-common-mb uni-border-bottom uni-flex-item">
+        		<input confirm-type="done" type="text" v-model="updateVal" class="uni-left" @confirm="updateConfirm"/>
+        	</view>
+          <view class="uni-common-mt uni-common-pl uni-text-small" @tap="updateConfirm">
+          	<text style="background: #d81e06;padding: 8upx 16upx;border-radius: 4upx;color: #FFFFFF;">确认</text>
+          </view>
+        </view>
+      	
         
         <view class="uni-common-pa">
         	
@@ -300,7 +306,13 @@
       }
     },
     onShow(){
+     // #ifdef APP-PLUS
       this.version = plus.runtime.version
+     // #endif
+     // #ifndef APP-PLUS
+     this.version = '2.0.3'
+     // #endif
+     
       // console.log('version========' , JSON.stringify(config))
     }
   }

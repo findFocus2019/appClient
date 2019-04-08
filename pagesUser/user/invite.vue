@@ -9,10 +9,8 @@
     	<view class="invite-qrcode uni-center uni-common-mt">
     		<image lazy-load="true"  src="https://img-juren.oss-cn-shenzhen.aliyuncs.com/assets/images/invite-qrcode.png" mode="widthFix" style="width: 540upx;height: 800upx;"></image>
         <view class="qrcode-img" style="margin-top: -20upx;">
-        	<image lazy-load="true"  :src="userInfo.avatar" mode="" style="width: 160upx;height: 160upx;border-radius: 80upx;" ></image>
-        	<view class="uni-center uni-text-white">
-        		{{ userInfo.nickname }}
-        	</view>
+        	<image lazy-load="true"  :src="qrcodeImg" mode="" style="width: 200upx;height: 200upx;" ></image>
+
         </view>
     	</view>
       <view class="invite-info">
@@ -20,8 +18,8 @@
         	<image lazy-load="true"  src="/static/img/user/invite-info.png" mode="widthFix" style="width: 540upx;height: 323upx;margin-left: -4upx;"></image>
         </view>
       	
-        <view class="uni-common-pa user-info-box uni-flex uni-text-gray">
-        	<view class="uni-flex-item uni-center uni-common-mt" @tap="inviteShare('wx')">
+        <view class="uni-common-pa user-info-box uni-text-gray">
+        	<!-- <view class="uni-flex-item uni-center uni-common-mt" @tap="inviteShare('wx')">
         		<image src="../../static/icon/weixin.png" mode="" style="width: 140upx;height: 140upx;border-radius: 80upx;"></image>
             <view class="">
             	邀请微信好友
@@ -32,15 +30,33 @@
             <view class="">
             	分享到朋友圈
             </view>
+          </view> -->
+          <!-- <image lazy-load="true"  src="https://img-juren.oss-cn-shenzhen.aliyuncs.com/assets/images/invite-qrcode.png" mode="widthFix" style="width: 540upx;height: 800upx;"></image> -->
+          <view class="qrcode-img uni-center" style="margin-top: 20upx;">
+          	<image lazy-load="true"  :src="userInfo.avatar" mode="" style="width: 160upx;height: 160upx;border-radius: 80upx;" ></image>
+          	<view class="uni-center uni-text-gray">
+          		{{ userInfo.nickname }}
+          	</view>
           </view>
         </view>
 
       </view>
     </view>
     
-    <!-- <view class="uni-common-pa">
-    	
-    </view> -->
+    <view class="uni-common-pa uni-flex uni-text-gray">
+    	<view class="uni-flex-item uni-center uni-common-mt" @tap="inviteShare('wx')">
+    		<image src="../../static/icon/weixin.png" mode="" style="width: 140upx;height: 140upx;border-radius: 80upx;"></image>
+    	  <view class="">
+    	  	邀请微信好友
+    	  </view>
+    	</view>
+    	<view class="uni-flex-item uni-center uni-common-mt uni-text-gray" @tap="inviteShare('fr')">
+    		<image src="../../static/icon/friend.png" mode="" style="width: 140upx;height: 140upx;border-radius: 80upx;"></image>
+    	  <view class="">
+    	  	分享到朋友圈
+    	  </view>
+    	</view>
+    </view>
     <view class="uni-common-pa uni-center uni-text-gray">
     	<navigator url="/pagesUser/user/inviteList">
         点击查看邀请记录
@@ -56,6 +72,11 @@
   } from "vuex";
   import Share from '@/static/js/share.js';
   export default {
+    data(){
+      return {
+        qrcodeImg:''
+      }
+    },
     computed:{
       ...mapState(['hasLogin','userInfo' , 'webDomain' , 'miniAppId', 'miniAppOrId'])
     },
@@ -102,6 +123,15 @@
           Share.wx(shareData , 1)
         }
       }
+    },
+    onLoad() {
+      console.log('this.userInfo.user_id' , this.userInfo.user_id)
+      
+      // let domain = 'http://127.0.0.1:5001'
+      let domain = 'https://api.faxianjiaodian.com'
+      let inviteUrl = 'https://h5.faxianjiaodian.com/pages/auth/register?isInvite=1&puid=' + this.userInfo.user_id
+      console.log('inviteUrl' , inviteUrl)
+    	this.qrcodeImg = domain + '/upload/qrcode?url=' + encodeURIComponent(inviteUrl) 
     }
     
   }

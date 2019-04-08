@@ -36,57 +36,42 @@
 
       //  检查更新
       // #ifdef APP-PLUS
-      // config.version = '2.0.2'
-      // console.log('version========',JSON.stringify(plus.runtime))
-      // this.fsManage()
       
       var server = config.apiDomain + "/update"; //检查更新地址  
       let platform = device.platform
-      uni.request({
-        url: server,
-        data: {
-          version: plus.runtime.version,
-          platform: platform
-        },
-        success: (res) => {
-          console.log('check update ret:', JSON.stringify(res.data))
-          if (res.statusCode == 200 && res.data.status === 1) {
-            plus.storage.clear();
-            let url = res.data.url
-            uni.showModal({ //提醒用户更新  
-              title: "更新提示",
-              content: res.data.note,
-              success: (res) => {
-                if (res.confirm) {
-                  if (platform == 'android') {
-                    plus.runtime.openURL(url)
-//                     let downLoadurl = 'https://img-juren.oss-cn-shenzhen.aliyuncs.com/app/android_2.0.2.apk'
-//                     let dtask = plus.downloader.createDownload( downLoadurl, {}, function ( d, status ) {  
-//                         if ( status == 200 ) { // 下载成功  
-//                             let path = d.filename;  
-//                             console.log(d.filename);
-//                              plus.runtime.install(path);
-//                         } else {//下载失败  
-//                             uni.showToast({
-//                                 title: '下载失败',
-//                                 duration: 2000,
-//                                 success(){
-//                                   plus.runtime.openURL(url)
-//                                 }  
-//                             });
-//                              
-//                         }    
-//                     });  
-//                     dtask.start();
-                  } else if (platform == 'ios') {
-                    plus.runtime.openURL(url)
+      
+      if(platform == 'android'){
+        uni.request({
+          url: server,
+          data: {
+            version: plus.runtime.version,
+            platform: platform
+          },
+          success: (res) => {
+            console.log('check update ret:', JSON.stringify(res.data))
+            if (res.statusCode == 200 && res.data.status === 1) {
+              // plus.storage.clear();
+              let url = res.data.url
+              uni.showModal({ //提醒用户更新  
+                title: "更新提示",
+                content: res.data.note,
+                success: (res) => {
+                  if (res.confirm) {
+                    if (platform == 'android') {
+                      plus.runtime.openURL(url)
+                    } else if (platform == 'ios') {
+                      // plus.runtime.openURL(url)
+                    }
                   }
                 }
-              }
-            })
+              })
+            }
           }
-        }
-      })
+        })
+        
+      }
+      
+      
       uni.subscribePush({
         provider: 'igexin',
         success: async (res) => {

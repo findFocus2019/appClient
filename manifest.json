@@ -3,7 +3,7 @@
     "appid" : "__UNI__26AFF07",
     "description" : "发现焦点APP",
     "versionName" : "2.0.3",
-    "versionCode" : 20301,
+    "versionCode" : 20302,
     "transformPx" : true,
     "debug" : false,
     "app-plus" : {
@@ -16,7 +16,8 @@
             "LivePusher" : {},
             "Push" : {},
             "Bluetooth" : {},
-            "Statistic" : {}
+            "Statistic" : {},
+            "VideoPlayer" : {}
         },
         /* 模块配置 */
         "distribute" : {

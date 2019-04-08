@@ -106,6 +106,9 @@
             <!-- <text class="order-btn" @tap="goRate(order)">评价</text> -->
             <!-- <text class="order-btn" @tap="goAfter(order)">申请售后</text> -->
           </view>
+          <view class="" v-if="order.status == -2">
+          	已退款
+          </view>
         </view>
 
       </view>
@@ -150,6 +153,10 @@
           {
             status: 9,
             text: '已完成'
+          },
+          {
+            status: -1,
+            text: '已取消'
           },
         ],
         orderTypes: ['', '自营', '京选'],

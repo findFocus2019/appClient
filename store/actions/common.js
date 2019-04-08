@@ -78,6 +78,11 @@ export default {
   async getJdExpress(store, data = {}){
     let ret = await Request.post('pub/orderTrack', data)
     return ret
+  },
+  
+  async getInviteUser(store, data = {}){
+    let ret = await Request.post('pub/getInviteUser', data)
+    return ret
   }
   
 }

@@ -48,7 +48,8 @@
         let device = uni.getSystemInfoSync();
         console.log('divice info:' + JSON.stringify(device));
         if(device.platform == 'ios'){
-          location.href = 'https://www.pgyer.com/QcuX'
+          location.href = 'https://itunes.apple.com/cn/app/发现焦点/id1439012110'
+          
         }else if(device.platform == 'android') {
           location.href = 'https://www.pgyer.com/j5Um'
         }
