@@ -76,7 +76,7 @@
        	</view>
         
        </view>
-       <view class="uni-center uni-text-gray uni-common-pb">
+       <view class="uni-center uni-text-gray uni-common-pb" v-if="hasProvider">
        	快捷登录
        </view>
      </view> 

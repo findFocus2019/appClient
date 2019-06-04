@@ -310,7 +310,7 @@
       this.version = plus.runtime.version
      // #endif
      // #ifndef APP-PLUS
-     this.version = '2.0.3'
+     this.version = '2.0.5'
      // #endif
      
       // console.log('version========' , JSON.stringify(config))

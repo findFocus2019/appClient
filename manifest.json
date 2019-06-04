@@ -2,8 +2,8 @@
     "name" : "发现焦点",
     "appid" : "__UNI__26AFF07",
     "description" : "发现焦点APP",
-    "versionName" : "2.0.3",
-    "versionCode" : 20302,
+    "versionName" : "2.0.5",
+    "versionCode" : 20501,
     "transformPx" : true,
     "debug" : false,
     "app-plus" : {
@@ -164,31 +164,31 @@
             "splashscreen" : {
                 "ios" : {
                     "iphone" : {
-                        "retina35" : "/Users/lucong/Desktop/启动页png/640x960.png",
-                        "retina40" : "/Users/lucong/Desktop/启动页png/640x1136.png",
-                        "retina40l" : "/Users/lucong/Desktop/启动页png/1136x640.png",
-                        "retina47" : "/Users/lucong/Desktop/启动页png/750x1334.png",
-                        "retina47l" : "/Users/lucong/Desktop/启动页png/1334x750.png",
-                        "retina55" : "/Users/lucong/Desktop/启动页png/1242x2208.png",
-                        "retina55l" : "/Users/lucong/Desktop/启动页png/2208x1242.png",
-                        "iphonex" : "/Users/lucong/Desktop/启动页png/1125x2436.png",
-                        "iphonexl" : "/Users/lucong/Desktop/启动页png/2436x1125.png",
-                        "portrait-896h@2x" : "/Users/lucong/Desktop/启动页png/828x1792.png",
-                        "landscape-896h@2x" : "/Users/lucong/Desktop/启动页png/1792x828.png",
-                        "portrait-896h@3x" : "/Users/lucong/Desktop/启动页png/1242x2688.png",
-                        "landscape-896h@3x" : "/Users/lucong/Desktop/启动页png/2688x1242.png"
+                        "retina35" : "static/starter/640x960.png",
+                        "retina40" : "static/starter/640x1136.png",
+                        "retina40l" : "static/starter/1136x640.png",
+                        "retina47" : "static/starter/750x1334.png",
+                        "retina47l" : "static/starter/1334x750.png",
+                        "retina55" : "static/starter/1242x2208.png",
+                        "retina55l" : "static/starter/2208x1242.png",
+                        "iphonex" : "static/starter/1125x2436.png",
+                        "iphonexl" : "static/starter/2436x1125.png",
+                        "portrait-896h@2x" : "static/starter/828x1792.png",
+                        "landscape-896h@2x" : "static/starter/1792x828.png",
+                        "portrait-896h@3x" : "static/starter/1242x2688.png",
+                        "landscape-896h@3x" : "static/starter/2688x1242.png"
                     }
                 },
                 "android" : {
-                    "hdpi" : "/Users/lucong/Desktop/启动页png/480x762.png",
-                    "xhdpi" : "/Users/lucong/Desktop/启动页png/720x1242.png",
-                    "xxhdpi" : "/Users/lucong/Desktop/启动页png/1080x1882.png"
+                    "hdpi" : "static/starter/480x762.png",
+                    "xhdpi" : "static/starter/720x1242.png",
+                    "xxhdpi" : "static/starter/1080x1882.png"
                 }
             }
         },
         "splashscreen" : {
             "waiting" : true,
-            "alwaysShowBeforeRender" : true
+            "alwaysShowBeforeRender" : false
         },
         "runmode" : "liberate"
     },

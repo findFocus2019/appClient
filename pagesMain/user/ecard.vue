@@ -3,6 +3,10 @@
     <view class="" v-for="(ecard,index) in userEcardList" :key="index">
     	<user-ecard :ecard="ecard" @ecardItemTap="ecardItemTap"></user-ecard>
     </view>
+    
+   <view class="uni-center uni-common-pt" v-if="userEcardList && userEcardList.length > 1">
+     <text class="uni-text-blue" @click="ecardCombine">合并可用代金券</text>
+   </view>
 	</view>
 </template>
 
@@ -39,6 +43,30 @@
           })
         }
         // this.$store.state.userEcardInfo = item
+      },
+      ecardCombine(){
+        uni.showModal({
+          title:'确认',
+          content:'合并可用代金券？',
+          success:  async (res) => {
+              if (res.confirm) {
+                  console.log('用户点击确定');
+                  
+                  let ret = await this.$store.dispatch('userEcardCombine')
+                  if (ret.code == 0){
+                    this.$store.dispatch('userEcardListGet')
+                  }else {
+                    uni.showToast({
+                      title: ret.message,
+                      mask: false,
+                      duration: 1500
+                    });
+                  }
+              } else if (res.cancel) {
+                 
+              }
+          }
+        })
       }
     },
     onLoad(opt) {

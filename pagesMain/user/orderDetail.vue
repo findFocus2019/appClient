@@ -80,7 +80,7 @@
     	              <text style="margin-left: 10upx;">{{ item.num }}</text>
     		        	</view>
     		          <view class="uni-flex-item uni-right uni-text-small uni-text-light" >
-    		             <text class="uni-bg-gray order-detail-item-action" v-if="order.status == 9" @tap="goToAfterApply({order:order, items: [item]})" >售后</text>
+    		             <text class="uni-bg-gray order-detail-item-action" v-if="order.status == 9 && order.finish_time && order.finish_time + 7 * 24 * 3600 > parseInt(Date.now() /1000) " @tap="goToAfterApply({order:order, items: [item]})" >售后</text>
                      <text class="uni-bg-gray order-detail-item-action" v-if="order.status == 9" @tap="goToOrderRate({order:order, item: item})" >评价</text>
     		          </view>
     		        </view>
@@ -245,7 +245,7 @@
         <view class="" v-if="order.status == 2">
         	<text class="order-btn" @tap="goComplete(order)">确认收货</text>
         </view>
-        <view class="" v-if="order.status == 9">
+        <view class="" v-if="order.status == 9 && order.finish_time && order.finish_time + 7 * 24 * 3600 > parseInt(Date.now() /1000) ">
         	<!-- <text @tap="goToComment">评价</text> -->
           <text @tap="goToAfterApply({order:order, items: order.goods_items})">申请售后</text>
         </view>

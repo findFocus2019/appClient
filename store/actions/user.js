@@ -171,5 +171,10 @@ export default {
   async userRabates(store , data = {}){
     let ret = await Request.post('user/rabates' , data)
     return ret
+  },
+  
+  async userEcardCombine(store, data = {}) {
+    let ret = await Request.post('user/ecardCombine' , data)
+    return ret
   }
 }

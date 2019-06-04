@@ -51,7 +51,8 @@
           location.href = 'https://itunes.apple.com/cn/app/发现焦点/id1439012110'
           
         }else if(device.platform == 'android') {
-          location.href = 'https://www.pgyer.com/j5Um'
+          // location.href = 'https://www.pgyer.com/j5Um'
+          location.href = 'https://a.app.qq.com/o/simple.jsp?pkgname=com.dfn.newdiscoverfocusnews'
         }
       }
     },
